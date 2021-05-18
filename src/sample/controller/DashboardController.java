@@ -36,6 +36,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 import org.eclipse.fx.ui.controls.tree.FilterableTreeItem;
@@ -501,21 +502,21 @@ public class DashboardController extends Main implements Initializable {
 
     public void loadColumnToTable() {
 
-        TableColumn number = new TableColumn("No.");
-        TableColumn id = new TableColumn("Id");
+
+
+        TableColumn number = new TableColumn("#");
         TableColumn catalogNo = new TableColumn("catalogNo");
         TableColumn symbol = new TableColumn("symbol");
         TableColumn priceNet = new TableColumn("priceNet");
         TableColumn stock = new TableColumn("stock");
 
-        table.getColumns().addAll(number, id, catalogNo, symbol, priceNet, stock);
+        table.getColumns().addAll(number, catalogNo, symbol, priceNet, stock);
 
-        number.prefWidthProperty().bind(table.widthProperty().multiply(0.07));
-        id.prefWidthProperty().bind(table.widthProperty().multiply(0.1));
-        catalogNo.prefWidthProperty().bind(table.widthProperty().multiply(0.23));
-        symbol.prefWidthProperty().bind(table.widthProperty().multiply(0.2));
-        priceNet.prefWidthProperty().bind(table.widthProperty().multiply(0.2));
-        stock.prefWidthProperty().bind(table.widthProperty().multiply(0.194));
+        number.prefWidthProperty().bind(table.widthProperty().multiply(0.05));
+        catalogNo.prefWidthProperty().bind(table.widthProperty().multiply(0.14));
+        symbol.prefWidthProperty().bind(table.widthProperty().multiply(0.52));
+        priceNet.prefWidthProperty().bind(table.widthProperty().multiply(0.12));
+        stock.prefWidthProperty().bind(table.widthProperty().multiply(0.12));
 
         number.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ProductCatalog, ProductCatalog>, ObservableValue<ProductCatalog>>() {
             @Override
@@ -542,18 +543,17 @@ public class DashboardController extends Main implements Initializable {
             }
         });
         number.setSortable(false);
-        id.setCellValueFactory(new PropertyValueFactory<ProductCatalog, String>("Id"));
         catalogNo.setCellValueFactory(new PropertyValueFactory<ProductCatalog, String>("catalogNo"));
         symbol.setCellValueFactory(new PropertyValueFactory<ProductCatalog, String>("symbol"));
         priceNet.setCellValueFactory(new PropertyValueFactory<ProductCatalog, String>("priceNet"));
         stock.setCellValueFactory(new PropertyValueFactory<ProductCatalog, String>("stock"));
 
-        number.setResizable(false);
-        id.setResizable(false);
-        catalogNo.setResizable(false);
-        symbol.setResizable(false);
-        priceNet.setResizable(false);
-        stock.setResizable(false);
+        number.setResizable(true);
+        catalogNo.setResizable(true);
+        symbol.setResizable(true);
+        priceNet.setResizable(true);
+        stock.setResizable(true);
+
 
     }
 
@@ -616,9 +616,10 @@ public class DashboardController extends Main implements Initializable {
                     ProductCatalogDAO.updateByCatalog_no(excelProduct.getPriceNet(), dbProduct.getId());
                     countAffectedProducts++;
 
-                } else if (dbProduct.getPriceNet() == excelProduct.getPriceNet()) {
+                } else if (dbProduct.getPriceNet() == excelProduct.getPriceNet() && dbProduct.getCatalogNo() == excelProduct.getCatalogNo()) {
                     isNewProduct = false;
-                    countDBProduducts++;
+//                    countDBProduducts++;
+                    countDBProduducts = dbProducts.size() - countAffectedProducts;
                 }
 
             }
@@ -647,9 +648,9 @@ public class DashboardController extends Main implements Initializable {
         label.setMinHeight(150);
         label.setAlignment(Pos.CENTER);
         popup.getContent().addAll(label, hide);
-        if (countAffectedProducts > 0) {
+//        if (countAffectedProducts > 0) {
             popup.show(parent);
-        }
+//        }
 
     }
 
@@ -702,7 +703,7 @@ public class DashboardController extends Main implements Initializable {
         root.predicateProperty().bind(Bindings.createObjectBinding(() -> {
             if (paieskosLaukelis.getText() == null || paieskosLaukelis.getText().isEmpty())
                 return null;
-            return TreeItemPredicate.create(categoryItem -> categoryItem.toString().contains(paieskosLaukelis.getText()));
+            return TreeItemPredicate.create(categoryItem -> categoryItem.toString().toLowerCase().contains(paieskosLaukelis.getText().toLowerCase()));
         }, paieskosLaukelis.textProperty()));
 
         treeView.setRoot(root);
@@ -711,7 +712,6 @@ public class DashboardController extends Main implements Initializable {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 TreeItem<CategoryItem> item = treeView.getSelectionModel().getSelectedItem();
-                System.out.println(item.getValue().getName());
                 List<Categories> categories = CategoriesDAO.selectCategory(item.getValue().getName());
                 List<ProductCatalog> products = ProductCatalogDAO.displayAllItems();
                 int number = 0;
