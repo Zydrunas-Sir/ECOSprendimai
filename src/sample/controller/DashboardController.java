@@ -5,9 +5,8 @@ import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -42,14 +41,18 @@ import java.util.ResourceBundle;
 import org.eclipse.fx.ui.controls.tree.FilterableTreeItem;
 import org.eclipse.fx.ui.controls.tree.TreeItemPredicate;
 
+import javax.swing.*;
+
 public class DashboardController extends Main implements Initializable {
 
     public Button close_button;
     @FXML
     private TableView table;
     public Button open_file;
-    public TextField paieskosLaukelis;
+    public TextField treeViewSearchField;
     public Label countAll;
+    public TextField tableViewSearchField;
+    public ChoiceBox<String> tableViewChoiceBox;
 
 
 
@@ -502,7 +505,7 @@ public class DashboardController extends Main implements Initializable {
 
     public void loadColumnToTable() {
 
-
+        table.setColumnResizePolicy(table.CONSTRAINED_RESIZE_POLICY);
 
         TableColumn number = new TableColumn("#");
         TableColumn catalogNo = new TableColumn("catalogNo");
@@ -512,11 +515,11 @@ public class DashboardController extends Main implements Initializable {
 
         table.getColumns().addAll(number, catalogNo, symbol, priceNet, stock);
 
-        number.prefWidthProperty().bind(table.widthProperty().multiply(0.05));
-        catalogNo.prefWidthProperty().bind(table.widthProperty().multiply(0.14));
-        symbol.prefWidthProperty().bind(table.widthProperty().multiply(0.52));
-        priceNet.prefWidthProperty().bind(table.widthProperty().multiply(0.12));
-        stock.prefWidthProperty().bind(table.widthProperty().multiply(0.12));
+        number.minWidthProperty().bind(table.widthProperty().multiply(0.06));
+        catalogNo.minWidthProperty().bind(table.widthProperty().multiply(0.14));
+        symbol.minWidthProperty().bind(table.widthProperty().multiply(0.52));
+        priceNet.minWidthProperty().bind(table.widthProperty().multiply(0.1));
+        stock.minWidthProperty().bind(table.widthProperty().multiply(0.1));
 
         number.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ProductCatalog, ProductCatalog>, ObservableValue<ProductCatalog>>() {
             @Override
@@ -568,18 +571,39 @@ public class DashboardController extends Main implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         loadColumnToTable();
         createContents();
+        loadStartingTable();
     }
 
     public void openExcelFileFromDialog() {
         final FileChooser fileChooser = new FileChooser();
-        open_file.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(final ActionEvent e) {
-                configureFileChooser(fileChooser);
-                File file = fileChooser.showOpenDialog(new Stage());
-                if (file != null) {
-                    openFile(file);
-                }
+        open_file.setOnAction(e -> {
+            configureFileChooser(fileChooser);
+            File file = fileChooser.showOpenDialog(new Stage());
+            if (file != null) {
+                JOptionPane.showMessageDialog(null, "Prašome palaukti. Nuskaitomas Excel Failas: " + file.getName());
+                openFile(file);
+            }
+        });
+    }
+
+    public void loadStartingTable(){
+        ObservableList<ProductCatalog> products = FXCollections.observableArrayList(ProductCatalogDAO.displayAllItems());
+        FilteredList<ProductCatalog> flProducts = new FilteredList( products, p -> true);
+        tableViewChoiceBox.getItems().addAll( "symbol");
+        tableViewChoiceBox.setValue("symbol");
+        tableViewSearchField.setPromptText("");
+        table.setItems(flProducts);
+        tableViewSearchField.textProperty().addListener((observable, oldValue, newValue) ->{
+            switch (tableViewChoiceBox.getValue()){
+                case "symbol" :
+                    flProducts.setPredicate(p -> p.getSymbol().toLowerCase().contains(newValue.toLowerCase().trim()));
+                    break;
+            }
+        });
+
+        tableViewChoiceBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                tableViewSearchField.setText("");
             }
         });
 
@@ -635,12 +659,7 @@ public class DashboardController extends Main implements Initializable {
                 "Duombazėje nepakeistų produktų : " + countDBProduducts);
         final Popup popup = new Popup();
         Button hide = new Button("Ok");
-        hide.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                popup.hide();
-            }
-        });
+        hide.setOnAction(event -> popup.hide());
         hide.setLayoutX(140);
         hide.setLayoutY(115);
         label.setStyle(" -fx-background-color: grey; -fx-text-fill: white;");
@@ -683,8 +702,8 @@ public class DashboardController extends Main implements Initializable {
 
 
     private Node createFilterPane() {
-        paieskosLaukelis.setPromptText("Įveskite kategorijos pavadinimą filtravimui ...");
-        TitledPane pane = new TitledPane("Filter", paieskosLaukelis);
+        treeViewSearchField.setPromptText("Įveskite kategorijos pavadinimą filtravimui ...");
+        TitledPane pane = new TitledPane("Filter", treeViewSearchField);
         pane.setCollapsible(false);
         return pane;
     }
@@ -701,31 +720,28 @@ public class DashboardController extends Main implements Initializable {
     private Node createFilteredTree() {
         FilterableTreeItem<CategoryItem> root = loadsProductsToCatalogTree();
         root.predicateProperty().bind(Bindings.createObjectBinding(() -> {
-            if (paieskosLaukelis.getText() == null || paieskosLaukelis.getText().isEmpty())
+            if (treeViewSearchField.getText() == null || treeViewSearchField.getText().isEmpty())
                 return null;
-            return TreeItemPredicate.create(categoryItem -> categoryItem.toString().toLowerCase().contains(paieskosLaukelis.getText().toLowerCase()));
-        }, paieskosLaukelis.textProperty()));
+            return TreeItemPredicate.create(categoryItem -> categoryItem.toString().toLowerCase().contains(treeViewSearchField.getText().toLowerCase()));
+        }, treeViewSearchField.textProperty()));
 
         treeView.setRoot(root);
         treeView.setShowRoot(false);
-        treeView.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                TreeItem<CategoryItem> item = treeView.getSelectionModel().getSelectedItem();
-                List<Categories> categories = CategoriesDAO.selectCategory(item.getValue().getName());
-                List<ProductCatalog> products = ProductCatalogDAO.displayAllItems();
-                int number = 0;
-                table.getItems().clear();
-                for (Categories category : categories) {
-                    for (ProductCatalog product : products) {
-                        if (category.getId() == product.getGroupId()) {
-                            number++;
-                            loadDataToTable(product);
-                        }
+        treeView.addEventFilter(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
+            TreeItem<CategoryItem> item = treeView.getSelectionModel().getSelectedItem();
+            List<Categories> categories = CategoriesDAO.selectCategory(item.getValue().getName());
+            List<ProductCatalog> products = ProductCatalogDAO.displayAllItems();
+            int number = 0;
+            table.getItems().clear();
+            for (Categories category : categories) {
+                for (ProductCatalog product : products) {
+                    if (category.getId() == product.getGroupId()) {
+                        number++;
+                        loadDataToTable(product);
                     }
                 }
-                countAll.setText("Išviso įrašų : " + number);
             }
+            countAll.setText("Išviso įrašų : " + number);
         });
         return treeView;
     }
