@@ -571,7 +571,7 @@ public class DashboardController extends Main implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         loadColumnToTable();
         createContents();
-        loadStartingTable();
+//        loadStartingTable();
     }
 
     public void openExcelFileFromDialog() {
