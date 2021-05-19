@@ -1,5 +1,7 @@
 package sample.JPA;
 
+import org.hibernate.exception.JDBCConnectionException;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,8 +14,12 @@ public class ProductCatalogDAO {
 public static void insert(ProductCatalog productCatalog){
     EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
     EntityTransaction entityTransaction = entityManager.getTransaction();
+    try {
     entityTransaction.begin();
-
+    } catch (JDBCConnectionException e) {
+        JPAUtil.infoBox("NEPAVYKO PRISIJUNGTI PRIE DUOMENŲ BAZĖS", "ServiceException");
+        JPAUtil.shutdown();
+    }
     entityManager.persist(productCatalog);
 
     entityManager.getTransaction().commit();
@@ -25,8 +31,12 @@ public static void insert(ProductCatalog productCatalog){
 public static List<ProductCatalog> displayAllItems(){
     EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
     EntityTransaction entityTransaction = entityManager.getTransaction();
+    try {
     entityTransaction.begin();
-
+    } catch (JDBCConnectionException e) {
+        JPAUtil.infoBox("NEPAVYKO PRISIJUNGTI PRIE DUOMENŲ BAZĖS", "ServiceException");
+        JPAUtil.shutdown();
+    }
     TypedQuery<ProductCatalog> query = entityManager.createQuery("Select e From ProductCatalog e", ProductCatalog.class);
     List<ProductCatalog> productCatalog = query.getResultList();
 
@@ -54,8 +64,12 @@ public static List<ProductCatalog> displayAllItems(){
     public static void updateByCatalog_no(double price, int id) {
         EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
         EntityTransaction entityTransaction = entityManager.getTransaction();
+        try {
         entityTransaction.begin();
-
+        } catch (JDBCConnectionException e) {
+            JPAUtil.infoBox("NEPAVYKO PRISIJUNGTI PRIE DUOMENŲ BAZĖS", "ServiceException");
+            JPAUtil.shutdown();
+        }
 
         ProductCatalog productCatalog1 = entityManager.find(ProductCatalog.class, id);
         productCatalog1.setPriceNet(price);
