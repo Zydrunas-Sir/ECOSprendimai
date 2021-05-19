@@ -1,5 +1,7 @@
 package sample.JPA;
 
+import org.hibernate.exception.JDBCConnectionException;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -9,8 +11,12 @@ public class CategoriesDAO {
     public static void insert(Categories categories) {
         EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
         EntityTransaction entityTransaction = entityManager.getTransaction();
+        try {
         entityTransaction.begin();
-
+        } catch (JDBCConnectionException e) {
+            JPAUtil.infoBox("NEPAVYKO PRISIJUNGTI PRIE DUOMENŲ BAZĖS", "ServiceException");
+            JPAUtil.shutdown();
+        }
         entityManager.persist(categories);
 
         entityManager.getTransaction().commit();
@@ -46,8 +52,12 @@ public class CategoriesDAO {
     public static void updateById(Categories categories, int id) {
         EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
         EntityTransaction entityTransaction = entityManager.getTransaction();
+        try {
         entityTransaction.begin();
-
+        } catch (JDBCConnectionException e) {
+            JPAUtil.infoBox("NEPAVYKO PRISIJUNGTI PRIE DUOMENŲ BAZĖS", "ServiceException");
+            JPAUtil.shutdown();
+        }
         Categories categories1 = entityManager.find(Categories.class, id);
         categories1.setName(categories.getName());
         categories1.setlft(categories.getlft());
@@ -61,13 +71,21 @@ public class CategoriesDAO {
 
     public static List<Categories> selectCategory(String name) {
         EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
+        System.out.println("HELLO 1");
         EntityTransaction entityTransaction = entityManager.getTransaction();
-        entityTransaction.begin();
+        System.out.println("HELLO 2");
+        try {
+            entityTransaction.begin();
 
+        } catch (JDBCConnectionException e) {
+            JPAUtil.infoBox("NEPAVYKO PRISIJUNGTI PRIE DUOMENŲ BAZĖS", "ServiceException");
+            JPAUtil.shutdown();
+        }
         TypedQuery<Categories> query = entityManager.createQuery("SELECT e FROM Categories e" +
                 " JOIN Categories a  ON (e.lft >= a.lft AND e.rght <= a.rght) " +
                 "WHERE a.name = ?1 ORDER BY e.lft", Categories.class);
         List<Categories> categories = query.setParameter(1, name).getResultList();
+
 
         entityManager.getTransaction().commit();
         entityManager.close();
@@ -78,8 +96,12 @@ public class CategoriesDAO {
     public static List<Categories> displayAllCategories(){
         EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
         EntityTransaction entityTransaction = entityManager.getTransaction();
-        entityTransaction.begin();
-
+        try {
+            entityTransaction.begin();
+        } catch (JDBCConnectionException e) {
+            JPAUtil.infoBox("NEPAVYKO PRISIJUNGTI PRIE DUOMENŲ BAZĖS", "ServiceException");
+            JPAUtil.shutdown();
+        }
         TypedQuery<Categories> query = entityManager.createQuery("Select e From Categories e", Categories.class);
         List<Categories> categories = query.getResultList();
 
