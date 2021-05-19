@@ -6,6 +6,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -34,9 +35,7 @@ import sample.utils.Constants;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.List;
-import java.util.Locale;
-import java.util.ResourceBundle;
+import java.util.*;
 
 import org.eclipse.fx.ui.controls.tree.FilterableTreeItem;
 import org.eclipse.fx.ui.controls.tree.TreeItemPredicate;
@@ -47,21 +46,20 @@ public class DashboardController extends Main implements Initializable {
 
     public Button close_button;
     @FXML
-    private TableView table;
+    private TableView<ProductCatalog> table;
     public Button open_file;
     public TextField treeViewSearchField;
     public Label countAll;
     public TextField tableViewSearchField;
-    public ChoiceBox<String> tableViewChoiceBox;
 
 
 
     public void goBackToLogin(ActionEvent actionEvent) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource(Constants.LOGIN_VIEW_DIRECTORY_PATH));
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(Constants.LOGIN_VIEW_DIRECTORY_PATH)));
             Stage LoginStage = new Stage();
             Scene scene = new Scene(root, Constants.LOGIN_REGISTER_WINDOW_WIDTH, Constants.LOGIN_REGISTER_WINDOW_HEIGHT);
-            scene.getStylesheets().add(getClass().getResource(Constants.CSS_DIRECTORY_PATH).toExternalForm());
+            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource(Constants.CSS_DIRECTORY_PATH)).toExternalForm());
             LoginStage.setTitle("");
             LoginStage.setScene(scene);
             LoginStage.show();
@@ -82,7 +80,11 @@ public class DashboardController extends Main implements Initializable {
 
 
         FilterableTreeItem<CategoryItem> root = new FilterableTreeItem<>(new CategoryItem("Root"));
-        root.setExpanded(true);
+
+
+        FilterableTreeItem<CategoryItem> home = createFolder("Home");
+
+        home.setExpanded(true);
 
         FilterableTreeItem<CategoryItem> skydai = createFolder("Skydai");
         FilterableTreeItem<CategoryItem> apsvietimas = createFolder("Apšvietimas");
@@ -93,14 +95,16 @@ public class DashboardController extends Main implements Initializable {
         FilterableTreeItem<CategoryItem> izeminimasIrZaibosauga = createFolder("Įžeminimas ir žaibosauga");
         FilterableTreeItem<CategoryItem> elektromechanika = createFolder("Elektromechanika");
 
-        root.getInternalChildren().add(skydai);
-        root.getInternalChildren().add(apsvietimas);
-        root.getInternalChildren().add(kabeliai);
-        root.getInternalChildren().add(vamzdziaiIrGofra);
-        root.getInternalChildren().add(instaliacinesPrekes);
-        root.getInternalChildren().add(metalinesKonstrukcijos);
-        root.getInternalChildren().add(izeminimasIrZaibosauga);
-        root.getInternalChildren().add(elektromechanika);
+        root.getInternalChildren().add(home);
+
+        home.getInternalChildren().add(skydai);
+        home.getInternalChildren().add(apsvietimas);
+        home.getInternalChildren().add(kabeliai);
+        home.getInternalChildren().add(vamzdziaiIrGofra);
+        home.getInternalChildren().add(instaliacinesPrekes);
+        home.getInternalChildren().add(metalinesKonstrukcijos);
+        home.getInternalChildren().add(izeminimasIrZaibosauga);
+        home.getInternalChildren().add(elektromechanika);
 
         //Skydai
         FilterableTreeItem<CategoryItem> laukoSkydai = createFolder("Lauko skydai");
@@ -505,7 +509,7 @@ public class DashboardController extends Main implements Initializable {
 
     public void loadColumnToTable() {
 
-        table.setColumnResizePolicy(table.CONSTRAINED_RESIZE_POLICY);
+        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         TableColumn number = new TableColumn("#");
         TableColumn catalogNo = new TableColumn("catalogNo");
@@ -521,12 +525,7 @@ public class DashboardController extends Main implements Initializable {
         priceNet.minWidthProperty().bind(table.widthProperty().multiply(0.1));
         stock.minWidthProperty().bind(table.widthProperty().multiply(0.1));
 
-        number.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ProductCatalog, ProductCatalog>, ObservableValue<ProductCatalog>>() {
-            @Override
-            public ObservableValue<ProductCatalog> call(TableColumn.CellDataFeatures<ProductCatalog, ProductCatalog> p) {
-                return new ReadOnlyObjectWrapper(p.getValue());
-            }
-        });
+        number.setCellValueFactory((Callback<TableColumn.CellDataFeatures<ProductCatalog, ProductCatalog>, ObservableValue<ProductCatalog>>) p -> new ReadOnlyObjectWrapper(p.getValue()));
 
         number.setCellFactory(new Callback<TableColumn<ProductCatalog, ProductCatalog>, TableCell<ProductCatalog, ProductCatalog>>() {
             @Override
@@ -571,7 +570,6 @@ public class DashboardController extends Main implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         loadColumnToTable();
         createContents();
-//        loadStartingTable();
     }
 
     public void openExcelFileFromDialog() {
@@ -586,27 +584,14 @@ public class DashboardController extends Main implements Initializable {
         });
     }
 
-    public void loadStartingTable(){
-        ObservableList<ProductCatalog> products = FXCollections.observableArrayList(ProductCatalogDAO.displayAllItems());
-        FilteredList<ProductCatalog> flProducts = new FilteredList( products, p -> true);
-        tableViewChoiceBox.getItems().addAll( "symbol");
-        tableViewChoiceBox.setValue("symbol");
-        tableViewSearchField.setPromptText("");
-        table.setItems(flProducts);
-        tableViewSearchField.textProperty().addListener((observable, oldValue, newValue) ->{
-            switch (tableViewChoiceBox.getValue()){
-                case "symbol" :
-                    flProducts.setPredicate(p -> p.getSymbol().toLowerCase().contains(newValue.toLowerCase().trim()));
-                    break;
-            }
+    public void tableSearchFunction(ObservableList<ProductCatalog> productCatalogs){
+        FilteredList<ProductCatalog> flProducts = new FilteredList( productCatalogs, product -> true);
+        tableViewSearchField.textProperty().addListener((observable, oldValue, newValue) -> {
+            flProducts.setPredicate(product -> product.getSymbol().toLowerCase().contains(newValue.toLowerCase().trim()));
         });
-
-        tableViewChoiceBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue != null) {
-                tableViewSearchField.setText("");
-            }
-        });
-
+        SortedList<ProductCatalog> slProducts = new SortedList<>(flProducts);
+        slProducts.comparatorProperty().bind(table.comparatorProperty());
+        table.setItems(slProducts);
     }
 
     private void openFile(File file) {
@@ -627,6 +612,7 @@ public class DashboardController extends Main implements Initializable {
         int countNewProducts = 0;
         int countDBProduducts = 0;
 
+        assert excelProducts != null;
         for (ProductCatalog excelProduct : excelProducts) {
             countExcelProducts++;
 
@@ -728,19 +714,20 @@ public class DashboardController extends Main implements Initializable {
         treeView.setRoot(root);
         treeView.setShowRoot(false);
         treeView.addEventFilter(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
+            ObservableList<ProductCatalog> filteredProduct = FXCollections.observableArrayList();
             TreeItem<CategoryItem> item = treeView.getSelectionModel().getSelectedItem();
             List<Categories> categories = CategoriesDAO.selectCategory(item.getValue().getName());
             List<ProductCatalog> products = ProductCatalogDAO.displayAllItems();
             int number = 0;
-            table.getItems().clear();
             for (Categories category : categories) {
                 for (ProductCatalog product : products) {
                     if (category.getId() == product.getGroupId()) {
                         number++;
-                        loadDataToTable(product);
+                        filteredProduct.add(product);
                     }
                 }
             }
+            tableSearchFunction(filteredProduct);
             countAll.setText("Išviso įrašų : " + number);
         });
         return treeView;
@@ -748,10 +735,9 @@ public class DashboardController extends Main implements Initializable {
 
 
     private FilterableTreeItem<CategoryItem> createFolder(String name) {
-        FilterableTreeItem<CategoryItem> folder = new FilterableTreeItem<>(new CategoryItem(name));
 
 
-        return folder;
+        return new FilterableTreeItem<>(new CategoryItem(name));
     }
 
 
