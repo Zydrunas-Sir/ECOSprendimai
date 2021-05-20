@@ -1,50 +1,69 @@
 package sample.JPA;
 
+import org.hibernate.HibernateException;
 import org.hibernate.exception.JDBCConnectionException;
 
 import javax.persistence.*;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.hibernate.service.spi.ServiceException;
+import sample.utils.Constants;
 
 public class ProductCatalogDAO {
 
 
+    public static void insert(ProductCatalog productCatalog) {
+        EntityManager entityManager;
+        EntityTransaction entityTransaction;
+
+        try {
+            entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
+            entityTransaction = entityManager.getTransaction();
+            entityTransaction.begin();
+            entityManager.persist(productCatalog);
+            entityManager.getTransaction().commit();
+            entityManager.close();
+        } catch (JDBCConnectionException e) {
+            System.out.println("ProductCatalogDAO.insert() JDBCConnectionException");
+        } catch (HibernateException e) {
+            System.out.println("ProductCatalogDAO.insert() HibernateException");
+        }
 
 
-public static void insert(ProductCatalog productCatalog){
-    EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
-    EntityTransaction entityTransaction = entityManager.getTransaction();
-    try {
-    entityTransaction.begin();
-    } catch (JDBCConnectionException e) {
-        JPAUtil.infoBox("NEPAVYKO PRISIJUNGTI PRIE DUOMENŲ BAZĖS", "ServiceException");
-        JPAUtil.shutdown();
+
     }
-    entityManager.persist(productCatalog);
 
-    entityManager.getTransaction().commit();
-    entityManager.close();
-    
-}
+    public static List<ProductCatalog> displayAllItems() {
+
+        EntityManager entityManager;
+        EntityTransaction entityTransaction;
+        List<ProductCatalog> productCatalog = null;
+        TypedQuery<ProductCatalog> query;
+
+        try {
+            entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
+            entityTransaction = entityManager.getTransaction();
+            entityTransaction.begin();
+            query = entityManager.createQuery("Select e From ProductCatalog e", ProductCatalog.class);
+            productCatalog = query.getResultList();
 
 
-public static List<ProductCatalog> displayAllItems(){
-    EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
-    EntityTransaction entityTransaction = entityManager.getTransaction();
-    try {
-    entityTransaction.begin();
-    } catch (JDBCConnectionException e) {
-        JPAUtil.infoBox("NEPAVYKO PRISIJUNGTI PRIE DUOMENŲ BAZĖS", "ServiceException");
-        JPAUtil.shutdown();
+            entityManager.getTransaction().commit();
+            entityManager.close();
+        } catch (IllegalStateException e) {
+            System.out.println("ProductCatalogDAO.displayAllItems() IllegalStateException");
+        } catch (JDBCConnectionException e) {
+            System.out.println("ProductCatalogDAO.displayAllItems() JDBCConnectionException");
+        } catch (ServiceException e) {
+            System.out.println("ProductCatalogDAO.displayAllItems() ServiceException");
+        } catch (PersistenceException e) {
+            System.out.println("ProductCatalogDAO.displayAllItems() PersistenceException");
+        }
+
+        return productCatalog;
     }
-    TypedQuery<ProductCatalog> query = entityManager.createQuery("Select e From ProductCatalog e", ProductCatalog.class);
-    List<ProductCatalog> productCatalog = query.getResultList();
-
-    entityManager.getTransaction().commit();
-    entityManager.close();
-
-    return productCatalog;
-}
 
     public static List<ProductCatalog> searchByName(String name) {
         EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
@@ -62,20 +81,28 @@ public static List<ProductCatalog> displayAllItems(){
 
 
     public static void updateByCatalog_no(double price, int id) {
-        EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
-        EntityTransaction entityTransaction = entityManager.getTransaction();
+
+        EntityManager entityManager;
+        EntityTransaction entityTransaction;
+        ProductCatalog productCatalog1;
+
         try {
-        entityTransaction.begin();
+            entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
+            entityTransaction = entityManager.getTransaction();
+            entityTransaction.begin();
+            productCatalog1 = entityManager.find(ProductCatalog.class, id);
+            productCatalog1.setPriceNet(price);
+            entityManager.getTransaction().commit();
+            entityManager.close();
+        } catch (IllegalStateException e) {
+            System.out.println("ProductCaalogDAO.updateByCatalog_no IllegalStateException");
         } catch (JDBCConnectionException e) {
-            JPAUtil.infoBox("NEPAVYKO PRISIJUNGTI PRIE DUOMENŲ BAZĖS", "ServiceException");
-            JPAUtil.shutdown();
+            System.out.println("ProductCaalogDAO.updateByCatalog_no JDBCConnectionException");
+        } catch (ServiceException e) {
+            System.out.println("ProductCaalogDAO.updateByCatalog_no ServiceException");
+        } catch (PersistenceException e) {
+            System.out.println("ProductCaalogDAO.updateByCatalog_no PersistenceException");
         }
-
-        ProductCatalog productCatalog1 = entityManager.find(ProductCatalog.class, id);
-        productCatalog1.setPriceNet(price);
-        entityManager.getTransaction().commit();
-        entityManager.close();
-
     }
 
     public static List<ProductCatalog> searchByTreeItemName(String treeItemSearchName) {
@@ -104,4 +131,23 @@ public static List<ProductCatalog> displayAllItems(){
         return iteratedProductCatalog;
     }
 
+    public static void checkIfCatalogExistsIfNotCreateIt() {
+        String checkQuery = "SHOW TABLES FROM ecosprendimai LIKE 'product_catalog'";
+        String createTableQuery = "CREATE TABLE IF NOT EXISTS `product_catalog` (`id` INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,`catalog_no` INT(11) DEFAULT NULL,`date` DATE DEFAULT NULL,`group_id` INT(11) DEFAULT NULL,`price_net` DOUBLE DEFAULT NULL,`stock` INT(11) DEFAULT NULL,`symbol` VARCHAR(255) DEFAULT NULL)";
+        Statement stmt;
+        System.out.println("checkIfCatalogExistsIfNotCreateIt method initiated...");
+        try {
+            Connection conn = DriverManager.getConnection(Constants.DB_URL, Constants.USER, Constants.PASS);
+            stmt = conn.createStatement();
+            int rsBool = stmt.executeUpdate(checkQuery);
+            if (rsBool == 0) {
+                System.out.println("product_catalog table has not been found, creating a new one...");
+                stmt.execute(createTableQuery);
+            }
+            conn.close();
+            stmt.close();
+        } catch (SQLException throwables) {
+            JPAUtil.infoBox("NEPAVYKO PRISIJUNGTI PRIE DUOMENŲ BAZĖS", "SQLException");
+        }
+    }
 }

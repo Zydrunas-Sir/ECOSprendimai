@@ -2,6 +2,7 @@ package sample.JPA;
 
 import org.hibernate.HibernateException;
 import org.hibernate.exception.JDBCConnectionException;
+import org.hibernate.service.spi.ServiceException;
 
 import javax.persistence.*;
 import java.util.List;
@@ -64,22 +65,34 @@ public class CategoriesDAO {
 
 
     public static List<Categories> selectCategory(String name) {
-        EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
-        EntityTransaction entityTransaction = entityManager.getTransaction();
-        try {
-            entityTransaction.begin();
-        } catch (HibernateException e) {
-            JPAUtil.infoBox("NEPAVYKO PRISIJUNGTI PRIE DUOMENŲ BAZĖS", "HibernateException");
-        }
-        TypedQuery<Categories> query = entityManager.createQuery("SELECT e FROM Categories e" +
-                " JOIN Categories a  ON (e.lft >= a.lft AND e.rght <= a.rght) " +
-                "WHERE a.name = ?1 ORDER BY e.lft", Categories.class);
-        List<Categories> categories = query.setParameter(1, name).getResultList();
 
-        entityManager.getTransaction().commit();
-        entityManager.close();
+        EntityManager entityManager;
+        EntityTransaction entityTransaction;
+        TypedQuery<Categories> query;
+        List<Categories> categories = null;
+
+        try {
+            entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
+            entityTransaction = entityManager.getTransaction();
+            entityTransaction.begin();
+            query = entityManager.createQuery("SELECT e FROM Categories e" +
+                    " JOIN Categories a  ON (e.lft >= a.lft AND e.rght <= a.rght) " +
+                    "WHERE a.name = ?1 ORDER BY e.lft", Categories.class);
+            categories = query.setParameter(1, name).getResultList();
+            entityManager.getTransaction().commit();
+            entityManager.close();
+        } catch (IllegalStateException e) {
+            JPAUtil.infoBox("NEPAVYKO PRISIJUNGTI PRIE DUOMENŲ BAZĖS", "IllegalStateException");
+        } catch (JDBCConnectionException e) {
+            JPAUtil.infoBox("NEPAVYKO PRISIJUNGTI PRIE DUOMENŲ BAZĖS", "JDBCConnectionException");
+        } catch (ServiceException e) {
+            JPAUtil.infoBox("NEPAVYKO PRISIJUNGTI PRIE DUOMENŲ BAZĖS", "ServiceException");
+        } catch (PersistenceException e) {
+            JPAUtil.infoBox("NEPAVYKO PRISIJUNGTI PRIE DUOMENŲ BAZĖS", "PersistenceException");
+        }
 
         return categories;
+
     }
 
 
