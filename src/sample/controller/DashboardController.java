@@ -597,6 +597,9 @@ public class DashboardController extends Main implements Initializable {
 
     //Tikriną excelio produktų kainas su duombasėje esamomis produkto kainomis, įkelia naujus produktus, jei jų nėra duombasėje, visai tai skaičiuoja.
     private void openFile(File file) {
+        ProductCatalogDAO.checkIfCatalogExistsIfNotCreateIt();
+        Window parent = open_file.getScene().getWindow();
+
         List<ProductCatalog> excelProducts = null;
         List<ProductCatalog> dbProducts = ProductCatalogDAO.displayAllItems();
 

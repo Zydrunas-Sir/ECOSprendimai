@@ -14,4 +14,8 @@ public class Constants {
     public static final String LOGIN_VIEW_DIRECTORY_PATH = "../view/login.fxml";
     public static final String CSS_DIRECTORY_PATH = "../view/CSS.css";
 
+
+    public static final String DB_URL = "jdbc:mysql://localhost:3306/ecosprendimai";
+    public static final String USER = "root";
+    public static final String PASS = "";
 }

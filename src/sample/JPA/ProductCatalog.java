@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.sql.Date;
 
 @Entity
-@Table(name = "Product_catalog")
+@Table(name = "product_catalog")
 public class ProductCatalog {
 
     @Id
