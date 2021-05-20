@@ -51,7 +51,8 @@ public class DashboardController extends Main implements Initializable {
     public TextField treeViewSearchField;
     public Label countAll;
     public TextField tableViewSearchField;
-
+    public TitledPane leftTitledPane;
+    TreeView<CategoryItem> treeView = new TreeView<>();
 
 
     public void goBackToLogin(ActionEvent actionEvent) {
@@ -76,13 +77,14 @@ public class DashboardController extends Main implements Initializable {
         stage.close();
     }
 
+    //Surašomi visi treeview item'imai ir jų relationship'ai
     public FilterableTreeItem<CategoryItem> loadsProductsToCatalogTree() {
 
 
         FilterableTreeItem<CategoryItem> root = new FilterableTreeItem<>(new CategoryItem("Root"));
 
 
-        FilterableTreeItem<CategoryItem> home = createFolder("Home");
+        FilterableTreeItem<CategoryItem> home = createFolder("Visos kategorijos");
 
         home.setExpanded(true);
 
@@ -507,6 +509,7 @@ public class DashboardController extends Main implements Initializable {
     }
 
 
+    //Nusako table'o stulpelius ir jų matmenys.
     public void loadColumnToTable() {
 
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
@@ -556,13 +559,7 @@ public class DashboardController extends Main implements Initializable {
         priceNet.setResizable(true);
         stock.setResizable(true);
 
-
-    }
-
-    public void loadDataToTable(ProductCatalog productCatalog) {
-
-        table.getItems().add(productCatalog);
-
+        tableViewSearchField.setPromptText("Įveskite produkto pavadinimą filtravimui ...");
     }
 
 
@@ -572,6 +569,7 @@ public class DashboardController extends Main implements Initializable {
         createContents();
     }
 
+    //Iš excel failo pasiema produktus.
     public void openExcelFileFromDialog() {
         final FileChooser fileChooser = new FileChooser();
         open_file.setOnAction(e -> {
@@ -584,20 +582,21 @@ public class DashboardController extends Main implements Initializable {
         });
     }
 
-    public void tableSearchFunction(ObservableList<ProductCatalog> productCatalogs){
-        FilteredList<ProductCatalog> flProducts = new FilteredList( productCatalogs, product -> true);
+    //Sukelia observablelistą į table'ą su filtravimo funkciją.
+    public void tableSearchFunction(ObservableList<ProductCatalog> productCatalogs) {
+        FilteredList<ProductCatalog> flProducts = new FilteredList(productCatalogs, product -> true);
         tableViewSearchField.textProperty().addListener((observable, oldValue, newValue) -> {
             flProducts.setPredicate(product -> product.getSymbol().toLowerCase().contains(newValue.toLowerCase().trim()));
+            countAll.setText("Išviso įrašų : " + flProducts.size());
         });
         SortedList<ProductCatalog> slProducts = new SortedList<>(flProducts);
         slProducts.comparatorProperty().bind(table.comparatorProperty());
+        countAll.setText("Išviso įrašų : " + slProducts.size());
         table.setItems(slProducts);
     }
 
+    //Tikriną excelio produktų kainas su duombasėje esamomis produkto kainomis, įkelia naujus produktus, jei jų nėra duombasėje, visai tai skaičiuoja.
     private void openFile(File file) {
-
-        Window parent = open_file.getScene().getWindow();
-
         List<ProductCatalog> excelProducts = null;
         List<ProductCatalog> dbProducts = ProductCatalogDAO.displayAllItems();
 
@@ -610,39 +609,42 @@ public class DashboardController extends Main implements Initializable {
         int countAffectedProducts = 0;
         int countExcelProducts = 0;
         int countNewProducts = 0;
-        int countDBProduducts = 0;
+        int countDBProducts = 0;
 
         assert excelProducts != null;
+
         for (ProductCatalog excelProduct : excelProducts) {
             countExcelProducts++;
-
             boolean isNewProduct = true;
 
             for (ProductCatalog dbProduct : dbProducts) {
-
-
                 if (dbProduct.getPriceNet() != excelProduct.getPriceNet() && dbProduct.getCatalogNo() == excelProduct.getCatalogNo()) {
                     isNewProduct = false;
                     ProductCatalogDAO.updateByCatalog_no(excelProduct.getPriceNet(), dbProduct.getId());
                     countAffectedProducts++;
-
                 } else if (dbProduct.getPriceNet() == excelProduct.getPriceNet() && dbProduct.getCatalogNo() == excelProduct.getCatalogNo()) {
                     isNewProduct = false;
-//                    countDBProduducts++;
-                    countDBProduducts = dbProducts.size() - countAffectedProducts;
+                    countDBProducts = dbProducts.size() - countAffectedProducts;
                 }
-
             }
             if (isNewProduct) {
                 countNewProducts++;
                 ProductCatalogDAO.insert(excelProduct);
             }
         }
+        createInformationPopUp(countAffectedProducts, countExcelProducts, countNewProducts, countDBProducts);
+
+
+    }
+
+    //Sukuria pop up su produktų kiekių informaciją.
+    public void createInformationPopUp(int countAffectedProducts, int countExcelProducts, int countNewProducts, int countDBProducts) {
+        Window parent = open_file.getScene().getWindow();
 
         Label label = new Label("Pakeista produktų :" + " " + countAffectedProducts + "\n" +
                 "Excel'yje yra produktų : " + countExcelProducts + "\n" +
                 "Pridėta naujų produktų : " + countNewProducts + "\n" +
-                "Duombazėje nepakeistų produktų : " + countDBProduducts);
+                "Duombazėje nepakeistų produktų : " + countDBProducts);
         final Popup popup = new Popup();
         Button hide = new Button("Ok");
         hide.setOnAction(event -> popup.hide());
@@ -653,12 +655,11 @@ public class DashboardController extends Main implements Initializable {
         label.setMinHeight(150);
         label.setAlignment(Pos.CENTER);
         popup.getContent().addAll(label, hide);
-//        if (countAffectedProducts > 0) {
-            popup.show(parent);
-//        }
+        popup.show(parent);
 
     }
 
+    //Konfiguriuoja failo pasirinkimus
     private static void configureFileChooser(
             final FileChooser fileChooser) {
         fileChooser.setTitle("Uzkrauti excel faila");
@@ -670,23 +671,16 @@ public class DashboardController extends Main implements Initializable {
         );
     }
 
-    /**
-     * NUO CIA PRASIDEDA AKTYVAUS FILTRAVIMO KODAS
-     */
-
-    public TitledPane leftTitledPane;
-    TreeView<CategoryItem> treeView = new TreeView<>();
-
-
+    //Sukuria vbox elementą, kuriame ir yra treeView su filtravimo funkcija.
     public void createContents() {
         VBox vBoxElement = new VBox(6);
         vBoxElement.getChildren().add(createFilterPane());
-        Node demoPane = createDemoPane();
-        VBox.setVgrow(demoPane, Priority.ALWAYS);
-        vBoxElement.getChildren().add(demoPane);
+        Node pane = createPane();
+        VBox.setVgrow(pane, Priority.ALWAYS);
+        vBoxElement.getChildren().add(pane);
     }
 
-
+    //Redaguoja ir sujungia titled pane su text field.
     private Node createFilterPane() {
         treeViewSearchField.setPromptText("Įveskite kategorijos pavadinimą filtravimui ...");
         TitledPane pane = new TitledPane("Filter", treeViewSearchField);
@@ -694,7 +688,8 @@ public class DashboardController extends Main implements Initializable {
         return pane;
     }
 
-    private Node createDemoPane() {
+    //Sukuria hbox elementą, kuris laiko treeview.
+    private Node createPane() {
         HBox hBoxElement = new HBox(6);
         Node filteredTree = createFilteredTree();
         HBox.setHgrow(filteredTree, Priority.ALWAYS);
@@ -703,6 +698,7 @@ public class DashboardController extends Main implements Initializable {
         return new BorderPane(hBoxElement);
     }
 
+    //Sukuria treeview su filtravimu.
     private Node createFilteredTree() {
         FilterableTreeItem<CategoryItem> root = loadsProductsToCatalogTree();
         root.predicateProperty().bind(Bindings.createObjectBinding(() -> {
@@ -710,34 +706,46 @@ public class DashboardController extends Main implements Initializable {
                 return null;
             return TreeItemPredicate.create(categoryItem -> categoryItem.toString().toLowerCase().contains(treeViewSearchField.getText().toLowerCase()));
         }, treeViewSearchField.textProperty()));
-
         treeView.setRoot(root);
         treeView.setShowRoot(false);
-        treeView.addEventFilter(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
-            ObservableList<ProductCatalog> filteredProduct = FXCollections.observableArrayList();
-            TreeItem<CategoryItem> item = treeView.getSelectionModel().getSelectedItem();
-            List<Categories> categories = CategoriesDAO.selectCategory(item.getValue().getName());
-            List<ProductCatalog> products = ProductCatalogDAO.displayAllItems();
-            int number = 0;
-            for (Categories category : categories) {
-                for (ProductCatalog product : products) {
-                    if (category.getId() == product.getGroupId()) {
-                        number++;
-                        filteredProduct.add(product);
-                    }
-                }
-            }
-            tableSearchFunction(filteredProduct);
-            countAll.setText("Išviso įrašų : " + number);
-        });
+        mouseEventForTreeView();
         return treeView;
     }
 
-
+    //Sukuria filtruojama treeview item.
     private FilterableTreeItem<CategoryItem> createFolder(String name) {
-
-
         return new FilterableTreeItem<>(new CategoryItem(name));
+    }
+
+    //Filtruoja treeviewitem ,kad sutaptu su duombazės pavadinimų.
+    public String homeFilter(String itemName) {
+        if (itemName.equals("Visos kategorijos")) {
+            return "Home";
+        }
+        return itemName;
+    }
+
+    //Surenka visus produktus turiunčius pasirinktos kategorijos id
+    public ObservableList<ProductCatalog> createFilteredList(List<Categories> categories, List<ProductCatalog> products) {
+        ObservableList<ProductCatalog> filteredProduct = FXCollections.observableArrayList();
+        for (Categories category : categories) {
+            for (ProductCatalog product : products) {
+                if (category.getId() == product.getGroupId()) {
+                    filteredProduct.add(product);
+                }
+            }
+        }
+        return filteredProduct;
+    }
+
+    //Paspaudus ant treeView item'o, table'ę atsiras visi jam priskirti produktai.
+    public void mouseEventForTreeView() {
+        treeView.addEventFilter(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
+            TreeItem<CategoryItem> item = treeView.getSelectionModel().getSelectedItem();
+            List<Categories> categories = CategoriesDAO.selectCategory(homeFilter(item.getValue().getName()));
+            List<ProductCatalog> products = ProductCatalogDAO.displayAllItems();
+            tableSearchFunction(createFilteredList(categories, products));
+        });
     }
 
 
