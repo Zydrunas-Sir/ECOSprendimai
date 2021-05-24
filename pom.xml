@@ -47,7 +47,11 @@
             <artifactId>poi</artifactId>
             <version>3.13</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.mindrot</groupId>
+            <artifactId>jbcrypt</artifactId>
+            <version>0.3m</version>
+        </dependency>
         <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi-ooxml</artifactId>
@@ -62,5 +66,4 @@
         </dependency>
 
     </dependencies>
-
 </project>
