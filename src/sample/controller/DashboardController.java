@@ -3,10 +3,7 @@ package sample.controller;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -36,7 +33,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
-import java.util.Locale;
 import java.util.ResourceBundle;
 
 import org.eclipse.fx.ui.controls.tree.FilterableTreeItem;
@@ -48,8 +44,10 @@ public class DashboardController extends Main implements Initializable {
     @FXML
     private TableView table;
     public Button open_file;
-    public TextField paieskosLaukelis;
+    public TextField searchField;
     public Label countAll;
+    public static Label session_user_name;
+
 
 
 
@@ -57,7 +55,7 @@ public class DashboardController extends Main implements Initializable {
         try {
             Parent root = FXMLLoader.load(getClass().getResource(Constants.LOGIN_VIEW_DIRECTORY_PATH));
             Stage LoginStage = new Stage();
-            Scene scene = new Scene(root, Constants.LOGIN_REGISTER_WINDOW_WIDTH, Constants.LOGIN_REGISTER_WINDOW_HEIGHT);
+            Scene scene = new Scene(root, Constants.LOGIN_WINDOW_WIDTH, Constants.LOGIN_WINDOW_HEIGHT);
             scene.getStylesheets().add(getClass().getResource(Constants.CSS_DIRECTORY_PATH).toExternalForm());
             LoginStage.setTitle("");
             LoginStage.setScene(scene);
@@ -568,22 +566,22 @@ public class DashboardController extends Main implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         loadColumnToTable();
         createContents();
+
     }
 
+
+    //Opens file search window and choose a file
     public void openExcelFileFromDialog() {
         final FileChooser fileChooser = new FileChooser();
-        open_file.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(final ActionEvent e) {
+
+        //TODO:Bug: Button one time click (Complete)
+
                 configureFileChooser(fileChooser);
                 File file = fileChooser.showOpenDialog(new Stage());
                 if (file != null) {
                     openFile(file);
                 }
             }
-        });
-
-    }
 
     private void openFile(File file) {
 
@@ -683,8 +681,8 @@ public class DashboardController extends Main implements Initializable {
 
 
     private Node createFilterPane() {
-        paieskosLaukelis.setPromptText("Įveskite kategorijos pavadinimą filtravimui ...");
-        TitledPane pane = new TitledPane("Filter", paieskosLaukelis);
+        searchField.setPromptText("Įveskite kategorijos pavadinimą filtravimui ...");
+        TitledPane pane = new TitledPane("Filter", searchField);
         pane.setCollapsible(false);
         return pane;
     }
@@ -701,10 +699,10 @@ public class DashboardController extends Main implements Initializable {
     private Node createFilteredTree() {
         FilterableTreeItem<CategoryItem> root = loadsProductsToCatalogTree();
         root.predicateProperty().bind(Bindings.createObjectBinding(() -> {
-            if (paieskosLaukelis.getText() == null || paieskosLaukelis.getText().isEmpty())
+            if (searchField.getText() == null || searchField.getText().isEmpty())
                 return null;
-            return TreeItemPredicate.create(categoryItem -> categoryItem.toString().toLowerCase().contains(paieskosLaukelis.getText().toLowerCase()));
-        }, paieskosLaukelis.textProperty()));
+            return TreeItemPredicate.create(categoryItem -> categoryItem.toString().toLowerCase().contains(searchField.getText().toLowerCase()));
+        }, searchField.textProperty()));
 
         treeView.setRoot(root);
         treeView.setShowRoot(false);

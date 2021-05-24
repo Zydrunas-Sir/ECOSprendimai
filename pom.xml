@@ -54,6 +54,11 @@
             <version>3.13</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.mindrot</groupId>
+            <artifactId>jbcrypt</artifactId>
+            <version>0.3m</version>
+        </dependency>
         <!-- https://mvnrepository.com/artifact/at.bestsolution.eclipse/org.eclipse.fx.ui.controls -->
         <dependency>
             <groupId>at.bestsolution.eclipse</groupId>

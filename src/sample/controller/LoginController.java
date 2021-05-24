@@ -8,6 +8,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import org.mindrot.jbcrypt.BCrypt;
+import sample.JPA.User;
+import sample.JPA.UserDAO;
 import sample.utils.Constants;
 import sample.utils.Validation;
 
@@ -15,20 +18,53 @@ public class LoginController {
 
     public Button username_button;
     public Label login_info_label;
-    public TextField username_textfield;
+    public TextField email_textfield;
     public PasswordField password_passwordfield;
     public Button register_button;
     public Button dashboard_button;
-    public Stage dashboardStage = new Stage();
+
 
     public void login() {
-        if (Validation.isValidUsername(username_textfield.getText()) && Validation.isValidPassword(password_passwordfield.getText())) {
-            login_info_label.setStyle("-fx-text-fill: green;");
-            login_info_label.setText("Prisijungimo vardas : " + username_textfield.getText() + "\n Slaptazodis : " + password_passwordfield.getText());
-            goTodashboard();
+        if (!email_textfield.getText().isEmpty()   //If text field filled returns false
+                && !password_passwordfield.getText().isEmpty()) {
+
+
+            if (Validation.isValidEmail(email_textfield.getText()) && Validation.isValidPassword(password_passwordfield.getText())) {
+
+
+                //Comparing two objects (email)
+                //If email from text field equals email from database
+                //Go to dashboard
+                //TODO: Do encryption and decryption
+                //TODO: Finish validation compare passwords
+
+                //Getting list from UserDAO class with credentials of password and username
+                User credentials = UserDAO.searchUserByEmail(email_textfield.getText());
+
+
+                //checking password is it match
+
+                try {
+                    assert credentials != null;
+                    if (checkPass(password_passwordfield.getText(), credentials.getPassword())) {
+                        goTodashboard();
+                    } else if (!checkPass(password_passwordfield.getText(), credentials.getPassword())) {
+
+                        login_info_label.setStyle("-fx-text-fill: red;");
+                        login_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT);
+                    }
+                } catch (NullPointerException npe) {
+                    login_info_label.setStyle("-fx-text-fill: red;");
+                    login_info_label.setText(Constants.EMAIL_NOT_EXIST);
+                }
+
+            } else {
+                login_info_label.setStyle("-fx-text-fill: red;");
+                login_info_label.setText(Constants.CREDENTIALS_EMAIL_AND_PASSWORD_NOT_CORRECT);
+            }
         } else {
             login_info_label.setStyle("-fx-text-fill: red;");
-            login_info_label.setText("Blogai įvestas prisijungimo vardas arba slaptažodis");
+            login_info_label.setText(Constants.CREDENTIALS_IS_NOT_FILLED);
         }
     }
 
@@ -41,10 +77,11 @@ public class LoginController {
         try {
             Parent root = FXMLLoader.load(getClass().getResource(Constants.REGISTER_VIEW_DIRECTORY_PATH));
             Stage registerStage = new Stage();
-            Scene scene = new Scene(root, Constants.LOGIN_REGISTER_WINDOW_WIDTH, Constants.LOGIN_REGISTER_WINDOW_HEIGHT);
+            Scene scene = new Scene(root, Constants.REGISTER_WINDOW_WIDTH, Constants.REGISTER_WINDOW_HEIGHT);
             scene.getStylesheets().add(getClass().getResource(Constants.CSS_DIRECTORY_PATH).toExternalForm());
             registerStage.setTitle("Registracija");
             registerStage.setScene(scene);
+            registerStage.setResizable(false);
             registerStage.show();
             windowCloseLoginButton();
 
@@ -54,7 +91,7 @@ public class LoginController {
         }
     }
 
-    public void goTodashboard(){
+    public void goTodashboard() {
         try {
             Parent root = FXMLLoader.load(getClass().getResource(Constants.DASHBOARD_VIEW_DIRECTORY_PATH));
             Stage dashboardStage = new Stage();
@@ -72,5 +109,17 @@ public class LoginController {
         }
     }
 
+    /**
+     * @param hashedPassword is encrypted password
+     * @param plainPassword  password witch declared in password field
+     */
+    public static boolean checkPass(String plainPassword, String hashedPassword) {
+        if (BCrypt.checkpw(plainPassword, hashedPassword)) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
 
 }

@@ -1,5 +1,7 @@
 package sample.JPA;
 
+import sample.JPAUtil;
+
 import javax.persistence.*;
 import java.util.List;
 
