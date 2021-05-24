@@ -26,4 +26,8 @@ public class Constants {
     public static final String PASSWORD_IS_NOT_EQUAL = "Įvesti slaptažodžiai nesutampa.";
     public static final String CREDENTIALS_IS_NOT_FILLED = "Visi laukeliai privalo būti užpildyti.";
     public static final String CREDENTIALS_EMAIL_AND_PASSWORD_NOT_CORRECT = "Blogai įvestas el.paštas arba slaptažodis";
+
+    public static final String DB_URL = "jdbc:mysql://localhost:3306/ecosprendimai";
+    public static final String USER = "root";
+    public static final String PASS = "";
 }

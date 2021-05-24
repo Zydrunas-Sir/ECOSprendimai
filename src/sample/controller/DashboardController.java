@@ -59,7 +59,7 @@ public class DashboardController extends Main implements Initializable {
         try {
             Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(Constants.LOGIN_VIEW_DIRECTORY_PATH)));
             Stage LoginStage = new Stage();
-            Scene scene = new Scene(root, Constants.LOGIN_REGISTER_WINDOW_WIDTH, Constants.LOGIN_REGISTER_WINDOW_HEIGHT);
+            Scene scene = new Scene(root, Constants.LOGIN_WINDOW_WIDTH, Constants.LOGIN_WINDOW_HEIGHT);
             scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource(Constants.CSS_DIRECTORY_PATH)).toExternalForm());
             LoginStage.setTitle("");
             LoginStage.setScene(scene);
@@ -513,20 +513,20 @@ public class DashboardController extends Main implements Initializable {
     public void loadColumnToTable() {
 
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-
+        // pakeisti lietuviskai kategorijos numeri, produkto pavadinimas, kaina, kiekis.
         TableColumn number = new TableColumn("#");
-        TableColumn catalogNo = new TableColumn("catalogNo");
-        TableColumn symbol = new TableColumn("symbol");
-        TableColumn priceNet = new TableColumn("priceNet");
-        TableColumn stock = new TableColumn("stock");
+        TableColumn catalogNo = new TableColumn("Kategorijos nr.");
+        TableColumn symbol = new TableColumn("Produkto pavadinimas");
+        TableColumn priceNet = new TableColumn("Kaina");
+        TableColumn stock = new TableColumn("Kiekis");
 
         table.getColumns().addAll(number, catalogNo, symbol, priceNet, stock);
 
-        number.minWidthProperty().bind(table.widthProperty().multiply(0.06));
-        catalogNo.minWidthProperty().bind(table.widthProperty().multiply(0.14));
+        number.minWidthProperty().bind(table.widthProperty().multiply(0.05));
+        catalogNo.minWidthProperty().bind(table.widthProperty().multiply(0.17));
         symbol.minWidthProperty().bind(table.widthProperty().multiply(0.52));
-        priceNet.minWidthProperty().bind(table.widthProperty().multiply(0.1));
-        stock.minWidthProperty().bind(table.widthProperty().multiply(0.1));
+        priceNet.minWidthProperty().bind(table.widthProperty().multiply(0.09));
+        stock.minWidthProperty().bind(table.widthProperty().multiply(0.09));
 
         number.setCellValueFactory((Callback<TableColumn.CellDataFeatures<ProductCatalog, ProductCatalog>, ObservableValue<ProductCatalog>>) p -> new ReadOnlyObjectWrapper(p.getValue()));
 
@@ -572,14 +572,12 @@ public class DashboardController extends Main implements Initializable {
     //Iš excel failo pasiema produktus.
     public void openExcelFileFromDialog() {
         final FileChooser fileChooser = new FileChooser();
-        open_file.setOnAction(e -> {
-            configureFileChooser(fileChooser);
-            File file = fileChooser.showOpenDialog(new Stage());
-            if (file != null) {
-                JOptionPane.showMessageDialog(null, "Prašome palaukti. Nuskaitomas Excel Failas: " + file.getName());
-                openFile(file);
-            }
-        });
+        configureFileChooser(fileChooser);
+        File file = fileChooser.showOpenDialog(new Stage());
+        if (file != null) {
+            JOptionPane.showMessageDialog(null, "Prašome palaukti. Nuskaitomas Excel Failas: " + file.getName());
+            openFile(file);
+        }
     }
 
     //Sukelia observablelistą į table'ą su filtravimo funkciją.
