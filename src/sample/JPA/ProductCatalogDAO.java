@@ -80,7 +80,7 @@ public class ProductCatalogDAO {
     }
 
 
-    public static void updateByCatalog_no(double price, int id) {
+    public static void updatePrice(double price, int id) {
 
         EntityManager entityManager;
         EntityTransaction entityTransaction;
@@ -104,6 +104,83 @@ public class ProductCatalogDAO {
             System.out.println("ProductCaalogDAO.updateByCatalog_no PersistenceException");
         }
     }
+
+    public static void updateCatalog_no(int catalog_no, int id) {
+
+        EntityManager entityManager;
+        EntityTransaction entityTransaction;
+        ProductCatalog productCatalog1;
+
+        try {
+            entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
+            entityTransaction = entityManager.getTransaction();
+            entityTransaction.begin();
+            productCatalog1 = entityManager.find(ProductCatalog.class, id);
+            productCatalog1.setCatalogNo(catalog_no);
+            entityManager.getTransaction().commit();
+            entityManager.close();
+        } catch (IllegalStateException e) {
+            System.out.println("ProductCaalogDAO.updateByCatalog_no IllegalStateException");
+        } catch (JDBCConnectionException e) {
+            System.out.println("ProductCaalogDAO.updateByCatalog_no JDBCConnectionException");
+        } catch (ServiceException e) {
+            System.out.println("ProductCaalogDAO.updateByCatalog_no ServiceException");
+        } catch (PersistenceException e) {
+            System.out.println("ProductCaalogDAO.updateByCatalog_no PersistenceException");
+        }
+    }
+
+    public static void updateStock(int stock, int id) {
+
+        EntityManager entityManager;
+        EntityTransaction entityTransaction;
+        ProductCatalog productCatalog1;
+
+        try {
+            entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
+            entityTransaction = entityManager.getTransaction();
+            entityTransaction.begin();
+            productCatalog1 = entityManager.find(ProductCatalog.class, id);
+            productCatalog1.setStock(stock);
+            entityManager.getTransaction().commit();
+            entityManager.close();
+        } catch (IllegalStateException e) {
+            System.out.println("ProductCaalogDAO.updateByCatalog_no IllegalStateException");
+        } catch (JDBCConnectionException e) {
+            System.out.println("ProductCaalogDAO.updateByCatalog_no JDBCConnectionException");
+        } catch (ServiceException e) {
+            System.out.println("ProductCaalogDAO.updateByCatalog_no ServiceException");
+        } catch (PersistenceException e) {
+            System.out.println("ProductCaalogDAO.updateByCatalog_no PersistenceException");
+        }
+    }
+
+    public static void updateSymbol(String symbol, int id) {
+
+        EntityManager entityManager;
+        EntityTransaction entityTransaction;
+        ProductCatalog productCatalog1;
+
+        try {
+            entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
+            entityTransaction = entityManager.getTransaction();
+            entityTransaction.begin();
+            productCatalog1 = entityManager.find(ProductCatalog.class, id);
+            productCatalog1.setSymbol(symbol);
+            entityManager.getTransaction().commit();
+            entityManager.close();
+        } catch (IllegalStateException e) {
+            System.out.println("ProductCaalogDAO.updateByCatalog_no IllegalStateException");
+        } catch (JDBCConnectionException e) {
+            System.out.println("ProductCaalogDAO.updateByCatalog_no JDBCConnectionException");
+        } catch (ServiceException e) {
+            System.out.println("ProductCaalogDAO.updateByCatalog_no ServiceException");
+        } catch (PersistenceException e) {
+            System.out.println("ProductCaalogDAO.updateByCatalog_no PersistenceException");
+        }
+    }
+
+
 
     public static List<ProductCatalog> searchByTreeItemName(String treeItemSearchName) {
         treeItemSearchName = "%" + treeItemSearchName + "%";

@@ -8,6 +8,7 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -20,6 +21,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.FileChooser;
@@ -28,6 +30,8 @@ import javafx.stage.Stage;
 
 import javafx.stage.Window;
 import javafx.util.Callback;
+import javafx.util.converter.DoubleStringConverter;
+import javafx.util.converter.IntegerStringConverter;
 import sample.JPA.*;
 import sample.Main;
 import sample.utils.Constants;
@@ -512,13 +516,14 @@ public class DashboardController extends Main implements Initializable {
     //Nusako table'o stulpelius ir jų matmenys.
     public void loadColumnToTable() {
 
+        table.setEditable(true);
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         // pakeisti lietuviskai kategorijos numeri, produkto pavadinimas, kaina, kiekis.
         TableColumn number = new TableColumn("#");
-        TableColumn catalogNo = new TableColumn("Kategorijos nr.");
-        TableColumn symbol = new TableColumn("Produkto pavadinimas");
-        TableColumn priceNet = new TableColumn("Kaina");
-        TableColumn stock = new TableColumn("Kiekis");
+        TableColumn<ProductCatalog, Integer> catalogNo = new TableColumn<>("Kategorijos nr.");
+        TableColumn<ProductCatalog, String> symbol = new TableColumn<>("Produkto pavadinimas");
+        TableColumn<ProductCatalog, Double> priceNet = new TableColumn<>("Kaina");
+        TableColumn<ProductCatalog, Integer> stock = new TableColumn<>("Kiekis");
 
         table.getColumns().addAll(number, catalogNo, symbol, priceNet, stock);
 
@@ -548,10 +553,30 @@ public class DashboardController extends Main implements Initializable {
             }
         });
         number.setSortable(false);
-        catalogNo.setCellValueFactory(new PropertyValueFactory<ProductCatalog, String>("catalogNo"));
-        symbol.setCellValueFactory(new PropertyValueFactory<ProductCatalog, String>("symbol"));
-        priceNet.setCellValueFactory(new PropertyValueFactory<ProductCatalog, String>("priceNet"));
-        stock.setCellValueFactory(new PropertyValueFactory<ProductCatalog, String>("stock"));
+        catalogNo.setCellValueFactory(new PropertyValueFactory<>("catalogNo"));
+        symbol.setCellValueFactory(new PropertyValueFactory<>("symbol"));
+        symbol.setCellFactory(TextFieldTableCell.forTableColumn());
+        symbol.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<ProductCatalog, String>>() {
+            @Override
+            public void handle(TableColumn.CellEditEvent<ProductCatalog, String> event) {
+                ProductCatalog productCatalog = event.getRowValue();
+                productCatalog.setSymbol(event.getNewValue());
+                ProductCatalogDAO.updateSymbol(event.getNewValue(), productCatalog.getId());
+            }
+        });
+        priceNet.setCellValueFactory(new PropertyValueFactory<>("priceNet"));
+        priceNet.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
+        priceNet.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<ProductCatalog, Double>>() {
+            @Override
+            public void handle(TableColumn.CellEditEvent<ProductCatalog, Double> event) {
+                ProductCatalog productCatalog = event.getRowValue();
+                productCatalog.setPriceNet(event.getNewValue());
+                ProductCatalogDAO.updatePrice(event.getNewValue(), productCatalog.getId());
+            }
+        });
+        stock.setCellValueFactory(new PropertyValueFactory<>("stock"));
+
+
 
         number.setResizable(true);
         catalogNo.setResizable(true);
@@ -621,7 +646,7 @@ public class DashboardController extends Main implements Initializable {
             for (ProductCatalog dbProduct : dbProducts) {
                 if (dbProduct.getPriceNet() != excelProduct.getPriceNet() && dbProduct.getCatalogNo() == excelProduct.getCatalogNo()) {
                     isNewProduct = false;
-                    ProductCatalogDAO.updateByCatalog_no(excelProduct.getPriceNet(), dbProduct.getId());
+                    ProductCatalogDAO.updatePrice(excelProduct.getPriceNet(), dbProduct.getId());
                     countAffectedProducts++;
                 } else if (dbProduct.getPriceNet() == excelProduct.getPriceNet() && dbProduct.getCatalogNo() == excelProduct.getCatalogNo()) {
                     isNewProduct = false;
@@ -726,7 +751,7 @@ public class DashboardController extends Main implements Initializable {
         return itemName;
     }
 
-    //Surenka visus produktus turiunčius pasirinktos kategorijos id
+    //Surenka visus produktus turinčius pasirinktos kategorijos id
     public ObservableList<ProductCatalog> createFilteredList(List<Categories> categories, List<ProductCatalog> products) {
         ObservableList<ProductCatalog> filteredProduct = FXCollections.observableArrayList();
         for (Categories category : categories) {
