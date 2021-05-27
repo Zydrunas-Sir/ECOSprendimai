@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 12, 2021 at 01:57 PM
+-- Generation Time: May 27, 2021 at 11:35 AM
 -- Server version: 10.4.18-MariaDB
 -- PHP Version: 8.0.3
 
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `task`
+-- Database: `ecosprendimai`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Categories`
+-- Table structure for table `categories`
 --
 
 CREATE TABLE `categories` (
@@ -35,14 +35,14 @@ CREATE TABLE `categories` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `Categories`
+-- Dumping data for table `categories`
 --
 
-INSERT INTO `Categories` (`id`, `lft`, `name`, `rght`) VALUES
+INSERT INTO `categories` (`id`, `lft`, `name`, `rght`) VALUES
 (1, 1, 'Home', 260),
 (2, 2, 'Skydai', 27),
 (3, 3, 'Lauko skydai', 4),
-(4, 5, 'Vidaus skydai', 24),
+(4, 5, 'Vidaus skydai', 26),
 (5, 6, 'Metalinės dėžės', 7),
 (6, 8, 'Potinkiniai skydeliai', 13),
 (7, 9, 'Metaliniai', 10),
@@ -100,7 +100,7 @@ INSERT INTO `Categories` (`id`, `lft`, `name`, `rght`) VALUES
 (59, 115, 'Lauko', 130),
 (60, 116, 'APE', 117),
 (61, 118, 'Gofros', 125),
-(62, 119, '450N', 112),
+(62, 119, '450N', 120),
 (63, 121, '750N', 122),
 (64, 123, '1250N', 124),
 (65, 126, 'Prakalimo vamzdis', 127),
@@ -128,7 +128,7 @@ INSERT INTO `Categories` (`id`, `lft`, `name`, `rght`) VALUES
 (87, 170, 'Šildymo įranga', 171),
 (88, 173, 'Judesio ir būvio jutikliai', 186),
 (89, 174, 'Judesio', 179),
-(90, 175, 'virštinkiniai', 176),
+(90, 175, 'Virštinkiniai', 176),
 (91, 177, 'Potinkiniai', 178),
 (92, 180, 'Būvio', 185),
 (93, 181, 'virštinkiniai', 182),
@@ -175,9 +175,9 @@ INSERT INTO `Categories` (`id`, `lft`, `name`, `rght`) VALUES
 --
 
 --
--- Indexes for table `Categories`
+-- Indexes for table `categories`
 --
-ALTER TABLE `Categories`
+ALTER TABLE `categories`
   ADD PRIMARY KEY (`id`);
 COMMIT;
 
