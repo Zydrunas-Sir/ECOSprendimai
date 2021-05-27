@@ -157,6 +157,8 @@ public class DashboardController extends Main implements Initializable {
         FilterableTreeItem<CategoryItem> kontroliniaiKabeliai = createFolder("Kontroliniai kabeliai");
         FilterableTreeItem<CategoryItem> laidai = createFolder("Laidai");
         FilterableTreeItem<CategoryItem> internetiniaiKabeliai = createFolder("Internetinai kabeliai");
+        FilterableTreeItem<CategoryItem> antgaliaiKabeliui = createFolder("Antgaliai kabeliui");
+        FilterableTreeItem<CategoryItem> movosKabeliui = createFolder("Movos kabeliui");
 
         //Vamzdžiai ir gofra
         FilterableTreeItem<CategoryItem> lauko = createFolder("Lauko");
@@ -191,7 +193,9 @@ public class DashboardController extends Main implements Initializable {
 
         //Elektromechanika
         FilterableTreeItem<CategoryItem> automatiniaiJungikliai = createFolder("Automatiniai jungikliai");
-        FilterableTreeItem<CategoryItem> relės = createFolder("Relės");
+        FilterableTreeItem<CategoryItem> srovesNuotekioReles = createFolder("Srovės nuotekio relės");
+        FilterableTreeItem<CategoryItem> srovesNuotekioRelesKartuSuAutomatiniuJungikliu = createFolder("Srovės nuotekio relės kartu su automatiniu jungikliu");
+        FilterableTreeItem<CategoryItem> valdymoReles = createFolder("Valdymo relės");
         FilterableTreeItem<CategoryItem> kontaktoriai = createFolder("Kontaktoriai");
         FilterableTreeItem<CategoryItem> kirtikliai = createFolder("Kirtikliai");
         FilterableTreeItem<CategoryItem> moduliniaiJungikliai = createFolder("Moduliniai jungikliai");
@@ -212,6 +216,8 @@ public class DashboardController extends Main implements Initializable {
         kabeliai.getInternalChildren().add(kontroliniaiKabeliai);
         kabeliai.getInternalChildren().add(laidai);
         kabeliai.getInternalChildren().add(internetiniaiKabeliai);
+        kabeliai.getInternalChildren().add(antgaliaiKabeliui);
+        kabeliai.getInternalChildren().add(movosKabeliui);
 
         //VamzdziaiIrGofra add
         vamzdziaiIrGofra.getInternalChildren().add(lauko);
@@ -244,7 +250,9 @@ public class DashboardController extends Main implements Initializable {
 
         //Elektromechanika add
         elektromechanika.getInternalChildren().add(automatiniaiJungikliai);
-        elektromechanika.getInternalChildren().add(relės);
+        elektromechanika.getInternalChildren().add(srovesNuotekioReles);
+        elektromechanika.getInternalChildren().add(srovesNuotekioRelesKartuSuAutomatiniuJungikliu);
+        elektromechanika.getInternalChildren().add(valdymoReles);
         elektromechanika.getInternalChildren().add(kontaktoriai);
         elektromechanika.getInternalChildren().add(kirtikliai);
         elektromechanika.getInternalChildren().add(moduliniaiJungikliai);
@@ -362,26 +370,36 @@ public class DashboardController extends Main implements Initializable {
         //Kabeliai - Jėgos kabeliai
         FilterableTreeItem<CategoryItem> nyyj = createFolder("NYY-J");
         FilterableTreeItem<CategoryItem> cykyj = createFolder("CYKY-J");
+        FilterableTreeItem<CategoryItem> r2vSuXLPE = createFolder("R2v su XLPE");
 
         //Kabeliai - Jėgos kabeliai add
         jegosKabeliai.getInternalChildren().add(nyyj);
         jegosKabeliai.getInternalChildren().add(cykyj);
+        jegosKabeliai.getInternalChildren().add(r2vSuXLPE);
 
         //Kabeliai - Behalogeniniai kabeliai
+        FilterableTreeItem<CategoryItem> dca = createFolder("Dca");
         FilterableTreeItem<CategoryItem> cca = createFolder("Cca");
         FilterableTreeItem<CategoryItem> b2ca = createFolder("B2ca");
+        FilterableTreeItem<CategoryItem> ekranuotasB2ca = createFolder("Ekranuotas B2ca");
+        FilterableTreeItem<CategoryItem> nedegusKabelis = createFolder("Nedegus kabelis");
 
         //Kabeliai - Behalogeniniai kabeliai add
+        behalogeniniaiKabeliai.getInternalChildren().add(dca);
         behalogeniniaiKabeliai.getInternalChildren().add(cca);
         behalogeniniaiKabeliai.getInternalChildren().add(b2ca);
+        behalogeniniaiKabeliai.getInternalChildren().add(ekranuotasB2ca);
+        behalogeniniaiKabeliai.getInternalChildren().add(nedegusKabelis);
 
         //Kabeliai - Internetinai kabeliai
         FilterableTreeItem<CategoryItem> cat5 = createFolder("Cat5");
         FilterableTreeItem<CategoryItem> cat6 = createFolder("Cat6");
+        FilterableTreeItem<CategoryItem> cat6a = createFolder("Cat6a");
 
         //Kabeliai - Internetinai kabeliai add
         internetiniaiKabeliai.getInternalChildren().add(cat5);
         internetiniaiKabeliai.getInternalChildren().add(cat6);
+        internetiniaiKabeliai.getInternalChildren().add(cat6a);
 
         //Kabeliai - Internetinai kabeliai - cat5
         FilterableTreeItem<CategoryItem> cat5utp = createFolder("UTP");
@@ -445,6 +463,15 @@ public class DashboardController extends Main implements Initializable {
         vGofros.getInternalChildren().add(vG320N);
         vGofros.getInternalChildren().add(vG750N);
 
+        //Vamzdžiai ir gofra - vidaus - Behalogeninės gofros
+        FilterableTreeItem<CategoryItem> bg320N = createFolder("320N");
+        FilterableTreeItem<CategoryItem> bg750N = createFolder("750N");
+
+        //Vamzdžiai ir gofra - vidaus - Behalogeninės gofros add
+        behalogeninėsGofros.getInternalChildren().add(bg320N);
+        behalogeninėsGofros.getInternalChildren().add(bg750N);
+
+
         //Instaliacinės prekės - Jungikliai ir kištukiniai lizdai
         FilterableTreeItem<CategoryItem> potinkiniaiJungikliai = createFolder("Potinkiniai jungikliai ir kištukiniai lizdai");
         FilterableTreeItem<CategoryItem> virstinkiniaiJungikliai = createFolder("Virštinkiniai jungikliai ir kištukiniai lizdai");
@@ -455,6 +482,15 @@ public class DashboardController extends Main implements Initializable {
         jungikliaiIrKistukiniaiLizdai.getInternalChildren().add(virstinkiniaiJungikliai);
         jungikliaiIrKistukiniaiLizdai.getInternalChildren().add(pramoniniaiLizdai);
 
+        //Instaliacinės prekės - Jungikliai ir kištukiniai lizdai - Virštinkiniai jungikliai ir kištukiniai lizdai
+        FilterableTreeItem<CategoryItem> ip20 = createFolder("IP20");
+        FilterableTreeItem<CategoryItem> ip44 = createFolder("IP44");
+
+        //Instaliacinės prekės - Jungikliai ir kištukiniai lizdai - Virštinkiniai jungikliai ir kištukiniai lizdai add
+        virstinkiniaiJungikliai.getInternalChildren().add(ip20);
+        virstinkiniaiJungikliai.getInternalChildren().add(ip44);
+
+
         //Instaliacinės prekės - Potinkinės dėžutės
         FilterableTreeItem<CategoryItem> muroDezute = createFolder("Dėžutė į mūrą");
         FilterableTreeItem<CategoryItem> gipsoDezute = createFolder("Dėžutė į gipsą");
@@ -462,6 +498,7 @@ public class DashboardController extends Main implements Initializable {
         //Instaliacinės prekės - Potinkinės dėžutės add
         potinkinesDezutes.getInternalChildren().add(muroDezute);
         potinkinesDezutes.getInternalChildren().add(gipsoDezute);
+
         //Instaliacinės prekės - Šildymo elementai
         FilterableTreeItem<CategoryItem> sildymoKilimėliai = createFolder("Šildymo kilimėliai");
         FilterableTreeItem<CategoryItem> sildymoKabeliai = createFolder("Šildymo kabeliai");
