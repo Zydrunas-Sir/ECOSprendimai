@@ -21,30 +21,36 @@
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="330.0" prefWidth="403.0">
                     <children>
                         <Label layoutX="21.0" layoutY="14.0" prefHeight="17.0" prefWidth="77.0" text="Kat. numeris :" />
-                        <Label layoutX="114.0" layoutY="14.0" prefHeight="17.0" prefWidth="90.0" style="-fx-font-weight: bold;" text="0" />
+                        <Label fx:id="catalogNo" layoutX="114.0" layoutY="14.0" prefHeight="17.0" prefWidth="90.0" style="-fx-font-weight: bold;" text="0" />
                         <Label layoutX="21.0" layoutY="85.0" prefHeight="17.0" prefWidth="94.0" text="Kaina :" />
                         <Label layoutX="21.0" layoutY="123.0" prefHeight="17.0" prefWidth="109.0" text="Kaina su nuolaida :" />
                         <Label layoutX="21.0" layoutY="104.0" prefHeight="17.0" prefWidth="84.0" text="Nuolaida :" />
-                        <Label layoutX="21.0" layoutY="151.0" prefHeight="17.0" prefWidth="101.0" text="Teikimo terminas :" />
+                        <Label layoutX="21.0" layoutY="151.0" prefHeight="17.0" prefWidth="101.0" text="Tiekimo terminas :" />
                         <Label layoutX="21.0" layoutY="187.0" prefHeight="17.0" prefWidth="112.0" text="Minimalus kiekis :" />
                         <Label layoutX="21.0" layoutY="204.0" prefHeight="17.0" prefWidth="107.0" text="Nuolaidų grupė :" />
                         <Label layoutX="21.0" layoutY="221.0" prefHeight="17.0" prefWidth="118.0" text="Produktų šeima :" />
-                        <Label layoutX="157.0" layoutY="85.0" prefHeight="17.0" prefWidth="30.0" style="-fx-font-weight: bold;" text="0" />
-                        <Label layoutX="21.0" layoutY="247.0" prefHeight="17.0" prefWidth="85.0" text="EAN kodas :" />
-                        <Label layoutX="157.0" layoutY="104.0" prefHeight="17.0" prefWidth="30.0" style="-fx-font-weight: bold;" text="0" />
-                        <Label layoutX="157.0" layoutY="123.0" prefHeight="17.0" prefWidth="30.0" style="-fx-font-weight: bold;" text="0" />
-                        <Label layoutX="157.0" layoutY="151.0" prefHeight="17.0" prefWidth="30.0" style="-fx-font-weight: bold;" text="0" />
-                        <Label layoutX="157.0" layoutY="168.0" prefHeight="17.0" prefWidth="30.0" style="-fx-font-weight: bold;" text="0" />
-                        <Label layoutX="157.0" layoutY="187.0" prefHeight="17.0" prefWidth="30.0" style="-fx-font-weight: bold;" text="0" />
-                        <Label layoutX="157.0" layoutY="204.0" prefHeight="17.0" prefWidth="30.0" style="-fx-font-weight: bold;" text="0" />
-                        <Label layoutX="157.0" layoutY="221.0" prefHeight="17.0" prefWidth="30.0" style="-fx-font-weight: bold;" text="0" />
-                        <Label layoutX="157.0" layoutY="247.0" prefHeight="17.0" prefWidth="30.0" style="-fx-font-weight: bold;" text="0" />
+                        <Label fx:id="basePrice" layoutX="157.0" layoutY="85.0" prefHeight="17.0" prefWidth="30.0" style="-fx-font-weight: bold;" text="0" />
+                        <Label layoutX="21.0" layoutY="257.0" prefHeight="17.0" prefWidth="85.0" text="EAN kodas :" />
+                        <Label fx:id="discountInPercent" layoutX="157.0" layoutY="104.0" prefHeight="17.0" prefWidth="30.0" style="-fx-font-weight: bold;" text="0" />
+                        <Label fx:id="discountInPercent" layoutX="157.0" layoutY="123.0" prefHeight="17.0" prefWidth="30.0" style="-fx-font-weight: bold;" text="0" />
+                        <Label fx:id="deliveryTimeInDaysFrom" layoutX="183.0" layoutY="151.0" prefHeight="17.0" prefWidth="23.0" style="-fx-font-weight: bold;" text="0" textAlignment="CENTER" />
+                        <Label fx:id="itemPackage" layoutX="157.0" layoutY="168.0" prefHeight="17.0" prefWidth="53.0" style="-fx-font-weight: bold;" text="0" />
+                        <Label fx:id="minOrderAmount" layoutX="157.0" layoutY="187.0" prefHeight="17.0" prefWidth="30.0" style="-fx-font-weight: bold;" text="0" />
+                        <Label fx:id="discountGroup" layoutX="157.0" layoutY="204.0" prefHeight="17.0" prefWidth="143.0" style="-fx-font-weight: bold;" text="nėra" />
+                        <Label fx:id="productFamily" layoutX="157.0" layoutY="221.0" lineSpacing="3.0" prefHeight="17.0" prefWidth="181.0" style="-fx-font-weight: bold;" text="nėra" />
+                        <Label fx:id="eanCode" layoutX="157.0" layoutY="257.0" prefHeight="17.0" prefWidth="179.0" style="-fx-font-weight: bold;" text="0" />
                         <Label layoutX="194.0" layoutY="85.0" prefHeight="17.0" prefWidth="67.0" text="Eur už 1 vnt." />
-                        <Label layoutX="196.0" layoutY="104.0" prefHeight="17.0" prefWidth="36.0" text="\%" />
+                        <Label layoutX="178.0" layoutY="104.0" prefHeight="17.0" prefWidth="36.0" text="\%" />
                         <Label layoutX="196.0" layoutY="123.0" prefHeight="17.0" prefWidth="36.0" text="Eur" />
-                        <Label layoutX="196.0" layoutY="168.0" prefHeight="17.0" prefWidth="36.0" text="vnt." />
+                        <Label layoutX="216.0" layoutY="168.0" prefHeight="17.0" prefWidth="36.0" text="vnt." />
                         <Label layoutX="22.0" layoutY="169.0" prefHeight="17.0" prefWidth="85.0" text="Paketas :" />
                         <Button layoutX="230.0" layoutY="108.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="30.0" text="?" />
+                  <Label layoutX="21.0" layoutY="35.0" prefHeight="17.0" prefWidth="112.0" text="Prekės pavadinimas:" />
+                  <Label fx:id="itemName" layoutX="158.0" layoutY="35.0" prefHeight="17.0" prefWidth="192.0" style="-fx-font-weight: bold;" text="label" />
+                  <Label layoutX="156.0" layoutY="151.0" text="nuo" />
+                  <Label layoutX="199.0" layoutY="151.0" text="iki" />
+                  <Label fx:id="deliveryTimeInDaysTo" layoutX="224.0" layoutY="151.0" style="-fx-font-weight: bold;" text="0" />
+                  <Label layoutX="243.0" layoutY="151.0" text="d. dienų" />
                     </children>
                <padding>
                   <Insets bottom="3.0" />

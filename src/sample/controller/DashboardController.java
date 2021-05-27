@@ -39,24 +39,54 @@ import sample.utils.Constants;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.*;
 
 import org.eclipse.fx.ui.controls.tree.FilterableTreeItem;
 import org.eclipse.fx.ui.controls.tree.TreeItemPredicate;
 
+import javax.persistence.Column;
 import javax.swing.*;
 
 public class DashboardController extends Main implements Initializable {
 
     public Button close_button;
     @FXML
-    private TableView<ProductCatalog> table;
+    public TableView<ProductCatalog> table;
     public Button open_file;
     public TextField treeViewSearchField;
     public Label countAll;
     public TextField tableViewSearchField;
     public TitledPane leftTitledPane;
     TreeView<CategoryItem> treeView = new TreeView<>();
+
+    // Dešinės panelės label
+    @FXML
+    public Label catalogNo;
+    @FXML
+    public Label itemName;
+    @FXML
+    public Label basePrice;
+    @FXML
+    public Label discountInPercent;
+    @FXML
+    public Label deliveryTimeInDaysFrom;
+    @FXML
+    public Label deliveryTimeInDaysTo;
+    @FXML
+    public Label itemPackage;
+    @FXML
+    public Label minOrderAmount;
+    @FXML
+    public Label discountGroup;
+    @FXML
+    public Label productFamily;
+    @FXML
+    public Label eanCode;
+
+
+
+
 
 
     public void goBackToLogin(ActionEvent actionEvent) {
@@ -520,7 +550,7 @@ public class DashboardController extends Main implements Initializable {
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         // pakeisti lietuviskai kategorijos numeri, produkto pavadinimas, kaina, kiekis.
         TableColumn number = new TableColumn("#");
-        TableColumn<ProductCatalog, Integer> catalogNo = new TableColumn<>("Kategorijos nr.");
+        TableColumn<ProductCatalog, Integer> catalogNo = new TableColumn<>("Katalogo nr.");
         TableColumn<ProductCatalog, String> symbol = new TableColumn<>("Produkto pavadinimas");
         TableColumn<ProductCatalog, Double> priceNet = new TableColumn<>("Kaina");
         TableColumn<ProductCatalog, Integer> stock = new TableColumn<>("Kiekis");
@@ -638,28 +668,32 @@ public class DashboardController extends Main implements Initializable {
         int countDBProducts = 0;
 
         assert excelProducts != null;
+        try {
+            for (ProductCatalog excelProduct : excelProducts) {
+                countExcelProducts++;
+                boolean isNewProduct = true;
 
-        for (ProductCatalog excelProduct : excelProducts) {
-            countExcelProducts++;
-            boolean isNewProduct = true;
-
-            for (ProductCatalog dbProduct : dbProducts) {
-                if (dbProduct.getPriceNet() != excelProduct.getPriceNet() && dbProduct.getCatalogNo() == excelProduct.getCatalogNo()) {
-                    isNewProduct = false;
-                    ProductCatalogDAO.updatePrice(excelProduct.getPriceNet(), dbProduct.getId());
-                    countAffectedProducts++;
-                } else if (dbProduct.getPriceNet() == excelProduct.getPriceNet() && dbProduct.getCatalogNo() == excelProduct.getCatalogNo()) {
-                    isNewProduct = false;
-                    countDBProducts = dbProducts.size() - countAffectedProducts;
+                for (ProductCatalog dbProduct : dbProducts) {
+                    if (dbProduct.getPriceNet() != excelProduct.getPriceNet() && dbProduct.getCatalogNo() == excelProduct.getCatalogNo()) {
+                        isNewProduct = false;
+                        ProductCatalogDAO.updatePrice(excelProduct.getPriceNet(), dbProduct.getId());
+                        countAffectedProducts++;
+                    } else if (dbProduct.getPriceNet() == excelProduct.getPriceNet() && dbProduct.getCatalogNo() == excelProduct.getCatalogNo()) {
+                        isNewProduct = false;
+                        countDBProducts = dbProducts.size() - countAffectedProducts;
+                    }
+                }
+                if (isNewProduct) {
+                    countNewProducts++;
+                    ProductCatalogDAO.insert(excelProduct);
                 }
             }
-            if (isNewProduct) {
-                countNewProducts++;
-                ProductCatalogDAO.insert(excelProduct);
-            }
+            createInformationPopUp(countAffectedProducts, countExcelProducts, countNewProducts, countDBProducts);
+        } catch (NullPointerException e) {
+            System.out.println("openFile() NullPointerException");
+        } catch (RuntimeException e) {
+            System.out.println("openFile() RuntimeExeception");
         }
-        createInformationPopUp(countAffectedProducts, countExcelProducts, countNewProducts, countDBProducts);
-
 
     }
 
@@ -735,6 +769,7 @@ public class DashboardController extends Main implements Initializable {
         treeView.setRoot(root);
         treeView.setShowRoot(false);
         mouseEventForTreeView();
+        mouseEventForTableView();
         return treeView;
     }
 
@@ -752,7 +787,7 @@ public class DashboardController extends Main implements Initializable {
     }
 
     //Surenka visus produktus turinčius pasirinktos kategorijos id
-    public ObservableList<ProductCatalog> createFilteredList(List<Categories> categories, List<ProductCatalog> products) {
+    public ObservableList<ProductCatalog> createFilteredList(List<Categories> categories, List<ProductCatalog> products) throws NullPointerException {
         ObservableList<ProductCatalog> filteredProduct = FXCollections.observableArrayList();
         for (Categories category : categories) {
             for (ProductCatalog product : products) {
@@ -767,11 +802,79 @@ public class DashboardController extends Main implements Initializable {
     //Paspaudus ant treeView item'o, table'ę atsiras visi jam priskirti produktai.
     public void mouseEventForTreeView() {
         treeView.addEventFilter(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
-            TreeItem<CategoryItem> item = treeView.getSelectionModel().getSelectedItem();
-            List<Categories> categories = CategoriesDAO.selectCategory(homeFilter(item.getValue().getName()));
-            List<ProductCatalog> products = ProductCatalogDAO.displayAllItems();
-            tableSearchFunction(createFilteredList(categories, products));
+            TreeItem<CategoryItem> item;
+            List<Categories> categories;
+            List<ProductCatalog> products;
+            ProductCatalog tableItem;
+            try {
+                if (!treeView.getSelectionModel().isEmpty()) {
+                    item = treeView.getSelectionModel().getSelectedItem();
+                    categories = CategoriesDAO.selectCategory(homeFilter(item.getValue().getName()));
+                    products = ProductCatalogDAO.displayAllItems();
+                    tableSearchFunction(createFilteredList(categories, products));
+                }
+            } catch (IllegalStateException e) {
+                System.out.println("mouseEventForTreeView() IllegalStateExecption");
+            } catch (NullPointerException e) {
+                System.out.println("mouseEventForTreeView() NullPointerException");
+            }
+
+
         });
+    }
+
+    // Tikrinama ar vidurinėje panelėje buvo pasirinktas item, jeigu buvo, kviečiamas dešinės panelės užpildymo metodas
+    // metodui perduodamas item'o katalogo numeris.
+    public void mouseEventForTableView() {
+        table.addEventFilter(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
+            ProductCatalog tableItem;
+            try {
+                if (!table.getSelectionModel().isEmpty()) {
+                    tableItem = table.getSelectionModel().getSelectedItem();
+                    fillDescriptionPanel(tableItem.getCatalogNo());
+                    System.out.println("Item was selected.");
+                    System.out.println("Selected Catalog No: " + tableItem.getCatalogNo());
+                }
+            } catch (IllegalStateException e) {
+                System.out.println("mouseEventForTreeView() IllegalStateExecption");
+            } catch (NullPointerException e) {
+                System.out.println("mouseEventForTreeView() NullPointerException");
+            }
+
+        });
+    }
+
+    // Suveikia pasirinkus item'ą vidurinėje panelėje.
+    // Pirmiausia kreipiamasi į duomenų bazę, patikrinama ar egzistuoja produkto aprašymas.
+    // Jei egzistuoja, ištraukiami visi duomenys ir užpildoma dešinė panelė.
+    public void fillDescriptionPanel(int catalogNoImported) {
+        List<ProductDescription> productByCatalogNo = ProductDescriptionDAO.searchByCatalogNo(catalogNoImported);
+        if (productByCatalogNo.isEmpty()) {
+            catalogNo.setText(String.valueOf(catalogNoImported));
+            itemName.setText("PREKĖS APRAŠYMAS NERASTAS");
+            basePrice.setText("-");
+            discountInPercent.setText("-");
+            deliveryTimeInDaysFrom.setText("-");
+            deliveryTimeInDaysTo.setText("-");
+            itemPackage.setText("-");
+            minOrderAmount.setText("-");
+            discountGroup.setText("-");
+            productFamily.setText("-");
+            eanCode.setText("-");
+        } else {
+            ProductDescription selectedProductDescription = productByCatalogNo.get(0);
+            catalogNo.setText(String.valueOf(catalogNoImported));
+            itemName.setText(selectedProductDescription.getItemName());
+            basePrice.setText(String.valueOf(selectedProductDescription.getBasePrice()));
+            discountInPercent.setText(String.valueOf(selectedProductDescription.getDiscountInPercent()));
+            deliveryTimeInDaysFrom.setText(String.valueOf(selectedProductDescription.getDeliveryTimeInDaysFrom()));
+            deliveryTimeInDaysTo.setText(String.valueOf(selectedProductDescription.getDeliveryTimeInDaysTo()));
+            itemPackage.setText(selectedProductDescription.getItemPackage());
+            minOrderAmount.setText(String.valueOf(selectedProductDescription.getMinOrderAmount()));
+            discountGroup.setText(selectedProductDescription.getDiscountGroup());
+            productFamily.setText(selectedProductDescription.getProductFamily());
+            eanCode.setText(selectedProductDescription.getEanCode());
+        }
     }
 
 
