@@ -56,6 +56,10 @@ public class DashboardController extends Main implements Initializable {
     public Label countAll;
     public TextField tableViewSearchField;
     public TitledPane leftTitledPane;
+    public Label corrent_session_user_email;
+    public Label corrent_session_user_status;
+
+
     TreeView<CategoryItem> treeView = new TreeView<>();
 
 
@@ -590,8 +594,12 @@ public class DashboardController extends Main implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+
         loadColumnToTable();
         createContents();
+        currentSessionUserData();
+
     }
 
     //Iš excel failo pasiema produktus.
@@ -774,7 +782,23 @@ public class DashboardController extends Main implements Initializable {
         });
     }
 
+        private void currentSessionUserData(){
 
+            //Getting data from the last scene calling a class UserHolder
+            UserHolder holder = UserHolder.getInstance();
+            User u = holder.getUser();
+            String email = u.getEmail();
+            Boolean isAdmin = u.isAdmin();
+
+
+            if(isAdmin == true){
+                corrent_session_user_status.setText(Constants.CURRENT_SESSION_STATUS_ADMIN);
+            }else{
+                corrent_session_user_status.setText(Constants.CURRENT_SESSION_STATUS_USER);
+            }
+
+            corrent_session_user_email.setText(email);
+        }
 }
 
 

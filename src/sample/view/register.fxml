@@ -68,7 +68,7 @@
       </Label>
       <PasswordField fx:id="password_confirm_passwordfield" layoutX="219.0" layoutY="359.0" prefHeight="35.0" prefWidth="250.0">
          <font>
-            <Font name="Comic Sans MS" size="19.0" />
+            <Font name="Comic Sans MS" size="16.0" />
          </font>
       </PasswordField>
    </children>

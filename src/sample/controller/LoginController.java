@@ -1,6 +1,7 @@
 package sample.controller;
 
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -11,8 +12,12 @@ import javafx.stage.Stage;
 import org.mindrot.jbcrypt.BCrypt;
 import sample.JPA.User;
 import sample.JPA.UserDAO;
+import sample.JPA.UserHolder;
 import sample.utils.Constants;
 import sample.utils.Validation;
+
+import java.awt.event.MouseEvent;
+import java.io.IOException;
 
 public class LoginController {
 
@@ -47,7 +52,13 @@ public class LoginController {
                 try {
                     assert credentials != null;
                     if (checkPass(password_passwordfield.getText(), credentials.getPassword())) {
+
+                        User u = new User(credentials.getEmail(),credentials.isAdmin());
+                        UserHolder holder = UserHolder.getInstance();
+                        holder.setUser(u);
+
                         goTodashboard();
+
                     } else if (!checkPass(password_passwordfield.getText(), credentials.getPassword())) {
 
                         login_info_label.setStyle("-fx-text-fill: red;");
@@ -119,6 +130,7 @@ public class LoginController {
         } else {
             return false;
         }
+
 
     }
 

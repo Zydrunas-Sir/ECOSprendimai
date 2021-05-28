@@ -2,6 +2,7 @@ package sample.JPA;
 
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "User")
@@ -21,17 +22,14 @@ public class User {
     private String companyName;
     @Column(name = "password")
     private String password;
-   // @Column(name = "is_admin")
-   // private boolean isAdmin;
-   // @Basic
-   // @Column(name = "date")
-   // @Temporal(TemporalType.TIMESTAMP)
-   // private Date timestamp;
-   // @Column(name = "time_spend")
-   // private int timeSpend;
-    // private String passwordConfirm;
+    @Column(name = "is_admin", columnDefinition="tinyint(1) default 0")
+    private boolean isAdmin;
+    @Column(name = "logged_date", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private Timestamp loggedDate;
+    @Column(name = "time_spend", nullable = false)
+    private int timeSpend;
 
-    public User( String firstName, String lastName, String email, String companyName, String password) {
+    public User(String firstName, String lastName, String email, String companyName, String password) {
 
         this.firstName = firstName;
         this.lastName = lastName;
@@ -40,20 +38,25 @@ public class User {
         this.password = password;
     }
 
-    public User(String firstName, String lastName, String email, String companyName, String password, String passwordConfirm) {
+    public User(int id, String firstName, String lastName, String email, String companyName, String password, boolean isAdmin, Timestamp loggedDate, int timeSpend) {
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.companyName = companyName;
         this.password = password;
+        this.isAdmin = isAdmin;
+        this.loggedDate = loggedDate;
+        this.timeSpend = timeSpend;
+    }
 
+    public User(String email, boolean isAdmin) {
+        this.email = email;
+        this.isAdmin = isAdmin;
     }
 
     public User() {
     }
-
-
-
 
 
     public int getId() {
@@ -104,6 +107,32 @@ public class User {
         this.password = password;
     }
 
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
+    }
+
+    public Timestamp getLoggedDate() {
+        return loggedDate;
+    }
+
+    public void setLoggedDate(Timestamp loggedDate) {
+        this.loggedDate = loggedDate;
+    }
+
+    public int getTimeSpend() {
+        return timeSpend;
+    }
+
+    public void setTimeSpend(int timeSpend) {
+        this.timeSpend = timeSpend;
+    }
+
+
+
     @Override
     public String toString() {
         return "User{" +
@@ -113,6 +142,9 @@ public class User {
                 ", email='" + email + '\'' +
                 ", companyName='" + companyName + '\'' +
                 ", password='" + password + '\'' +
+                ", isAdmin=" + isAdmin +
+                ", loggedDate=" + loggedDate +
+                ", timeSpend=" + timeSpend +
                 '}';
     }
 }
