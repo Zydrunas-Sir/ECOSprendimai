@@ -35,6 +35,7 @@ public class RegisterController extends Main {
 
     //Checks all register fields are correct
     public void register() {
+
         if (first_name_textfield.getText().isEmpty() == false
                &&  last_name_textfield.getText().isEmpty() == false
                 && email_textfield.getText().isEmpty()  == false
