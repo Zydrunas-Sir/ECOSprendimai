@@ -1,5 +1,6 @@
 package sample.JPA;
 
+import org.apache.commons.lang.ObjectUtils;
 import org.hibernate.HibernateException;
 import org.hibernate.exception.JDBCConnectionException;
 
@@ -35,7 +36,7 @@ public class ProductCatalogDAO {
 
     }
 
-    public static List<ProductCatalog> displayAllItems() {
+    public static List<ProductCatalog> displayAllItems()   {
 
         EntityManager entityManager;
         EntityTransaction entityTransaction;
@@ -49,17 +50,14 @@ public class ProductCatalogDAO {
             query = entityManager.createQuery("Select e From ProductCatalog e", ProductCatalog.class);
             productCatalog = query.getResultList();
 
-
             entityManager.getTransaction().commit();
             entityManager.close();
-        } catch (IllegalStateException e) {
+
+        } catch (NullPointerException e ) {
+            System.out.println("ProductCatalogDAO.displayAllItems() NullPointerExecption");
+        }
+        catch (RuntimeException e) {
             System.out.println("ProductCatalogDAO.displayAllItems() IllegalStateException");
-        } catch (JDBCConnectionException e) {
-            System.out.println("ProductCatalogDAO.displayAllItems() JDBCConnectionException");
-        } catch (ServiceException e) {
-            System.out.println("ProductCatalogDAO.displayAllItems() ServiceException");
-        } catch (PersistenceException e) {
-            System.out.println("ProductCatalogDAO.displayAllItems() PersistenceException");
         }
 
         return productCatalog;
@@ -224,7 +222,11 @@ public class ProductCatalogDAO {
             conn.close();
             stmt.close();
         } catch (SQLException throwables) {
-            JPAUtil.infoBox("NEPAVYKO PRISIJUNGTI PRIE DUOMENŲ BAZĖS", "SQLException");
+            System.out.println("checkIfCatalogExistsIfNotCreateIt() SQLExecption");
+        } catch (NullPointerException e) {
+            System.out.println("checkIfCatalogExistsIfNotCreateIt NullPointerException");
+        } catch (RuntimeException e) {
+            System.out.println("checkIfCatalogExistsIfNotCreateIt RuntimeExeception");
         }
     }
 }
