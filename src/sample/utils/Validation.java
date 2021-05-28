@@ -44,12 +44,4 @@ public class Validation {
         Matcher matcher = pattern.matcher(email);
         return matcher.find();
     }
-
-
-
-
-    //
-
-    //
-
 }

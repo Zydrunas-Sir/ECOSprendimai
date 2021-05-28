@@ -29,7 +29,7 @@ public class UserDAO {
                     "SELECT a FROM User a WHERE a.email = :email2")
                     .setParameter("email2", email);
 
-            query.setMaxResults(1);
+
             User user = (User) query.getSingleResult();
             entityManager.getTransaction().commit();
             entityManager.close();
