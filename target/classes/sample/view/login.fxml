@@ -14,55 +14,46 @@
       <RowConstraints />
    </rowConstraints>
    <children>
-      <Pane prefHeight="300.0" prefWidth="500.0">
+      <Pane prefHeight="303.0" prefWidth="500.0">
          <children>
-            <Label alignment="TOP_CENTER" layoutX="100.0" layoutY="37.0" prefHeight="47.0" prefWidth="293.0" text="EcoSprendimai">
+            <Label alignment="TOP_CENTER" layoutX="99.0" layoutY="25.0" prefHeight="47.0" prefWidth="293.0" text="EcoSprendimai">
                <font>
                   <Font name="Comic Sans MS" size="27.0" />
                </font>
             </Label>
-            <Label alignment="CENTER_RIGHT" layoutX="44.0" layoutY="100.0" prefHeight="37.0" prefWidth="172.0" text="Elektroninis paštas:">
+            <Label alignment="CENTER_RIGHT" layoutX="46.0" layoutY="87.0" prefHeight="37.0" prefWidth="172.0" text="Elektroninis paštas:">
                <font>
-                  <Font name="Comic Sans MS" size="18.0" />
+                  <Font name="Microsoft JhengHei Light" size="16.0" />
                </font></Label>
-            <Label alignment="CENTER_RIGHT" layoutX="44.0" layoutY="144.0" prefHeight="37.0" prefWidth="172.0" text="Slaptažodis:" textAlignment="RIGHT">
+            <Label alignment="CENTER_RIGHT" layoutX="46.0" layoutY="131.0" prefHeight="37.0" prefWidth="172.0" text="Slaptažodis:" textAlignment="RIGHT">
                <font>
-                  <Font name="Comic Sans MS" size="17.0" />
+                  <Font name="Microsoft JhengHei Light" size="16.0" />
                </font></Label>
-            <TextField fx:id="email_textfield" layoutX="222.0" layoutY="100.0" prefHeight="37.0" prefWidth="220.0">
+            <TextField fx:id="email_textfield" layoutX="224.0" layoutY="87.0" prefHeight="37.0" prefWidth="220.0">
                <font>
                   <Font name="Arial" size="18.0" />
                </font>
                <cursor>
                   <Cursor fx:constant="TEXT" />
                </cursor></TextField>
-            <PasswordField fx:id="password_passwordfield" layoutX="222.0" layoutY="144.0" prefHeight="37.0" prefWidth="220.0">
+            <PasswordField fx:id="password_passwordfield" layoutX="224.0" layoutY="131.0" prefHeight="37.0" prefWidth="220.0">
                <font>
                   <Font name="Arial" size="18.0" />
                </font>
                <cursor>
                   <Cursor fx:constant="TEXT" />
                </cursor></PasswordField>
-            <Label fx:id="login_info_label" alignment="CENTER" layoutX="7.0" layoutY="187.0" prefHeight="47.0" prefWidth="475.0" textFill="RED" wrapText="true">
+            <Label fx:id="login_info_label" alignment="CENTER" layoutX="8.0" layoutY="197.0" prefHeight="25.0" prefWidth="475.0" textFill="RED" wrapText="true">
                <font>
-                  <Font name="Serif Regular" size="20.0" />
+                  <Font name="Arial" size="15.0" />
                </font></Label>
-            <Button fx:id="username_button" layoutX="121.0" layoutY="237.0" mnemonicParsing="false" onAction="#login" prefHeight="37.0" prefWidth="108.0" text="Prisijungti">
+            <CheckBox fx:id="check_box_remember_me" layoutX="335.0" layoutY="174.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="108.0" text="Prisiminti mane" textFill="#2698f0c6" underline="true" />
+            <Button fx:id="username_button" layoutX="174.0" layoutY="228.0" mnemonicParsing="false" onAction="#login" prefHeight="37.0" prefWidth="142.0" text="Prisijungti">
                <font>
-                  <Font name="Comic Sans MS" size="16.0" />
+                  <Font name="Microsoft JhengHei Light" size="16.0" />
                </font></Button>
-            <Button fx:id="register_button" layoutX="332.0" layoutY="237.0" mnemonicParsing="false" onAction="#register" prefHeight="37.0" prefWidth="108.0" text="Registruoti">
-               <font>
-                  <Font name="Comic Sans MS" size="16.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor></Button>
             <Label layoutX="440.0" layoutY="12.0" prefHeight="25.0" prefWidth="43.0" text="v: 0.1" textFill="#b9b9b9" />
-            <Button fx:id="dashboard_button" layoutX="9.0" layoutY="237.0" mnemonicParsing="false" onAction="#goTodashboard" prefHeight="37.0" prefWidth="108.0" text="Dashboard">
-               <font>
-                  <Font name="Comic Sans MS" size="16.0" />
-               </font></Button>
+            <Hyperlink fx:id="register_button" layoutX="196.0" layoutY="271.0" onAction="#register" prefHeight="23.0" prefWidth="108.0" text="Naujas vartotojas?" underline="true" />
          </children>
          <opaqueInsets>
             <Insets />

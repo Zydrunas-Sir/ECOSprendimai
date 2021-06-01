@@ -23,7 +23,7 @@ public class LoginController implements Initializable {
     public Label login_info_label;
     public TextField email_textfield;
     public PasswordField password_passwordfield;
-    public Button register_button;
+    public Hyperlink register_button;
     public Button dashboard_button;
     public CheckBox check_box_remember_me;
 
