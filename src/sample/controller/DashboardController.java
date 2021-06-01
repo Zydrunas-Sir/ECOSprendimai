@@ -31,21 +31,21 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.util.Callback;
 import javafx.util.converter.DoubleStringConverter;
-import javafx.util.converter.IntegerStringConverter;
 import sample.JPA.*;
+import sample.JPA.user.User;
+import sample.JPA.user.UserDAO;
+import sample.JPA.user.UserHolder;
 import sample.Main;
 import sample.utils.Constants;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.*;
 
 import org.eclipse.fx.ui.controls.tree.FilterableTreeItem;
 import org.eclipse.fx.ui.controls.tree.TreeItemPredicate;
 
-import javax.persistence.Column;
 import javax.swing.*;
 
 public class DashboardController extends Main implements Initializable {
@@ -115,8 +115,8 @@ public class DashboardController extends Main implements Initializable {
 
     public void windowClose() { //Uzdaro prisijungimo langa
         Stage stage = (Stage) close_button.getScene().getWindow();
-        loggedTimeElapsed = System.nanoTime() - loggedTimeStart;
-        UserDAO.updateUserTimeSpent((int) loggedTimeElapsed);
+       // loggedTimeElapsed = System.nanoTime() - loggedTimeStart;
+       // UserDAO.updateUserTimeSpent((int) loggedTimeElapsed);
         stage.close();
     }
 
@@ -670,7 +670,7 @@ public class DashboardController extends Main implements Initializable {
 
         loadColumnToTable();
         createContents();
-//        currentSessionUserData();
+      currentSessionUserData();
         loggedTimeStart = System.nanoTime();
 
 

@@ -7,15 +7,14 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import sample.JPA.ProductCatalog;
-import sample.JPA.User;
+import sample.JPA.user.User;
 import sample.Main;
 
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import static sample.JPA.UserDAO.getAllUsers;
+import static sample.JPA.user.UserDAO.getAllUsers;
 
 public class UserStatsController extends Main implements Initializable {
 
