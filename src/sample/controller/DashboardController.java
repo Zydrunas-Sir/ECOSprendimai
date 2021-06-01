@@ -74,6 +74,8 @@ public class DashboardController extends Main implements Initializable {
     @FXML
     public Label discountInPercent;
     @FXML
+    public Label priceWithDiscount;
+    @FXML
     public Label deliveryTimeInDaysFrom;
     @FXML
     public Label deliveryTimeInDaysTo;
@@ -88,7 +90,8 @@ public class DashboardController extends Main implements Initializable {
     @FXML
     public Label eanCode;
 
-
+    public static long loggedTimeStart;
+    public static long loggedTimeElapsed;
 
 
 
@@ -112,6 +115,8 @@ public class DashboardController extends Main implements Initializable {
 
     public void windowClose() { //Uzdaro prisijungimo langa
         Stage stage = (Stage) close_button.getScene().getWindow();
+        loggedTimeElapsed = System.nanoTime() - loggedTimeStart;
+        UserDAO.updateUserTimeSpent((int) loggedTimeElapsed);
         stage.close();
     }
 
@@ -665,7 +670,9 @@ public class DashboardController extends Main implements Initializable {
 
         loadColumnToTable();
         createContents();
-        currentSessionUserData();
+//        currentSessionUserData();
+        loggedTimeStart = System.nanoTime();
+
 
     }
 
@@ -939,6 +946,24 @@ public class DashboardController extends Main implements Initializable {
 
             corrent_session_user_email.setText(email);
         }
+
+    // Atidaro langą su vartotojų sąrašu
+    public void openUserStats() {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource(Constants.USER_STATS_VIEW_PATH));
+            Stage registerStage = new Stage();
+            Scene scene = new Scene(root);
+            registerStage.setTitle("Informacija apie programos vartotojus");
+            registerStage.setScene(scene);
+            registerStage.setResizable(true);
+            registerStage.show();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            e.getCause();
+        }
+
+    }
 }
 
 
