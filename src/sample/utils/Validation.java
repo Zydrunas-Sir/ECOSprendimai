@@ -44,4 +44,32 @@ public class Validation {
         Matcher matcher = pattern.matcher(email);
         return matcher.find();
     }
+
+    public static final String PRODUCT_FORM_CATALOG_NO_PATTERN = "^[0-9]{1,25}$";
+    public static boolean isValidCatalogNo(String catalogNo){
+        Pattern pattern = Pattern.compile(PRODUCT_FORM_CATALOG_NO_PATTERN);
+        Matcher matcher = pattern.matcher(catalogNo);
+        return matcher.find();
+    }
+
+    public static final String PRODUCT_FORM_SYMBOL_PATTERN = "^((?![\\^!@#$*~ <>?]).)((?![\\^!@#$*~<>?]).){0,73}((?![\\^!@#$*~ <>?]).)$";
+    public static boolean isValidSymbol(String symbol){
+        Pattern pattern = Pattern.compile(PRODUCT_FORM_SYMBOL_PATTERN);
+        Matcher matcher = pattern.matcher(symbol);
+        return matcher.find();
+    }
+
+    public static final String PRODUCT_FORM_PRICE_PATTERN = "^[0-9.]{1,25}$";
+    public static boolean isValidPrice(String price){
+        Pattern pattern = Pattern.compile(PRODUCT_FORM_PRICE_PATTERN);
+        Matcher matcher = pattern.matcher(price);
+        return matcher.find();
+    }
+
+    public static final String PRODUCT_FORM_STOCK_PATTERN = "^[0-9]{1,25}$";
+    public static boolean isValidStock(String stock){
+        Pattern pattern = Pattern.compile(PRODUCT_FORM_STOCK_PATTERN);
+        Matcher matcher = pattern.matcher(stock);
+        return matcher.find();
+    }
 }

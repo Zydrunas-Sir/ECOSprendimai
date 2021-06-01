@@ -110,5 +110,19 @@ public class CategoriesDAO {
         return categories;
     }
 
+    public static List<String> selectAllCategoryNames() {
+        EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
+        EntityTransaction entityTransaction = entityManager.getTransaction();
+        entityTransaction.begin();
+
+        TypedQuery<String> query = entityManager.createQuery("SELECT CONCAT(REPEAT(' ', count(parent.name) - 1), node.name) AS categoryNames FROM Categories as node INNER JOIN Categories as parent ON ( parent.lft <= node.lft AND parent.rght >= node.lft ) GROUP BY node.id ORDER BY node.lft", String.class);
+        List<String> categories = query.getResultList();
+
+        entityManager.getTransaction().commit();
+        entityManager.close();
+
+        return categories;
+    }
+
 }
 
