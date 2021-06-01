@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane minWidth="1342.0" prefHeight="534.0" prefWidth="1342.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.DashboardController">
+<AnchorPane minWidth="1342.0" prefHeight="534.0" prefWidth="1342.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.DashboardController">
     <children>
         <TableView fx:id="table" fixedCellSize="0.0" layoutX="387.0" layoutY="56.0" prefHeight="463.0" prefWidth="537.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="387.0" AnchorPane.rightAnchor="418.0" AnchorPane.topAnchor="56.0">
             <columns>
@@ -32,7 +32,7 @@
                         <Label fx:id="basePrice" layoutX="157.0" layoutY="85.0" prefHeight="17.0" prefWidth="30.0" style="-fx-font-weight: bold;" text="0" />
                         <Label layoutX="21.0" layoutY="257.0" prefHeight="17.0" prefWidth="85.0" text="EAN kodas :" />
                         <Label fx:id="discountInPercent" layoutX="157.0" layoutY="104.0" prefHeight="17.0" prefWidth="30.0" style="-fx-font-weight: bold;" text="0" />
-                        <Label fx:id="discountInPercent" layoutX="157.0" layoutY="123.0" prefHeight="17.0" prefWidth="30.0" style="-fx-font-weight: bold;" text="0" />
+                        <Label fx:id="priceWithDiscount" layoutX="157.0" layoutY="123.0" prefHeight="17.0" prefWidth="30.0" style="-fx-font-weight: bold;" text="0" />
                         <Label fx:id="deliveryTimeInDaysFrom" layoutX="183.0" layoutY="151.0" prefHeight="17.0" prefWidth="23.0" style="-fx-font-weight: bold;" text="0" textAlignment="CENTER" />
                         <Label fx:id="itemPackage" layoutX="157.0" layoutY="168.0" prefHeight="17.0" prefWidth="53.0" style="-fx-font-weight: bold;" text="0" />
                         <Label fx:id="minOrderAmount" layoutX="157.0" layoutY="187.0" prefHeight="17.0" prefWidth="30.0" style="-fx-font-weight: bold;" text="0" />
@@ -51,6 +51,7 @@
                   <Label layoutX="199.0" layoutY="151.0" text="iki" />
                   <Label fx:id="deliveryTimeInDaysTo" layoutX="224.0" layoutY="151.0" style="-fx-font-weight: bold;" text="0" />
                   <Label layoutX="243.0" layoutY="151.0" text="d. dienų" />
+                  <Button layoutX="324.0" layoutY="410.0" mnemonicParsing="false" onAction="#openUserStats" text="Users" />
                     </children>
                <padding>
                   <Insets bottom="3.0" />

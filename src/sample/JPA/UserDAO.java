@@ -1,9 +1,10 @@
 package sample.JPA;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
-import javax.persistence.NoResultException;
-import javax.persistence.Query;
+import org.hibernate.exception.JDBCConnectionException;
+import org.hibernate.service.spi.ServiceException;
+
+import javax.persistence.*;
+import java.util.List;
 
 public class UserDAO {
     public static void insert(User user) {
@@ -70,5 +71,56 @@ public class UserDAO {
         }
     }
 
+    public static List<User> getAllUsers() {
+
+        EntityManager entityManager;
+        EntityTransaction entityTransaction;
+        List<User> userList = null;
+        TypedQuery<User> query;
+
+        try {
+            entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
+            entityTransaction = entityManager.getTransaction();
+            entityTransaction.begin();
+            query = entityManager.createQuery("Select e From User e", User.class);
+            userList = query.getResultList();
+
+            entityManager.getTransaction().commit();
+            entityManager.close();
+
+        } catch (NullPointerException e ) {
+            System.out.println("ProductCatalogDAO.displayAllItems() NullPointerExecption");
+        }
+        catch (RuntimeException e) {
+            System.out.println("ProductCatalogDAO.displayAllItems() IllegalStateException");
+        }
+
+        return userList;
+    }
+
+    public static void updateUserTimeSpent(int timeSpent) {
+
+        EntityManager entityManager;
+        EntityTransaction entityTransaction;
+        User user1;
+
+        try {
+            entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
+            entityTransaction = entityManager.getTransaction();
+            entityTransaction.begin();
+            user1 = entityManager.find(User.class, timeSpent);
+            user1.setTimeSpend(timeSpent);
+            entityManager.getTransaction().commit();
+            entityManager.close();
+        } catch (IllegalStateException e) {
+            System.out.println("ProductCaalogDAO.updateByCatalog_no IllegalStateException");
+        } catch (JDBCConnectionException e) {
+            System.out.println("ProductCaalogDAO.updateByCatalog_no JDBCConnectionException");
+        } catch (ServiceException e) {
+            System.out.println("ProductCaalogDAO.updateByCatalog_no ServiceException");
+        } catch (PersistenceException e) {
+            System.out.println("ProductCaalogDAO.updateByCatalog_no PersistenceException");
+        }
+    }
 
 }
