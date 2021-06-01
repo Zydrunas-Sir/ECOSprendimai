@@ -1,7 +1,8 @@
-package sample.JPA;
+package sample.JPA.user;
 
 import org.hibernate.exception.JDBCConnectionException;
 import org.hibernate.service.spi.ServiceException;
+import sample.JPA.JPAUtil;
 
 import javax.persistence.*;
 import java.util.List;

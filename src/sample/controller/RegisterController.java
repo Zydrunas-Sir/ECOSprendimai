@@ -10,8 +10,8 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.mindrot.jbcrypt.BCrypt;
-import sample.JPA.User;
-import sample.JPA.UserDAO;
+import sample.JPA.user.User;
+import sample.JPA.user.UserDAO;
 import sample.Main;
 import sample.utils.Constants;
 import sample.utils.Validation;
@@ -36,96 +36,79 @@ public class RegisterController extends Main {
     //Checks all register fields are correct
     public void register() {
 
-        if (first_name_textfield.getText().isEmpty() == false
-               &&  last_name_textfield.getText().isEmpty() == false
-                && email_textfield.getText().isEmpty()  == false
-                 && company_name_textfield.getText().isEmpty()  == false
-                  && password_passwordfield.getText().isEmpty()  == false
-                   && password_confirm_passwordfield.getText().isEmpty()  == false
+        if (!first_name_textfield.getText().isEmpty()
+                && !last_name_textfield.getText().isEmpty()
+                && !email_textfield.getText().isEmpty()
+                && !company_name_textfield.getText().isEmpty()
+                && !password_passwordfield.getText().isEmpty()
+                && !password_confirm_passwordfield.getText().isEmpty()
         ) {
 
-            if (Validation.isValidFirstName(first_name_textfield.getText())) {
-
-                if (Validation.isValidLastName(last_name_textfield.getText())) {
-
-                    if (Validation.isValidEmail(email_textfield.getText())) {
-
-                        if (Validation.isValidCompanyName(company_name_textfield.getText())) {
-
-                            if (Validation.isValidPassword(password_passwordfield.getText())) {
-
-                                if (Validation.isValidPassword(password_confirm_passwordfield.getText())) {
-                                    if (password_passwordfield.getText().equals(password_confirm_passwordfield.getText())) {
-                                        //Sending data with email address and getting answer is it exists in boolean
-                                        boolean credentials = UserDAO.compareEmailForValidation(email_textfield.getText());
-
-
-                                        //If theres is no same email
-                                        if (credentials == false) {
-                                            //Creating new user
-                                            registerToDataBase();
-                                        }
-
-                                        form_info_label.setText("");
-                                        form_info_label.setStyle("-fx-text-fill: red;");
-                                        form_info_label.setText(Constants.EMAIL_EXISTS);
-                                        email_textfield.setStyle("-fx-text-fill: red;");
-
-
-                                    } else {
-
-                                        form_info_label.setText("");
-                                        form_info_label.setStyle("-fx-text-fill: red;");
-                                        form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_PASSWORD);
-                                    }
-                                } else {
-                                    form_info_label.setText("");
-                                    form_info_label.setStyle("-fx-text-fill: red;");
-                                    form_info_label.setText(Constants.PASSWORD_IS_NOT_EQUAL);
-                                }
-                            } else {
-                                form_info_label.setText("");
-                                form_info_label.setStyle("-fx-text-fill: red;");
-                                form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_PASSWORD);
-
-                            }
-
-                        } else {
-                            form_info_label.setText("");
-                            form_info_label.setStyle("-fx-text-fill: red;");
-                            //  company_name_textfield.setStyle("-fx-text-fill: red;");
-                            form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_COMPANY_NAME);
-                        }
-                    } else {
-                        form_info_label.setText("");
-                        form_info_label.setStyle("-fx-text-fill: red;");
-                        // email_textfield.setStyle("-fx-text-fill: red;");
-                        form_info_label.setText(Constants.CREDENTIALS_IS_NOT_FILLED_EMAIL);
-                    }
-                } else {
-                    form_info_label.setText("");
-                    form_info_label.setStyle("-fx-text-fill: red;");
-                    // last_name_textfield.setStyle("-fx-text-fill: red;");
-                    form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_LAST_NAME);
-
-                }
-            } else {
-                form_info_label.setText("");
-                form_info_label.setStyle("-fx-text-fill: red;");
-                //  first_name_textfield.setStyle("-fx-text-fill: red;");
+            if (!Validation.isValidFirstName(first_name_textfield.getText())) {
+                WarnStyle();
+                form_info_label.setText(Constants.CREDENTIALS_IS_NOT_FILLED);
+            }
+            if (!Validation.isValidLastName(last_name_textfield.getText())) {
+                WarnStyle();
+                ;
                 form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_FIRST_NAME);
             }
+            if (!Validation.isValidEmail(email_textfield.getText())) {
+                WarnStyle();
+                form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_LAST_NAME);
+            }
+            if (!Validation.isValidCompanyName(company_name_textfield.getText())) {
+                WarnStyle();
+                form_info_label.setText(Constants.CREDENTIALS_IS_NOT_FILLED_EMAIL);
+            }
+            if (!Validation.isValidPassword(password_passwordfield.getText())) {
+                WarnStyle();
+                form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_COMPANY_NAME);
+            }
+            if (!Validation.isValidPassword(password_confirm_passwordfield.getText())) {
+                WarnStyle();
+                form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_PASSWORD);
+            }
+            if (password_passwordfield.getText().equals(password_confirm_passwordfield.getText())) {
+                //Sending data with email address and getting answer is it exists in boolean
+                boolean credentials = UserDAO.compareEmailForValidation(email_textfield.getText());
+
+
+                //If theres is no same email
+                if (!credentials) {
+                    //Creating new user
+                    registerToDataBase();
+                }
+
+                form_info_label.setText("");
+                form_info_label.setStyle("-fx-text-fill: red;");
+                form_info_label.setText(Constants.EMAIL_EXISTS);
+                email_textfield.setStyle("-fx-text-fill: red;");
+
+
+            } else {
+
+                WarnStyle();
+                form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_PASSWORD);
+            }
         } else {
-            form_info_label.setText("");
-            form_info_label.setStyle("-fx-text-fill: red;");
-            form_info_label.setText(Constants.CREDENTIALS_IS_NOT_FILLED);
+            WarnStyle();
+            form_info_label.setText(Constants.PASSWORD_IS_NOT_EQUAL);
         }
+
+
     }
 
     public void closeRegister() { //Uzdaro prisijungimo langa
         Stage stage = (Stage) register_button.getScene().getWindow();
         stage.close();
     }
+
+    void WarnStyle() {
+        form_info_label.setText("");
+        form_info_label.setStyle("-fx-text-fill: red;");
+    }
+
 
     public void goToLogin() {
         try {

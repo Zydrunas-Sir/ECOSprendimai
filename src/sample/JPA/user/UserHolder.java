@@ -1,4 +1,4 @@
-package sample.JPA;
+package sample.JPA.user;
 
 public final class UserHolder {
 
