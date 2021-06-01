@@ -90,7 +90,7 @@ public class LoginController implements Initializable {
                 User u = new User(credentials.getEmail(), credentials.isAdmin());
                 UserHolder holder = UserHolder.getInstance();
                 holder.setUser(u);
-                goTodashboard();
+                goToDashBoard();
 
             } else if (!checkPass(password_passwordfield.getText(), credentials.getPassword())) {
 
@@ -128,7 +128,7 @@ public class LoginController implements Initializable {
         }
     }
 
-    public void goTodashboard() {
+    public void goToDashBoard() {
         try {
             Parent root = FXMLLoader.load(getClass().getResource(Constants.DASHBOARD_VIEW_DIRECTORY_PATH));
             Stage dashboardStage = new Stage();

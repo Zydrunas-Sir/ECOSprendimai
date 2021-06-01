@@ -17,36 +17,34 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.*;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
-
 import javafx.stage.Window;
 import javafx.util.Callback;
 import javafx.util.converter.DoubleStringConverter;
+import org.eclipse.fx.ui.controls.tree.FilterableTreeItem;
+import org.eclipse.fx.ui.controls.tree.TreeItemPredicate;
 import sample.JPA.*;
 import sample.JPA.user.User;
-import sample.JPA.user.UserDAO;
 import sample.JPA.user.UserHolder;
 import sample.Main;
 import sample.utils.Constants;
 
+import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.*;
-
-import org.eclipse.fx.ui.controls.tree.FilterableTreeItem;
-import org.eclipse.fx.ui.controls.tree.TreeItemPredicate;
-
-import javax.swing.*;
+import java.util.List;
+import java.util.Objects;
+import java.util.ResourceBundle;
 
 public class DashboardController extends Main implements Initializable {
 
@@ -58,10 +56,8 @@ public class DashboardController extends Main implements Initializable {
     public Label countAll;
     public TextField tableViewSearchField;
     public TitledPane leftTitledPane;
-    public Label corrent_session_user_email;
-    public Label corrent_session_user_status;
-
-
+    public Label current_session_user_email;
+    public Label current_session_user_status;
     TreeView<CategoryItem> treeView = new TreeView<>();
 
     // Dešinės panelės label
@@ -94,7 +90,374 @@ public class DashboardController extends Main implements Initializable {
     public static long loggedTimeElapsed;
 
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        loadColumnToTable();
+        createContents();
+        currentSessionUserData();
+        //loggedTimeStart = System.nanoTime();
+    }
 
+    //Nusako table'o stulpelius ir jų matmenys.
+    public void loadColumnToTable() {
+
+        table.setEditable(true);
+        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        // pakeisti lietuviskai kategorijos numeri, produkto pavadinimas, kaina, kiekis.
+        TableColumn number = new TableColumn("#");
+        TableColumn<ProductCatalog, Integer> catalogNo = new TableColumn<>("Katalogo nr.");
+        TableColumn<ProductCatalog, String> symbol = new TableColumn<>("Produkto pavadinimas");
+        TableColumn<ProductCatalog, Double> priceNet = new TableColumn<>("Kaina");
+        TableColumn<ProductCatalog, Integer> stock = new TableColumn<>("Kiekis");
+
+        table.getColumns().addAll(number, catalogNo, symbol, priceNet, stock);
+
+        number.minWidthProperty().bind(table.widthProperty().multiply(0.05));
+        catalogNo.minWidthProperty().bind(table.widthProperty().multiply(0.17));
+        symbol.minWidthProperty().bind(table.widthProperty().multiply(0.52));
+        priceNet.minWidthProperty().bind(table.widthProperty().multiply(0.09));
+        stock.minWidthProperty().bind(table.widthProperty().multiply(0.09));
+
+        number.setCellValueFactory((Callback<TableColumn.CellDataFeatures<ProductCatalog, ProductCatalog>, ObservableValue<ProductCatalog>>) p -> new ReadOnlyObjectWrapper(p.getValue()));
+
+        number.setCellFactory(new Callback<TableColumn<ProductCatalog, ProductCatalog>, TableCell<ProductCatalog, ProductCatalog>>() {
+            @Override
+            public TableCell<ProductCatalog, ProductCatalog> call(TableColumn<ProductCatalog, ProductCatalog> param) {
+                return new TableCell<ProductCatalog, ProductCatalog>() {
+                    @Override
+                    protected void updateItem(ProductCatalog item, boolean empty) {
+                        super.updateItem(item, empty);
+
+                        if (this.getTableRow() != null && item != null) {
+                            setText(this.getTableRow().getIndex() + 1 + "");
+                        } else {
+                            setText("");
+                        }
+                    }
+                };
+            }
+        });
+        number.setSortable(false);
+        catalogNo.setCellValueFactory(new PropertyValueFactory<>("catalogNo"));
+        symbol.setCellValueFactory(new PropertyValueFactory<>("symbol"));
+        symbol.setCellFactory(TextFieldTableCell.forTableColumn());
+        symbol.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<ProductCatalog, String>>() {
+            @Override
+            public void handle(TableColumn.CellEditEvent<ProductCatalog, String> event) {
+                ProductCatalog productCatalog = event.getRowValue();
+                productCatalog.setSymbol(event.getNewValue());
+                ProductCatalogDAO.updateSymbol(event.getNewValue(), productCatalog.getId());
+            }
+        });
+        priceNet.setCellValueFactory(new PropertyValueFactory<>("priceNet"));
+        priceNet.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
+        priceNet.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<ProductCatalog, Double>>() {
+            @Override
+            public void handle(TableColumn.CellEditEvent<ProductCatalog, Double> event) {
+                ProductCatalog productCatalog = event.getRowValue();
+                productCatalog.setPriceNet(event.getNewValue());
+                ProductCatalogDAO.updatePrice(event.getNewValue(), productCatalog.getId());
+            }
+        });
+        stock.setCellValueFactory(new PropertyValueFactory<>("stock"));
+
+
+        number.setResizable(true);
+        catalogNo.setResizable(true);
+        symbol.setResizable(true);
+        priceNet.setResizable(true);
+        stock.setResizable(true);
+
+        tableViewSearchField.setPromptText("Įveskite produkto pavadinimą filtravimui ...");
+    }
+
+    //Iš excel failo pasiema produktus.
+    public void openExcelFileFromDialog() {
+        final FileChooser fileChooser = new FileChooser();
+        configureFileChooser(fileChooser);
+        File file = fileChooser.showOpenDialog(new Stage());
+        if (file != null) {
+            JOptionPane.showMessageDialog(null, "Prašome palaukti. Nuskaitomas Excel Failas: " + file.getName());
+            openFile(file);
+        }
+    }
+
+    //Konfiguriuoja failo pasirinkimus
+    private static void configureFileChooser(final FileChooser fileChooser) {
+        fileChooser.setTitle("Uzkrauti excel faila");
+        fileChooser.setInitialDirectory(
+                new File(System.getProperty("user.home"))
+        );
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Excel file", "*.xlsx")
+        );
+    }
+
+    //Tikriną excelio produktų kainas su duombasėje esamomis produkto kainomis, įkelia naujus produktus, jei jų nėra duombasėje, visai tai skaičiuoja.
+    private void openFile(File file) {
+        ProductCatalogDAO.checkIfCatalogExistsIfNotCreateIt();
+        Window parent = open_file.getScene().getWindow();
+
+        List<ProductCatalog> excelProducts = null;
+        List<ProductCatalog> dbProducts = ProductCatalogDAO.displayAllItems();
+
+        try {
+            excelProducts = ReadExcelWithProductCatalog.readFileUsingPOI(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        int countAffectedProducts = 0;
+        int countExcelProducts = 0;
+        int countNewProducts = 0;
+        int countDBProducts = 0;
+
+        assert excelProducts != null;
+        try {
+            for (ProductCatalog excelProduct : excelProducts) {
+                countExcelProducts++;
+                boolean isNewProduct = true;
+
+                for (ProductCatalog dbProduct : dbProducts) {
+                    if (dbProduct.getPriceNet() != excelProduct.getPriceNet() && dbProduct.getCatalogNo() == excelProduct.getCatalogNo()) {
+                        isNewProduct = false;
+                        ProductCatalogDAO.updatePrice(excelProduct.getPriceNet(), dbProduct.getId());
+                        countAffectedProducts++;
+                    } else if (dbProduct.getPriceNet() == excelProduct.getPriceNet() && dbProduct.getCatalogNo() == excelProduct.getCatalogNo()) {
+                        isNewProduct = false;
+                        countDBProducts = dbProducts.size() - countAffectedProducts;
+                    }
+                }
+                if (isNewProduct) {
+                    countNewProducts++;
+                    ProductCatalogDAO.insert(excelProduct);
+                }
+            }
+            createInformationPopUp(countAffectedProducts, countExcelProducts, countNewProducts, countDBProducts);
+        } catch (NullPointerException e) {
+            System.out.println("openFile() NullPointerException");
+        } catch (RuntimeException e) {
+            System.out.println("openFile() RuntimeExeception");
+        }
+
+    }
+
+    //Sukuria pop up su produktų kiekių informaciją.
+    public void createInformationPopUp(int countAffectedProducts, int countExcelProducts, int countNewProducts, int countDBProducts) {
+        Window parent = open_file.getScene().getWindow();
+
+        Label label = new Label("Pakeista produktų :" + " " + countAffectedProducts + "\n" +
+                "Excel'yje yra produktų : " + countExcelProducts + "\n" +
+                "Pridėta naujų produktų : " + countNewProducts + "\n" +
+                "Duombazėje nepakeistų produktų : " + countDBProducts);
+        final Popup popup = new Popup();
+        Button hide = new Button("Ok");
+        hide.setOnAction(event -> popup.hide());
+        hide.setLayoutX(140);
+        hide.setLayoutY(115);
+        label.setStyle(" -fx-background-color: grey; -fx-text-fill: white;");
+        label.setMinWidth(300);
+        label.setMinHeight(150);
+        label.setAlignment(Pos.CENTER);
+        popup.getContent().addAll(label, hide);
+        popup.show(parent);
+
+    }
+
+    //Sukuria vbox elementą, kuriame ir yra treeView su filtravimo funkcija.
+    public void createContents() {
+        VBox vBoxElement = new VBox(6);
+        vBoxElement.getChildren().add(createFilterPane());
+        Node pane = createPane();
+        VBox.setVgrow(pane, Priority.ALWAYS);
+        vBoxElement.getChildren().add(pane);
+    }
+
+    //Redaguoja ir sujungia titled pane su text field.
+    private Node createFilterPane() {
+        treeViewSearchField.setPromptText("Įveskite kategorijos pavadinimą filtravimui ...");
+        TitledPane pane = new TitledPane("Filter", treeViewSearchField);
+        pane.setCollapsible(false);
+        return pane;
+    }
+
+    //Sukuria hbox elementą, kuris laiko treeview.
+    private Node createPane() {
+        HBox hBoxElement = new HBox(6);
+        Node filteredTree = createFilteredTree();
+        HBox.setHgrow(filteredTree, Priority.ALWAYS);
+        hBoxElement.getChildren().add(filteredTree);
+        leftTitledPane.setContent(filteredTree);
+        return new BorderPane(hBoxElement);
+    }
+
+    //Sukuria treeview su filtravimu.
+    private Node createFilteredTree() {
+        FilterableTreeItem<CategoryItem> root = loadsProductsToCatalogTree();
+        root.predicateProperty().bind(Bindings.createObjectBinding(() -> {
+            if (treeViewSearchField.getText() == null || treeViewSearchField.getText().isEmpty())
+                return null;
+            return TreeItemPredicate.create(categoryItem -> categoryItem.toString().toLowerCase().contains(treeViewSearchField.getText().toLowerCase()));
+        }, treeViewSearchField.textProperty()));
+        treeView.setRoot(root);
+        treeView.setShowRoot(false);
+        mouseEventForTreeView();
+        mouseEventForTableView();
+        return treeView;
+    }
+
+    //Filtruoja treeviewitem ,kad sutaptu su duombazės pavadinimų.
+    public String homeFilter(String itemName) {
+        if (itemName.equals("Visos kategorijos")) {
+            return "Home";
+        }
+        return itemName;
+    }
+
+    //Sukuria filtruojama treeview item.
+    private FilterableTreeItem<CategoryItem> createFolder(String name) {
+        return new FilterableTreeItem<>(new CategoryItem(name));
+    }
+
+    //Surenka visus produktus turinčius pasirinktos kategorijos id
+    public ObservableList<ProductCatalog> createFilteredList(List<Categories> categories, List<ProductCatalog> products) throws NullPointerException {
+        ObservableList<ProductCatalog> filteredProduct = FXCollections.observableArrayList();
+        for (Categories category : categories) {
+            for (ProductCatalog product : products) {
+                if (category.getId() == product.getGroupId()) {
+                    filteredProduct.add(product);
+                }
+            }
+        }
+        return filteredProduct;
+    }
+
+    //Sukelia observablelistą į table'ą su filtravimo funkciją.
+    public void tableSearchFunction(ObservableList<ProductCatalog> productCatalogs) {
+        FilteredList<ProductCatalog> flProducts = new FilteredList(productCatalogs, product -> true);
+        tableViewSearchField.textProperty().addListener((observable, oldValue, newValue) -> {
+            flProducts.setPredicate(product -> product.getSymbol().toLowerCase().contains(newValue.toLowerCase().trim()));
+            countAll.setText("Išviso įrašų : " + flProducts.size());
+        });
+        SortedList<ProductCatalog> slProducts = new SortedList<>(flProducts);
+        slProducts.comparatorProperty().bind(table.comparatorProperty());
+        countAll.setText("Išviso įrašų : " + slProducts.size());
+        table.setItems(slProducts);
+    }
+
+    //Paspaudus ant treeView item'o, table'ę atsiras visi jam priskirti produktai.
+    public void mouseEventForTreeView() {
+        treeView.addEventFilter(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
+            TreeItem<CategoryItem> item;
+            List<Categories> categories;
+            List<ProductCatalog> products;
+            ProductCatalog tableItem;
+            try {
+                if (!treeView.getSelectionModel().isEmpty()) {
+                    item = treeView.getSelectionModel().getSelectedItem();
+                    categories = CategoriesDAO.selectCategory(homeFilter(item.getValue().getName()));
+                    products = ProductCatalogDAO.displayAllItems();
+                    tableSearchFunction(createFilteredList(categories, products));
+                }
+            } catch (IllegalStateException e) {
+                System.out.println("mouseEventForTreeView() IllegalStateExecption");
+            } catch (NullPointerException e) {
+                System.out.println("mouseEventForTreeView() NullPointerException");
+            }
+
+
+        });
+    }
+
+    // Tikrinama ar vidurinėje panelėje buvo pasirinktas item, jeigu buvo, kviečiamas dešinės panelės užpildymo metodas
+    // metodui perduodamas item'o katalogo numeris.
+    public void mouseEventForTableView() {
+        table.addEventFilter(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
+            ProductCatalog tableItem;
+            try {
+                if (!table.getSelectionModel().isEmpty()) {
+                    tableItem = table.getSelectionModel().getSelectedItem();
+                    fillDescriptionPanel(tableItem.getCatalogNo());
+                    System.out.println("Item was selected.");
+                    System.out.println("Selected Catalog No: " + tableItem.getCatalogNo());
+                }
+            } catch (IllegalStateException e) {
+                System.out.println("mouseEventForTreeView() IllegalStateExecption");
+            } catch (NullPointerException e) {
+                System.out.println("mouseEventForTreeView() NullPointerException");
+            }
+
+        });
+    }
+
+    // Suveikia pasirinkus item'ą vidurinėje panelėje.
+    // Pirmiausia kreipiamasi į duomenų bazę, patikrinama ar egzistuoja produkto aprašymas.
+    // Jei egzistuoja, ištraukiami visi duomenys ir užpildoma dešinė panelė.
+    public void fillDescriptionPanel(int catalogNoImported) {
+        List<ProductDescription> productByCatalogNo = ProductDescriptionDAO.searchByCatalogNo(catalogNoImported);
+        if (productByCatalogNo.isEmpty()) {
+            catalogNo.setText(String.valueOf(catalogNoImported));
+            itemName.setText("PREKĖS APRAŠYMAS NERASTAS");
+            basePrice.setText("-");
+            discountInPercent.setText("-");
+            deliveryTimeInDaysFrom.setText("-");
+            deliveryTimeInDaysTo.setText("-");
+            itemPackage.setText("-");
+            minOrderAmount.setText("-");
+            discountGroup.setText("-");
+            productFamily.setText("-");
+            eanCode.setText("-");
+        } else {
+            ProductDescription selectedProductDescription = productByCatalogNo.get(0);
+            catalogNo.setText(String.valueOf(catalogNoImported));
+            itemName.setText(selectedProductDescription.getItemName());
+            basePrice.setText(String.valueOf(selectedProductDescription.getBasePrice()));
+            discountInPercent.setText(String.valueOf(selectedProductDescription.getDiscountInPercent()));
+            deliveryTimeInDaysFrom.setText(String.valueOf(selectedProductDescription.getDeliveryTimeInDaysFrom()));
+            deliveryTimeInDaysTo.setText(String.valueOf(selectedProductDescription.getDeliveryTimeInDaysTo()));
+            itemPackage.setText(selectedProductDescription.getItemPackage());
+            minOrderAmount.setText(String.valueOf(selectedProductDescription.getMinOrderAmount()));
+            discountGroup.setText(selectedProductDescription.getDiscountGroup());
+            productFamily.setText(selectedProductDescription.getProductFamily());
+            eanCode.setText(selectedProductDescription.getEanCode());
+        }
+    }
+
+    private void currentSessionUserData() {
+
+        //Getting data from the last scene calling a class UserHolder
+        UserHolder holder = UserHolder.getInstance();
+        User u = holder.getUser();
+        String email = u.getEmail();
+        Boolean isAdmin = u.isAdmin();
+
+
+        if (isAdmin == true) {
+            current_session_user_status.setText(Constants.CURRENT_SESSION_STATUS_ADMIN);
+        } else {
+            current_session_user_status.setText(Constants.CURRENT_SESSION_STATUS_USER);
+        }
+
+        current_session_user_email.setText(email);
+    }
+
+    // Atidaro langą su vartotojų sąrašu
+    public void openUserStats() {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource(Constants.USER_STATS_VIEW_PATH));
+            Stage registerStage = new Stage();
+            Scene scene = new Scene(root);
+            registerStage.setTitle("Informacija apie programos vartotojus");
+            registerStage.setScene(scene);
+            registerStage.setResizable(true);
+            registerStage.show();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            e.getCause();
+        }
+
+    }
 
     public void goBackToLogin(ActionEvent actionEvent) {
         try {
@@ -113,10 +476,26 @@ public class DashboardController extends Main implements Initializable {
         }
     }
 
+    public void createNewProduct(ActionEvent actionEvent) {
+        try {
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(Constants.PRODUCTFORM_VIEW_PATH)));
+            Stage LoginStage = new Stage();
+            Scene scene = new Scene(root, Constants.REGISTER_WINDOW_WIDTH, Constants.REGISTER_WINDOW_HEIGHT);
+            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource(Constants.CSS_DIRECTORY_PATH)).toExternalForm());
+            LoginStage.setTitle("");
+            LoginStage.setScene(scene);
+            LoginStage.show();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            e.getCause();
+        }
+    }
+
     public void windowClose() { //Uzdaro prisijungimo langa
         Stage stage = (Stage) close_button.getScene().getWindow();
-       // loggedTimeElapsed = System.nanoTime() - loggedTimeStart;
-       // UserDAO.updateUserTimeSpent((int) loggedTimeElapsed);
+        //loggedTimeElapsed = System.nanoTime() - loggedTimeStart;
+        //UserDAO.updateUserTimeSpent((int) loggedTimeElapsed);
         stage.close();
     }
 
@@ -589,381 +968,6 @@ public class DashboardController extends Main implements Initializable {
     }
 
 
-    //Nusako table'o stulpelius ir jų matmenys.
-    public void loadColumnToTable() {
-
-        table.setEditable(true);
-        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        // pakeisti lietuviskai kategorijos numeri, produkto pavadinimas, kaina, kiekis.
-        TableColumn number = new TableColumn("#");
-        TableColumn<ProductCatalog, Integer> catalogNo = new TableColumn<>("Katalogo nr.");
-        TableColumn<ProductCatalog, String> symbol = new TableColumn<>("Produkto pavadinimas");
-        TableColumn<ProductCatalog, Double> priceNet = new TableColumn<>("Kaina");
-        TableColumn<ProductCatalog, Integer> stock = new TableColumn<>("Kiekis");
-
-        table.getColumns().addAll(number, catalogNo, symbol, priceNet, stock);
-
-        number.minWidthProperty().bind(table.widthProperty().multiply(0.05));
-        catalogNo.minWidthProperty().bind(table.widthProperty().multiply(0.17));
-        symbol.minWidthProperty().bind(table.widthProperty().multiply(0.52));
-        priceNet.minWidthProperty().bind(table.widthProperty().multiply(0.09));
-        stock.minWidthProperty().bind(table.widthProperty().multiply(0.09));
-
-        number.setCellValueFactory((Callback<TableColumn.CellDataFeatures<ProductCatalog, ProductCatalog>, ObservableValue<ProductCatalog>>) p -> new ReadOnlyObjectWrapper(p.getValue()));
-
-        number.setCellFactory(new Callback<TableColumn<ProductCatalog, ProductCatalog>, TableCell<ProductCatalog, ProductCatalog>>() {
-            @Override
-            public TableCell<ProductCatalog, ProductCatalog> call(TableColumn<ProductCatalog, ProductCatalog> param) {
-                return new TableCell<ProductCatalog, ProductCatalog>() {
-                    @Override
-                    protected void updateItem(ProductCatalog item, boolean empty) {
-                        super.updateItem(item, empty);
-
-                        if (this.getTableRow() != null && item != null) {
-                            setText(this.getTableRow().getIndex() + 1 + "");
-                        } else {
-                            setText("");
-                        }
-                    }
-                };
-            }
-        });
-        number.setSortable(false);
-        catalogNo.setCellValueFactory(new PropertyValueFactory<>("catalogNo"));
-        symbol.setCellValueFactory(new PropertyValueFactory<>("symbol"));
-        symbol.setCellFactory(TextFieldTableCell.forTableColumn());
-        symbol.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<ProductCatalog, String>>() {
-            @Override
-            public void handle(TableColumn.CellEditEvent<ProductCatalog, String> event) {
-                ProductCatalog productCatalog = event.getRowValue();
-                productCatalog.setSymbol(event.getNewValue());
-                ProductCatalogDAO.updateSymbol(event.getNewValue(), productCatalog.getId());
-            }
-        });
-        priceNet.setCellValueFactory(new PropertyValueFactory<>("priceNet"));
-        priceNet.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
-        priceNet.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<ProductCatalog, Double>>() {
-            @Override
-            public void handle(TableColumn.CellEditEvent<ProductCatalog, Double> event) {
-                ProductCatalog productCatalog = event.getRowValue();
-                productCatalog.setPriceNet(event.getNewValue());
-                ProductCatalogDAO.updatePrice(event.getNewValue(), productCatalog.getId());
-            }
-        });
-        stock.setCellValueFactory(new PropertyValueFactory<>("stock"));
-
-
-
-        number.setResizable(true);
-        catalogNo.setResizable(true);
-        symbol.setResizable(true);
-        priceNet.setResizable(true);
-        stock.setResizable(true);
-
-        tableViewSearchField.setPromptText("Įveskite produkto pavadinimą filtravimui ...");
-    }
-
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-
-
-        loadColumnToTable();
-        createContents();
-      currentSessionUserData();
-        loggedTimeStart = System.nanoTime();
-
-
-    }
-
-    //Iš excel failo pasiema produktus.
-    public void openExcelFileFromDialog() {
-        final FileChooser fileChooser = new FileChooser();
-        configureFileChooser(fileChooser);
-        File file = fileChooser.showOpenDialog(new Stage());
-        if (file != null) {
-            JOptionPane.showMessageDialog(null, "Prašome palaukti. Nuskaitomas Excel Failas: " + file.getName());
-            openFile(file);
-        }
-    }
-
-    //Sukelia observablelistą į table'ą su filtravimo funkciją.
-    public void tableSearchFunction(ObservableList<ProductCatalog> productCatalogs) {
-        FilteredList<ProductCatalog> flProducts = new FilteredList(productCatalogs, product -> true);
-        tableViewSearchField.textProperty().addListener((observable, oldValue, newValue) -> {
-            flProducts.setPredicate(product -> product.getSymbol().toLowerCase().contains(newValue.toLowerCase().trim()));
-            countAll.setText("Išviso įrašų : " + flProducts.size());
-        });
-        SortedList<ProductCatalog> slProducts = new SortedList<>(flProducts);
-        slProducts.comparatorProperty().bind(table.comparatorProperty());
-        countAll.setText("Išviso įrašų : " + slProducts.size());
-        table.setItems(slProducts);
-    }
-
-    //Tikriną excelio produktų kainas su duombasėje esamomis produkto kainomis, įkelia naujus produktus, jei jų nėra duombasėje, visai tai skaičiuoja.
-    private void openFile(File file) {
-        ProductCatalogDAO.checkIfCatalogExistsIfNotCreateIt();
-        Window parent = open_file.getScene().getWindow();
-
-        List<ProductCatalog> excelProducts = null;
-        List<ProductCatalog> dbProducts = ProductCatalogDAO.displayAllItems();
-
-        try {
-            excelProducts = ReadExcelWithProductCatalog.readFileUsingPOI(file);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        int countAffectedProducts = 0;
-        int countExcelProducts = 0;
-        int countNewProducts = 0;
-        int countDBProducts = 0;
-
-        assert excelProducts != null;
-        try {
-            for (ProductCatalog excelProduct : excelProducts) {
-                countExcelProducts++;
-                boolean isNewProduct = true;
-
-                for (ProductCatalog dbProduct : dbProducts) {
-                    if (dbProduct.getPriceNet() != excelProduct.getPriceNet() && dbProduct.getCatalogNo() == excelProduct.getCatalogNo()) {
-                        isNewProduct = false;
-                        ProductCatalogDAO.updatePrice(excelProduct.getPriceNet(), dbProduct.getId());
-                        countAffectedProducts++;
-                    } else if (dbProduct.getPriceNet() == excelProduct.getPriceNet() && dbProduct.getCatalogNo() == excelProduct.getCatalogNo()) {
-                        isNewProduct = false;
-                        countDBProducts = dbProducts.size() - countAffectedProducts;
-                    }
-                }
-                if (isNewProduct) {
-                    countNewProducts++;
-                    ProductCatalogDAO.insert(excelProduct);
-                }
-            }
-            createInformationPopUp(countAffectedProducts, countExcelProducts, countNewProducts, countDBProducts);
-        } catch (NullPointerException e) {
-            System.out.println("openFile() NullPointerException");
-        } catch (RuntimeException e) {
-            System.out.println("openFile() RuntimeExeception");
-        }
-
-    }
-
-    //Sukuria pop up su produktų kiekių informaciją.
-    public void createInformationPopUp(int countAffectedProducts, int countExcelProducts, int countNewProducts, int countDBProducts) {
-        Window parent = open_file.getScene().getWindow();
-
-        Label label = new Label("Pakeista produktų :" + " " + countAffectedProducts + "\n" +
-                "Excel'yje yra produktų : " + countExcelProducts + "\n" +
-                "Pridėta naujų produktų : " + countNewProducts + "\n" +
-                "Duombazėje nepakeistų produktų : " + countDBProducts);
-        final Popup popup = new Popup();
-        Button hide = new Button("Ok");
-        hide.setOnAction(event -> popup.hide());
-        hide.setLayoutX(140);
-        hide.setLayoutY(115);
-        label.setStyle(" -fx-background-color: grey; -fx-text-fill: white;");
-        label.setMinWidth(300);
-        label.setMinHeight(150);
-        label.setAlignment(Pos.CENTER);
-        popup.getContent().addAll(label, hide);
-        popup.show(parent);
-
-    }
-
-    //Konfiguriuoja failo pasirinkimus
-    private static void configureFileChooser(
-            final FileChooser fileChooser) {
-        fileChooser.setTitle("Uzkrauti excel faila");
-        fileChooser.setInitialDirectory(
-                new File(System.getProperty("user.home"))
-        );
-        fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("Excel file", "*.xlsx")
-        );
-    }
-
-    //Sukuria vbox elementą, kuriame ir yra treeView su filtravimo funkcija.
-    public void createContents() {
-        VBox vBoxElement = new VBox(6);
-        vBoxElement.getChildren().add(createFilterPane());
-        Node pane = createPane();
-        VBox.setVgrow(pane, Priority.ALWAYS);
-        vBoxElement.getChildren().add(pane);
-    }
-
-    //Redaguoja ir sujungia titled pane su text field.
-    private Node createFilterPane() {
-        treeViewSearchField.setPromptText("Įveskite kategorijos pavadinimą filtravimui ...");
-        TitledPane pane = new TitledPane("Filter", treeViewSearchField);
-        pane.setCollapsible(false);
-        return pane;
-    }
-
-    //Sukuria hbox elementą, kuris laiko treeview.
-    private Node createPane() {
-        HBox hBoxElement = new HBox(6);
-        Node filteredTree = createFilteredTree();
-        HBox.setHgrow(filteredTree, Priority.ALWAYS);
-        hBoxElement.getChildren().add(filteredTree);
-        leftTitledPane.setContent(filteredTree);
-        return new BorderPane(hBoxElement);
-    }
-
-    //Sukuria treeview su filtravimu.
-    private Node createFilteredTree() {
-        FilterableTreeItem<CategoryItem> root = loadsProductsToCatalogTree();
-        root.predicateProperty().bind(Bindings.createObjectBinding(() -> {
-            if (treeViewSearchField.getText() == null || treeViewSearchField.getText().isEmpty())
-                return null;
-            return TreeItemPredicate.create(categoryItem -> categoryItem.toString().toLowerCase().contains(treeViewSearchField.getText().toLowerCase()));
-        }, treeViewSearchField.textProperty()));
-        treeView.setRoot(root);
-        treeView.setShowRoot(false);
-        mouseEventForTreeView();
-        mouseEventForTableView();
-        return treeView;
-    }
-
-    //Sukuria filtruojama treeview item.
-    private FilterableTreeItem<CategoryItem> createFolder(String name) {
-        return new FilterableTreeItem<>(new CategoryItem(name));
-    }
-
-    //Filtruoja treeviewitem ,kad sutaptu su duombazės pavadinimų.
-    public String homeFilter(String itemName) {
-        if (itemName.equals("Visos kategorijos")) {
-            return "Home";
-        }
-        return itemName;
-    }
-
-    //Surenka visus produktus turinčius pasirinktos kategorijos id
-    public ObservableList<ProductCatalog> createFilteredList(List<Categories> categories, List<ProductCatalog> products) throws NullPointerException {
-        ObservableList<ProductCatalog> filteredProduct = FXCollections.observableArrayList();
-        for (Categories category : categories) {
-            for (ProductCatalog product : products) {
-                if (category.getId() == product.getGroupId()) {
-                    filteredProduct.add(product);
-                }
-            }
-        }
-        return filteredProduct;
-    }
-
-    //Paspaudus ant treeView item'o, table'ę atsiras visi jam priskirti produktai.
-    public void mouseEventForTreeView() {
-        treeView.addEventFilter(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
-            TreeItem<CategoryItem> item;
-            List<Categories> categories;
-            List<ProductCatalog> products;
-            ProductCatalog tableItem;
-            try {
-                if (!treeView.getSelectionModel().isEmpty()) {
-                    item = treeView.getSelectionModel().getSelectedItem();
-                    categories = CategoriesDAO.selectCategory(homeFilter(item.getValue().getName()));
-                    products = ProductCatalogDAO.displayAllItems();
-                    tableSearchFunction(createFilteredList(categories, products));
-                }
-            } catch (IllegalStateException e) {
-                System.out.println("mouseEventForTreeView() IllegalStateExecption");
-            } catch (NullPointerException e) {
-                System.out.println("mouseEventForTreeView() NullPointerException");
-            }
-
-
-        });
-    }
-
-    // Tikrinama ar vidurinėje panelėje buvo pasirinktas item, jeigu buvo, kviečiamas dešinės panelės užpildymo metodas
-    // metodui perduodamas item'o katalogo numeris.
-    public void mouseEventForTableView() {
-        table.addEventFilter(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
-            ProductCatalog tableItem;
-            try {
-                if (!table.getSelectionModel().isEmpty()) {
-                    tableItem = table.getSelectionModel().getSelectedItem();
-                    fillDescriptionPanel(tableItem.getCatalogNo());
-                    System.out.println("Item was selected.");
-                    System.out.println("Selected Catalog No: " + tableItem.getCatalogNo());
-                }
-            } catch (IllegalStateException e) {
-                System.out.println("mouseEventForTreeView() IllegalStateExecption");
-            } catch (NullPointerException e) {
-                System.out.println("mouseEventForTreeView() NullPointerException");
-            }
-
-        });
-    }
-
-    // Suveikia pasirinkus item'ą vidurinėje panelėje.
-    // Pirmiausia kreipiamasi į duomenų bazę, patikrinama ar egzistuoja produkto aprašymas.
-    // Jei egzistuoja, ištraukiami visi duomenys ir užpildoma dešinė panelė.
-    public void fillDescriptionPanel(int catalogNoImported) {
-        List<ProductDescription> productByCatalogNo = ProductDescriptionDAO.searchByCatalogNo(catalogNoImported);
-        if (productByCatalogNo.isEmpty()) {
-            catalogNo.setText(String.valueOf(catalogNoImported));
-            itemName.setText("PREKĖS APRAŠYMAS NERASTAS");
-            basePrice.setText("-");
-            discountInPercent.setText("-");
-            deliveryTimeInDaysFrom.setText("-");
-            deliveryTimeInDaysTo.setText("-");
-            itemPackage.setText("-");
-            minOrderAmount.setText("-");
-            discountGroup.setText("-");
-            productFamily.setText("-");
-            eanCode.setText("-");
-        } else {
-            ProductDescription selectedProductDescription = productByCatalogNo.get(0);
-            catalogNo.setText(String.valueOf(catalogNoImported));
-            itemName.setText(selectedProductDescription.getItemName());
-            basePrice.setText(String.valueOf(selectedProductDescription.getBasePrice()));
-            discountInPercent.setText(String.valueOf(selectedProductDescription.getDiscountInPercent()));
-            deliveryTimeInDaysFrom.setText(String.valueOf(selectedProductDescription.getDeliveryTimeInDaysFrom()));
-            deliveryTimeInDaysTo.setText(String.valueOf(selectedProductDescription.getDeliveryTimeInDaysTo()));
-            itemPackage.setText(selectedProductDescription.getItemPackage());
-            minOrderAmount.setText(String.valueOf(selectedProductDescription.getMinOrderAmount()));
-            discountGroup.setText(selectedProductDescription.getDiscountGroup());
-            productFamily.setText(selectedProductDescription.getProductFamily());
-            eanCode.setText(selectedProductDescription.getEanCode());
-        }
-    }
-
-        private void currentSessionUserData(){
-
-            //Getting data from the last scene calling a class UserHolder
-            UserHolder holder = UserHolder.getInstance();
-            User u = holder.getUser();
-            String email = u.getEmail();
-            Boolean isAdmin = u.isAdmin();
-
-
-            if(isAdmin == true){
-                corrent_session_user_status.setText(Constants.CURRENT_SESSION_STATUS_ADMIN);
-            }else{
-                corrent_session_user_status.setText(Constants.CURRENT_SESSION_STATUS_USER);
-            }
-
-            corrent_session_user_email.setText(email);
-        }
-
-    // Atidaro langą su vartotojų sąrašu
-    public void openUserStats() {
-        try {
-            Parent root = FXMLLoader.load(getClass().getResource(Constants.USER_STATS_VIEW_PATH));
-            Stage registerStage = new Stage();
-            Scene scene = new Scene(root);
-            registerStage.setTitle("Informacija apie programos vartotojus");
-            registerStage.setScene(scene);
-            registerStage.setResizable(true);
-            registerStage.show();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            e.getCause();
-        }
-
-    }
 }
 
 
