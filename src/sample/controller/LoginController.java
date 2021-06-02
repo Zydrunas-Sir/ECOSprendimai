@@ -138,6 +138,7 @@ public class LoginController implements Initializable {
             dashboardStage.setScene(scene);
             dashboardStage.setMinWidth(1345);
             dashboardStage.show();
+            dashboardStage.setOnCloseRequest(e -> DashboardController.closeDashboard());
             windowCloseLoginButton();
 
         } catch (Exception e) {

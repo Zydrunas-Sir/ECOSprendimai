@@ -3,6 +3,7 @@ package sample.JPA.user;
 import org.hibernate.exception.JDBCConnectionException;
 import org.hibernate.service.spi.ServiceException;
 import sample.JPA.JPAUtil;
+import sample.JPA.ProductCatalog;
 
 import javax.persistence.*;
 import java.util.List;
@@ -99,28 +100,35 @@ public class UserDAO {
         return userList;
     }
 
-    public static void updateUserTimeSpent(int timeSpent) {
+    public static void updateUserTimeSpent(User holdedUser, int timeSpent) {
 
         EntityManager entityManager;
         EntityTransaction entityTransaction;
-        User user1;
 
         try {
             entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
             entityTransaction = entityManager.getTransaction();
+
             entityTransaction.begin();
-            user1 = entityManager.find(User.class, timeSpent);
-            user1.setTimeSpend(timeSpent);
+            Query query = entityManager.createQuery(
+                    "SELECT a FROM User a WHERE a.email = :email2")
+                    .setParameter("email2", holdedUser.getEmail());
+            User downloadedUser = (User) query.getSingleResult();
+            entityManager.getTransaction().commit();
+
+            entityTransaction.begin();
+            holdedUser = entityManager.find(User.class, downloadedUser.getId());
+            holdedUser.setTimeSpend(timeSpent + downloadedUser.getTimeSpend());
             entityManager.getTransaction().commit();
             entityManager.close();
         } catch (IllegalStateException e) {
-            System.out.println("ProductCaalogDAO.updateByCatalog_no IllegalStateException");
+            System.out.println("ProductCatalogDAO.updateUserTimeSpent IllegalStateException");
         } catch (JDBCConnectionException e) {
-            System.out.println("ProductCaalogDAO.updateByCatalog_no JDBCConnectionException");
+            System.out.println("ProductCatalogDAO.updateUserTimeSpent JDBCConnectionException");
         } catch (ServiceException e) {
-            System.out.println("ProductCaalogDAO.updateByCatalog_no ServiceException");
+            System.out.println("ProductCatalogDAO.updateUserTimeSpent ServiceException");
         } catch (PersistenceException e) {
-            System.out.println("ProductCaalogDAO.updateByCatalog_no PersistenceException");
+            System.out.println("ProductCatalogDAO.updateUserTimeSpent PersistenceException");
         }
     }
 
