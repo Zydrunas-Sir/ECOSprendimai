@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="618.0" prefWidth="550.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.RegisterController">
+<AnchorPane prefHeight="552.0" prefWidth="550.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.RegisterController">
    <children>
       <Label alignment="CENTER_RIGHT" layoutX="20.0" layoutY="240.0" prefHeight="35.0" prefWidth="184.0" text="Įmonės pavadinimas:">
          <font>
@@ -35,14 +36,20 @@
             <Font name="Microsoft JhengHei Light" size="15.0" />
          </font>
       </PasswordField>
-      <Button fx:id="register_button" layoutX="107.0" layoutY="545.0" mnemonicParsing="false" onAction="#register" prefHeight="34.0" prefWidth="336.0" text="Registruoti" AnchorPane.bottomAnchor="39.0" AnchorPane.leftAnchor="107.0" AnchorPane.rightAnchor="107.0">
+      <Button fx:id="register_button" layoutX="107.0" layoutY="497.0" mnemonicParsing="false" onAction="#register" prefHeight="34.0" prefWidth="336.0" style="-fx-background-color: #4444;" text="Registruoti" AnchorPane.bottomAnchor="21.0" AnchorPane.leftAnchor="107.0" AnchorPane.rightAnchor="107.0">
          <font>
             <Font name="Microsoft JhengHei Light" size="16.0" />
-         </font></Button>
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
       <Button fx:id="close" layoutX="20.0" layoutY="21.0" mnemonicParsing="false" onAction="#goToLogin" prefHeight="24.0" prefWidth="70.0" style="-fx-background-color: #4444;" text="Grįžti" textAlignment="CENTER" visible="true" AnchorPane.rightAnchor="460.0" AnchorPane.topAnchor="21.0">
          <font>
             <Font size="13.0" />
-         </font></Button>
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
       <Label alignment="CENTER_RIGHT" layoutX="20.0" layoutY="180.0" prefHeight="35.0" prefWidth="184.0" text="Elektroninis paštas:">
          <font>
             <Font name="Microsoft JhengHei Light" size="18.0" />
@@ -52,7 +59,7 @@
             <Font name="Microsoft JhengHei Light" size="18.0" />
          </font></Label>
 
-      <Label fx:id="form_info_label" alignment="CENTER" layoutX="6.0" layoutY="413.0" prefHeight="112.0" prefWidth="538.0" textAlignment="CENTER" textFill="RED" wrapText="true">
+      <Label fx:id="form_info_label" alignment="CENTER" layoutX="6.0" layoutY="403.0" prefHeight="87.0" prefWidth="538.0" textAlignment="CENTER" textFill="RED" wrapText="true">
          <font>
             <Font name="Arial" size="13.0" />
          </font></Label>

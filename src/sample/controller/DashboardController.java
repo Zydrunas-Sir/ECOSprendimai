@@ -465,12 +465,13 @@ public class DashboardController extends Main implements Initializable {
     public void goBackToLogin(ActionEvent actionEvent) {
         try {
             Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(Constants.LOGIN_VIEW_DIRECTORY_PATH)));
-            Stage LoginStage = new Stage();
+            Stage loginStage = new Stage();
             Scene scene = new Scene(root, Constants.LOGIN_WINDOW_WIDTH, Constants.LOGIN_WINDOW_HEIGHT);
             scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource(Constants.CSS_DIRECTORY_PATH)).toExternalForm());
-            LoginStage.setTitle("");
-            LoginStage.setScene(scene);
-            LoginStage.show();
+            loginStage.setTitle("Prisijungimas");
+            loginStage.setResizable(false);
+            loginStage.setScene(scene);
+            loginStage.show();
             windowClose();
 
         } catch (Exception e) {

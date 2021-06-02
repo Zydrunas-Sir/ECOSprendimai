@@ -100,10 +100,7 @@ public class RegisterController extends Main implements Initializable {
             form_info_label.setStyle("-fx-text-fill: red;");
             form_info_label.setText(Constants.EMAIL_EXISTS);
             email_textfield.setStyle("-fx-text-fill: red;");
-            return;
         }
-
-
     }
 
     public void closeRegister() { //Uzdaro prisijungimo langa
