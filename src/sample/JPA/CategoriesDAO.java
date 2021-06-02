@@ -1,10 +1,12 @@
 package sample.JPA;
 
-import org.hibernate.HibernateException;
 import org.hibernate.exception.JDBCConnectionException;
 import org.hibernate.service.spi.ServiceException;
 
-import javax.persistence.*;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
+import javax.persistence.PersistenceException;
+import javax.persistence.TypedQuery;
 import java.util.List;
 
 public class CategoriesDAO {
@@ -115,7 +117,7 @@ public class CategoriesDAO {
         EntityTransaction entityTransaction = entityManager.getTransaction();
         entityTransaction.begin();
 
-        TypedQuery<String> query = entityManager.createQuery("SELECT CONCAT(REPEAT(' ', count(parent.name) - 1), node.name) AS categoryNames FROM Categories as node INNER JOIN Categories as parent ON ( parent.lft <= node.lft AND parent.rght >= node.lft ) GROUP BY node.id ORDER BY node.lft", String.class);
+        TypedQuery<String> query = entityManager.createQuery("SELECT CONCAT(REPEAT('|', count(parent.name) - 2), CASE WHEN (count(parent.name) - 2 <= 0) THEN node.name ELSE CONCAT('- ', node.name) END) AS categoryNames FROM Categories as node INNER JOIN Categories as parent ON ( parent.lft <= node.lft AND parent.rght >= node.lft ) GROUP BY node.id ORDER BY node.lft", String.class);
         List<String> categories = query.getResultList();
 
         entityManager.getTransaction().commit();
