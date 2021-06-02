@@ -29,10 +29,10 @@ public class Validation {
         return matcher.find(); //Grazina true jei atitinka validacija, false jei neatitinka
     }
 
-    public static final String REGISTER_PASSWORD_PATTERM = "^(?=.*\\d)(?=.*[a-zĄąČčĘęĖėĮįŠšŲųŪūŽž])(?=.*[A-ZĄąČčĘęĖėĮįŠšŲųŪūŽž])(?=.*[a-zA-Z]).\\S{8,15}$";
+    public static final String REGISTER_PASSWORD_PATTERN = "^(?=.*\\d)(?=.*[a-zĄąČčĘęĖėĮįŠšŲųŪūŽž])(?=.*[A-ZĄąČčĘęĖėĮįŠšŲųŪūŽž])(?=.*[a-zA-Z]).\\S{8,15}$";
 
     public static boolean isValidPassword(String password) {
-        Pattern pattern = Pattern.compile(REGISTER_PASSWORD_PATTERM);
+        Pattern pattern = Pattern.compile(REGISTER_PASSWORD_PATTERN);
         Matcher matcher = pattern.matcher(password);
         return matcher.find();
     }
