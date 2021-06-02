@@ -2,6 +2,7 @@ package sample.controller;
 
 
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -16,8 +17,11 @@ import sample.Main;
 import sample.utils.Constants;
 import sample.utils.Validation;
 
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class RegisterController extends Main {
+
+public class RegisterController extends Main implements Initializable {
 
     public Button register_button;
     public Label form_info_label;
@@ -32,68 +36,71 @@ public class RegisterController extends Main {
     private String hashPassword(String plainTextPassword) {
         return BCrypt.hashpw(plainTextPassword, BCrypt.gensalt());
     }
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
 
+    }
     //Checks all register fields are correct
     public void register() {
 
-        if (!first_name_textfield.getText().isEmpty()
-                && !last_name_textfield.getText().isEmpty()
-                && !email_textfield.getText().isEmpty()
-                && !company_name_textfield.getText().isEmpty()
-                && !password_passwordfield.getText().isEmpty()
-                && !password_confirm_passwordfield.getText().isEmpty()
+        if (first_name_textfield.getText().isEmpty()
+                || last_name_textfield.getText().isEmpty()
+                || email_textfield.getText().isEmpty()
+                ||company_name_textfield.getText().isEmpty()
+                || password_passwordfield.getText().isEmpty()
+                || password_confirm_passwordfield.getText().isEmpty()
         ) {
-
-            if (!Validation.isValidFirstName(first_name_textfield.getText())) {
-                WarnStyle();
-                form_info_label.setText(Constants.CREDENTIALS_IS_NOT_FILLED);
-            }
-            if (!Validation.isValidLastName(last_name_textfield.getText())) {
-                WarnStyle();
-                ;
-                form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_FIRST_NAME);
-            }
-            if (!Validation.isValidEmail(email_textfield.getText())) {
-                WarnStyle();
-                form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_LAST_NAME);
-            }
-            if (!Validation.isValidCompanyName(company_name_textfield.getText())) {
-                WarnStyle();
-                form_info_label.setText(Constants.CREDENTIALS_IS_NOT_FILLED_EMAIL);
-            }
-            if (!Validation.isValidPassword(password_passwordfield.getText())) {
-                WarnStyle();
-                form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_COMPANY_NAME);
-            }
-            if (!Validation.isValidPassword(password_confirm_passwordfield.getText())) {
-                WarnStyle();
-                form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_PASSWORD);
-            }
-            if (password_passwordfield.getText().equals(password_confirm_passwordfield.getText())) {
-                //Sending data with email address and getting answer is it exists in boolean
-                boolean credentials = UserDAO.compareEmailForValidation(email_textfield.getText());
-
-
-                //If theres is no same email
-                if (!credentials) {
-                    //Creating new user
-                    registerToDataBase();
-                }
-
-                form_info_label.setText("");
-                form_info_label.setStyle("-fx-text-fill: red;");
-                form_info_label.setText(Constants.EMAIL_EXISTS);
-                email_textfield.setStyle("-fx-text-fill: red;");
-
-
-            } else {
-
-                WarnStyle();
-                form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_PASSWORD);
-            }
-        } else {
+            WarnStyle();
+            form_info_label.setText(Constants.CREDENTIALS_IS_NOT_FILLED);
+            return;
+        }
+        else if (!Validation.isValidFirstName(first_name_textfield.getText())) {
+            WarnStyle();
+            form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_FIRST_NAME);
+            return;
+        }
+        else if (!Validation.isValidLastName(last_name_textfield.getText())) {
+            WarnStyle();
+            form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_LAST_NAME);
+            return;
+        }
+        else if (!Validation.isValidEmail(email_textfield.getText())) {
+            WarnStyle();
+            form_info_label.setText(Constants.CREDENTIALS_IS_NOT_FILLED_EMAIL);
+            return;
+        }
+        else if (!Validation.isValidCompanyName(company_name_textfield.getText())) {
+            WarnStyle();
+            form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_COMPANY_NAME);
+            return;
+        }
+        else if (!Validation.isValidPassword(password_passwordfield.getText())) {
+            WarnStyle();
+            form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_PASSWORD);
+            return;
+        }
+        else if (!Validation.isValidPassword(password_confirm_passwordfield.getText())) {
+            WarnStyle();
+            form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_PASSWORD);
+            return;
+        }
+        else if (!password_passwordfield.getText().equals(password_confirm_passwordfield.getText())) {
             WarnStyle();
             form_info_label.setText(Constants.PASSWORD_IS_NOT_EQUAL);
+        }
+        //Sending data with email address and getting answer is it exists in boolean
+        boolean credentials = UserDAO.compareEmailForValidation(email_textfield.getText());
+
+        //If theres is no same email
+        if (!credentials) {
+            //Creating new user
+            registerToDataBase();
+        }else{
+            form_info_label.setText("");
+            form_info_label.setStyle("-fx-text-fill: red;");
+            form_info_label.setText(Constants.EMAIL_EXISTS);
+            email_textfield.setStyle("-fx-text-fill: red;");
+            return;
         }
 
 
@@ -108,7 +115,6 @@ public class RegisterController extends Main {
         form_info_label.setText("");
         form_info_label.setStyle("-fx-text-fill: red;");
     }
-
 
     public void goToLogin() {
         try {
