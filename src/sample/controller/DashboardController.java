@@ -34,6 +34,7 @@ import org.eclipse.fx.ui.controls.tree.FilterableTreeItem;
 import org.eclipse.fx.ui.controls.tree.TreeItemPredicate;
 import sample.JPA.*;
 import sample.JPA.user.User;
+import sample.JPA.user.UserDAO;
 import sample.JPA.user.UserHolder;
 import sample.Main;
 import sample.utils.Constants;
@@ -87,7 +88,9 @@ public class DashboardController extends Main implements Initializable {
     public Label eanCode;
 
     public static long loggedTimeStart;
-    public static long loggedTimeElapsed;
+    public static long loggedTimeEnd;
+    public static long loggedTimeSpent;
+    public static int spentTimeInSeconds;
 
 
     @Override
@@ -95,7 +98,7 @@ public class DashboardController extends Main implements Initializable {
         loadColumnToTable();
         createContents();
         currentSessionUserData();
-        //loggedTimeStart = System.nanoTime();
+        loggedTimeStart = System.currentTimeMillis(); // Fiksuoja prisijungimo laiko pradžią
     }
 
     //Nusako table'o stulpelius ir jų matmenys.
@@ -494,10 +497,24 @@ public class DashboardController extends Main implements Initializable {
 
     public void windowClose() { //Uzdaro prisijungimo langa
         Stage stage = (Stage) close_button.getScene().getWindow();
-        //loggedTimeElapsed = System.nanoTime() - loggedTimeStart;
-        //UserDAO.updateUserTimeSpent((int) loggedTimeElapsed);
+        calculateSpentTimeLoggedIn();
         stage.close();
     }
+
+    public static void closeDashboard() {
+        calculateSpentTimeLoggedIn();
+    }
+
+    public static void calculateSpentTimeLoggedIn() {
+        loggedTimeEnd = System.currentTimeMillis();
+        loggedTimeSpent = loggedTimeEnd - loggedTimeStart;
+        spentTimeInSeconds = (int) loggedTimeSpent / 1000;
+        System.out.println("Session time: " + spentTimeInSeconds + " seconds");
+        UserHolder holder = UserHolder.getInstance();
+        UserDAO.updateUserTimeSpent(holder.getUser(), spentTimeInSeconds);
+
+    }
+
 
     //Surašomi visi treeview item'imai ir jų relationship'ai
     public FilterableTreeItem<CategoryItem> loadsProductsToCatalogTree() {
@@ -969,5 +986,3 @@ public class DashboardController extends Main implements Initializable {
 
 
 }
-
-

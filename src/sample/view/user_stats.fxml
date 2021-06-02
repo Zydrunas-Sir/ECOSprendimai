@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane minWidth="1000.0" prefHeight="534.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.UserStatsController">
+   <children>
+      <TableView fx:id="userTableView" layoutY="29.0" prefHeight="505.0" prefWidth="1000.0">
+        <columns>
+          <TableColumn fx:id="number" prefWidth="26" text="#" />
+          <TableColumn fx:id="company" prefWidth="123" text="Įmonė" />
+            <TableColumn fx:id="name" prefWidth="149" text="Vardas" />
+            <TableColumn fx:id="surname" prefWidth="143" text="Pavardė" />
+            <TableColumn fx:id="email" prefWidth="147" text="El. paštas" />
+            <TableColumn fx:id="registered" prefWidth="110" text="Užsiregistravo" />
+            <TableColumn fx:id="loginCount" prefWidth="155" text="Naudota minučių" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>
