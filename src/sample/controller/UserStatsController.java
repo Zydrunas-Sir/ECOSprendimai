@@ -51,13 +51,19 @@ public class UserStatsController extends Main implements Initializable {
         userTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         number.setCellValueFactory(new PropertyValueFactory<>("id"));
         company.setCellValueFactory(new PropertyValueFactory<>("companyName"));
+        company.setMinWidth(50);
         name.setCellValueFactory(new PropertyValueFactory<>("firstName"));
+        name.setMinWidth(50);
         surname.setCellValueFactory(new PropertyValueFactory<>("lastName"));
-//        role.setCellValueFactory(new PropertyValueFactory<>("isAdmin"));
+        surname.setMinWidth(50);
         email.setCellValueFactory(new PropertyValueFactory<>("email"));
+        email.setMinWidth(50);
         registeredOn.setCellValueFactory(new PropertyValueFactory<>("registered"));
+        registeredOn.setMinWidth(50);
         lastLogin.setCellValueFactory(new PropertyValueFactory<>("lastLogin"));
+        lastLogin.setMinWidth(50);
         loginCount.setCellValueFactory(new PropertyValueFactory<>("timeSpentInDate"));
+        loginCount.setMinWidth(50);
 
         List<User> userList = getAllUsers();
         ObservableList<ObservableUser> filteredUsers = FXCollections.observableArrayList();
