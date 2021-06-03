@@ -44,14 +44,13 @@
                         <Label layoutX="196.0" layoutY="123.0" prefHeight="17.0" prefWidth="36.0" text="Eur" />
                         <Label layoutX="216.0" layoutY="168.0" prefHeight="17.0" prefWidth="36.0" text="vnt." />
                         <Label layoutX="22.0" layoutY="169.0" prefHeight="17.0" prefWidth="85.0" text="Paketas :" />
-                        <Button layoutX="230.0" layoutY="108.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="30.0" text="?" />
                   <Label layoutX="21.0" layoutY="35.0" prefHeight="17.0" prefWidth="112.0" text="Prekės pavadinimas:" />
                   <Label fx:id="itemName" layoutX="158.0" layoutY="35.0" prefHeight="17.0" prefWidth="192.0" style="-fx-font-weight: bold;" text="label" />
                   <Label layoutX="156.0" layoutY="151.0" text="nuo" />
                   <Label layoutX="199.0" layoutY="151.0" text="iki" />
                   <Label fx:id="deliveryTimeInDaysTo" layoutX="224.0" layoutY="151.0" style="-fx-font-weight: bold;" text="0" />
                   <Label layoutX="243.0" layoutY="151.0" text="d. dienų" />
-                  <Button layoutX="324.0" layoutY="410.0" mnemonicParsing="false" onAction="#openUserStats" text="Users" />
+                  <Button fx:id="userStatsButton" layoutX="324.0" layoutY="410.0" mnemonicParsing="false" onAction="#openUserStats" text="Users" />
                   <Button fx:id="createProduct_Button" layoutX="209.0" layoutY="410.0" mnemonicParsing="false" onAction="#createNewProduct" text="Create product" />
                     </children>
                <padding>

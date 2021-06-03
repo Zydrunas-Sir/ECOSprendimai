@@ -1,7 +1,10 @@
 package sample.JPA.user;
 
 
+import org.apache.poi.ss.formula.functions.T;
+
 import javax.persistence.*;
+import java.sql.Time;
 import java.sql.Timestamp;
 
 @Entity
@@ -24,8 +27,10 @@ public class User {
     private String password;
     @Column(name = "is_admin", columnDefinition="tinyint(1) default 0")
     private boolean isAdmin;
-    @Column(name = "logged_date", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private Timestamp loggedDate;
+    @Column(name = "created_date", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private Timestamp userCreationDate;
+    @Column(name = "last_login", columnDefinition = "TIMESTAMP")
+    private Timestamp lastLogin;
     @Column(name = "time_spend", nullable = false)
     private int timeSpend;
 
@@ -38,7 +43,7 @@ public class User {
         this.password = password;
     }
 
-    public User(int id, String firstName, String lastName, String email, String companyName, String password, boolean isAdmin, Timestamp loggedDate, int timeSpend) {
+    public User(int id, String firstName, String lastName, String email, String companyName, String password, boolean isAdmin, Timestamp userCreationDate, Timestamp lastLogin, int timeSpend) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -46,7 +51,8 @@ public class User {
         this.companyName = companyName;
         this.password = password;
         this.isAdmin = isAdmin;
-        this.loggedDate = loggedDate;
+        this.userCreationDate = userCreationDate;
+        this.lastLogin = lastLogin;
         this.timeSpend = timeSpend;
     }
 
@@ -115,12 +121,12 @@ public class User {
         isAdmin = admin;
     }
 
-    public Timestamp getLoggedDate() {
-        return loggedDate;
+    public Timestamp getUserCreationDate() {
+        return userCreationDate;
     }
 
-    public void setLoggedDate(Timestamp loggedDate) {
-        this.loggedDate = loggedDate;
+    public void setUserCreationDate(Timestamp loggedDate) {
+        this.userCreationDate = loggedDate;
     }
 
     public int getTimeSpend() {
@@ -131,7 +137,13 @@ public class User {
         this.timeSpend = timeSpend;
     }
 
+    public Timestamp getLastLogin() {
+        return lastLogin;
+    }
 
+    public void setLastLogin() {
+        this.lastLogin =  (new Timestamp(System.currentTimeMillis()));
+    }
 
     @Override
     public String toString() {
@@ -143,7 +155,7 @@ public class User {
                 ", companyName='" + companyName + '\'' +
                 ", password='" + password + '\'' +
                 ", isAdmin=" + isAdmin +
-                ", loggedDate=" + loggedDate +
+                ", loggedDate=" + userCreationDate +
                 ", timeSpend=" + timeSpend +
                 '}';
     }
