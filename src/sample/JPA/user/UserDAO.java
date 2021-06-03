@@ -132,4 +132,36 @@ public class UserDAO {
         }
     }
 
+    public static void setLastLoginTime(User holdedUser) {
+
+        EntityManager entityManager;
+        EntityTransaction entityTransaction;
+
+        try {
+            entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
+            entityTransaction = entityManager.getTransaction();
+
+            entityTransaction.begin();
+            Query query = entityManager.createQuery(
+                    "SELECT a FROM User a WHERE a.email = :email2")
+                    .setParameter("email2", holdedUser.getEmail());
+            User downloadedUser = (User) query.getSingleResult();
+            entityManager.getTransaction().commit();
+
+            entityTransaction.begin();
+            holdedUser = entityManager.find(User.class, downloadedUser.getId());
+            holdedUser.setLastLogin();
+            entityManager.getTransaction().commit();
+            entityManager.close();
+        } catch (IllegalStateException e) {
+            System.out.println("ProductCatalogDAO.setLastLoginTime IllegalStateException");
+        } catch (JDBCConnectionException e) {
+            System.out.println("ProductCatalogDAO.setLastLoginTime JDBCConnectionException");
+        } catch (ServiceException e) {
+            System.out.println("ProductCatalogDAO.setLastLoginTime ServiceException");
+        } catch (PersistenceException e) {
+            System.out.println("ProductCatalogDAO.setLastLoginTime PersistenceException");
+        }
+    }
+
 }

@@ -9,9 +9,11 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import sample.JPA.ProductCatalog;
 import sample.JPA.user.User;
+import sample.JPA.user.ObservableUser;
 import sample.Main;
 
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -30,11 +32,13 @@ public class UserStatsController extends Main implements Initializable {
     @FXML
     public TableColumn email;
     @FXML
-    public TableColumn registered;
+    public TableColumn registeredOn;
+    @FXML
+    public TableColumn lastLogin;
     @FXML
     public TableColumn loginCount;
     @FXML
-    public TableView<User> userTableView;
+    public TableView<ObservableUser> userTableView;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -43,21 +47,27 @@ public class UserStatsController extends Main implements Initializable {
 
     private void fillUserTable() {
 
+        loginCount.setSortable(false);
+        userTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         number.setCellValueFactory(new PropertyValueFactory<>("id"));
         company.setCellValueFactory(new PropertyValueFactory<>("companyName"));
         name.setCellValueFactory(new PropertyValueFactory<>("firstName"));
         surname.setCellValueFactory(new PropertyValueFactory<>("lastName"));
 //        role.setCellValueFactory(new PropertyValueFactory<>("isAdmin"));
         email.setCellValueFactory(new PropertyValueFactory<>("email"));
-//        registered.setCellValueFactory(new PropertyValueFactory<>(""));
-        loginCount.setCellValueFactory(new PropertyValueFactory<>("timeSpend"));
+        registeredOn.setCellValueFactory(new PropertyValueFactory<>("registered"));
+        lastLogin.setCellValueFactory(new PropertyValueFactory<>("lastLogin"));
+        loginCount.setCellValueFactory(new PropertyValueFactory<>("timeSpentInDate"));
 
         List<User> userList = getAllUsers();
-        ObservableList<User> filteredUsers = FXCollections.observableArrayList();
+        ObservableList<ObservableUser> filteredUsers = FXCollections.observableArrayList();
+
         for (User user : userList) {
-            user.setTimeSpend(user.getTimeSpend() / 60);
-            filteredUsers.add(user);
+            String registeredDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(user.getUserCreationDate());
+            String lastLoginDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(user.getLastLogin());
+            filteredUsers.add(new ObservableUser(user.getId(), user.getFirstName(), user.getLastName(), user.getEmail(), user.getCompanyName(), registeredDate, lastLoginDate, user.getTimeSpend()));
         }
+
         userTableView.setItems(filteredUsers);
 
     }

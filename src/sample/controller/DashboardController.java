@@ -24,10 +24,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import javafx.stage.FileChooser;
+import javafx.stage.*;
 import javafx.stage.Popup;
-import javafx.stage.Stage;
-import javafx.stage.Window;
 import javafx.util.Callback;
 import javafx.util.converter.DoubleStringConverter;
 import org.eclipse.fx.ui.controls.tree.FilterableTreeItem;
@@ -60,6 +58,8 @@ public class DashboardController extends Main implements Initializable {
     public Label current_session_user_email;
     public Label current_session_user_status;
     TreeView<CategoryItem> treeView = new TreeView<>();
+    @FXML
+    public Button userStatsButton;
 
     // Dešinės panelės label
     @FXML
@@ -93,12 +93,19 @@ public class DashboardController extends Main implements Initializable {
     public static int spentTimeInSeconds;
 
 
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         loadColumnToTable();
         createContents();
         currentSessionUserData();
+        UserHolder userHolded = UserHolder.getInstance();
+        UserDAO.setLastLoginTime(userHolded.getUser());
         loggedTimeStart = System.currentTimeMillis(); // Fiksuoja prisijungimo laiko pradžią
+        if (!userHolded.getUser().isAdmin()) {
+            unloadUsersButton();
+        }
+
     }
 
     //Nusako table'o stulpelius ir jų matmenys.
@@ -444,6 +451,11 @@ public class DashboardController extends Main implements Initializable {
         current_session_user_email.setText(email);
     }
 
+    public void unloadUsersButton() {
+        userStatsButton.setVisible(false);
+
+    }
+
     // Atidaro langą su vartotojų sąrašu
     public void openUserStats() {
         try {
@@ -510,8 +522,8 @@ public class DashboardController extends Main implements Initializable {
         loggedTimeSpent = loggedTimeEnd - loggedTimeStart;
         spentTimeInSeconds = (int) loggedTimeSpent / 1000;
         System.out.println("Session time: " + spentTimeInSeconds + " seconds");
-        UserHolder holder = UserHolder.getInstance();
-        UserDAO.updateUserTimeSpent(holder.getUser(), spentTimeInSeconds);
+        UserHolder userHolded = UserHolder.getInstance();
+        UserDAO.updateUserTimeSpent(userHolded.getUser(), spentTimeInSeconds);
 
     }
 
