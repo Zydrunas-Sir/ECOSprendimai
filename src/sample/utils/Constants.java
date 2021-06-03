@@ -4,9 +4,9 @@ public class Constants {
 
     // langu dydziu matmenys
     public static final int LOGIN_WINDOW_WIDTH = 500;
-    public static final int LOGIN_WINDOW_HEIGHT = 300;
+    public static final int LOGIN_WINDOW_HEIGHT = 303;
     public static final int REGISTER_WINDOW_WIDTH = 550;
-    public static final int REGISTER_WINDOW_HEIGHT = 618   ;
+    public static final int REGISTER_WINDOW_HEIGHT = 552;
 
     // keliai iki vaizdo
     public static final String REGISTER_VIEW_DIRECTORY_PATH = "../view/register.fxml";

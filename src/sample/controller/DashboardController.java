@@ -439,10 +439,10 @@ public class DashboardController extends Main implements Initializable {
         UserHolder holder = UserHolder.getInstance();
         User u = holder.getUser();
         String email = u.getEmail();
-        Boolean isAdmin = u.isAdmin();
+        boolean isAdmin = u.isAdmin();
 
 
-        if (isAdmin == true) {
+        if (isAdmin) {
             current_session_user_status.setText(Constants.CURRENT_SESSION_STATUS_ADMIN);
         } else {
             current_session_user_status.setText(Constants.CURRENT_SESSION_STATUS_USER);
@@ -474,15 +474,18 @@ public class DashboardController extends Main implements Initializable {
 
     }
 
+
+    //Grizta i prisi
     public void goBackToLogin(ActionEvent actionEvent) {
         try {
             Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(Constants.LOGIN_VIEW_DIRECTORY_PATH)));
-            Stage LoginStage = new Stage();
+            Stage loginStage = new Stage();
             Scene scene = new Scene(root, Constants.LOGIN_WINDOW_WIDTH, Constants.LOGIN_WINDOW_HEIGHT);
             scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource(Constants.CSS_DIRECTORY_PATH)).toExternalForm());
-            LoginStage.setTitle("");
-            LoginStage.setScene(scene);
-            LoginStage.show();
+            loginStage.setTitle("Prisijungimas");
+            loginStage.setResizable(false);
+            loginStage.setScene(scene);
+            loginStage.show();
             windowClose();
 
         } catch (Exception e) {
@@ -491,15 +494,22 @@ public class DashboardController extends Main implements Initializable {
         }
     }
 
+    //Atidaro produkto sukurimo form'a
     public void createNewProduct(ActionEvent actionEvent) {
         try {
-            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(Constants.PRODUCTFORM_VIEW_PATH)));
-            Stage LoginStage = new Stage();
-            Scene scene = new Scene(root, Constants.REGISTER_WINDOW_WIDTH, Constants.REGISTER_WINDOW_HEIGHT);
-            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource(Constants.CSS_DIRECTORY_PATH)).toExternalForm());
-            LoginStage.setTitle("");
-            LoginStage.setScene(scene);
-            LoginStage.show();
+            UserHolder holder = UserHolder.getInstance();
+            User u = holder.getUser();
+            boolean isAdmin = u.isAdmin();
+            if (isAdmin) {
+                Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(Constants.PRODUCTFORM_VIEW_PATH)));
+                Stage LoginStage = new Stage();
+                Scene scene = new Scene(root, Constants.REGISTER_WINDOW_WIDTH, Constants.REGISTER_WINDOW_HEIGHT);
+                scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource(Constants.CSS_DIRECTORY_PATH)).toExternalForm());
+                LoginStage.setTitle("");
+                LoginStage.setScene(scene);
+                LoginStage.show();
+            }
+
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -848,17 +858,17 @@ public class DashboardController extends Main implements Initializable {
 
         //Vamzdžiai ir gofra - vidaus
         FilterableTreeItem<CategoryItem> vGofros = createFolder("Gofros");
-        FilterableTreeItem<CategoryItem> behalogeninėsGofros = createFolder("Behalogeninės gofros");
-        FilterableTreeItem<CategoryItem> vamzdžiai = createFolder("Vamzdžiai");
-        FilterableTreeItem<CategoryItem> behalogeniniaiVamzdžiai = createFolder("Behalogeniniai vamzdžiai");
+        FilterableTreeItem<CategoryItem> behalogeninesGofros = createFolder("Behalogeninės gofros");
+        FilterableTreeItem<CategoryItem> vamzdziai = createFolder("Vamzdžiai");
+        FilterableTreeItem<CategoryItem> behalogeniniaiVamzdziai = createFolder("Behalogeniniai vamzdžiai");
         FilterableTreeItem<CategoryItem> gofrosSuKabeliu = createFolder("Gofros su kabeliu");
         FilterableTreeItem<CategoryItem> gofrosSuLaidu = createFolder("Gofros su laidu");
 
         //Vamzdžiai ir gofra - vidaus add
         vidaus.getInternalChildren().add(vGofros);
-        vidaus.getInternalChildren().add(behalogeninėsGofros);
-        vidaus.getInternalChildren().add(vamzdžiai);
-        vidaus.getInternalChildren().add(behalogeniniaiVamzdžiai);
+        vidaus.getInternalChildren().add(behalogeninesGofros);
+        vidaus.getInternalChildren().add(vamzdziai);
+        vidaus.getInternalChildren().add(behalogeniniaiVamzdziai);
         vidaus.getInternalChildren().add(gofrosSuKabeliu);
         vidaus.getInternalChildren().add(gofrosSuLaidu);
 
@@ -885,8 +895,8 @@ public class DashboardController extends Main implements Initializable {
         FilterableTreeItem<CategoryItem> bg750N = createFolder("750N");
 
         //Vamzdžiai ir gofra - vidaus - Behalogeninės gofros add
-        behalogeninėsGofros.getInternalChildren().add(bg320N);
-        behalogeninėsGofros.getInternalChildren().add(bg750N);
+        behalogeninesGofros.getInternalChildren().add(bg320N);
+        behalogeninesGofros.getInternalChildren().add(bg750N);
 
 
         //Instaliacinės prekės - Jungikliai ir kištukiniai lizdai
@@ -917,14 +927,14 @@ public class DashboardController extends Main implements Initializable {
         potinkinesDezutes.getInternalChildren().add(gipsoDezute);
 
         //Instaliacinės prekės - Šildymo elementai
-        FilterableTreeItem<CategoryItem> sildymoKilimėliai = createFolder("Šildymo kilimėliai");
+        FilterableTreeItem<CategoryItem> sildymoKilimeliai = createFolder("Šildymo kilimėliai");
         FilterableTreeItem<CategoryItem> sildymoKabeliai = createFolder("Šildymo kabeliai");
-        FilterableTreeItem<CategoryItem> sildymoĮranga = createFolder("Šildymo įranga");
+        FilterableTreeItem<CategoryItem> sildymoIranga = createFolder("Šildymo įranga");
 
         //Instaliacinės prekės - Šildymo elementai add
-        sildymoElementai.getInternalChildren().add(sildymoKilimėliai);
+        sildymoElementai.getInternalChildren().add(sildymoKilimeliai);
         sildymoElementai.getInternalChildren().add(sildymoKabeliai);
-        sildymoElementai.getInternalChildren().add(sildymoĮranga);
+        sildymoElementai.getInternalChildren().add(sildymoIranga);
 
         //Instaliacinės prekės - Grindinės dėžutės
         FilterableTreeItem<CategoryItem> gridninesPlastikinesDezutes = createFolder("Plastikinės");

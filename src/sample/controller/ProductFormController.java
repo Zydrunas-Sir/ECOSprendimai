@@ -1,16 +1,12 @@
 package sample.controller;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.collections.ObservableMap;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import sample.JPA.Categories;
 import sample.JPA.CategoriesDAO;
 import sample.JPA.ProductCatalog;
 import sample.JPA.ProductCatalogDAO;
@@ -18,9 +14,7 @@ import sample.Main;
 import sample.utils.Validation;
 
 import java.net.URL;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.ResourceBundle;
 
 public class ProductFormController extends Main implements Initializable {

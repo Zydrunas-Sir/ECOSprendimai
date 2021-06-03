@@ -5,6 +5,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import org.mindrot.jbcrypt.BCrypt;
 import sample.JPA.user.User;
@@ -13,6 +15,8 @@ import sample.JPA.user.UserHolder;
 import sample.utils.Constants;
 import sample.utils.Validation;
 
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.prefs.Preferences;
@@ -26,7 +30,7 @@ public class LoginController implements Initializable {
     public Hyperlink register_button;
     public Button dashboard_button;
     public CheckBox check_box_remember_me;
-
+    public ImageView imageView;
 
     final String PREF_NAME = "Email";
     final String PREF_PASSWORD = "Password";
@@ -35,6 +39,9 @@ public class LoginController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+
+
 
         String propertyValue = prefs.get(PREF_NAME, "");
 
@@ -122,6 +129,7 @@ public class LoginController implements Initializable {
             registerStage.show();
             windowCloseLoginButton();
 
+
         } catch (Exception e) {
             e.printStackTrace();
             e.getCause();
@@ -137,6 +145,7 @@ public class LoginController implements Initializable {
             dashboardStage.setTitle("Produktų peržiūros langas");
             dashboardStage.setScene(scene);
             dashboardStage.setMinWidth(1345);
+
             dashboardStage.show();
             dashboardStage.setOnCloseRequest(e -> DashboardController.closeDashboard());
             windowCloseLoginButton();
