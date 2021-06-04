@@ -59,33 +59,33 @@ public class DashboardController extends Main implements Initializable {
     public Label current_session_user_status;
     TreeView<CategoryItem> treeView = new TreeView<>();
     @FXML
-    public Button userStatsButton;
+    public Button user_stats_button;
 
     // Dešinės panelės label
     @FXML
-    public Label catalogNo;
+    public Label catalog_no;
     @FXML
-    public Label itemName;
+    public Label item_name;
     @FXML
-    public Label basePrice;
+    public Label base_price;
     @FXML
-    public Label discountInPercent;
+    public Label discount_in_percent;
     @FXML
-    public Label priceWithDiscount;
+    public Label price_with_discount;
     @FXML
-    public Label deliveryTimeInDaysFrom;
+    public Label delivery_time_in_days_from;
     @FXML
-    public Label deliveryTimeInDaysTo;
+    public Label delivery_time_in_days_to;
     @FXML
-    public Label itemPackage;
+    public Label item_package;
     @FXML
-    public Label minOrderAmount;
+    public Label min_order_amount;
     @FXML
-    public Label discountGroup;
+    public Label discount_group;
     @FXML
-    public Label productFamily;
+    public Label product_family;
     @FXML
-    public Label eanCode;
+    public Label ean_code;
 
     public static long loggedTimeStart;
     public static long loggedTimeEnd;
@@ -406,30 +406,30 @@ public class DashboardController extends Main implements Initializable {
     public void fillDescriptionPanel(int catalogNoImported) {
         List<ProductDescription> productByCatalogNo = ProductDescriptionDAO.searchByCatalogNo(catalogNoImported);
         if (productByCatalogNo.isEmpty()) {
-            catalogNo.setText(String.valueOf(catalogNoImported));
-            itemName.setText("PREKĖS APRAŠYMAS NERASTAS");
-            basePrice.setText("-");
-            discountInPercent.setText("-");
-            deliveryTimeInDaysFrom.setText("-");
-            deliveryTimeInDaysTo.setText("-");
-            itemPackage.setText("-");
-            minOrderAmount.setText("-");
-            discountGroup.setText("-");
-            productFamily.setText("-");
-            eanCode.setText("-");
+            catalog_no.setText(String.valueOf(catalogNoImported));
+            item_name.setText("PREKĖS APRAŠYMAS NERASTAS");
+            base_price.setText("-");
+            discount_in_percent.setText("-");
+            delivery_time_in_days_from.setText("-");
+            delivery_time_in_days_to.setText("-");
+            item_package.setText("-");
+            min_order_amount.setText("-");
+            discount_group.setText("-");
+            product_family.setText("-");
+            ean_code.setText("-");
         } else {
             ProductDescription selectedProductDescription = productByCatalogNo.get(0);
-            catalogNo.setText(String.valueOf(catalogNoImported));
-            itemName.setText(selectedProductDescription.getItemName());
-            basePrice.setText(String.valueOf(selectedProductDescription.getBasePrice()));
-            discountInPercent.setText(String.valueOf(selectedProductDescription.getDiscountInPercent()));
-            deliveryTimeInDaysFrom.setText(String.valueOf(selectedProductDescription.getDeliveryTimeInDaysFrom()));
-            deliveryTimeInDaysTo.setText(String.valueOf(selectedProductDescription.getDeliveryTimeInDaysTo()));
-            itemPackage.setText(selectedProductDescription.getItemPackage());
-            minOrderAmount.setText(String.valueOf(selectedProductDescription.getMinOrderAmount()));
-            discountGroup.setText(selectedProductDescription.getDiscountGroup());
-            productFamily.setText(selectedProductDescription.getProductFamily());
-            eanCode.setText(selectedProductDescription.getEanCode());
+            catalog_no.setText(String.valueOf(catalogNoImported));
+            item_name.setText(selectedProductDescription.getItemName());
+            base_price.setText(String.valueOf(selectedProductDescription.getBasePrice()));
+            discount_in_percent.setText(String.valueOf(selectedProductDescription.getDiscountInPercent()));
+            delivery_time_in_days_from.setText(String.valueOf(selectedProductDescription.getDeliveryTimeInDaysFrom()));
+            delivery_time_in_days_to.setText(String.valueOf(selectedProductDescription.getDeliveryTimeInDaysTo()));
+            item_package.setText(selectedProductDescription.getItemPackage());
+            min_order_amount.setText(String.valueOf(selectedProductDescription.getMinOrderAmount()));
+            discount_group.setText(selectedProductDescription.getDiscountGroup());
+            product_family.setText(selectedProductDescription.getProductFamily());
+            ean_code.setText(selectedProductDescription.getEanCode());
         }
     }
 
@@ -452,7 +452,7 @@ public class DashboardController extends Main implements Initializable {
     }
 
     public void unloadUsersButton() {
-        userStatsButton.setVisible(false);
+        user_stats_button.setVisible(false);
 
     }
 
@@ -460,12 +460,14 @@ public class DashboardController extends Main implements Initializable {
     public void openUserStats() {
         try {
             Parent root = FXMLLoader.load(getClass().getResource(Constants.USER_STATS_VIEW_PATH));
-            Stage registerStage = new Stage();
+            Stage statsStage = new Stage();
             Scene scene = new Scene(root);
-            registerStage.setTitle("Informacija apie programos vartotojus");
-            registerStage.setScene(scene);
-            registerStage.setResizable(true);
-            registerStage.show();
+            statsStage.setMinWidth(500);
+            statsStage.setMinHeight(400);
+            statsStage.setTitle("Registruotų vartotojų sąrašas");
+            statsStage.setScene(scene);
+            statsStage.setResizable(true);
+            statsStage.show();
 
         } catch (Exception e) {
             e.printStackTrace();

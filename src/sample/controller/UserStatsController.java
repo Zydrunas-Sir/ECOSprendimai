@@ -7,7 +7,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import sample.JPA.ProductCatalog;
 import sample.JPA.user.User;
 import sample.JPA.user.ObservableUser;
 import sample.Main;
@@ -32,13 +31,13 @@ public class UserStatsController extends Main implements Initializable {
     @FXML
     public TableColumn email;
     @FXML
-    public TableColumn registeredOn;
+    public TableColumn registered_on;
     @FXML
-    public TableColumn lastLogin;
+    public TableColumn last_login;
     @FXML
-    public TableColumn loginCount;
+    public TableColumn login_count;
     @FXML
-    public TableView<ObservableUser> userTableView;
+    public TableView<ObservableUser> user_table_view;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -47,17 +46,23 @@ public class UserStatsController extends Main implements Initializable {
 
     private void fillUserTable() {
 
-        loginCount.setSortable(false);
-        userTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        login_count.setSortable(false);
+        user_table_view.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         number.setCellValueFactory(new PropertyValueFactory<>("id"));
         company.setCellValueFactory(new PropertyValueFactory<>("companyName"));
+        company.setMinWidth(50);
         name.setCellValueFactory(new PropertyValueFactory<>("firstName"));
+        name.setMinWidth(50);
         surname.setCellValueFactory(new PropertyValueFactory<>("lastName"));
-//        role.setCellValueFactory(new PropertyValueFactory<>("isAdmin"));
+        surname.setMinWidth(50);
         email.setCellValueFactory(new PropertyValueFactory<>("email"));
-        registeredOn.setCellValueFactory(new PropertyValueFactory<>("registered"));
-        lastLogin.setCellValueFactory(new PropertyValueFactory<>("lastLogin"));
-        loginCount.setCellValueFactory(new PropertyValueFactory<>("timeSpentInDate"));
+        email.setMinWidth(50);
+        registered_on.setCellValueFactory(new PropertyValueFactory<>("registered"));
+        registered_on.setMinWidth(50);
+        last_login.setCellValueFactory(new PropertyValueFactory<>("lastLogin"));
+        last_login.setMinWidth(50);
+        login_count.setCellValueFactory(new PropertyValueFactory<>("timeSpentInDate"));
+        login_count.setMinWidth(50);
 
         List<User> userList = getAllUsers();
         ObservableList<ObservableUser> filteredUsers = FXCollections.observableArrayList();
@@ -68,7 +73,7 @@ public class UserStatsController extends Main implements Initializable {
             filteredUsers.add(new ObservableUser(user.getId(), user.getFirstName(), user.getLastName(), user.getEmail(), user.getCompanyName(), registeredDate, lastLoginDate, user.getTimeSpend()));
         }
 
-        userTableView.setItems(filteredUsers);
+        user_table_view.setItems(filteredUsers);
 
     }
 
