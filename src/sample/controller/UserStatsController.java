@@ -44,6 +44,8 @@ public class UserStatsController extends Main implements Initializable {
         fillUserTable();
     }
 
+
+    //
     private void fillUserTable() {
 
         login_count.setSortable(false);
@@ -70,6 +72,7 @@ public class UserStatsController extends Main implements Initializable {
         for (User user : userList) {
             String registeredDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(user.getUserCreationDate());
             String lastLoginDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(user.getLastLogin());
+            //KONVERTUOJA User Į ObservableUser objektą
             filteredUsers.add(new ObservableUser(user.getId(), user.getFirstName(), user.getLastName(), user.getEmail(), user.getCompanyName(), registeredDate, lastLoginDate, user.getTimeSpend()));
         }
 
