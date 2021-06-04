@@ -5,16 +5,16 @@
 
 <AnchorPane minWidth="1000.0" prefHeight="534.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.UserStatsController">
    <children>
-      <TableView fx:id="userTableView" prefHeight="534.0" prefWidth="1000.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <TableView fx:id="user_table_view" prefHeight="534.0" prefWidth="1000.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columns>
           <TableColumn fx:id="number" maxWidth="35.0" minWidth="35.0" prefWidth="35.0" style="-fx-alignment: center;" text="#" />
           <TableColumn fx:id="company" prefWidth="143.33333778381348" text="Įmonė" />
             <TableColumn fx:id="name" prefWidth="123.66670227050781" text="Vardas" />
             <TableColumn fx:id="surname" prefWidth="132.0" text="Pavardė" />
             <TableColumn fx:id="email" prefWidth="138.99996948242188" text="El. paštas" />
-            <TableColumn fx:id="registeredOn" prefWidth="148.6666259765625" style="-fx-alignment: center;" text="Užsiregistravo" />
-            <TableColumn fx:id="lastLogin" prefWidth="160.3333740234375" style="-fx-alignment: center;" text="Prisijungė" />
-            <TableColumn fx:id="loginCount" minWidth="0.0" prefWidth="126.666748046875" style="-fx-alignment: center;" text="Sesijų suma" />
+            <TableColumn fx:id="registered_on" prefWidth="148.6666259765625" style="-fx-alignment: center;" text="Užsiregistravo" />
+            <TableColumn fx:id="last_login" prefWidth="160.3333740234375" style="-fx-alignment: center;" text="Prisijungė" />
+            <TableColumn fx:id="login_count" minWidth="0.0" prefWidth="126.666748046875" style="-fx-alignment: center;" text="Sesijų suma" />
         </columns>
       </TableView>
    </children>
