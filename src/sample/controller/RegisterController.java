@@ -139,7 +139,6 @@ public class RegisterController extends Main implements Initializable {
                 email_textfield.getText(),
                 company_name_textfield.getText(),
 
-
                 //encrypting user password then calling function hasPassword
                 hashPassword(password_passwordfield.getText())
         );
