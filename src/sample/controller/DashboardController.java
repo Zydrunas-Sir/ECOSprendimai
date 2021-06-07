@@ -23,7 +23,6 @@ import javafx.stage.*;
 import javafx.stage.Popup;
 import javafx.util.Callback;
 import javafx.util.converter.DoubleStringConverter;
-import org.eclipse.fx.ui.controls.tree.FilterableTreeItem;
 import sample.JPA.*;
 import sample.JPA.user.User;
 import sample.JPA.user.UserDAO;
@@ -354,12 +353,6 @@ public class DashboardController extends Main implements Initializable {
         popup.getContent().addAll(label, hide);
         popup.show(parent);
 
-    }
-
-
-    //Sukuria filtruojama treeview item.
-    private FilterableTreeItem<CategoryItem> createFolder(String name) {
-        return new FilterableTreeItem<>(new CategoryItem(name));
     }
 
     //Surenka visus produktus turinčius pasirinktos kategorijos id
