@@ -18,12 +18,20 @@ public class Categories {
     private int lft;
     @Column(name = "rght")
     private int rght;
+    @Transient
+    private long countParents;
 
     public Categories(int id, String name, int lft, int rght) {
         this.id = id;
         this.name = name;
         this.lft = lft;
         this.rght = rght;
+    }
+
+    public Categories(int id, String name, long countParents) {
+        this.id = id;
+        this.name = name;
+        this.countParents = countParents;
     }
 
     public Categories(String name, int lft, int rght) {
@@ -65,6 +73,14 @@ public class Categories {
 
     public void setrght(int rght) {
         this.rght = rght;
+    }
+
+    public long getCountParents() {
+        return countParents;
+    }
+
+    public void setCountParents(long countParents) {
+        this.countParents = countParents;
     }
 
     @Override

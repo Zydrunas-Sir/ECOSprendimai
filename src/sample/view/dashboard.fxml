@@ -6,16 +6,19 @@
 
 <AnchorPane prefWidth="1342.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.DashboardController">
     <children>
-        <TableView fx:id="table" fixedCellSize="0.0" layoutX="387.0" layoutY="56.0" prefHeight="463.0" prefWidth="537.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="387.0" AnchorPane.rightAnchor="418.0" AnchorPane.topAnchor="56.0">
+        <TableView fx:id="table" fixedCellSize="0.0" layoutX="387.0" layoutY="56.0" onMouseClicked="#mouseEventForTableView" prefHeight="463.0" prefWidth="537.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="387.0" AnchorPane.rightAnchor="418.0" AnchorPane.topAnchor="56.0">
             <columns>
             </columns>
          <opaqueInsets>
             <Insets />
          </opaqueInsets>
         </TableView>
-        <TextField id="treeViewSearchField" fx:id="treeViewSearchField" layoutX="3.0" layoutY="16.0" prefHeight="25.0" prefWidth="380.0" AnchorPane.topAnchor="16.0" />
+        <TextField id="treeViewSearchField" fx:id="listViewSearchField" layoutX="3.0" layoutY="16.0" prefHeight="25.0" prefWidth="380.0" AnchorPane.topAnchor="16.0" />
       <Pane layoutX="1038.0" layoutY="7.0" opacity="0.31" prefHeight="43.0" prefWidth="263.0" style="-fx-background-color: gray;" AnchorPane.rightAnchor="41.0" AnchorPane.topAnchor="7.0" />
-      <TitledPane fx:id="leftTitledPane" animated="false" collapsible="false" layoutX="3.0" layoutY="56.0" prefHeight="380.0" prefWidth="380.0" text="Prekių kategorijų medis" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="3.0" AnchorPane.topAnchor="56.0" />
+      <TitledPane fx:id="leftTitledPane" animated="false" collapsible="false" layoutX="3.0" layoutY="56.0" prefHeight="380.0" prefWidth="380.0" text="Prekių kategorijų medis" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="3.0" AnchorPane.topAnchor="56.0">
+         <content>
+            <ListView fx:id="listView" editable="true" onMouseClicked="#mouseEventForListView" prefHeight="200.0" prefWidth="200.0" />
+         </content></TitledPane>
         <TitledPane animated="false" collapsible="false" layoutX="929.0" layoutY="56.0" pickOnBounds="false" prefHeight="356.0" prefWidth="414.0" text="Pasirinktos prekes stulpeleje pavadinimas" AnchorPane.bottomAnchor="3.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="56.0">
             <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="330.0" prefWidth="403.0">

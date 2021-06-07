@@ -71,7 +71,7 @@ public class ProductFormController extends Main implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        List<String> categories = CategoriesDAO.selectAllCategoryNames();
+        List<String> categories = CategoriesDAO.selectAllEditedCategoryNames();
         int i = 0;
         for (String categoryName : categories) {
             if (categoryName.equals("Home")) {

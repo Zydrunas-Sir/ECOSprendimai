@@ -66,7 +66,7 @@ public class CategoriesDAO {
     }
 
 
-    public static List<Categories> selectCategory(String name) {
+    public static List<Categories> selectCategoryById(int id) {
 
         EntityManager entityManager;
         EntityTransaction entityTransaction;
@@ -79,8 +79,8 @@ public class CategoriesDAO {
             entityTransaction.begin();
             query = entityManager.createQuery("SELECT e FROM Categories e" +
                     " JOIN Categories a  ON (e.lft >= a.lft AND e.rght <= a.rght) " +
-                    "WHERE a.name = ?1 ORDER BY e.lft", Categories.class);
-            categories = query.setParameter(1, name).getResultList();
+                    "WHERE a.id = ?1 ORDER BY e.lft", Categories.class);
+            categories = query.setParameter(1, id).getResultList();
             entityManager.getTransaction().commit();
             entityManager.close();
         } catch (IllegalStateException e) {
@@ -112,13 +112,27 @@ public class CategoriesDAO {
         return categories;
     }
 
-    public static List<String> selectAllCategoryNames() {
+    public static List<String> selectAllEditedCategoryNames() {
         EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
         EntityTransaction entityTransaction = entityManager.getTransaction();
         entityTransaction.begin();
 
-        TypedQuery<String> query = entityManager.createQuery("SELECT CONCAT(REPEAT('|', count(parent.name) - 2), CASE WHEN (count(parent.name) - 2 <= 0) THEN node.name ELSE CONCAT('- ', node.name) END) AS categoryNames FROM Categories as node INNER JOIN Categories as parent ON ( parent.lft <= node.lft AND parent.rght >= node.lft ) GROUP BY node.id ORDER BY node.lft", String.class);
+        TypedQuery<String> query = entityManager.createQuery("SELECT CONCAT(REPEAT('|', count(parent.name) - 3), CASE WHEN (count(parent.name) - 3 <= 0) THEN CONCAT('  ', node.name) ELSE CONCAT('- ', node.name) END) AS categoryNames FROM Categories as node INNER JOIN Categories as parent ON ( parent.lft <= node.lft AND parent.rght >= node.lft ) GROUP BY node.id ORDER BY node.lft", String.class);
         List<String> categories = query.getResultList();
+
+        entityManager.getTransaction().commit();
+        entityManager.close();
+
+        return categories;
+    }
+
+    public static List<Categories> selectCategoriesForListView(){
+        EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
+        EntityTransaction entityTransaction = entityManager.getTransaction();
+        entityTransaction.begin();
+
+        TypedQuery<Categories> query = entityManager.createQuery("SELECT NEW Categories(node.id, CONCAT(REPEAT('    ', count(parent.name) - 3), CASE WHEN (count(parent.name) - 3 <= 0) THEN CONCAT('   ', node.name) ELSE CONCAT(' |- ', node.name) END), count(parent.name)) FROM Categories as node INNER JOIN Categories as parent ON ( parent.lft <= node.lft AND parent.rght >= node.lft ) GROUP BY node.id ORDER BY node.lft", Categories.class);
+        List<Categories> categories = query.getResultList();
 
         entityManager.getTransaction().commit();
         entityManager.close();
