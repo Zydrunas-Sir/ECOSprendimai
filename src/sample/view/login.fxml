@@ -23,22 +23,22 @@
             </Label>
             <Label alignment="CENTER_RIGHT" layoutX="46.0" layoutY="85.0" prefHeight="37.0" prefWidth="172.0" text="Elektroninis paštas:">
                <font>
-                  <Font name="Microsoft JhengHei Light" size="16.0" />
+                  <Font name="Segoe UI Light" size="18.0" />
                </font></Label>
             <Label alignment="CENTER_RIGHT" layoutX="46.0" layoutY="131.0" prefHeight="37.0" prefWidth="172.0" text="Slaptažodis:" textAlignment="RIGHT">
                <font>
-                  <Font name="Microsoft JhengHei Light" size="16.0" />
+                  <Font name="Segoe UI Light" size="18.0" />
                </font></Label>
             <TextField fx:id="email_textfield" layoutX="224.0" layoutY="85.0" prefHeight="37.0" prefWidth="220.0">
                <font>
-                  <Font name="Microsoft JhengHei Light" size="18.0" />
+                  <Font name="Segoe UI Light" size="16.0" />
                </font>
                <cursor>
                   <Cursor fx:constant="TEXT" />
                </cursor></TextField>
             <PasswordField fx:id="password_passwordfield" layoutX="224.0" layoutY="131.0" prefHeight="37.0" prefWidth="220.0">
                <font>
-                  <Font name="Microsoft JhengHei Light" size="18.0" />
+                  <Font name="Segoe UI Light" size="16.0" />
                </font>
                <cursor>
                   <Cursor fx:constant="TEXT" />
