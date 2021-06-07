@@ -73,5 +73,6 @@
       <Label fx:id="current_session_user_status" layoutX="1120.0" layoutY="12.0" prefHeight="17.0" prefWidth="180.0" text="Vartotojas" textFill="#808080" AnchorPane.rightAnchor="41.0" AnchorPane.topAnchor="12.0" />
       <Label layoutX="1062.0" layoutY="28.0" text="El.paštas:" AnchorPane.rightAnchor="232.0" AnchorPane.topAnchor="28.0" />
         <Button fx:id="close_button" layoutX="1301.0" layoutY="7.0" mnemonicParsing="false" onAction="#goBackToLogin" prefHeight="42.0" prefWidth="26.0" style="-fx-background-radius: 0px; -fx-background-color: #474747;" text="X" textFill="WHITE" AnchorPane.rightAnchor="15.0" />
+      <ProgressIndicator fx:id="loadProgress" visible="false" layoutX="639.0" layoutY="249.0" progress="0.0" />
     </children>
 </AnchorPane>

@@ -53,7 +53,8 @@ public class DashboardController extends Main implements Initializable {
     public ListView<Categories> listView;
     @FXML
     public Button user_stats_button;
-
+    @FXML
+    public Button createProduct_Button;
     // Dešinės panelės label
     @FXML
     public Label catalog_no;
@@ -89,6 +90,7 @@ public class DashboardController extends Main implements Initializable {
     public static int spentTimeInSeconds;
 
 
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         loadColumnToTable();
@@ -99,6 +101,7 @@ public class DashboardController extends Main implements Initializable {
         loggedTimeStart = System.currentTimeMillis(); // Fiksuoja prisijungimo laiko pradžią
         if (!userHolder.getUser().isAdmin()) {
             unloadUsersButton();
+            unloadCreateProductButton();
         }
 
     }
@@ -268,10 +271,10 @@ public class DashboardController extends Main implements Initializable {
         // Loading Spinner start.
         File file = fileChooser.showOpenDialog(new Stage());
         if (file != null) {
-            JOptionPane.showMessageDialog(null, "Prašome palaukti. Nuskaitomas Excel Failas: " + file.getName());
             openFile(file);
             loadProgress.setVisible(false); // Loading Spinner ends.
         }
+        loadProgress.setVisible(false);
     }
 
     //Konfiguriuoja failo pasirinkimus
@@ -457,6 +460,11 @@ public class DashboardController extends Main implements Initializable {
 
     }
 
+    public void unloadCreateProductButton() {
+        createProduct_Button.setVisible(false);
+
+    }
+
     // Atidaro langą su vartotojų sąrašu
     public void openUserStats() {
         try {
@@ -500,18 +508,13 @@ public class DashboardController extends Main implements Initializable {
     //Atidaro produkto sukurimo form'a
     public void createNewProduct(ActionEvent actionEvent) {
         try {
-            UserHolder holder = UserHolder.getInstance();
-            User u = holder.getUser();
-            boolean isAdmin = u.isAdmin();
-            if (isAdmin) {
-                Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(Constants.PRODUCTFORM_VIEW_PATH)));
-                Stage LoginStage = new Stage();
-                Scene scene = new Scene(root, Constants.REGISTER_WINDOW_WIDTH, Constants.REGISTER_WINDOW_HEIGHT);
-                scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource(Constants.CSS_DIRECTORY_PATH)).toExternalForm());
-                LoginStage.setTitle("");
-                LoginStage.setScene(scene);
-                LoginStage.show();
-            }
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(Constants.PRODUCTFORM_VIEW_PATH)));
+            Stage LoginStage = new Stage();
+            Scene scene = new Scene(root, Constants.REGISTER_WINDOW_WIDTH, Constants.REGISTER_WINDOW_HEIGHT);
+            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource(Constants.CSS_DIRECTORY_PATH)).toExternalForm());
+            LoginStage.setTitle("");
+            LoginStage.setScene(scene);
+            LoginStage.show();
 
 
         } catch (Exception e) {
@@ -557,7 +560,6 @@ public class DashboardController extends Main implements Initializable {
                 final int count = 1000 - 1;
                 for (int i = 1; i <= count; i++) {
                     Thread.sleep(100000);
-                    updateProgress(i + 1, 10);
                 }
                 return tabPane;
             }
