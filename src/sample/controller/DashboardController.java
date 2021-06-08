@@ -472,7 +472,7 @@ public class DashboardController extends Main implements Initializable {
     // Atidaro langą su vartotojų sąrašu
     public void openUserStats() {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource(Constants.USER_STATS_VIEW_PATH));
+            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource(Constants.USER_STATS_VIEW_PATH));
             Stage statsStage = new Stage();
             Scene scene = new Scene(root);
             statsStage.setMinWidth(500);
@@ -493,10 +493,10 @@ public class DashboardController extends Main implements Initializable {
     //Grizta i prisi
     public void goBackToLogin(ActionEvent actionEvent) {
         try {
-            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(Constants.LOGIN_VIEW_DIRECTORY_PATH)));
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource(Constants.LOGIN_VIEW_DIRECTORY_PATH)));
             Stage loginStage = new Stage();
             Scene scene = new Scene(root, Constants.LOGIN_WINDOW_WIDTH, Constants.LOGIN_WINDOW_HEIGHT);
-            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource(Constants.CSS_DIRECTORY_PATH)).toExternalForm());
+            scene.getStylesheets().add(Objects.requireNonNull(getClass().getClassLoader().getResource(Constants.CSS_DIRECTORY_PATH)).toExternalForm());
             loginStage.setTitle("Prisijungimas");
             loginStage.setResizable(false);
             loginStage.setScene(scene);
@@ -511,10 +511,10 @@ public class DashboardController extends Main implements Initializable {
 
     public void createNewCategory(ActionEvent actionEvent){
         try {
-            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(Constants.CATEGORY_FORM_VIEW_PATH)));
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource(Constants.CATEGORY_FORM_VIEW_PATH)));
             Stage LoginStage = new Stage();
             Scene scene = new Scene(root, Constants.REGISTER_WINDOW_WIDTH, Constants.REGISTER_WINDOW_HEIGHT);
-            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource(Constants.CSS_DIRECTORY_PATH)).toExternalForm());
+            scene.getStylesheets().add(Objects.requireNonNull(getClass().getClassLoader().getResource(Constants.CSS_DIRECTORY_PATH)).toExternalForm());
             LoginStage.setTitle("");
             LoginStage.setScene(scene);
             LoginStage.show();
@@ -529,10 +529,10 @@ public class DashboardController extends Main implements Initializable {
     //Atidaro produkto sukurimo form'a
     public void createNewProduct(ActionEvent actionEvent) {
         try {
-            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(Constants.PRODUCT_FORM_VIEW_PATH)));
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource(Constants.PRODUCT_FORM_VIEW_PATH)));
             Stage LoginStage = new Stage();
             Scene scene = new Scene(root, Constants.REGISTER_WINDOW_WIDTH, Constants.REGISTER_WINDOW_HEIGHT);
-            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource(Constants.CSS_DIRECTORY_PATH)).toExternalForm());
+            scene.getStylesheets().add(Objects.requireNonNull(getClass().getClassLoader().getResource(Constants.CSS_DIRECTORY_PATH)).toExternalForm());
             LoginStage.setTitle("");
             LoginStage.setScene(scene);
             LoginStage.show();

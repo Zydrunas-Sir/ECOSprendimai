@@ -115,10 +115,10 @@ public class RegisterController extends Main implements Initializable {
 
     public void goToLogin() {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource(Constants.LOGIN_VIEW_DIRECTORY_PATH));
+            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource(Constants.LOGIN_VIEW_DIRECTORY_PATH));
             Stage loginStage = new Stage();
             Scene scene = new Scene(root, Constants.LOGIN_WINDOW_WIDTH, Constants.LOGIN_WINDOW_HEIGHT);
-            scene.getStylesheets().add(getClass().getResource(Constants.CSS_DIRECTORY_PATH).toExternalForm());
+            scene.getStylesheets().add(getClass().getClassLoader().getResource(Constants.CSS_DIRECTORY_PATH).toExternalForm());
             loginStage.setTitle("Prisijungimas");
             loginStage.setResizable(false);
             loginStage.setScene(scene);

@@ -5,16 +5,17 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import sample.utils.Constants;
 
 public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("view/login.fxml"));
+        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource(Constants.LOGIN_VIEW_DIRECTORY_PATH));
         primaryStage.setTitle("Prisijungimas");
 
         Scene scene = new Scene(root, 500, 300);
-        scene.getStylesheets().add(getClass().getResource("view/CSS.css").toExternalForm());
+        scene.getStylesheets().add(getClass().getClassLoader().getResource(Constants.CSS_DIRECTORY_PATH).toExternalForm());
         primaryStage.setResizable(false);
         primaryStage.setScene(scene);
         primaryStage.show();
