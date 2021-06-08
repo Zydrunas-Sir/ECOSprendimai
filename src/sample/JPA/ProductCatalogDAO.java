@@ -1,6 +1,6 @@
 package sample.JPA;
 
-import org.apache.commons.lang.ObjectUtils;
+
 import org.hibernate.HibernateException;
 import org.hibernate.exception.JDBCConnectionException;
 

@@ -2,11 +2,9 @@ package sample.controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
+import sample.JPA.Categories;
 import sample.JPA.CategoriesDAO;
 import sample.JPA.ProductCatalog;
 import sample.JPA.ProductCatalogDAO;
@@ -20,20 +18,18 @@ import java.util.ResourceBundle;
 public class ProductFormController extends Main implements Initializable {
 
     public Button create_product_button;
-    public Button close;
     public TextField catalog_no_textField;
     public TextField symbol_textField;
     public TextField price_textField;
     public TextField stock_textField;
     public Label form_info_label;
-    public ComboBox<String> categoryComboBox;
-
-
+    public ComboBox<Categories> categoryComboBox;
 
 
     public void createProduct(ActionEvent actionEvent) {
+        Categories item = categoryComboBox.getSelectionModel().getSelectedItem();
         if (!catalog_no_textField.getText().isEmpty() && !symbol_textField.getText().isEmpty() &&
-                !price_textField.getText().isEmpty() && !stock_textField.getText().isEmpty()) {
+                !price_textField.getText().isEmpty() && !stock_textField.getText().isEmpty() && !(item == null)) {
             if (Validation.isValidCatalogNo(catalog_no_textField.getText())) {
                 if (Validation.isValidSymbol(symbol_textField.getText())) {
                     if (Validation.isValidPrice(price_textField.getText())) {
@@ -41,7 +37,7 @@ public class ProductFormController extends Main implements Initializable {
                             Stage stage = (Stage) create_product_button.getScene().getWindow();
                             ProductCatalog product = new ProductCatalog(Integer.parseInt(catalog_no_textField.getText()), symbol_textField.getText(),
                                     Double.parseDouble(price_textField.getText()), Integer.parseInt(stock_textField.getText()),
-                                    categoryComboBox.getSelectionModel().getSelectedIndex() + 2, null);
+                                    item.getId(), null);
                             ProductCatalogDAO.insert(product);
                             stage.close();
                         } else {
@@ -71,17 +67,19 @@ public class ProductFormController extends Main implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        List<String> categories = CategoriesDAO.selectAllEditedCategoryNames();
-        int i = 0;
-        for (String categoryName : categories) {
-            if (categoryName.equals("Home")) {
-                //nothing;
-            } else {
-                categoryComboBox.getItems().add(i, categoryName);
-                i++;
+        List<Categories> categoryNames = CategoriesDAO.selectCategoriesForListView();
+        categoryComboBox.setCellFactory(lv -> new ListCell<Categories>(){
+            public void updateItem(Categories item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setText(null);
+                } else {
+                    setText(item.getName());
+                }
             }
+        });
+        categoryComboBox.getItems().addAll(categoryNames);
 
-        }
 
     }
 }

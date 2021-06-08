@@ -51,12 +51,5 @@
     <orderEntry type="library" name="Maven: org.apache.poi:poi-ooxml-schemas:3.13" level="project" />
     <orderEntry type="library" name="Maven: org.apache.xmlbeans:xmlbeans:2.6.0" level="project" />
     <orderEntry type="library" name="Maven: stax:stax-api:1.0.1" level="project" />
-    <orderEntry type="library" name="Maven: at.bestsolution.eclipse:org.eclipse.fx.ui.controls:2.2.0" level="project" />
-    <orderEntry type="library" name="Maven: at.bestsolution.eclipse:org.eclipse.jdt.annotation:2.0.100" level="project" />
-    <orderEntry type="library" name="Maven: at.bestsolution.eclipse:org.eclipse.fx.core:2.2.0" level="project" />
-    <orderEntry type="library" name="Maven: javax.inject:javax.inject:1" level="project" />
-    <orderEntry type="library" name="Maven: commons-lang:commons-lang:2.6" level="project" />
-    <orderEntry type="library" name="Maven: com.google.guava:guava:19.0-rc1" level="project" />
-    <orderEntry type="library" name="Maven: at.bestsolution.eclipse:org.eclipse.fx.ui.panes:2.2.0" level="project" />
   </component>
 </module>

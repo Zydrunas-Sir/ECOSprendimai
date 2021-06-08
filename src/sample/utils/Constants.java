@@ -13,7 +13,8 @@ public class Constants {
     public static final String DASHBOARD_VIEW_DIRECTORY_PATH = "../view/dashboard.fxml";
     public static final String LOGIN_VIEW_DIRECTORY_PATH = "../view/login.fxml";
     public static final String USER_STATS_VIEW_PATH = "../view/user_stats.fxml";
-    public static final String PRODUCTFORM_VIEW_PATH = "../view/productForm.fxml";
+    public static final String PRODUCT_FORM_VIEW_PATH = "../view/productForm.fxml";
+    public static final String CATEGORY_FORM_VIEW_PATH = "../view/categoryForm.fxml";
     public static final String CSS_DIRECTORY_PATH = "../view/CSS.css";
 
 

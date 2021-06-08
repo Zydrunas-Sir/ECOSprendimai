@@ -85,11 +85,6 @@ public class Categories {
 
     @Override
     public String toString() {
-        return "Categories{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", lft=" + lft +
-                ", rght=" + rght +
-                '}';
+        return name;
     }
 }

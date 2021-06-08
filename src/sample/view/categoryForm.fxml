@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.CategoryFormController">
+    <Button fx:id="createCategory_button" layoutX="152.0" layoutY="317.0" mnemonicParsing="false" onAction="#createCategory" prefHeight="28.0" prefWidth="329.0" style="-fx-background-color: #4444;" text="Sukurti" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="152.0" AnchorPane.rightAnchor="122.0">
+        <font>
+            <Font name="Segoe UI Light" size="18.0" />
+        </font>
+    </Button>
+
+    <Label fx:id="form_info_label" alignment="CENTER" layoutY="227.0" prefHeight="66.0" prefWidth="600.0" textAlignment="CENTER" textFill="RED" wrapText="true">
+        <font>
+            <Font name="Segoe UI Light" size="18.0" />
+        </font>
+    </Label>
+    <TextField fx:id="categoryName_textField" layoutX="269.0" layoutY="101.0" prefHeight="35.0" prefWidth="250.0" AnchorPane.leftAnchor="269.0" AnchorPane.rightAnchor="84.0">
+        <font>
+            <Font name="Segoe UI Light" size="16.0" />
+        </font>
+    </TextField>
+    <Label alignment="CENTER_RIGHT" layoutX="45.0" layoutY="100.0" prefHeight="35.0" prefWidth="213.0" text="Kategorijos pavadinimas :" AnchorPane.leftAnchor="45.0">
+        <font>
+            <Font name="Segoe UI Light" size="18.0" />
+        </font>
+    </Label>
+    <Label alignment="CENTER_RIGHT" layoutX="58.0" layoutY="163.0" prefHeight="28.0" prefWidth="198.0" text="Tėvine klasė :" AnchorPane.leftAnchor="58.0">
+        <font>
+            <Font name="Segoe UI Light" size="18.0" />
+        </font>
+    </Label>
+    <ComboBox fx:id="categoryComboBox" layoutX="269.0" layoutY="165.0" prefHeight="35.0" prefWidth="250.0" AnchorPane.leftAnchor="269.0" AnchorPane.rightAnchor="84.0" AnchorPane.topAnchor="165.0" />
+</AnchorPane>

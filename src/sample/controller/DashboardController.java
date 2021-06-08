@@ -30,7 +30,7 @@ import sample.JPA.user.UserHolder;
 import sample.Main;
 import sample.utils.Constants;
 
-import javax.swing.*;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -51,6 +51,8 @@ public class DashboardController extends Main implements Initializable {
     public Label current_session_user_email;
     public Label current_session_user_status;
     public ListView<Categories> listView;
+    @FXML
+    public Button createCategory_Button;
     @FXML
     public Button user_stats_button;
     @FXML
@@ -102,6 +104,7 @@ public class DashboardController extends Main implements Initializable {
         if (!userHolder.getUser().isAdmin()) {
             unloadUsersButton();
             unloadCreateProductButton();
+            unloadCreateCategoryButton();
         }
 
     }
@@ -199,6 +202,7 @@ public class DashboardController extends Main implements Initializable {
 
     public void loadCategoriesToListView() {
         List<Categories> categoryNamesForListView = CategoriesDAO.selectCategoriesForListView();
+        listViewSearchField.setPromptText("Įveskite kategorijos pavadinimą filtravimui ...");
         listView.setCellFactory(lv -> new ListCell<Categories>() {
             @Override
             protected void updateItem(Categories c, boolean empty) {
@@ -212,7 +216,7 @@ public class DashboardController extends Main implements Initializable {
                         setStyle("-fx-font-weight: bold");
                     } else if (c.getCountParents() == 2) {
                         setText(getText().toUpperCase());
-                        setStyle("-fx-font-style: italic");//CAPSLock
+                        setStyle("-fx-font-style: italic");
                     } else if (c.getCountParents() == 1) {
                         setStyle("-fx-text-fill: rgb(9, 96, 235)");
                     } else {
@@ -222,8 +226,6 @@ public class DashboardController extends Main implements Initializable {
             }
         });
         listView.setItems(createFilteredList(categoryNamesForListView));
-
-
     }
 
     public FilteredList<Categories> createFilteredList(List<Categories> categoryNamesForListView) {
@@ -235,10 +237,7 @@ public class DashboardController extends Main implements Initializable {
                     return true;
                 }
                 String lowerCaseFilter = newValue.toLowerCase();
-                if (category.getName().toLowerCase().contains(lowerCaseFilter)) {
-                    return true;
-                }
-                return false;
+                return category.getName().toLowerCase().contains(lowerCaseFilter);
             });
         });
         return filteredList;
@@ -465,6 +464,11 @@ public class DashboardController extends Main implements Initializable {
 
     }
 
+    public void unloadCreateCategoryButton() {
+        createCategory_Button.setVisible(false);
+
+    }
+
     // Atidaro langą su vartotojų sąrašu
     public void openUserStats() {
         try {
@@ -505,10 +509,27 @@ public class DashboardController extends Main implements Initializable {
         }
     }
 
+    public void createNewCategory(ActionEvent actionEvent){
+        try {
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(Constants.CATEGORY_FORM_VIEW_PATH)));
+            Stage LoginStage = new Stage();
+            Scene scene = new Scene(root, Constants.REGISTER_WINDOW_WIDTH, Constants.REGISTER_WINDOW_HEIGHT);
+            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource(Constants.CSS_DIRECTORY_PATH)).toExternalForm());
+            LoginStage.setTitle("");
+            LoginStage.setScene(scene);
+            LoginStage.show();
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            e.getCause();
+        }
+    }
+
     //Atidaro produkto sukurimo form'a
     public void createNewProduct(ActionEvent actionEvent) {
         try {
-            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(Constants.PRODUCTFORM_VIEW_PATH)));
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(Constants.PRODUCT_FORM_VIEW_PATH)));
             Stage LoginStage = new Stage();
             Scene scene = new Scene(root, Constants.REGISTER_WINDOW_WIDTH, Constants.REGISTER_WINDOW_HEIGHT);
             scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource(Constants.CSS_DIRECTORY_PATH)).toExternalForm());
@@ -538,8 +559,8 @@ public class DashboardController extends Main implements Initializable {
         loggedTimeSpent = loggedTimeEnd - loggedTimeStart;
         spentTimeInSeconds = (int) loggedTimeSpent / 1000;
         System.out.println("Session time: " + spentTimeInSeconds + " seconds");
-        UserHolder userHolded = UserHolder.getInstance();
-        UserDAO.updateUserTimeSpent(userHolded.getUser(), spentTimeInSeconds);
+        UserHolder userHolder = UserHolder.getInstance();
+        UserDAO.updateUserTimeSpent(userHolder.getUser(), spentTimeInSeconds);
     }
 
     private void loadProgress() {

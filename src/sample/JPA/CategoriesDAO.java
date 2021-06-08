@@ -3,10 +3,7 @@ package sample.JPA;
 import org.hibernate.exception.JDBCConnectionException;
 import org.hibernate.service.spi.ServiceException;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
-import javax.persistence.PersistenceException;
-import javax.persistence.TypedQuery;
+import javax.persistence.*;
 import java.util.List;
 
 public class CategoriesDAO {
@@ -112,20 +109,6 @@ public class CategoriesDAO {
         return categories;
     }
 
-    public static List<String> selectAllEditedCategoryNames() {
-        EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
-        EntityTransaction entityTransaction = entityManager.getTransaction();
-        entityTransaction.begin();
-
-        TypedQuery<String> query = entityManager.createQuery("SELECT CONCAT(REPEAT('|', count(parent.name) - 3), CASE WHEN (count(parent.name) - 3 <= 0) THEN CONCAT('  ', node.name) ELSE CONCAT('- ', node.name) END) AS categoryNames FROM Categories as node INNER JOIN Categories as parent ON ( parent.lft <= node.lft AND parent.rght >= node.lft ) GROUP BY node.id ORDER BY node.lft", String.class);
-        List<String> categories = query.getResultList();
-
-        entityManager.getTransaction().commit();
-        entityManager.close();
-
-        return categories;
-    }
-
     public static List<Categories> selectCategoriesForListView(){
         EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
         EntityTransaction entityTransaction = entityManager.getTransaction();
@@ -138,6 +121,48 @@ public class CategoriesDAO {
         entityManager.close();
 
         return categories;
+    }
+
+    public static void updateCategoryLefts(int lft){
+        EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
+        EntityTransaction entityTransaction = entityManager.getTransaction();
+        entityTransaction.begin();
+
+        Query query = entityManager.createQuery("Update Categories a SET a.lft = a.lft + 2 WHERE a.lft > ?1");
+        query.setParameter(1, lft);
+        int rowsUpdated = query.executeUpdate();
+        System.out.println("entities Updated: " + rowsUpdated);
+
+        entityManager.getTransaction().commit();
+        entityManager.close();
+    }
+
+    public static void updateCategoryRights(int lft){
+        EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
+        EntityTransaction entityTransaction = entityManager.getTransaction();
+        entityTransaction.begin();
+
+        Query query = entityManager.createQuery("Update Categories a SET a.rght = a.rght + 2 WHERE a.rght > ?1");
+        query.setParameter(1, lft);
+        int rowsUpdated = query.executeUpdate();
+        System.out.println("entities Updated: " + rowsUpdated);
+
+        entityManager.getTransaction().commit();
+        entityManager.close();
+    }
+
+    public static Categories displayParentCategoryById(int id){
+        EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
+        EntityTransaction entityTransaction = entityManager.getTransaction();
+        entityTransaction.begin();
+
+        TypedQuery<Categories> query = entityManager.createQuery("Select e From Categories e WHERE e.id =?1", Categories.class);
+        Categories category = query.setParameter(1, id).getSingleResult();
+
+        entityManager.getTransaction().commit();
+        entityManager.close();
+
+        return category;
     }
 
 }
