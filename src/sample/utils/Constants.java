@@ -9,13 +9,13 @@ public class Constants {
     public static final int REGISTER_WINDOW_HEIGHT = 552;
 
     // keliai iki vaizdo
-    public static final String REGISTER_VIEW_DIRECTORY_PATH = "../view/register.fxml";
-    public static final String DASHBOARD_VIEW_DIRECTORY_PATH = "../view/dashboard.fxml";
-    public static final String LOGIN_VIEW_DIRECTORY_PATH = "../view/login.fxml";
-    public static final String USER_STATS_VIEW_PATH = "../view/user_stats.fxml";
-    public static final String PRODUCT_FORM_VIEW_PATH = "../view/productForm.fxml";
-    public static final String CATEGORY_FORM_VIEW_PATH = "../view/categoryForm.fxml";
-    public static final String CSS_DIRECTORY_PATH = "../view/CSS.css";
+    public static final String REGISTER_VIEW_DIRECTORY_PATH = "sample/Resources/view/register.fxml";
+    public static final String DASHBOARD_VIEW_DIRECTORY_PATH = "sample/Resources/view/dashboard.fxml";
+    public static final String LOGIN_VIEW_DIRECTORY_PATH = "sample/Resources/view/login.fxml";
+    public static final String USER_STATS_VIEW_PATH = "sample/Resources/view/user_stats.fxml";
+    public static final String PRODUCT_FORM_VIEW_PATH = "sample/Resources/view/productForm.fxml";
+    public static final String CATEGORY_FORM_VIEW_PATH = "sample/Resources/view/categoryForm.fxml";
+    public static final String CSS_DIRECTORY_PATH = "sample/Resources/view/CSS.css";
 
 
     public static final String EMAIL_NOT_EXIST = "Įvestas el.paštas neegzistuoja.";

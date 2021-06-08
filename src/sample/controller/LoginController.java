@@ -119,10 +119,10 @@ public class LoginController implements Initializable {
 
     public void register() {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource(Constants.REGISTER_VIEW_DIRECTORY_PATH));
+            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource(Constants.REGISTER_VIEW_DIRECTORY_PATH));
             Stage registerStage = new Stage();
             Scene scene = new Scene(root, Constants.REGISTER_WINDOW_WIDTH, Constants.REGISTER_WINDOW_HEIGHT);
-            scene.getStylesheets().add(getClass().getResource(Constants.CSS_DIRECTORY_PATH).toExternalForm());
+            scene.getStylesheets().add(getClass().getClassLoader().getResource(Constants.CSS_DIRECTORY_PATH).toExternalForm());
             registerStage.setTitle("Registracija");
             registerStage.setScene(scene);
             registerStage.setResizable(false);
@@ -138,7 +138,7 @@ public class LoginController implements Initializable {
 
     public void goToDashBoard() {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource(Constants.DASHBOARD_VIEW_DIRECTORY_PATH));
+            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource(Constants.DASHBOARD_VIEW_DIRECTORY_PATH));
             Stage dashboardStage = new Stage();
             Scene scene = new Scene(root);
             //scene.getStylesheets().add(getClass().getResource(Constants.CSS_DIRECTORY_PATH).toExternalForm());
