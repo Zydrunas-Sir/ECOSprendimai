@@ -17,6 +17,7 @@ import sample.Main;
 import sample.utils.Constants;
 import sample.utils.Validation;
 
+import java.awt.event.ActionEvent;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -36,55 +37,50 @@ public class RegisterController extends Main implements Initializable {
     private String hashPassword(String plainTextPassword) {
         return BCrypt.hashpw(plainTextPassword, BCrypt.gensalt());
     }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        onMouseClick();
     }
+
     //Checks all register fields are correct
     public void register() {
 
         if (first_name_textfield.getText().isEmpty()
                 || last_name_textfield.getText().isEmpty()
                 || email_textfield.getText().isEmpty()
-                ||company_name_textfield.getText().isEmpty()
+                || company_name_textfield.getText().isEmpty()
                 || password_passwordfield.getText().isEmpty()
                 || password_confirm_passwordfield.getText().isEmpty()
         ) {
             WarnStyle();
             form_info_label.setText(Constants.CREDENTIALS_IS_NOT_FILLED);
             return;
-        }
-        else if (!Validation.isValidFirstName(first_name_textfield.getText())) {
+        } else if (!Validation.isValidFirstName(first_name_textfield.getText())) {
             WarnStyle();
             form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_FIRST_NAME);
             return;
-        }
-        else if (!Validation.isValidLastName(last_name_textfield.getText())) {
+        } else if (!Validation.isValidLastName(last_name_textfield.getText())) {
             WarnStyle();
             form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_LAST_NAME);
             return;
-        }
-        else if (!Validation.isValidEmail(email_textfield.getText())) {
+        } else if (!Validation.isValidEmail(email_textfield.getText())) {
             WarnStyle();
             form_info_label.setText(Constants.CREDENTIALS_IS_NOT_FILLED_EMAIL);
             return;
-        }
-        else if (!Validation.isValidCompanyName(company_name_textfield.getText())) {
+        } else if (!Validation.isValidCompanyName(company_name_textfield.getText())) {
             WarnStyle();
             form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_COMPANY_NAME);
             return;
-        }
-        else if (!Validation.isValidPassword(password_passwordfield.getText())) {
+        } else if (!Validation.isValidPassword(password_passwordfield.getText())) {
             WarnStyle();
             form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_PASSWORD);
             return;
-        }
-        else if (!Validation.isValidPassword(password_confirm_passwordfield.getText())) {
+        } else if (!Validation.isValidPassword(password_confirm_passwordfield.getText())) {
             WarnStyle();
             form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_PASSWORD);
             return;
-        }
-        else if (!password_passwordfield.getText().equals(password_confirm_passwordfield.getText())) {
+        } else if (!password_passwordfield.getText().equals(password_confirm_passwordfield.getText())) {
             WarnStyle();
             form_info_label.setText(Constants.PASSWORD_IS_NOT_EQUAL);
         }
@@ -95,7 +91,7 @@ public class RegisterController extends Main implements Initializable {
         if (!credentials) {
             //Creating new user
             registerToDataBase();
-        }else{
+        } else {
             form_info_label.setText("");
             form_info_label.setStyle("-fx-text-fill: red;");
             form_info_label.setText(Constants.EMAIL_EXISTS);
@@ -129,6 +125,44 @@ public class RegisterController extends Main implements Initializable {
             e.getCause();
         }
     }
+
+    public void onMouseClick() {
+        form_info_label.setStyle("-fx-text-fill: black;");
+        // Handle TextField text changes.
+        password_passwordfield.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue.length() <= 7) {
+
+                form_info_label.setText("Slaptažodyje turi būti :\n" +
+                        "✳bent 8 simboliai.\n");
+                return;
+
+            } else {
+                form_info_label.setText("");
+            }
+            if (!Validation.isOneUpperCaseExist(newValue)) {
+                form_info_label.setText("Slaptažodyje turi būti :\n" +
+                        "✳bent viena didžioji radė.\n");
+                return;
+
+            } else {
+                form_info_label.setText("");
+            }
+            if (!Validation.isOneDigitAre(newValue)) {
+                form_info_label.setText("Slaptažodyje turi būti :\n" +
+                        "✳bent vienas skaičius.\n");
+                return;
+
+            } else {
+                form_info_label.setText("");
+            }
+            if(!password_confirm_passwordfield.getText().equals(password_passwordfield.getText())) {
+                form_info_label.setText("Įvesti slaptažodžiai turi sutapti.");
+                return;
+            }
+
+        });
+    }
+
 
     public void registerToDataBase() {
 

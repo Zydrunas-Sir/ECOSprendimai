@@ -36,7 +36,13 @@ public class Validation {
         Matcher matcher = pattern.matcher(password);
         return matcher.find();
     }
+    public static final String PASSWORD_CONTAIN_ONE_UPPERCASE = "(.*[A-Z].*)";
 
+    public static boolean isOneUpperCaseExist(String password) {
+        Pattern pattern = Pattern.compile(PASSWORD_CONTAIN_ONE_UPPERCASE);
+        Matcher matcher = pattern.matcher(password);
+        return matcher.find();
+    }
     public static final String REGISTER_EMAIL_PATTERN = "^[A-Za-z0-9._%+-a-zĄąČčĘęĖėĮįŠšŲųŪūŽž]+@[A-Za-z0-9.-]+.[A-Za-z]{2,50}$";
 
     public static boolean isValidEmail(String email) {
@@ -45,6 +51,13 @@ public class Validation {
         return matcher.find();
     }
 
+    public static final String PASSWORD_CONTAIN_ONE_SYMBOL = "(?=.*\\d)";
+
+    public static boolean isOneDigitAre(String email) {
+        Pattern pattern = Pattern.compile(PASSWORD_CONTAIN_ONE_SYMBOL);
+        Matcher matcher = pattern.matcher(email);
+        return matcher.find();
+    }
     public static final String PRODUCT_FORM_CATALOG_NO_PATTERN = "^[0-9]{1,25}$";
     public static boolean isValidCatalogNo(String catalogNo){
         Pattern pattern = Pattern.compile(PRODUCT_FORM_CATALOG_NO_PATTERN);
