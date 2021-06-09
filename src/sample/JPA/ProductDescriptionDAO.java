@@ -9,7 +9,7 @@ import java.util.List;
 
 public class ProductDescriptionDAO {
 
-    public static List<ProductDescription> searchByCatalogNo(int catalogNo) {
+    public static List<ProductDescription> searchByCatalogNo(String catalogNo) {
 
         EntityManager entityManager;
         EntityTransaction entityTransaction;

@@ -26,7 +26,7 @@
             <Font name="Segoe UI Light" size="18.0" />
         </font>
     </Label>
-    <Label alignment="CENTER_RIGHT" layoutX="58.0" layoutY="163.0" prefHeight="28.0" prefWidth="198.0" text="Tėvine klasė :" AnchorPane.leftAnchor="58.0">
+    <Label alignment="CENTER_RIGHT" layoutX="58.0" layoutY="163.0" prefHeight="28.0" prefWidth="198.0" text="Tėvine kategorija :" AnchorPane.leftAnchor="58.0">
         <font>
             <Font name="Segoe UI Light" size="18.0" />
         </font>

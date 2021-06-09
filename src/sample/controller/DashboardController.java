@@ -121,7 +121,7 @@ public class DashboardController extends Main implements Initializable {
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         // pakeisti lietuviskai kategorijos numeri, produkto pavadinimas, kaina, kiekis.
         TableColumn number = new TableColumn("#");
-        TableColumn<ProductCatalog, Integer> catalogNo = new TableColumn<>("Katalogo nr.");
+        TableColumn<ProductCatalog, String> catalogNo = new TableColumn<>("Katalogo nr.");
         TableColumn<ProductCatalog, String> symbol = new TableColumn<>("Produkto pavadinimas");
         TableColumn<ProductCatalog, Double> priceNet = new TableColumn<>("Kaina");
         TableColumn<ProductCatalog, Integer> stock = new TableColumn<>("Kiekis");
@@ -255,9 +255,9 @@ public class DashboardController extends Main implements Initializable {
                 tableSearchFunction(createFilteredList(categories, products));
             }
         } catch (IllegalStateException e) {
-            System.out.println("mouseEventForTreeView() IllegalStateExecption");
+            System.out.println("mouseEventForListView() IllegalStateExecption");
         } catch (NullPointerException e) {
-            System.out.println("mouseEventForTreeView() NullPointerException");
+            System.out.println("mouseEventForListView() NullPointerException");
         }
 
     }
@@ -312,11 +312,11 @@ public class DashboardController extends Main implements Initializable {
                 boolean isNewProduct = true;
 
                 for (ProductCatalog dbProduct : dbProducts) {
-                    if (dbProduct.getPriceNet() != excelProduct.getPriceNet() && dbProduct.getCatalogNo() == excelProduct.getCatalogNo()) {
+                    if (dbProduct.getPriceNet() != excelProduct.getPriceNet() && dbProduct.getCatalogNo().equals(excelProduct.getCatalogNo())) {
                         isNewProduct = false;
                         ProductCatalogDAO.updatePrice(excelProduct.getPriceNet(), dbProduct.getId());
                         countAffectedProducts++;
-                    } else if (dbProduct.getPriceNet() == excelProduct.getPriceNet() && dbProduct.getCatalogNo() == excelProduct.getCatalogNo()) {
+                    } else if (dbProduct.getPriceNet() == excelProduct.getPriceNet() && dbProduct.getCatalogNo().equals(excelProduct.getCatalogNo())) {
                         isNewProduct = false;
                         countDBProducts = dbProducts.size() - countAffectedProducts;
                     }
@@ -406,10 +406,10 @@ public class DashboardController extends Main implements Initializable {
     // Suveikia pasirinkus item'ą vidurinėje panelėje.
     // Pirmiausia kreipiamasi į duomenų bazę, patikrinama ar egzistuoja produkto aprašymas.
     // Jei egzistuoja, ištraukiami visi duomenys ir užpildoma dešinė panelė.
-    public void fillDescriptionPanel(int catalogNoImported) {
+    public void fillDescriptionPanel(String catalogNoImported) {
         List<ProductDescription> productByCatalogNo = ProductDescriptionDAO.searchByCatalogNo(catalogNoImported);
         if (productByCatalogNo.isEmpty()) {
-            catalog_no.setText(String.valueOf(catalogNoImported));
+            catalog_no.setText(catalogNoImported);
             item_name.setText("PREKĖS APRAŠYMAS NERASTAS");
             base_price.setText("-");
             discount_in_percent.setText("-");
@@ -422,7 +422,7 @@ public class DashboardController extends Main implements Initializable {
             ean_code.setText("-");
         } else {
             ProductDescription selectedProductDescription = productByCatalogNo.get(0);
-            catalog_no.setText(String.valueOf(catalogNoImported));
+            catalog_no.setText(catalogNoImported);
             item_name.setText(selectedProductDescription.getItemName());
             base_price.setText(String.valueOf(selectedProductDescription.getBasePrice()));
             discount_in_percent.setText(String.valueOf(selectedProductDescription.getDiscountInPercent()));

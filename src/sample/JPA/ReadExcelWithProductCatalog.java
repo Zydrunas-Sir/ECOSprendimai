@@ -18,8 +18,6 @@ public class ReadExcelWithProductCatalog {
     public static List<ProductCatalog> readFileUsingPOI(File file) throws IOException {
         List<ProductCatalog> products = new ArrayList<>();
 
-        //String excelFilePath = "C:\\Users\\Dovyd\\IdeaProjects\\ECOSprendimai\\target\\classes\\sample\\JPA\\products.xlsx";
-        //File file = new File(excelFilePath);
         FileInputStream inputStream = new FileInputStream(file);
 
         Workbook workbook = new XSSFWorkbook(inputStream);
@@ -28,8 +26,6 @@ public class ReadExcelWithProductCatalog {
         Iterator iterator = sheet.iterator();
         while (iterator.hasNext()) {
             Row nextRow = (Row) iterator.next();
-
-            // Not creating country object for header
             if (nextRow.getRowNum() == 0)
                 continue;
 
@@ -41,16 +37,22 @@ public class ReadExcelWithProductCatalog {
                 int columnIndex = cell.getColumnIndex();
                 switch (columnIndex + 1) {
                     case 1:
-                        productCatalog.setCatalogNo((int) cell.getNumericCellValue());
+                        productCatalog.setCatalogNo(cell.getStringCellValue());
                         break;
                     case 2:
                         productCatalog.setSymbol(cell.getStringCellValue());
                         break;
                     case 3:
-                        productCatalog.setPriceNet(cell.getNumericCellValue());
+                        Double price = cell.getNumericCellValue();
+                        if (price != null){
+                            productCatalog.setPriceNet(price);
+                        }else {productCatalog.setPriceNet(0);}
                         break;
                     case 4:
-                        productCatalog.setStock((int) cell.getNumericCellValue());
+                        Integer stock = (int) cell.getNumericCellValue();
+                        if (stock != null){
+                            productCatalog.setStock(stock);
+                        } else {productCatalog.setStock(0);}
                         break;
                     case 5:
                         productCatalog.setGroupId((int) cell.getNumericCellValue());

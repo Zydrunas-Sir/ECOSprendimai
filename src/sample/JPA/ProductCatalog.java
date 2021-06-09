@@ -15,7 +15,7 @@ public class ProductCatalog {
     @GenericGenerator(name = "incrementation", strategy = "increment")
     private int id;
     @Column(name = "catalog_no")
-    private int catalogNo;
+    private String catalogNo;
     @Column(name = "symbol")
     private String symbol;
     @Column(name = "price_net")
@@ -30,7 +30,7 @@ public class ProductCatalog {
     private Date date;
 
 
-    public ProductCatalog(int id, int catalogNo, String symbol, double priceNet, int stock, int groupId, Date date) {
+    public ProductCatalog(int id, String catalogNo, String symbol, double priceNet, int stock, int groupId, Date date) {
         this.id = id;
         this.catalogNo = catalogNo;
         this.symbol = symbol;
@@ -40,7 +40,7 @@ public class ProductCatalog {
         this.date = date;
     }
 
-    public ProductCatalog(int catalogNo, String symbol, double priceNet, int stock, int groupId, Date date) {
+    public ProductCatalog(String catalogNo, String symbol, double priceNet, int stock, int groupId, Date date) {
         this.catalogNo = catalogNo;
         this.symbol = symbol;
         this.priceNet = priceNet;
@@ -53,11 +53,11 @@ public class ProductCatalog {
     public ProductCatalog() {
     }
 
-    public int getCatalogNo() {
+    public String getCatalogNo() {
         return catalogNo;
     }
 
-    public void setCatalogNo(int catalogNo) {
+    public void setCatalogNo(String catalogNo) {
         this.catalogNo = catalogNo;
     }
 

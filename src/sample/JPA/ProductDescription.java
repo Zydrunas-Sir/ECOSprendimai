@@ -15,7 +15,7 @@ public class ProductDescription {
     @GenericGenerator(name = "incrementation", strategy = "increment")
     private int id;
     @Column(name = "catalog_no")
-    private int catalogNo;
+    private String catalogNo;
     @Column(name = "item_name")
     private String itemName;
     @Column(name = "base_price")
@@ -40,7 +40,7 @@ public class ProductDescription {
     public ProductDescription() {
     }
 
-    public ProductDescription(int catalogNo, String itemName, double basePrice, double discountInPercent, int deliveryTimeInDaysFrom, int deliveryTimeInDaysTo, String itemPackage, int minOrderAmount, String discountGroup, String productFamily, String eanCode) {
+    public ProductDescription(String catalogNo, String itemName, double basePrice, double discountInPercent, int deliveryTimeInDaysFrom, int deliveryTimeInDaysTo, String itemPackage, int minOrderAmount, String discountGroup, String productFamily, String eanCode) {
         this.catalogNo = catalogNo;
         this.itemName = itemName;
         this.basePrice = basePrice;
@@ -54,7 +54,7 @@ public class ProductDescription {
         this.eanCode = eanCode;
     }
 
-    public ProductDescription(int id, int catalogNo, String itemName, double basePrice, double discountInPercent, int deliveryTimeInDaysFrom, int deliveryTimeInDaysTo, String itemPackage, int minOrderAmount, String discountGroup, String productFamily, String eanCode) {
+    public ProductDescription(int id, String catalogNo, String itemName, double basePrice, double discountInPercent, int deliveryTimeInDaysFrom, int deliveryTimeInDaysTo, String itemPackage, int minOrderAmount, String discountGroup, String productFamily, String eanCode) {
         this.id = id;
         this.catalogNo = catalogNo;
         this.itemName = itemName;
@@ -77,11 +77,11 @@ public class ProductDescription {
         this.id = id;
     }
 
-    public int getCatalogNo() {
+    public String getCatalogNo() {
         return catalogNo;
     }
 
-    public void setCatalogNo(int catalogNo) {
+    public void setCatalogNo(String catalogNo) {
         this.catalogNo = catalogNo;
     }
 

@@ -103,7 +103,7 @@ public class ProductCatalogDAO {
         }
     }
 
-    public static void updateCatalog_no(int catalog_no, int id) {
+    public static void updateCatalog_no(String catalog_no, int id) {
 
         EntityManager entityManager;
         EntityTransaction entityTransaction;
