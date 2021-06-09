@@ -51,12 +51,9 @@ public class DashboardController extends Main implements Initializable {
     public Label current_session_user_email;
     public Label current_session_user_status;
     public ListView<Categories> listView;
-    @FXML
-    public Button createCategory_Button;
-    @FXML
-    public Button user_stats_button;
-    @FXML
-    public Button createProduct_Button;
+
+
+
     // Dešinės panelės label
     @FXML
     public Label catalog_no;
@@ -84,7 +81,8 @@ public class DashboardController extends Main implements Initializable {
     public Label ean_code;
     @FXML
     public ProgressIndicator loadProgress;
-
+    @FXML
+    private MenuBar menu_bar;
 
     public static long loggedTimeStart;
     public static long loggedTimeEnd;
@@ -101,11 +99,11 @@ public class DashboardController extends Main implements Initializable {
         UserHolder userHolder = UserHolder.getInstance();
         UserDAO.setLastLoginTime(userHolder.getUser());
         loggedTimeStart = System.currentTimeMillis(); // Fiksuoja prisijungimo laiko pradžią
+
         if (!userHolder.getUser().isAdmin()) {
-            unloadUsersButton();
-            unloadCreateProductButton();
-            unloadCreateCategoryButton();
+            menu_bar.setVisible(false);
         }
+
 
     }
 
@@ -454,20 +452,7 @@ public class DashboardController extends Main implements Initializable {
         current_session_user_email.setText(email);
     }
 
-    public void unloadUsersButton() {
-        user_stats_button.setVisible(false);
 
-    }
-
-    public void unloadCreateProductButton() {
-        createProduct_Button.setVisible(false);
-
-    }
-
-    public void unloadCreateCategoryButton() {
-        createCategory_Button.setVisible(false);
-
-    }
 
     // Atidaro langą su vartotojų sąrašu
     public void openUserStats() {
