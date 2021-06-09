@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefWidth="1342.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.DashboardController">
+<AnchorPane prefWidth="1342.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.DashboardController">
     <children>
         <TableView fx:id="table" fixedCellSize="0.0" layoutX="387.0" layoutY="56.0" onMouseClicked="#mouseEventForTableView" prefHeight="463.0" prefWidth="537.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="387.0" AnchorPane.rightAnchor="418.0" AnchorPane.topAnchor="56.0">
             <columns>
@@ -13,7 +13,7 @@
             <Insets />
          </opaqueInsets>
         </TableView>
-        <TextField id="treeViewSearchField" fx:id="listViewSearchField" layoutX="3.0" layoutY="29.0" prefHeight="25.0" prefWidth="380.0" AnchorPane.topAnchor="29.0" />
+        <TextField id="treeViewSearchField" fx:id="listViewSearchField" layoutX="3.0" layoutY="29.0" onInputMethodTextChanged="#createFilteredCategoryList" onKeyTyped="#createFilteredCategoryList" prefHeight="25.0" prefWidth="380.0" AnchorPane.topAnchor="29.0" />
       <Pane layoutX="931.0" opacity="0.31" prefHeight="53.0" prefWidth="311.0" style="-fx-background-color: gray;" AnchorPane.rightAnchor="103.0" AnchorPane.topAnchor="0.0" />
       <TitledPane fx:id="leftTitledPane" animated="false" collapsible="false" layoutX="3.0" layoutY="56.0" prefHeight="380.0" prefWidth="380.0" text="Prekių kategorijų medis" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="3.0" AnchorPane.topAnchor="56.0">
          <content>
@@ -66,7 +66,7 @@
         <Label layoutX="938.0" layoutY="11.0" text="Statusas:" AnchorPane.rightAnchor="357.0" AnchorPane.topAnchor="11.0" />
         <Label fx:id="current_session_user_email" layoutX="996.0" layoutY="30.0" prefHeight="17.0" prefWidth="180.0" style="-fx-font-weight: bold;" text="Example@example.com" AnchorPane.rightAnchor="166.0" AnchorPane.topAnchor="30.0" />
         <Label fx:id="countAll" alignment="CENTER" layoutX="389.0" layoutY="519.0" prefHeight="17.0" prefWidth="537.0" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="389.0" AnchorPane.rightAnchor="416.0" />
-      <TextField fx:id="tableViewSearchField" layoutX="387.0" layoutY="29.0" prefHeight="25.0" prefWidth="537.0" AnchorPane.leftAnchor="387.0" AnchorPane.rightAnchor="418.0" AnchorPane.topAnchor="29.0" />
+      <TextField fx:id="tableViewSearchField" layoutX="387.0" layoutY="29.0" onKeyPressed="#tableViewSearchFunction" prefHeight="25.0" prefWidth="537.0" AnchorPane.leftAnchor="387.0" AnchorPane.rightAnchor="418.0" AnchorPane.topAnchor="29.0" />
       <Label fx:id="current_session_user_status" layoutX="996.0" layoutY="11.0" prefHeight="17.0" prefWidth="180.0" text="Vartotojas" textFill="#808080" AnchorPane.rightAnchor="166.0" AnchorPane.topAnchor="11.0" />
       <Label layoutX="937.0" layoutY="30.0" text="El.paštas:" AnchorPane.rightAnchor="357.0" AnchorPane.topAnchor="30.0" />
         <Button fx:id="close_button" layoutX="1301.0" layoutY="-1.0" mnemonicParsing="false" onAction="#goBackToLogin" prefHeight="53.0" prefWidth="104.0" style="-fx-background-radius: 0px; -fx-background-color: #474747;" text="Atsijungti" textFill="WHITE" underline="true" AnchorPane.rightAnchor="3.0" />

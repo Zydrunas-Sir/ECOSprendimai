@@ -43,7 +43,6 @@ public class DashboardController extends Main implements Initializable {
     public Button close_button;
     @FXML
     public TableView<ProductCatalog> table;
-    public Button open_file;
     public TextField listViewSearchField;
     public Label countAll;
     public TextField tableViewSearchField;
@@ -51,7 +50,6 @@ public class DashboardController extends Main implements Initializable {
     public Label current_session_user_email;
     public Label current_session_user_status;
     public ListView<Categories> listView;
-
 
 
     // Dešinės panelės label
@@ -88,7 +86,11 @@ public class DashboardController extends Main implements Initializable {
     public static long loggedTimeEnd;
     public static long loggedTimeSpent;
     public static int spentTimeInSeconds;
-
+    List<Categories> categoryNamesForListView;
+    ObservableList<Categories> observableCategoryList;
+    ObservableList<ProductCatalog> observableProducts;
+    List<ProductCatalog> fullProductList;
+    List<Categories> fullCategoryList;
 
 
     @Override
@@ -96,6 +98,14 @@ public class DashboardController extends Main implements Initializable {
         loadColumnToTable();
         loadCategoriesToListView();
         currentSessionUserData();
+        fullProductList = ProductCatalogDAO.displayAllItems();
+        fullCategoryList = CategoriesDAO.displayAllCategories();
+        observableProducts = createFilteredProductList(fullCategoryList, fullProductList);
+        categoryNamesForListView = CategoriesDAO.selectCategoriesForListView();
+        observableCategoryList = FXCollections.observableList(categoryNamesForListView);
+        countTableViewObservableProducts(observableProducts);
+        table.setItems(observableProducts);
+        listView.setItems(observableCategoryList);
         UserHolder userHolder = UserHolder.getInstance();
         UserDAO.setLastLoginTime(userHolder.getUser());
         loggedTimeStart = System.currentTimeMillis(); // Fiksuoja prisijungimo laiko pradžią
@@ -199,7 +209,6 @@ public class DashboardController extends Main implements Initializable {
 
 
     public void loadCategoriesToListView() {
-        List<Categories> categoryNamesForListView = CategoriesDAO.selectCategoriesForListView();
         listViewSearchField.setPromptText("Įveskite kategorijos pavadinimą filtravimui ...");
         listView.setCellFactory(lv -> new ListCell<Categories>() {
             @Override
@@ -223,12 +232,11 @@ public class DashboardController extends Main implements Initializable {
                 }
             }
         });
-        listView.setItems(createFilteredList(categoryNamesForListView));
+
     }
 
-    public FilteredList<Categories> createFilteredList(List<Categories> categoryNamesForListView) {
-        ObservableList<Categories> observableList = FXCollections.observableList(categoryNamesForListView);
-        FilteredList<Categories> filteredList = new FilteredList<>(observableList, p -> true);
+    public void createFilteredCategoryList() {
+        FilteredList<Categories> filteredList = new FilteredList<>(observableCategoryList, p -> true);
         listViewSearchField.textProperty().addListener((observable, oldValue, newValue) -> {
             filteredList.setPredicate(category -> {
                 if (newValue == null || newValue.isEmpty()) {
@@ -238,19 +246,19 @@ public class DashboardController extends Main implements Initializable {
                 return category.getName().toLowerCase().contains(lowerCaseFilter);
             });
         });
-        return filteredList;
+        listView.setItems(filteredList);
     }
 
     public void mouseEventForListView(MouseEvent mouseEvent) {
         Categories item;
-        List<Categories> categories;
-        List<ProductCatalog> products;
         try {
             if (!listView.getSelectionModel().isEmpty()) {
                 item = listView.getSelectionModel().getSelectedItem();
-                categories = CategoriesDAO.selectCategoryById(item.getId());
-                products = ProductCatalogDAO.displayAllItems();
-                tableSearchFunction(createFilteredList(categories, products));
+                fullCategoryList = CategoriesDAO.selectCategoryById(item.getId());
+                observableProducts = FXCollections.observableList(createFilteredProductList(fullCategoryList, fullProductList));
+                countTableViewObservableProducts(observableProducts);
+                table.setItems(observableProducts);
+
             }
         } catch (IllegalStateException e) {
             System.out.println("mouseEventForListView() IllegalStateExecption");
@@ -326,16 +334,16 @@ public class DashboardController extends Main implements Initializable {
             }
             createInformationPopUp(countAffectedProducts, countExcelProducts, countNewProducts, countDBProducts);
         } catch (NullPointerException e) {
-            System.out.println("openFile() NullPointerException");
+            System.out.println("openFile(" + e + " )");
         } catch (RuntimeException e) {
-            System.out.println("openFile() RuntimeExeception");
+            System.out.println("openFile(" + e + " )");
         }
 
     }
 
     //Sukuria pop up su produktų kiekių informaciją.
     public void createInformationPopUp(int countAffectedProducts, int countExcelProducts, int countNewProducts, int countDBProducts) {
-        Window parent = open_file.getScene().getWindow();
+        Window parent = menu_bar.getScene().getWindow();
 
         Label label = new Label("Pakeista produktų :" + " " + countAffectedProducts + "\n" +
                 "Excel'yje yra produktų : " + countExcelProducts + "\n" +
@@ -356,7 +364,7 @@ public class DashboardController extends Main implements Initializable {
     }
 
     //Surenka visus produktus turinčius pasirinktos kategorijos id
-    public ObservableList<ProductCatalog> createFilteredList(List<Categories> categories, List<ProductCatalog> products) throws NullPointerException {
+    public ObservableList<ProductCatalog> createFilteredProductList(List<Categories> categories, List<ProductCatalog> products) {
         ObservableList<ProductCatalog> filteredProduct = FXCollections.observableArrayList();
         for (Categories category : categories) {
             for (ProductCatalog product : products) {
@@ -369,16 +377,22 @@ public class DashboardController extends Main implements Initializable {
     }
 
     //Sukelia observablelistą į table'ą su filtravimo funkciją.
-    public void tableSearchFunction(ObservableList<ProductCatalog> productCatalogs) {
-        FilteredList<ProductCatalog> flProducts = new FilteredList(productCatalogs, product -> true);
-        tableViewSearchField.textProperty().addListener((observable, oldValue, newValue) -> {
-            flProducts.setPredicate(product -> product.getSymbol().toLowerCase().contains(newValue.toLowerCase().trim()));
-            countAll.setText("Išviso įrašų : " + flProducts.size());
-        });
-        SortedList<ProductCatalog> slProducts = new SortedList<>(flProducts);
-        slProducts.comparatorProperty().bind(table.comparatorProperty());
-        countAll.setText("Išviso įrašų : " + slProducts.size());
-        table.setItems(slProducts);
+    public void tableViewSearchFunction() {
+        try {
+            FilteredList<ProductCatalog> flProducts = new FilteredList(observableProducts, product -> true);
+            tableViewSearchField.textProperty().addListener((observable, oldValue, newValue) -> {
+                flProducts.setPredicate(product -> product.getSymbol().toLowerCase().contains(newValue.toLowerCase().trim()));
+                countTableViewFilteredProducts(flProducts);
+            });
+            /*SortedList<ProductCatalog> slProducts = new SortedList<>(flProducts);
+            slProducts.comparatorProperty().bind(table.comparatorProperty());
+            countTableViewSortedProducts(slProducts);*/
+            countTableViewFilteredProducts(flProducts);
+            table.setItems(flProducts);
+
+        } catch (Exception e) {
+            System.out.println("tableSearch error ( " + e + " )");
+        }
     }
 
     // Tikrinama ar vidurinėje panelėje buvo pasirinktas item, jeigu buvo, kviečiamas dešinės panelės užpildymo metodas
@@ -397,8 +411,18 @@ public class DashboardController extends Main implements Initializable {
         } catch (NullPointerException e) {
             System.out.println("mouseEventForTreeView() NullPointerException");
         }
+    }
 
+    public void countTableViewObservableProducts(ObservableList<ProductCatalog> products){
+        countAll.setText("Išviso įrašų : " + products.size());
+    }
 
+    public void countTableViewFilteredProducts(FilteredList<ProductCatalog> products){
+        countAll.setText("Išviso įrašų : " + products.size());
+    }
+
+    public void countTableViewSortedProducts(SortedList<ProductCatalog> products){
+        countAll.setText("Išviso įrašų : " + products.size());
     }
 
     // Suveikia pasirinkus item'ą vidurinėje panelėje.
@@ -453,7 +477,6 @@ public class DashboardController extends Main implements Initializable {
     }
 
 
-
     // Atidaro langą su vartotojų sąrašu
     public void openUserStats() {
         try {
@@ -494,7 +517,7 @@ public class DashboardController extends Main implements Initializable {
         }
     }
 
-    public void createNewCategory(ActionEvent actionEvent){
+    public void createNewCategory(ActionEvent actionEvent) {
         try {
             Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource(Constants.CATEGORY_FORM_VIEW_PATH)));
             Stage LoginStage = new Stage();
@@ -551,7 +574,7 @@ public class DashboardController extends Main implements Initializable {
     private void loadProgress() {
         Task copyWorker = createWorker();
         loadProgress.progressProperty().bind(copyWorker.progressProperty());
-        table.itemsProperty().bind(copyWorker.valueProperty());
+        //table.itemsProperty().bind(copyWorker.valueProperty());
         new Thread(copyWorker).start();
         loadProgress.setVisible(true);
 

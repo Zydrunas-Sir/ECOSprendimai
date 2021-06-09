@@ -43,16 +43,15 @@ public class ReadExcelWithProductCatalog {
                         productCatalog.setSymbol(cell.getStringCellValue());
                         break;
                     case 3:
-                        Double price = cell.getNumericCellValue();
-                        if (price != null){
-                            productCatalog.setPriceNet(price);
-                        }else {productCatalog.setPriceNet(0);}
+                        productCatalog.setPriceNet(cell.getNumericCellValue());
                         break;
                     case 4:
                         Integer stock = (int) cell.getNumericCellValue();
-                        if (stock != null){
+                        if (stock != null) {
                             productCatalog.setStock(stock);
-                        } else {productCatalog.setStock(0);}
+                        } else {
+                            productCatalog.setStock(0);
+                        }
                         break;
                     case 5:
                         productCatalog.setGroupId((int) cell.getNumericCellValue());
