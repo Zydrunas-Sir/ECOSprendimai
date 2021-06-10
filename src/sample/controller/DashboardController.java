@@ -25,7 +25,6 @@ import javafx.scene.paint.Paint;
 import javafx.stage.*;
 import javafx.stage.Popup;
 import javafx.util.Callback;
-import javafx.util.converter.DoubleStringConverter;
 import sample.JPA.*;
 import sample.JPA.user.User;
 import sample.JPA.user.UserDAO;
@@ -527,6 +526,7 @@ public class DashboardController extends Main implements Initializable {
             Parent root = FXMLLoader.load(getClass().getClassLoader().getResource(Constants.USER_STATS_VIEW_PATH));
             Stage statsStage = new Stage();
             Scene scene = new Scene(root);
+            JPAUtil.setScene(scene);
             statsStage.setMinWidth(500);
             statsStage.setMinHeight(400);
             statsStage.setTitle("Registruotų vartotojų sąrašas");
@@ -668,7 +668,7 @@ public class DashboardController extends Main implements Initializable {
         labelTitle.setAlignment(Pos.CENTER);
         labelTitle.setMinSize(450, 60);
         labelTitle.setText(title + "\n");
-        labelTitle.setStyle("-fx-font-size: 20; -fx-font-weight: bold");
+        labelTitle.setStyle("-fx-font-size: 17; -fx-font-weight: bold");
         labelTitle.setTextFill(Paint.valueOf(titleTextColor));
         hBox1.getChildren().add(labelTitle);
 
@@ -687,7 +687,7 @@ public class DashboardController extends Main implements Initializable {
         hBox3.setMinSize(200, 60);
         Button okButton = new Button();
         okButton.setText("Gerai" + "\n");
-        okButton.setStyle("-fx-font-size: 18;");
+        okButton.setStyle("-fx-font-size: 14;");
         okButton.setOnAction(event -> popup.hide());
         hBox3.getChildren().add(okButton);
 

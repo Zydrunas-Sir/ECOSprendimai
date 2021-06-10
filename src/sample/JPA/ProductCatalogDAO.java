@@ -14,6 +14,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import static sample.JPA.JPAUtil.getScene;
+
 public class ProductCatalogDAO {
 
 
@@ -59,6 +61,7 @@ public class ProductCatalogDAO {
             System.out.println("ProductCatalogDAO.displayAllItems() NullPointerExecption");
         }
         catch (RuntimeException e) {
+            JPAUtil.showPopupWindow("NEPAVYKO PRISIJUNGTI", "• Nepavyko prisijungti prie duomenų bazės\n• Patikrinkite ar turite interneto ryšį. \n• Priešingu atveju kreipkitės: į ECOSprendimai\n• Klaidos kodas: ProductCatalogDAO.displayAllItems() IllegalStateException\n• Programos versija: " + Constants.PROGRAM_VERSION, "#f8d7da", "#842029", getScene());
             System.out.println("ProductCatalogDAO.displayAllItems() IllegalStateException");
         }
 

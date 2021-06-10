@@ -5,18 +5,16 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import org.mindrot.jbcrypt.BCrypt;
+import sample.JPA.JPAUtil;
 import sample.JPA.user.User;
 import sample.JPA.user.UserDAO;
 import sample.JPA.user.UserHolder;
 import sample.utils.Constants;
 import sample.utils.Validation;
 
-import java.io.FileInputStream;
-import java.io.InputStream;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.prefs.Preferences;
@@ -41,25 +39,18 @@ public class LoginController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
 
-
-
         String propertyValue = prefs.get(PREF_NAME, "");
-
         String password = prefs.get(PREF_PASSWORD, "");
 
-
         check_box_remember_me.setSelected(prefs.getBoolean(PREF_CHECKBOX, false));
-
         email_textfield.setText(propertyValue);
         password_passwordfield.setText(password);
     }
 
     public void login() {
 
-
         if (email_textfield.getText().isEmpty()
                 || password_passwordfield.getText().isEmpty()) {
-
             login_info_label.setStyle("-fx-text-fill: red;");
             login_info_label.setText(Constants.CREDENTIALS_IS_NOT_FILLED);
             return;
@@ -125,6 +116,7 @@ public class LoginController implements Initializable {
             scene.getStylesheets().add(getClass().getClassLoader().getResource(Constants.CSS_DIRECTORY_PATH).toExternalForm());
             registerStage.setTitle("Registracija");
             registerStage.setScene(scene);
+            JPAUtil.setScene(scene);
             registerStage.setResizable(false);
             registerStage.show();
             windowCloseLoginButton();
@@ -141,6 +133,7 @@ public class LoginController implements Initializable {
             Parent root = FXMLLoader.load(getClass().getClassLoader().getResource(Constants.DASHBOARD_VIEW_DIRECTORY_PATH));
             Stage dashboardStage = new Stage();
             Scene scene = new Scene(root);
+            JPAUtil.setScene(scene);
             //scene.getStylesheets().add(getClass().getResource(Constants.CSS_DIRECTORY_PATH).toExternalForm());
             dashboardStage.setTitle("Produktų peržiūros langas");
             dashboardStage.setScene(scene);
@@ -167,5 +160,7 @@ public class LoginController implements Initializable {
             return false;
         }
     }
+
+
 
 }

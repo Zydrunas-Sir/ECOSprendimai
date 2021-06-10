@@ -10,14 +10,24 @@ import java.util.List;
 
 public class UserDAO {
     public static void insert(User user) {
-        EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
-        EntityTransaction entityTransaction = entityManager.getTransaction();
-        entityTransaction.begin();
+        try {
+            EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
+            EntityTransaction entityTransaction = entityManager.getTransaction();
+            entityTransaction.begin();
 
-        entityManager.persist(user);
+            entityManager.persist(user);
 
-        entityManager.getTransaction().commit();
-        entityManager.close();
+            entityManager.getTransaction().commit();
+            entityManager.close();
+        } catch (IllegalStateException e) {
+            System.out.println("UserDAO.insert IllegalStateException");
+        } catch (JDBCConnectionException e) {
+            System.out.println("UserDAO.insert JDBCConnectionException");
+        } catch (ServiceException e) {
+            System.out.println("UserDAO.insert ServiceException");
+        } catch (PersistenceException e) {
+            System.out.println("UserDAO.insert PersistenceException");
+        }
     }
 
     public static User searchUserByEmail(String email) {
@@ -68,7 +78,10 @@ public class UserDAO {
             entityManager.close();
             return true;
 
-        } catch (NoResultException nre) {
+        } catch (JDBCConnectionException e) {
+            System.out.println("UserDAO.insert() JDBCConnectionException");
+            return false;
+    } catch (NoResultException nre) {
             return false;
         }
     }
