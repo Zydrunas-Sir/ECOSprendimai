@@ -5,6 +5,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
@@ -82,9 +83,16 @@ public class JPAUtil {
         hBox3.setAlignment(Pos.CENTER);
         hBox3.setMinSize(200, 60);
         Button okButton = new Button();
+
         okButton.setText("Gerai" + "\n");
         okButton.setStyle("-fx-font-size: 14;");
         okButton.setOnAction(event -> popup.hide());
+        okButton.setOnKeyPressed(event -> {
+                    if (event.getCode().equals(KeyCode.ENTER)) {
+                        okButton.fire();
+                    }
+                }
+        );
         hBox3.getChildren().add(okButton);
 
         root.getChildren().add(hBox1);

@@ -18,6 +18,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -358,11 +359,11 @@ public class DashboardController extends Main implements Initializable {
                 boolean isNewProduct = true;
 
                 for (ProductCatalog dbProduct : dbProducts) {
-                    if (dbProduct.getPriceNet() != excelProduct.getPriceNet() && dbProduct.getCatalogNo().equalsIgnoreCase(excelProduct.getCatalogNo())) {
+                    if (!dbProduct.getPriceNet().equals(excelProduct.getPriceNet()) && dbProduct.getCatalogNo().equals(excelProduct.getCatalogNo())) {
                         isNewProduct = false;
                         ProductCatalogDAO.updatePrice(excelProduct.getPriceNet(), dbProduct.getId());
                         countAffectedProducts++;
-                    } else if (dbProduct.getPriceNet() == excelProduct.getPriceNet() && dbProduct.getCatalogNo().equalsIgnoreCase(excelProduct.getCatalogNo())) {
+                    } else if (dbProduct.getPriceNet().equals(excelProduct.getPriceNet()) && dbProduct.getCatalogNo().equals(excelProduct.getCatalogNo())) {
                         isNewProduct = false;
                         countDBProducts = dbProducts.size() - countAffectedProducts;
                     }
@@ -689,6 +690,12 @@ public class DashboardController extends Main implements Initializable {
         okButton.setText("Gerai" + "\n");
         okButton.setStyle("-fx-font-size: 14;");
         okButton.setOnAction(event -> popup.hide());
+        okButton.setOnKeyPressed(event -> {
+                    if (event.getCode().equals(KeyCode.ENTER)) {
+                        okButton.fire();
+                    }
+                }
+        );
         hBox3.getChildren().add(okButton);
 
         root.getChildren().add(hBox1);
