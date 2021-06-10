@@ -36,7 +36,7 @@ public class ProductFormController extends Main implements Initializable {
                         if (Validation.isValidStock(stock_textField.getText())) {
                             Stage stage = (Stage) create_product_button.getScene().getWindow();
                             ProductCatalog product = new ProductCatalog(catalog_no_textField.getText(), symbol_textField.getText(),
-                                    Double.parseDouble(price_textField.getText()), Integer.parseInt(stock_textField.getText()),
+                                    price_textField.getText(), Integer.parseInt(stock_textField.getText()),
                                     item.getId(), null);
                             ProductCatalogDAO.insert(product);
                             stage.close();

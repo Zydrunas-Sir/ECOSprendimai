@@ -12,14 +12,14 @@ public class JPAUtil {
     private static EntityManagerFactory factory = null;
 
     public static EntityManagerFactory getEntityManagerFactory() {
-            if (factory == null) {
-                try {
-                    factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
-                } catch (RuntimeException exception) {
-                    System.out.println("JPAUtil RuntimeException ");
-                    JPAUtil.infoBox("NEPAVYKO PRISIJUNGTI PRIE DUOMENŲ BAZĖS", "SQLException");
-                }
+        if (factory == null) {
+            try {
+                factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+            } catch (RuntimeException exception) {
+                System.out.println("JPAUtil RuntimeException ");
+                JPAUtil.infoBox("NEPAVYKO PRISIJUNGTI PRIE DUOMENŲ BAZĖS", "SQLException");
             }
+        }
         return factory;
     }
 

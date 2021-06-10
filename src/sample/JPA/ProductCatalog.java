@@ -19,7 +19,7 @@ public class ProductCatalog {
     @Column(name = "symbol")
     private String symbol;
     @Column(name = "price_net")
-    private double priceNet;
+    private String priceNet;
     @Column(name = "stock")
     private int stock;
     //@ManyToOne(targetEntity = Categories.class, fetch = FetchType.EAGER, cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
@@ -30,7 +30,7 @@ public class ProductCatalog {
     private Date date;
 
 
-    public ProductCatalog(int id, String catalogNo, String symbol, double priceNet, int stock, int groupId, Date date) {
+    public ProductCatalog(int id, String catalogNo, String symbol, String priceNet, int stock, int groupId, Date date) {
         this.id = id;
         this.catalogNo = catalogNo;
         this.symbol = symbol;
@@ -40,7 +40,7 @@ public class ProductCatalog {
         this.date = date;
     }
 
-    public ProductCatalog(String catalogNo, String symbol, double priceNet, int stock, int groupId, Date date) {
+    public ProductCatalog(String catalogNo, String symbol, String priceNet, int stock, int groupId, Date date) {
         this.catalogNo = catalogNo;
         this.symbol = symbol;
         this.priceNet = priceNet;
@@ -69,11 +69,11 @@ public class ProductCatalog {
         this.symbol = symbol;
     }
 
-    public double getPriceNet() {
+    public String getPriceNet() {
         return priceNet;
     }
 
-    public void setPriceNet(double priceNet) {
+    public void setPriceNet(String priceNet) {
         this.priceNet = priceNet;
     }
 

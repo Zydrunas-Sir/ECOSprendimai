@@ -32,7 +32,7 @@ public class Constants {
     public static final String CURRENT_SESSION_STATUS_ADMIN = "Administratorius";
     public static final String CURRENT_SESSION_STATUS_USER = "Vartotojas";
 
-    public static final String DB_URL = "jdbc:mysql://localhost:3306/ecosprendimai";
+    public static final String DB_URL = "jdbc:mysql://localhost:3306/task";
     public static final String USER = "root";
     public static final String PASS = "";
 }

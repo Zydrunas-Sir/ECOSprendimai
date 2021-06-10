@@ -43,7 +43,7 @@ public class ReadExcelWithProductCatalog {
                         productCatalog.setSymbol(cell.getStringCellValue());
                         break;
                     case 3:
-                        productCatalog.setPriceNet(cell.getNumericCellValue());
+                        productCatalog.setPriceNet(String.valueOf(cell.getNumericCellValue()));
                         break;
                     case 4:
                         Integer stock = (int) cell.getNumericCellValue();
