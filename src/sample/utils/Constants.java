@@ -23,12 +23,12 @@ public class Constants {
     public static final String CREDENTIALS_IS_NOT_CORRECT = "Įvesti duomenys neteisingi.";
     public static final String CREDENTIALS_IS_NOT_CORRECT_FIRST_NAME = "Vartotojo vardas neatitinka reikalavimų.";
     public static final String CREDENTIALS_IS_NOT_CORRECT_LAST_NAME = "Vartotojo pavardė neatitinka reikalavimų.";
-    public static final String CREDENTIALS_IS_NOT_CORRECT_COMPANY_NAME = "Neteisingai ivestas įmones pavadinimas.";
+    public static final String CREDENTIALS_IS_NOT_CORRECT_COMPANY_NAME = "Neteisingai įvestas įmonės pavadinimas.";
     public static final String CREDENTIALS_IS_NOT_CORRECT_PASSWORD = "Slaptažodis neatitinka reikalavimų.(Bent 8 simboliai)(bent viena didžioji raidė ir skaičius)";
-    public static final String CREDENTIALS_IS_NOT_FILLED_EMAIL = "Vartotojo el.paštas neatitinka reikalavimų.";
+    public static final String CREDENTIALS_IS_NOT_FILLED_EMAIL = "Vartotojo el. paštas neatitinka reikalavimų.";
     public static final String PASSWORD_IS_NOT_EQUAL = "Įvesti slaptažodžiai nesutampa.";
     public static final String CREDENTIALS_IS_NOT_FILLED = "Visi laukeliai privalo būti užpildyti.";
-    public static final String CREDENTIALS_EMAIL_AND_PASSWORD_NOT_CORRECT = "Blogai įvestas el.paštas arba slaptažodis";
+    public static final String CREDENTIALS_EMAIL_AND_PASSWORD_NOT_CORRECT = "Blogai įvestas el. paštas arba slaptažodis";
     public static final String CURRENT_SESSION_STATUS_ADMIN = "Administratorius";
     public static final String CURRENT_SESSION_STATUS_USER = "Vartotojas";
 

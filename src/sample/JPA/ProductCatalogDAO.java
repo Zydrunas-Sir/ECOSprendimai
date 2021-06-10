@@ -3,14 +3,16 @@ package sample.JPA;
 
 import org.hibernate.HibernateException;
 import org.hibernate.exception.JDBCConnectionException;
-
-import javax.persistence.*;
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.hibernate.service.spi.ServiceException;
 import sample.utils.Constants;
+
+import javax.persistence.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ProductCatalogDAO {
 

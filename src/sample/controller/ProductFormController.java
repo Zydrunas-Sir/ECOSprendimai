@@ -43,22 +43,22 @@ public class ProductFormController extends Main implements Initializable {
                         } else {
                             form_info_label.setText("");
                             form_info_label.setStyle("-fx-text-fill: red;");
-                            form_info_label.setText("Neveikia stock");
+                            form_info_label.setText("Neteisingai įvestas kiekis");
                         }
                     } else {
                         form_info_label.setText("");
                         form_info_label.setStyle("-fx-text-fill: red;");
-                        form_info_label.setText("Neveikia price");
+                        form_info_label.setText("Neteisingai įvesta kaina");
                     }
                 } else {
                     form_info_label.setText("");
                     form_info_label.setStyle("-fx-text-fill: red;");
-                    form_info_label.setText("Neveikia symbol");
+                    form_info_label.setText("Neteisingai įvestas pavadinimas");
                 }
             } else {
                 form_info_label.setText("");
                 form_info_label.setStyle("-fx-text-fill: red;");
-                form_info_label.setText("Neveikia catalogNo");
+                form_info_label.setText("Neteisingai įvestas katalogo numeris");
             }
 
 
