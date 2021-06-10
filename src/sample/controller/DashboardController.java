@@ -372,7 +372,7 @@ public class DashboardController extends Main implements Initializable {
                     ProductCatalogDAO.insert(excelProduct);
                 }
             }
-            String successToPopup = "Pakeista produktų: " + countAffectedProducts + "\nFaile buvo produktų: " + countExcelProducts + "\nPridėti nauji produktai: " + countNewProducts + "\nDuomenų bazėje nepaveikti produktai: " + countDBProducts + "\n";
+            String successToPopup = "Pakeista produktų: " + countAffectedProducts + "\nFaile aptikta produktų: " + countExcelProducts + "\nPridėti nauji produktai: " + countNewProducts + "\nDuomenų bazėje nepaveikti produktai: " + countDBProducts + "\n";
             showPopupWindow("FAILAS SĖKMINGAI ĮKELTAS", successToPopup, "#d1e7dd", "#0f5132");
 //      createInformationPopUp(countAffectedProducts, countExcelProducts, countNewProducts, countDBProducts);
         } catch (NullPointerException e) {
