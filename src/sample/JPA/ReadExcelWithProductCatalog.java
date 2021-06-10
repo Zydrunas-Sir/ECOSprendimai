@@ -58,6 +58,9 @@ public class ReadExcelWithProductCatalog {
                         break;
                 }
             }
+            if (productCatalog.getCatalogNo().isEmpty() && productCatalog.getSymbol().isEmpty() && productCatalog.getGroupId() == 0){
+                break;
+            }
             products.add(productCatalog);
 
         }

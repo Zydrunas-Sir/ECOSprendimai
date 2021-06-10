@@ -98,14 +98,10 @@ public class DashboardController extends Main implements Initializable {
         loadColumnToTable();
         loadCategoriesToListView();
         currentSessionUserData();
-        fullProductList = ProductCatalogDAO.displayAllItems();
-        fullCategoryList = CategoriesDAO.displayAllCategories();
-        observableProducts = createFilteredProductList(fullCategoryList, fullProductList);
         categoryNamesForListView = CategoriesDAO.selectCategoriesForListView();
         observableCategoryList = FXCollections.observableList(categoryNamesForListView);
-        countTableViewObservableProducts(observableProducts);
-        table.setItems(observableProducts);
         listView.setItems(observableCategoryList);
+        reloadProductTableView();
         UserHolder userHolder = UserHolder.getInstance();
         UserDAO.setLastLoginTime(userHolder.getUser());
         loggedTimeStart = System.currentTimeMillis(); // Fiksuoja prisijungimo laiko pradžią
@@ -280,6 +276,7 @@ public class DashboardController extends Main implements Initializable {
             loadProgress.setVisible(false); // Loading Spinner ends.
         }
         loadProgress.setVisible(false);
+        reloadProductTableView();
     }
 
     //Konfiguriuoja failo pasirinkimus
@@ -295,7 +292,7 @@ public class DashboardController extends Main implements Initializable {
 
     //Tikriną excelio produktų kainas su duombasėje esamomis produkto kainomis, įkelia naujus produktus, jei jų nėra duombasėje, visai tai skaičiuoja.
     private void openFile(File file) {
-        ProductCatalogDAO.checkIfCatalogExistsIfNotCreateIt();
+        //ProductCatalogDAO.checkIfCatalogExistsIfNotCreateIt();
 
         List<ProductCatalog> excelProducts = null;
         List<ProductCatalog> dbProducts = ProductCatalogDAO.displayAllItems();
@@ -318,11 +315,11 @@ public class DashboardController extends Main implements Initializable {
                 boolean isNewProduct = true;
 
                 for (ProductCatalog dbProduct : dbProducts) {
-                    if (dbProduct.getPriceNet() != excelProduct.getPriceNet() && dbProduct.getCatalogNo().equals(excelProduct.getCatalogNo())) {
+                    if (dbProduct.getPriceNet() != excelProduct.getPriceNet() && dbProduct.getCatalogNo().equalsIgnoreCase(excelProduct.getCatalogNo())) {
                         isNewProduct = false;
                         ProductCatalogDAO.updatePrice(excelProduct.getPriceNet(), dbProduct.getId());
                         countAffectedProducts++;
-                    } else if (dbProduct.getPriceNet() == excelProduct.getPriceNet() && dbProduct.getCatalogNo().equals(excelProduct.getCatalogNo())) {
+                    } else if (dbProduct.getPriceNet() == excelProduct.getPriceNet() && dbProduct.getCatalogNo().equalsIgnoreCase(excelProduct.getCatalogNo())) {
                         isNewProduct = false;
                         countDBProducts = dbProducts.size() - countAffectedProducts;
                     }
@@ -384,11 +381,10 @@ public class DashboardController extends Main implements Initializable {
                 flProducts.setPredicate(product -> product.getSymbol().toLowerCase().contains(newValue.toLowerCase().trim()));
                 countTableViewFilteredProducts(flProducts);
             });
-            /*SortedList<ProductCatalog> slProducts = new SortedList<>(flProducts);
+            SortedList<ProductCatalog> slProducts = new SortedList<>(flProducts);
             slProducts.comparatorProperty().bind(table.comparatorProperty());
-            countTableViewSortedProducts(slProducts);*/
-            countTableViewFilteredProducts(flProducts);
-            table.setItems(flProducts);
+            countTableViewSortedProducts(slProducts);
+            table.setItems(slProducts);
 
         } catch (Exception e) {
             System.out.println("tableSearch error ( " + e + " )");
@@ -520,13 +516,12 @@ public class DashboardController extends Main implements Initializable {
     public void createNewCategory(ActionEvent actionEvent) {
         try {
             Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource(Constants.CATEGORY_FORM_VIEW_PATH)));
-            Stage LoginStage = new Stage();
+            Stage createCategoryStage = new Stage();
             Scene scene = new Scene(root, Constants.REGISTER_WINDOW_WIDTH, Constants.REGISTER_WINDOW_HEIGHT);
             scene.getStylesheets().add(Objects.requireNonNull(getClass().getClassLoader().getResource(Constants.CSS_DIRECTORY_PATH)).toExternalForm());
-            LoginStage.setTitle("");
-            LoginStage.setScene(scene);
-            LoginStage.show();
-
+            createCategoryStage.setTitle("Kategorijos anketa");
+            createCategoryStage.setScene(scene);
+            createCategoryStage.show();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -541,7 +536,7 @@ public class DashboardController extends Main implements Initializable {
             Stage LoginStage = new Stage();
             Scene scene = new Scene(root, Constants.REGISTER_WINDOW_WIDTH, Constants.REGISTER_WINDOW_HEIGHT);
             scene.getStylesheets().add(Objects.requireNonNull(getClass().getClassLoader().getResource(Constants.CSS_DIRECTORY_PATH)).toExternalForm());
-            LoginStage.setTitle("");
+            LoginStage.setTitle("Produkto anketa");
             LoginStage.setScene(scene);
             LoginStage.show();
 
@@ -593,6 +588,21 @@ public class DashboardController extends Main implements Initializable {
                 return tabPane;
             }
         };
+    }// Loading Spinner set-up-ends
+
+
+    public void reloadCategoryListView(){
+        listView.setItems(observableCategoryList);
     }
-    // Loading Spinner set-up-ends
+
+    public void reloadProductTableView(){
+        fullProductList = ProductCatalogDAO.displayAllItems();
+        fullCategoryList = CategoriesDAO.displayAllCategories();
+        observableProducts = createFilteredProductList(fullCategoryList, fullProductList);
+        countTableViewObservableProducts(observableProducts);
+        table.setItems(observableProducts);
+    }
 }
+
+
+//TODO: Užvardinti scenas , reload metodą.

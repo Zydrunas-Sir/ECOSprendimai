@@ -207,7 +207,7 @@ public class ProductCatalogDAO {
     }
 
     public static void checkIfCatalogExistsIfNotCreateIt() {
-        String checkQuery = "SHOW TABLES FROM task LIKE 'product_catalog'";
+        String checkQuery = "SHOW TABLES FROM ecosprendi_kitm LIKE 'product_catalog'";
         String createTableQuery = "CREATE TABLE IF NOT EXISTS `product_catalog` (`id` INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,`catalog_no` INT(11) DEFAULT NULL,`date` DATE DEFAULT NULL,`group_id` INT(11) DEFAULT NULL,`price_net` DOUBLE DEFAULT NULL,`stock` INT(11) DEFAULT NULL,`symbol` VARCHAR(255) DEFAULT NULL)";
         Statement stmt;
         System.out.println("checkIfCatalogExistsIfNotCreateIt method initiated...");

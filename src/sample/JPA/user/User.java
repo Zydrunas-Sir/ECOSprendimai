@@ -1,10 +1,7 @@
 package sample.JPA.user;
 
 
-import org.apache.poi.ss.formula.functions.T;
-
 import javax.persistence.*;
-import java.sql.Time;
 import java.sql.Timestamp;
 
 @Entity
