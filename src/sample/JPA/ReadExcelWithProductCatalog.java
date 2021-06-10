@@ -1,17 +1,17 @@
 package sample.JPA;
 
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 
 public class ReadExcelWithProductCatalog {
@@ -43,7 +43,7 @@ public class ReadExcelWithProductCatalog {
                         productCatalog.setSymbol(cell.getStringCellValue());
                         break;
                     case 3:
-                        productCatalog.setPriceNet(cell.getNumericCellValue());
+                        productCatalog.setPriceNet(String.valueOf(cell.getNumericCellValue()));
                         break;
                     case 4:
                         Integer stock = (int) cell.getNumericCellValue();
