@@ -330,11 +330,11 @@ public class DashboardController extends Main implements Initializable {
         boolean isNewProduct = true;
 
         for (ProductCatalog dbProduct : dbProducts) {
-          if (dbProduct.getPriceNet() != excelProduct.getPriceNet() && dbProduct.getCatalogNo().equalsIgnoreCase(excelProduct.getCatalogNo())) {
+          if (!dbProduct.getPriceNet().equals(excelProduct.getPriceNet()) && dbProduct.getCatalogNo().equals(excelProduct.getCatalogNo())) {
             isNewProduct = false;
             ProductCatalogDAO.updatePrice(excelProduct.getPriceNet(), dbProduct.getId());
             countAffectedProducts++;
-          } else if (dbProduct.getPriceNet() == excelProduct.getPriceNet() && dbProduct.getCatalogNo().equalsIgnoreCase(excelProduct.getCatalogNo())) {
+          } else if (dbProduct.getPriceNet().equals(excelProduct.getPriceNet()) && dbProduct.getCatalogNo().equals(excelProduct.getCatalogNo())) {
             isNewProduct = false;
             countDBProducts = dbProducts.size() - countAffectedProducts;
           }

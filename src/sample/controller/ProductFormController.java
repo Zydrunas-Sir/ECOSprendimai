@@ -36,29 +36,29 @@ public class ProductFormController extends Main implements Initializable {
                         if (Validation.isValidStock(stock_textField.getText())) {
                             Stage stage = (Stage) create_product_button.getScene().getWindow();
                             ProductCatalog product = new ProductCatalog(catalog_no_textField.getText(), symbol_textField.getText(),
-                                    Double.parseDouble(price_textField.getText()), Integer.parseInt(stock_textField.getText()),
+                                    price_textField.getText(), Integer.parseInt(stock_textField.getText()),
                                     item.getId(), null);
                             ProductCatalogDAO.insert(product);
                             stage.close();
                         } else {
                             form_info_label.setText("");
                             form_info_label.setStyle("-fx-text-fill: red;");
-                            form_info_label.setText("Neveikia stock");
+                            form_info_label.setText("Neteisingai įvestas kiekis");
                         }
                     } else {
                         form_info_label.setText("");
                         form_info_label.setStyle("-fx-text-fill: red;");
-                        form_info_label.setText("Neveikia price");
+                        form_info_label.setText("Neteisingai įvesta kaina");
                     }
                 } else {
                     form_info_label.setText("");
                     form_info_label.setStyle("-fx-text-fill: red;");
-                    form_info_label.setText("Neveikia symbol");
+                    form_info_label.setText("Neteisingai įvestas pavadinimas");
                 }
             } else {
                 form_info_label.setText("");
                 form_info_label.setStyle("-fx-text-fill: red;");
-                form_info_label.setText("Neveikia catalogNo");
+                form_info_label.setText("Neteisingai įvestas katalogo numeris");
             }
 
 
