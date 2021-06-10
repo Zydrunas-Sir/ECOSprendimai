@@ -3,14 +3,16 @@ package sample.JPA;
 
 import org.hibernate.HibernateException;
 import org.hibernate.exception.JDBCConnectionException;
-
-import javax.persistence.*;
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.hibernate.service.spi.ServiceException;
 import sample.utils.Constants;
+
+import javax.persistence.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ProductCatalogDAO {
 
@@ -78,7 +80,7 @@ public class ProductCatalogDAO {
     }
 
 
-    public static void updatePrice(double price, int id) {
+    public static void updatePrice(String price, int id) {
 
         EntityManager entityManager;
         EntityTransaction entityTransaction;
@@ -208,7 +210,7 @@ public class ProductCatalogDAO {
 
     public static void checkIfCatalogExistsIfNotCreateIt() {
         String checkQuery = "SHOW TABLES FROM ecosprendi_kitm LIKE 'product_catalog'";
-        String createTableQuery = "CREATE TABLE IF NOT EXISTS `product_catalog` (`id` INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,`catalog_no` INT(11) DEFAULT NULL,`date` DATE DEFAULT NULL,`group_id` INT(11) DEFAULT NULL,`price_net` DOUBLE DEFAULT NULL,`stock` INT(11) DEFAULT NULL,`symbol` VARCHAR(255) DEFAULT NULL)";
+        String createTableQuery = "CREATE TABLE IF NOT EXISTS `product_catalog` (`id` INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,`catalog_no` INT(11) DEFAULT NULL,`date` DATE DEFAULT NULL,`group_id` INT(11) DEFAULT NULL,`price_net` VARCHAR(30) DEFAULT NULL,`stock` INT(11) DEFAULT NULL,`symbol` VARCHAR(255) DEFAULT NULL)";
         Statement stmt;
         System.out.println("checkIfCatalogExistsIfNotCreateIt method initiated...");
         try {
