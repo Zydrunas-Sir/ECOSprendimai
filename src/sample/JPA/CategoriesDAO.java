@@ -2,9 +2,12 @@ package sample.JPA;
 
 import org.hibernate.exception.JDBCConnectionException;
 import org.hibernate.service.spi.ServiceException;
+import sample.utils.Constants;
 
 import javax.persistence.*;
 import java.util.List;
+
+import static sample.JPA.JPAUtil.getScene;
 
 public class CategoriesDAO {
 
@@ -81,17 +84,15 @@ public class CategoriesDAO {
             entityManager.getTransaction().commit();
             entityManager.close();
         } catch (IllegalStateException e) {
-            JPAUtil.infoBox("NEPAVYKO PRISIJUNGTI PRIE DUOMENŲ BAZĖS", "IllegalStateException");
+            JPAUtil.showPopupWindow("NEPAVYKO PRISIJUNGTI", "• Nepavyko prisijungti prie duomenų bazės\n• Patikrinkite ar turite interneto ryšį. \n• Priešingu atveju kreipkitės: į ECOSprendimai\n• Klaidos kodas: JPAUtil RuntimeException\n• Programos versija: " + Constants.PROGRAM_VERSION, "#f8d7da", "#842029", getScene());
         } catch (JDBCConnectionException e) {
-            JPAUtil.infoBox("NEPAVYKO PRISIJUNGTI PRIE DUOMENŲ BAZĖS", "JDBCConnectionException");
+            JPAUtil.showPopupWindow("NEPAVYKO PRISIJUNGTI", "• Nepavyko prisijungti prie duomenų bazės\n• Patikrinkite ar turite interneto ryšį. \n• Priešingu atveju kreipkitės: į ECOSprendimai\n• Klaidos kodas: JPAUtil JDBCConnectionException\n• Programos versija: " + Constants.PROGRAM_VERSION, "#f8d7da", "#842029", getScene());
         } catch (ServiceException e) {
-            JPAUtil.infoBox("NEPAVYKO PRISIJUNGTI PRIE DUOMENŲ BAZĖS", "ServiceException");
+            JPAUtil.showPopupWindow("NEPAVYKO PRISIJUNGTI", "• Nepavyko prisijungti prie duomenų bazės\n• Patikrinkite ar turite interneto ryšį. \n• Priešingu atveju kreipkitės: į ECOSprendimai\n• Klaidos kodas: JPAUtil ServiceException\n• Programos versija: " + Constants.PROGRAM_VERSION, "#f8d7da", "#84209", getScene());
         } catch (PersistenceException e) {
-            JPAUtil.infoBox("NEPAVYKO PRISIJUNGTI PRIE DUOMENŲ BAZĖS", "PersistenceException");
+            JPAUtil.showPopupWindow("NEPAVYKO PRISIJUNGTI", "• Nepavyko prisijungti prie duomenų bazės\n• Patikrinkite ar turite interneto ryšį. \n• Priešingu atveju kreipkitės: į ECOSprendimai\n• Klaidos kodas: JPAUtil PersistenceException\n• Programos versija: " + Constants.PROGRAM_VERSION, "#f8d7da", "#842029", getScene());
         }
-
         return categories;
-
     }
 
 

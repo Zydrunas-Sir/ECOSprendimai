@@ -28,7 +28,9 @@ public class ProductDescriptionDAO {
         } catch (NullPointerException e ) {
             System.out.println("ProductDescriptionDAO.searchByCatalogNo() NullPointerExecption");
         } catch (RuntimeException e) {
-            JPAUtil.infoBox("NEPAVYKO PRISIJUNGTI PRIE DUOMENŲ BAZĖS", "RuntimeException");
+//            JPAUtil.infoBox("NEPAVYKO PRISIJUNGTI PRIE DUOMENŲ BAZĖS", "RuntimeException");
+//            JPAUtil.infoBox();
+
         }
 
         return productDescription;

@@ -14,6 +14,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import static sample.JPA.JPAUtil.getScene;
+
 public class ProductCatalogDAO {
 
 
