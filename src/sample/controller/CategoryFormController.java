@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import sample.JPA.Categories;
 import sample.JPA.CategoriesDAO;
 import sample.Main;
@@ -30,7 +31,7 @@ public class CategoryFormController extends Main implements Initializable {
                 CategoriesDAO.updateCategoryRights(parentCategory.getlft());
                 Categories newCategory = new Categories(categoryName_textField.getText(), parentCategory.getlft()+1, parentCategory.getlft()+2);
                 CategoriesDAO.insert(newCategory);
-                stage.close();
+                stage.fireEvent(new WindowEvent(stage, WindowEvent.WINDOW_CLOSE_REQUEST));
             }
         }
 
