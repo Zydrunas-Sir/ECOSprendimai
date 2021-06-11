@@ -9,17 +9,17 @@
         <TableView fx:id="table" fixedCellSize="0.0" layoutX="387.0" layoutY="56.0" onMouseClicked="#mouseEventForTableView" prefHeight="463.0" prefWidth="537.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="387.0" AnchorPane.rightAnchor="418.0" AnchorPane.topAnchor="56.0">
             <columns>
             </columns>
-         <opaqueInsets>
-            <Insets />
-         </opaqueInsets>
+            <opaqueInsets>
+                <Insets />
+            </opaqueInsets>
         </TableView>
-        <TextField id="treeViewSearchField" fx:id="listViewSearchField" layoutX="3.0" layoutY="29.0" onInputMethodTextChanged="#createFilteredCategoryList" onKeyTyped="#createFilteredCategoryList" prefHeight="25.0" prefWidth="380.0" AnchorPane.topAnchor="29.0" />
-      <Pane layoutX="931.0" opacity="0.31" prefHeight="53.0" prefWidth="311.0" style="-fx-background-color: gray;" AnchorPane.rightAnchor="103.0" AnchorPane.topAnchor="0.0" />
-      <TitledPane fx:id="leftTitledPane" animated="false" collapsible="false" layoutX="3.0" layoutY="56.0" prefHeight="380.0" prefWidth="380.0" text="Prekių kategorijų medis" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="3.0" AnchorPane.topAnchor="56.0">
-         <content>
-            <ListView fx:id="listView" editable="true" onMouseClicked="#mouseEventForListView" prefHeight="200.0" prefWidth="200.0" />
-         </content></TitledPane>
-        <TitledPane animated="false" collapsible="false" layoutX="929.0" layoutY="56.0" pickOnBounds="false" prefHeight="356.0" prefWidth="414.0" text="Pasirinktos prekes stulpeleje pavadinimas" AnchorPane.bottomAnchor="3.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="56.0">
+        <TextField id="treeViewSearchField" fx:id="listViewSearchField" layoutX="3.0" layoutY="29.0" onKeyPressed="#createFilteredCategoryList" prefHeight="25.0" prefWidth="380.0" AnchorPane.topAnchor="29.0" />
+        <Pane layoutX="928.0" layoutY="29.0" opacity="0.31" prefHeight="51.0" prefWidth="308.0" style="-fx-background-color: gray;" AnchorPane.rightAnchor="106.0" AnchorPane.topAnchor="29.0" />
+        <TitledPane fx:id="leftTitledPane" animated="false" collapsible="false" layoutX="3.0" layoutY="56.0" prefHeight="380.0" prefWidth="380.0" text="Prekių kategorijų medis" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="3.0" AnchorPane.topAnchor="56.0">
+            <content>
+                <ListView fx:id="listView" editable="true" onMouseClicked="#mouseEventForListView" prefHeight="200.0" prefWidth="200.0" />
+            </content></TitledPane>
+        <TitledPane animated="false" collapsible="false" layoutX="929.0" layoutY="83.0" pickOnBounds="false" prefHeight="448.0" prefWidth="414.0" text="Pasirinktos prekes stulpeleje pavadinimas" AnchorPane.bottomAnchor="3.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="83.0">
             <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="330.0" prefWidth="403.0">
                     <children>
@@ -47,49 +47,49 @@
                         <Label layoutX="196.0" layoutY="123.0" prefHeight="17.0" prefWidth="36.0" text="Eur" />
                         <Label layoutX="216.0" layoutY="168.0" prefHeight="17.0" prefWidth="36.0" text="vnt." />
                         <Label layoutX="22.0" layoutY="169.0" prefHeight="17.0" prefWidth="85.0" text="Paketas :" />
-                  <Label layoutX="21.0" layoutY="35.0" prefHeight="17.0" prefWidth="112.0" text="Prekės pavadinimas:" />
-                  <Label fx:id="item_name" layoutX="158.0" layoutY="35.0" prefHeight="17.0" prefWidth="192.0" style="-fx-font-weight: bold;" text="PREKĖ NEPASIRINKTA" />
-                  <Label layoutX="156.0" layoutY="151.0" text="nuo" />
-                  <Label layoutX="199.0" layoutY="151.0" text="iki" />
-                  <Label fx:id="delivery_time_in_days_to" layoutX="224.0" layoutY="151.0" style="-fx-font-weight: bold;" text="0" />
-                  <Label layoutX="243.0" layoutY="151.0" text="d. dienų" />
+                        <Label layoutX="21.0" layoutY="35.0" prefHeight="17.0" prefWidth="112.0" text="Prekės pavadinimas:" />
+                        <Label fx:id="item_name" layoutX="158.0" layoutY="35.0" prefHeight="17.0" prefWidth="192.0" style="-fx-font-weight: bold;" text="PREKĖ NEPASIRINKTA" />
+                        <Label layoutX="156.0" layoutY="151.0" text="nuo" />
+                        <Label layoutX="199.0" layoutY="151.0" text="iki" />
+                        <Label fx:id="delivery_time_in_days_to" layoutX="224.0" layoutY="151.0" style="-fx-font-weight: bold;" text="0" />
+                        <Label layoutX="243.0" layoutY="151.0" text="d. dienų" />
                     </children>
-               <padding>
-                  <Insets bottom="3.0" />
-               </padding>
+                    <padding>
+                        <Insets bottom="3.0" />
+                    </padding>
                 </AnchorPane>
             </content>
             <padding>
                 <Insets right="3.0" />
             </padding>
         </TitledPane>
-        <Label layoutX="938.0" layoutY="11.0" text="Statusas:" AnchorPane.rightAnchor="357.0" AnchorPane.topAnchor="11.0" />
-        <Label fx:id="current_session_user_email" layoutX="996.0" layoutY="30.0" prefHeight="17.0" prefWidth="180.0" style="-fx-font-weight: bold;" text="Example@example.com" AnchorPane.rightAnchor="166.0" AnchorPane.topAnchor="30.0" />
+        <Label layoutX="954.0" layoutY="40.0" text="Statusas:" AnchorPane.rightAnchor="341.0" AnchorPane.topAnchor="40.0" />
+        <Label fx:id="current_session_user_email" layoutX="1012.0" layoutY="59.0" prefHeight="17.0" prefWidth="195.0" style="-fx-font-weight: bold;" text="Example@example.com" AnchorPane.rightAnchor="135.0" AnchorPane.topAnchor="59.0" />
         <Label fx:id="countAll" alignment="CENTER" layoutX="389.0" layoutY="519.0" prefHeight="17.0" prefWidth="537.0" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="389.0" AnchorPane.rightAnchor="416.0" />
-      <TextField fx:id="tableViewSearchField" layoutX="387.0" layoutY="29.0" onKeyPressed="#tableViewSearchFunction" prefHeight="25.0" prefWidth="537.0" AnchorPane.leftAnchor="387.0" AnchorPane.rightAnchor="418.0" AnchorPane.topAnchor="29.0" />
-      <Label fx:id="current_session_user_status" layoutX="996.0" layoutY="11.0" prefHeight="17.0" prefWidth="180.0" text="Vartotojas" textFill="#808080" AnchorPane.rightAnchor="166.0" AnchorPane.topAnchor="11.0" />
-      <Label layoutX="937.0" layoutY="30.0" text="El.paštas:" AnchorPane.rightAnchor="357.0" AnchorPane.topAnchor="30.0" />
-        <Button fx:id="close_button" layoutX="1301.0" layoutY="-1.0" mnemonicParsing="false" onAction="#goBackToLogin" prefHeight="53.0" prefWidth="104.0" style="-fx-background-radius: 0px; -fx-background-color: #474747;" text="Atsijungti" textFill="WHITE" underline="true" AnchorPane.rightAnchor="3.0" />
-      <ProgressIndicator fx:id="loadProgress" layoutX="639.0" layoutY="249.0" progress="0.0" visible="false" />
-      <MenuBar fx:id="menu_bar" prefHeight="25.0" prefWidth="928.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="414.0" AnchorPane.topAnchor="0.0">
-        <menus>
-          <Menu mnemonicParsing="false" text="Failas">
-            <items>
-              <MenuItem mnemonicParsing="false" onAction="#openExcelFileFromDialog" text="Ikelti EXCEL faila..." />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Prideti">
-            <items>
-              <MenuItem mnemonicParsing="false" onAction="#createNewProduct" text="Pridėti produkta" />
-                  <MenuItem mnemonicParsing="false" onAction="#createNewCategory" text="Pridėti kategorija" />
-            </items>
-          </Menu>
-            <Menu mnemonicParsing="false" onAction="#openUserStats" text="Daugiau">
-              <items>
-                <MenuItem mnemonicParsing="false" text="Vartotojų sąrašas" />
-              </items>
-            </Menu>
-        </menus>
-      </MenuBar>
+        <TextField fx:id="tableViewSearchField" layoutX="387.0" layoutY="29.0" onKeyPressed="#tableViewSearchFunction" prefHeight="25.0" prefWidth="537.0" AnchorPane.leftAnchor="387.0" AnchorPane.rightAnchor="418.0" AnchorPane.topAnchor="29.0" />
+        <Label fx:id="current_session_user_status" layoutX="1012.0" layoutY="40.0" prefHeight="17.0" prefWidth="195.0" text="Vartotojas" textFill="#808080" AnchorPane.rightAnchor="135.0" AnchorPane.topAnchor="40.0" />
+        <Label layoutX="953.0" layoutY="59.0" text="El.paštas:" AnchorPane.rightAnchor="341.0" AnchorPane.topAnchor="59.0" />
+        <Button fx:id="close_button" layoutX="1236.0" layoutY="29.0" mnemonicParsing="false" onAction="#goBackToLogin" prefHeight="50.0" prefWidth="102.0" style="-fx-background-radius: 0px; -fx-background-color: #474747;" text="Atsijungti" textFill="WHITE" underline="true" AnchorPane.rightAnchor="4.0" />
+        <ProgressIndicator fx:id="loadProgress" layoutX="639.0" layoutY="249.0" progress="0.0" visible="false" />
+        <MenuBar fx:id="menu_bar" prefHeight="25.0" prefWidth="1342.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <menus>
+                <Menu fx:id="file_menu_bar" mnemonicParsing="false" text="Failas">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#openExcelFileFromDialog" text="Ikelti EXCEL faila..." />
+                    </items>
+                </Menu>
+                <Menu fx:id="add_menu_bar" mnemonicParsing="false" text="Prideti">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#createNewProduct" text="Pridėti produkta" />
+                        <MenuItem mnemonicParsing="false" onAction="#createNewCategory" text="Pridėti kategorija" />
+                    </items>
+                </Menu>
+                <Menu fx:id="more_menu_bar" mnemonicParsing="false" onAction="#openUserStats" text="Daugiau">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="Vartotojų sąrašas" />
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
     </children>
 </AnchorPane>

@@ -1,9 +1,11 @@
 package sample.controller;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import sample.JPA.Categories;
 import sample.JPA.CategoriesDAO;
 import sample.JPA.ProductCatalog;
@@ -39,7 +41,7 @@ public class ProductFormController extends Main implements Initializable {
                                     price_textField.getText(), Integer.parseInt(stock_textField.getText()),
                                     item.getId(), null);
                             ProductCatalogDAO.insert(product);
-                            stage.close();
+                            stage.fireEvent(new WindowEvent(stage, WindowEvent.WINDOW_CLOSE_REQUEST));
                         } else {
                             form_info_label.setText("");
                             form_info_label.setStyle("-fx-text-fill: red;");

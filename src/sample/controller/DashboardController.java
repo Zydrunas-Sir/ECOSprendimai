@@ -1,5 +1,6 @@
 package sample.controller;
 
+import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -85,6 +86,12 @@ public class DashboardController extends Main implements Initializable {
     public ProgressIndicator loadProgress;
     @FXML
     private MenuBar menu_bar;
+    @FXML
+    private Menu file_menu_bar;
+    @FXML
+    private Menu add_menu_bar;
+    @FXML
+    private Menu more_menu_bar;
 
     public static long loggedTimeStart;
     public static long loggedTimeEnd;
@@ -102,16 +109,16 @@ public class DashboardController extends Main implements Initializable {
         loadColumnToTable();
         loadCategoriesToListView();
         currentSessionUserData();
-        categoryNamesForListView = CategoriesDAO.selectCategoriesForListView();
-        observableCategoryList = FXCollections.observableList(categoryNamesForListView);
-        listView.setItems(observableCategoryList);
+        reloadCategoryListView();
         reloadProductTableView();
         UserHolder userHolder = UserHolder.getInstance();
         UserDAO.setLastLoginTime(userHolder.getUser());
         loggedTimeStart = System.currentTimeMillis(); // Fiksuoja prisijungimo laiko pradžią
 
         if (!userHolder.getUser().isAdmin()) {
-            menu_bar.setVisible(false);
+            file_menu_bar.setVisible(false);
+            add_menu_bar.setVisible(false);
+            more_menu_bar.setVisible(false);
         }
 
 
@@ -191,7 +198,6 @@ public class DashboardController extends Main implements Initializable {
                     }
                 }
             });
-
 
 
             priceNet.setCellValueFactory(new PropertyValueFactory<>("priceNet"));
@@ -295,6 +301,7 @@ public class DashboardController extends Main implements Initializable {
             if (!listView.getSelectionModel().isEmpty()) {
                 item = listView.getSelectionModel().getSelectedItem();
                 fullCategoryList = CategoriesDAO.selectCategoryById(item.getId());
+                fullProductList = ProductCatalogDAO.displayAllItems();
                 observableProducts = FXCollections.observableList(createFilteredProductList(fullCategoryList, fullProductList));
                 countTableViewObservableProducts(observableProducts);
                 table.setItems(observableProducts);
@@ -359,11 +366,11 @@ public class DashboardController extends Main implements Initializable {
                 boolean isNewProduct = true;
 
                 for (ProductCatalog dbProduct : dbProducts) {
-                    if (!dbProduct.getPriceNet().equals(excelProduct.getPriceNet()) && dbProduct.getCatalogNo().equals(excelProduct.getCatalogNo())) {
+                    if (!dbProduct.getPriceNet().equals(excelProduct.getPriceNet()) && dbProduct.getCatalogNo().equals(excelProduct.getCatalogNo()) && dbProduct.getGroupId() == excelProduct.getGroupId() && dbProduct.getSymbol().equals(excelProduct.getSymbol())) {
                         isNewProduct = false;
                         ProductCatalogDAO.updatePrice(excelProduct.getPriceNet(), dbProduct.getId());
                         countAffectedProducts++;
-                    } else if (dbProduct.getPriceNet().equals(excelProduct.getPriceNet()) && dbProduct.getCatalogNo().equals(excelProduct.getCatalogNo())) {
+                    } else if (dbProduct.getPriceNet().equals(excelProduct.getPriceNet()) && dbProduct.getCatalogNo().equals(excelProduct.getCatalogNo()) && dbProduct.getGroupId() == excelProduct.getGroupId() && dbProduct.getSymbol().equals(excelProduct.getSymbol())) {
                         isNewProduct = false;
                         countDBProducts = dbProducts.size() - countAffectedProducts;
                     }
@@ -571,6 +578,10 @@ public class DashboardController extends Main implements Initializable {
             createCategoryStage.setTitle("Kategorijos anketa");
             createCategoryStage.setScene(scene);
             createCategoryStage.show();
+            createCategoryStage.getScene().getWindow().addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, event -> {
+                reloadCategoryListView();
+            });
+
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -582,12 +593,15 @@ public class DashboardController extends Main implements Initializable {
     public void createNewProduct(ActionEvent actionEvent) {
         try {
             Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource(Constants.PRODUCT_FORM_VIEW_PATH)));
-            Stage LoginStage = new Stage();
+            Stage createNewProductStage = new Stage();
             Scene scene = new Scene(root, Constants.REGISTER_WINDOW_WIDTH, Constants.REGISTER_WINDOW_HEIGHT);
             scene.getStylesheets().add(Objects.requireNonNull(getClass().getClassLoader().getResource(Constants.CSS_DIRECTORY_PATH)).toExternalForm());
-            LoginStage.setTitle("Produkto anketa");
-            LoginStage.setScene(scene);
-            LoginStage.show();
+            createNewProductStage.setTitle("Produkto anketa");
+            createNewProductStage.setScene(scene);
+            createNewProductStage.show();
+            createNewProductStage.getScene().getWindow().addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, event -> {
+                reloadProductTableView();
+            });
 
 
         } catch (Exception e) {
@@ -641,6 +655,8 @@ public class DashboardController extends Main implements Initializable {
 
 
     public void reloadCategoryListView() {
+        categoryNamesForListView = CategoriesDAO.selectCategoriesForListView();
+        observableCategoryList = FXCollections.observableList(categoryNamesForListView);
         listView.setItems(observableCategoryList);
     }
 
@@ -652,7 +668,7 @@ public class DashboardController extends Main implements Initializable {
         table.setItems(observableProducts);
     }
 
-    public void showPopupWindow(String title, String information, String titleBackroundColor, String titleTextColor) {
+    public void showPopupWindow(String title, String information, String titleBackgroundColor, String titleTextColor) {
 
         Window parent = table.getScene().getWindow();
         Popup popup = new Popup();
@@ -663,7 +679,7 @@ public class DashboardController extends Main implements Initializable {
 
 
         HBox hBox1 = new HBox();
-        hBox1.setStyle("-fx-background-color: " + titleBackroundColor + ";");
+        hBox1.setStyle("-fx-background-color: " + titleBackgroundColor + ";");
         hBox1.setAlignment(Pos.CENTER);
         Label labelTitle = new Label();
         labelTitle.setAlignment(Pos.CENTER);
@@ -709,5 +725,3 @@ public class DashboardController extends Main implements Initializable {
     }
 }
 
-
-//TODO: Užvardinti scenas , reload metodą.
