@@ -1,5 +1,6 @@
 package sample.controller;
 
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
@@ -36,6 +37,9 @@ public class LoginController implements Initializable {
     public CheckBox check_box_remember_me;
     public ImageView imageView;
 
+    @FXML
+    public Label version_label;
+
     final String PREF_NAME = "Email";
     final String PREF_PASSWORD = "Password";
     final String PREF_CHECKBOX = "Check";
@@ -44,10 +48,12 @@ public class LoginController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+        version_label.setText("Versija: " + Constants.PROGRAM_VERSION);
 
         String propertyValue = prefs.get(PREF_NAME, "");
         String password = prefs.get(PREF_PASSWORD, "");
         check_box_remember_me.setSelected(prefs.getBoolean(PREF_CHECKBOX, false));
+
         email_textfield.setText(propertyValue);
         email_textfield.setOnKeyReleased(event -> {
                     if (event.getCode().equals(KeyCode.ENTER)) {
