@@ -5,7 +5,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 import org.mindrot.jbcrypt.BCrypt;
 import sample.JPA.JPAUtil;
@@ -15,7 +19,9 @@ import sample.JPA.user.UserHolder;
 import sample.utils.Constants;
 import sample.utils.Validation;
 
+import java.awt.*;
 import java.net.URL;
+import java.util.EventListener;
 import java.util.ResourceBundle;
 import java.util.prefs.Preferences;
 
@@ -41,10 +47,27 @@ public class LoginController implements Initializable {
 
         String propertyValue = prefs.get(PREF_NAME, "");
         String password = prefs.get(PREF_PASSWORD, "");
-
         check_box_remember_me.setSelected(prefs.getBoolean(PREF_CHECKBOX, false));
         email_textfield.setText(propertyValue);
+        email_textfield.setOnKeyReleased(event -> {
+                    if (event.getCode().equals(KeyCode.ENTER)) {
+                        username_button.fire();
+                    }
+                }
+        );
         password_passwordfield.setText(password);
+        password_passwordfield.setOnKeyReleased(event -> {
+                    if (event.getCode().equals(KeyCode.ENTER)) {
+                        username_button.fire();
+                    }
+                }
+        );
+        username_button.setOnKeyReleased(event -> {
+                    if (event.getCode().equals(KeyCode.ENTER)) {
+                        username_button.fire();
+                    }
+                }
+        );
     }
 
     public void login() {
@@ -54,9 +77,7 @@ public class LoginController implements Initializable {
             login_info_label.setStyle("-fx-text-fill: red;");
             login_info_label.setText(Constants.CREDENTIALS_IS_NOT_FILLED);
             return;
-        }
-
-        else if (!Validation.isValidEmail(email_textfield.getText()) || !Validation.isValidPassword(password_passwordfield.getText())) {
+        } else if (!Validation.isValidEmail(email_textfield.getText()) || !Validation.isValidPassword(password_passwordfield.getText())) {
 
             login_info_label.setStyle("-fx-text-fill: red;");
             login_info_label.setText(Constants.CREDENTIALS_EMAIL_AND_PASSWORD_NOT_CORRECT);
@@ -149,6 +170,7 @@ public class LoginController implements Initializable {
         }
     }
 
+
     /**
      * @param hashedPassword is encrypted password
      * @param plainPassword  password witch declared in password field
@@ -160,7 +182,6 @@ public class LoginController implements Initializable {
             return false;
         }
     }
-
 
 
 }
