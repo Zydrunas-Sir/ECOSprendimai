@@ -92,6 +92,8 @@ public class DashboardController extends Main implements Initializable {
     private Menu add_menu_bar;
     @FXML
     private Menu more_menu_bar;
+    @FXML
+    private Menu users_more_menu_bar;
 
     public static long loggedTimeStart;
     public static long loggedTimeEnd;
@@ -115,10 +117,16 @@ public class DashboardController extends Main implements Initializable {
         UserDAO.setLastLoginTime(userHolder.getUser());
         loggedTimeStart = System.currentTimeMillis(); // Fiksuoja prisijungimo laiko pradžią
 
-        if (!userHolder.getUser().isAdmin()) {
+        if (userHolder.getUser().isAdmin()) {
+            file_menu_bar.setVisible(true);
+            add_menu_bar.setVisible(true);
+            more_menu_bar.setVisible(true);
+            users_more_menu_bar.setVisible(false);
+        } else {
             file_menu_bar.setVisible(false);
             add_menu_bar.setVisible(false);
             more_menu_bar.setVisible(false);
+            users_more_menu_bar.setVisible(true);
         }
 
 
@@ -180,8 +188,8 @@ public class DashboardController extends Main implements Initializable {
                     if (event.getNewValue().isEmpty()) {
                         productCatalog = event.getRowValue();
                         productCatalog.setSymbol(event.getOldValue());
-                        showPopupWindow("NEĮVESTAS PRODUKTO PAVADINIMAS", "Redaguojant produkto pavadinimą\n" +
-                                "privalote įvesti reikšmę.", "#f8d7da", "#842029");
+                        showPopupWindow("Neįvestas produkto pavadinimas", "Redaguojant produkto pavadinimą\n" +
+                                "privalote įvesti reikšmę.", "#b02a37", "#FFFFFF");
                         System.out.println("SYMBOL IS EMPTY");
                     } else if (Validation.isValidSymbol(event.getNewValue())) {
                         productCatalog = event.getRowValue();
@@ -193,7 +201,7 @@ public class DashboardController extends Main implements Initializable {
                         productCatalog = event.getRowValue();
                         productCatalog.setSymbol(event.getOldValue());
                         table.refresh();
-                        showPopupWindow("BLOGAI ĮVESTAS PRODUKTO PAVADINIMAS", "Netinkami simboliai: „!@#$*~<>?“\nEilutę privalo sudaryti nuo 2 iki 75 simbolių, \nlietuviški simboliai priimami", "#f8d7da", "#842029");
+                        showPopupWindow("Blogai įvestas produkto pavadinimas", "Netinkami simboliai: „!@#$*~<>?“\nEilutę privalo sudaryti nuo 2 iki 75 simbolių, \nlietuviški simboliai priimami", "#b02a37", "#FFFFFF");
                         System.out.println("REGEX VALIDATION DENIED");
                     }
                 }
@@ -212,7 +220,7 @@ public class DashboardController extends Main implements Initializable {
                             if (event.getNewValue().isEmpty()) {
                                 productCatalog = event.getRowValue();
                                 productCatalog.setPriceNet(event.getOldValue());
-                                showPopupWindow("NEĮVESTA PRODUKTO KAINA", "Tinkami formatai: \n „30“, „7.15“, „1500.0“.", "#f8d7da", "#842029");
+                                showPopupWindow("Neįvesta produkto kaina", "Skaičius gali būti nuo 1 ir toliau simbolių, po kablelio turėti vieną,\ndu arba neturėti skaitmenų. Pavyzdžiui:\n „30“, „7.15“, „1500.0“ ir t.t.", "#b02a37", "#FFFFFF");
                                 System.out.println("PRICNET IS EMPTY");
                                 table.refresh();
                             } else if (Validation.isValidPrice(event.getNewValue())) {
@@ -225,7 +233,7 @@ public class DashboardController extends Main implements Initializable {
                                 productCatalog = event.getRowValue();
                                 productCatalog.setPriceNet(event.getOldValue());
                                 table.refresh();
-                                showPopupWindow("BLOGAI ĮVESTA PRODUKTO KAINA", "Tinkami formatai: \n „30“, „7.15“, „1500.0“.", "#f8d7da", "#842029");
+                                showPopupWindow("Blogai įvesta produkto kaina", "Skaičius gali būti nuo 1 ir toliau simbolių, po kablelio turėti vieną,\ndu arba neturėti skaitmenų. Pavyzdžiui:\n „30“, „7.15“, „1500.0“ ir t.t.", "#b02a37", "#FFFFFF");
 
                                 System.out.println("REGEX VALIDATION DENIED");
                             }
@@ -381,7 +389,7 @@ public class DashboardController extends Main implements Initializable {
                 }
             }
             String successToPopup = "Pakeista produktų: " + countAffectedProducts + "\nFaile aptikta produktų: " + countExcelProducts + "\nPridėti nauji produktai: " + countNewProducts + "\nDuomenų bazėje nepaveikti produktai: " + countDBProducts + "\n";
-            showPopupWindow("FAILAS SĖKMINGAI ĮKELTAS", successToPopup, "#d1e7dd", "#0f5132");
+            showPopupWindow("Failas sėkmingai įkeltas", successToPopup, "#146c43", "#FFFFFF");
 //      createInformationPopUp(countAffectedProducts, countExcelProducts, countNewProducts, countDBProducts);
         } catch (NullPointerException e) {
             System.out.println("openFile(" + e + " )");
@@ -610,6 +618,10 @@ public class DashboardController extends Main implements Initializable {
         }
     }
 
+    public void aboutInfo() {
+        showPopupWindow("Informacija", "UAB „ECO SPRENDIMAI“\nSusiekti galite:\n- Tel.: +370 600 00000\n- El.paštu: info@ecosprendimai.lt\nProgramos versija: " + Constants.PROGRAM_VERSION, "#0a58ca", "#FFFFFF");
+    }
+
     public void windowClose() { //Uzdaro prisijungimo langa
         Stage stage = (Stage) close_button.getScene().getWindow();
         calculateSpentTimeLoggedIn();
@@ -675,36 +687,52 @@ public class DashboardController extends Main implements Initializable {
 
         VBox root = new VBox();
         root.setAlignment(Pos.CENTER);
-        root.setStyle("-fx-border-width: 1; -fx-border-color: #3268a8; -fx-effect: dropshadow(two-pass-box, #000000, 10, 0.0, 1.0, 1.0);");
+        root.setStyle("-fx-border-width: 1; -fx-border-color: #000000; -fx-effect: dropshadow(two-pass-box, #000000, 10, 0.0, 1.0, 1.0);");
 
 
         HBox hBox1 = new HBox();
         hBox1.setStyle("-fx-background-color: " + titleBackgroundColor + ";");
         hBox1.setAlignment(Pos.CENTER);
+        hBox1.setMinSize(450, 29);
+
+        HBox hBox11 = new HBox();
+        hBox11.setAlignment(Pos.CENTER_LEFT);
+        hBox11.setMinSize(420, 28);
+        hBox11.setPrefSize(420, 28);
+
         Label labelTitle = new Label();
-        labelTitle.setAlignment(Pos.CENTER);
-        labelTitle.setMinSize(450, 60);
-        labelTitle.setText(title + "\n");
-        labelTitle.setStyle("-fx-font-size: 17; -fx-font-weight: bold");
+        labelTitle.setMinSize(100, 29);
+        labelTitle.setAlignment(Pos.CENTER_LEFT);
+        labelTitle.setText(title);
+        labelTitle.setStyle("-fx-font-size: 14;");
         labelTitle.setTextFill(Paint.valueOf(titleTextColor));
-        hBox1.getChildren().add(labelTitle);
+        hBox1.getChildren().add(hBox11);
+        hBox11.getChildren().add(labelTitle);
 
         HBox hBox2 = new HBox();
         hBox2.setStyle("-fx-background-color: #FFFFFF;");
         hBox2.setAlignment(Pos.CENTER);
+        hBox2.setMinSize(350, 120);
         Label stringInformation = new Label();
-        stringInformation.setMinSize(230, 100);
-        stringInformation.setStyle("-fx-font-size: 20;");
+        stringInformation.setMinSize(300, 100);
+        stringInformation.setStyle("-fx-font-size: 14;");
+        stringInformation.setAlignment(Pos.CENTER_LEFT);
         stringInformation.setText(information);
         hBox2.getChildren().add(stringInformation);
 
         HBox hBox3 = new HBox();
-        hBox3.setStyle("-fx-background-color: #d3d6d8;");
-        hBox3.setAlignment(Pos.CENTER);
-        hBox3.setMinSize(200, 60);
+        hBox3.setStyle("-fx-background-color: #F0F0F0;");
+        hBox3.setAlignment(Pos.CENTER_RIGHT);
+        hBox3.setMinSize(170, 65);
+        HBox hBox31 = new HBox();
+        hBox31.setStyle("-fx-background-color: #F0F0F0;");
+        hBox31.setAlignment(Pos.CENTER);
+        hBox31.setMinSize(140, 37);
         Button okButton = new Button();
         okButton.setText("Gerai" + "\n");
-        okButton.setStyle("-fx-font-size: 14;");
+        okButton.setStyle("-fx-font-size: 16; -fx-background-radius: 0;");
+        okButton.setMinSize(80, 10);
+        okButton.setAlignment(Pos.CENTER);
         okButton.setOnAction(event -> popup.hide());
         okButton.setOnKeyPressed(event -> {
                     if (event.getCode().equals(KeyCode.ENTER)) {
@@ -712,7 +740,8 @@ public class DashboardController extends Main implements Initializable {
                     }
                 }
         );
-        hBox3.getChildren().add(okButton);
+        hBox31.getChildren().add(okButton);
+        hBox3.getChildren().add(hBox31);
 
         root.getChildren().add(hBox1);
         root.getChildren().add(hBox2);

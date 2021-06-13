@@ -84,13 +84,13 @@ public class CategoriesDAO {
             entityManager.getTransaction().commit();
             entityManager.close();
         } catch (IllegalStateException e) {
-            JPAUtil.showPopupWindow("NEPAVYKO PRISIJUNGTI", "• Nepavyko prisijungti prie duomenų bazės\n• Patikrinkite ar turite interneto ryšį. \n• Priešingu atveju kreipkitės: į ECOSprendimai\n• Klaidos kodas: JPAUtil RuntimeException\n• Programos versija: " + Constants.PROGRAM_VERSION, "#f8d7da", "#842029", getScene());
+            JPAUtil.showPopupWindow("Nepapavyko užmegzti ryšio", "Nepavyko prisijungti prie duomenų bazės\n- Patikrinkite ar turite interneto ryšį. \n- Priešingu atveju kreipkitės: į ECOSprendimai\n- Klaidos kodas: JPAUtil PersistenceException\n- Programos versija: " + Constants.PROGRAM_VERSION, "#b02a37", "#FFFFFF", getScene());
         } catch (JDBCConnectionException e) {
-            JPAUtil.showPopupWindow("NEPAVYKO PRISIJUNGTI", "• Nepavyko prisijungti prie duomenų bazės\n• Patikrinkite ar turite interneto ryšį. \n• Priešingu atveju kreipkitės: į ECOSprendimai\n• Klaidos kodas: JPAUtil JDBCConnectionException\n• Programos versija: " + Constants.PROGRAM_VERSION, "#f8d7da", "#842029", getScene());
+            JPAUtil.showPopupWindow("Nepapavyko užmegzti ryšio", "Nepavyko prisijungti prie duomenų bazės\n- Patikrinkite ar turite interneto ryšį. \n- Priešingu atveju kreipkitės: į ECOSprendimai\n- Klaidos kodas: JPAUtil PersistenceException\n- Programos versija: " + Constants.PROGRAM_VERSION, "#b02a37", "#FFFFFF", getScene());
         } catch (ServiceException e) {
-            JPAUtil.showPopupWindow("NEPAVYKO PRISIJUNGTI", "• Nepavyko prisijungti prie duomenų bazės\n• Patikrinkite ar turite interneto ryšį. \n• Priešingu atveju kreipkitės: į ECOSprendimai\n• Klaidos kodas: JPAUtil ServiceException\n• Programos versija: " + Constants.PROGRAM_VERSION, "#f8d7da", "#84209", getScene());
+            JPAUtil.showPopupWindow("Nepapavyko užmegzti ryšio", "Nepavyko prisijungti prie duomenų bazės\n- Patikrinkite ar turite interneto ryšį. \n- Priešingu atveju kreipkitės: į ECOSprendimai\n- Klaidos kodas: JPAUtil PersistenceException\n- Programos versija: " + Constants.PROGRAM_VERSION, "#b02a37", "#FFFFFF", getScene());
         } catch (PersistenceException e) {
-            JPAUtil.showPopupWindow("NEPAVYKO PRISIJUNGTI", "• Nepavyko prisijungti prie duomenų bazės\n• Patikrinkite ar turite interneto ryšį. \n• Priešingu atveju kreipkitės: į ECOSprendimai\n• Klaidos kodas: JPAUtil PersistenceException\n• Programos versija: " + Constants.PROGRAM_VERSION, "#f8d7da", "#842029", getScene());
+            JPAUtil.showPopupWindow("Nepapavyko užmegzti ryšio", "Nepavyko prisijungti prie duomenų bazės\n- Patikrinkite ar turite interneto ryšį. \n- Priešingu atveju kreipkitės: į ECOSprendimai\n- Klaidos kodas: JPAUtil PersistenceException\n- Programos versija: " + Constants.PROGRAM_VERSION, "#b02a37", "#FFFFFF", getScene());
         }
         return categories;
     }
@@ -109,6 +109,7 @@ public class CategoriesDAO {
 
         return categories;
     }
+
 
     public static List<Categories> selectCategoriesForListView(){
         EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
