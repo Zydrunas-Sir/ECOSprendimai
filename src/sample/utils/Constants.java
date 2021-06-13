@@ -29,6 +29,13 @@ public class Constants {
     public static final String PASSWORD_IS_NOT_EQUAL = "Įvesti slaptažodžiai nesutampa.";
     public static final String CREDENTIALS_IS_NOT_FILLED = "Visi laukeliai privalo būti užpildyti.";
     public static final String CREDENTIALS_EMAIL_AND_PASSWORD_NOT_CORRECT = "Blogai įvestas el. paštas arba slaptažodis";
+    public static final String CREDENTIALS_IS_NOT_CORRECT_CATEGORY_NAME = "Kategorijos pavadinimas neatitinka reikalavimų.";
+    public static final String CREDENTIALS_IS_NOT_CHOSEN_CATEGORY = "Tėvinė kategorija privalo būti pasirinkta.";
+    public static final String CREDENTIALS_IS_NOT_CORRECT_PRODUCT_CATALOG_NUMBER = "Produkto katalogo numeris neatitinka reikalavimų.";
+    public static final String CREDENTIALS_IS_NOT_CORRECT_PRODUCT_SYMBOL = "Produkto pavadinimas neatitinka reikalavimų.";
+    public static final String CREDENTIALS_IS_NOT_CORRECT_PRODUCT_PRICE = "Produkto kaina neatitinka reikalavimų.";
+    public static final String CREDENTIALS_IS_NOT_CORRECT_PRODUCT_STOCK = "Produkto pasirinktas kiekis neatitinka reikalavimų.";
+
     public static final String CURRENT_SESSION_STATUS_ADMIN = "Administratorius";
     public static final String CURRENT_SESSION_STATUS_USER = "Vartotojas";
 
