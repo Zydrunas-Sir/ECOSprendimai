@@ -72,7 +72,7 @@ public class JPAUtil {
         labelTitle.setMinSize(100, 29);
         labelTitle.setAlignment(Pos.CENTER_LEFT);
         labelTitle.setText(title);
-        labelTitle.setStyle("-fx-font-size: 14;");
+        labelTitle.setStyle("-fx-font-size: 12;");
         labelTitle.setTextFill(Paint.valueOf(titleTextColor));
         hBox1.getChildren().add(hBox11);
         hBox11.getChildren().add(labelTitle);
@@ -83,7 +83,7 @@ public class JPAUtil {
         hBox2.setMinSize(350, 120);
         Label stringInformation = new Label();
         stringInformation.setMinSize(300, 100);
-        stringInformation.setStyle("-fx-font-size: 14;");
+        stringInformation.setStyle("-fx-font-size: 12;");
         stringInformation.setAlignment(Pos.CENTER_LEFT);
         stringInformation.setText(information);
         hBox2.getChildren().add(stringInformation);
@@ -95,14 +95,14 @@ public class JPAUtil {
         HBox hBox31 = new HBox();
         hBox31.setStyle("-fx-background-color: #F0F0F0;");
         hBox31.setAlignment(Pos.CENTER);
-        hBox31.setMinSize(140, 37);
+        hBox31.setMinSize(140, 28);
         Button okButton = new Button();
         okButton.setText("Gerai" + "\n");
-        okButton.setStyle("-fx-font-size: 16; -fx-background-radius: 0;");
-        okButton.setMinSize(80, 10);
+        okButton.setStyle("-fx-font-size: 12; -fx-background-radius: 0; -fx-background-color: #0078D7, linear-gradient(#E1e1e1, #E1E1E1);");
+        okButton.setMinSize(82, 28);
         okButton.setAlignment(Pos.CENTER);
         okButton.setOnAction(event -> popup.hide());
-        okButton.setOnKeyPressed(event -> {
+        okButton.setOnKeyReleased(event -> {
                     if (event.getCode().equals(KeyCode.ENTER)) {
                         okButton.fire();
                     }
