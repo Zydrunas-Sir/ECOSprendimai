@@ -27,7 +27,7 @@ public class JPAUtil {
                 factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
             } catch (RuntimeException exception) {
                 System.out.println("JPAUtil RuntimeException ");
-                showPopupWindow("NEPAVYKO PRISIJUNGTI", "• Nepavyko prisijungti prie duomenų bazės\n• Patikrinkite ar turite interneto ryšį. \n• Priešingu atveju kreipkitės: į ECOSprendimai\n• Klaidos kodas: JPAUtil RuntimeException\n• Programos versija: " + Constants.PROGRAM_VERSION, "#f8d7da", "#842029", getScene());
+                showPopupWindow("Nepapavyko užmegzti ryšio", "Nepavyko prisijungti prie duomenų bazės\n- Patikrinkite ar turite interneto ryšį. \n- Priešingu atveju kreipkitės: į ECOSprendimai\n- Klaidos kodas: JPAUtil PersistenceException\n- Programos versija: " + Constants.PROGRAM_VERSION, "#b02a37", "#FFFFFF", getScene());
 
             }
         }
@@ -55,45 +55,61 @@ public class JPAUtil {
 
         VBox root = new VBox();
         root.setAlignment(Pos.CENTER);
-        root.setStyle("-fx-border-width: 1; -fx-border-color: #3268a8; -fx-effect: dropshadow(two-pass-box, #000000, 10, 0.0, 1.0, 1.0);");
+        root.setStyle("-fx-border-width: 1; -fx-border-color: #000000; -fx-effect: dropshadow(two-pass-box, #000000, 10, 0.0, 1.0, 1.0);");
 
 
         HBox hBox1 = new HBox();
         hBox1.setStyle("-fx-background-color: " + titleBackroundColor + ";");
         hBox1.setAlignment(Pos.CENTER);
+        hBox1.setMinSize(450, 29);
+
+        HBox hBox11 = new HBox();
+        hBox11.setAlignment(Pos.CENTER_LEFT);
+        hBox11.setMinSize(420, 28);
+        hBox11.setPrefSize(420, 28);
+
         Label labelTitle = new Label();
-        labelTitle.setAlignment(Pos.CENTER);
-        labelTitle.setMinSize(450, 60);
-        labelTitle.setText(title + "\n");
-        labelTitle.setStyle("-fx-font-size: 17; -fx-font-weight: bold");
+        labelTitle.setMinSize(100, 29);
+        labelTitle.setAlignment(Pos.CENTER_LEFT);
+        labelTitle.setText(title);
+        labelTitle.setStyle("-fx-font-size: 12;");
         labelTitle.setTextFill(Paint.valueOf(titleTextColor));
-        hBox1.getChildren().add(labelTitle);
+        hBox1.getChildren().add(hBox11);
+        hBox11.getChildren().add(labelTitle);
 
         HBox hBox2 = new HBox();
         hBox2.setStyle("-fx-background-color: #FFFFFF;");
         hBox2.setAlignment(Pos.CENTER);
+        hBox2.setMinSize(350, 120);
         Label stringInformation = new Label();
-        stringInformation.setMinSize(230, 100);
-        stringInformation.setStyle("-fx-font-size: 16;");
+        stringInformation.setMinSize(300, 100);
+        stringInformation.setStyle("-fx-font-size: 12;");
+        stringInformation.setAlignment(Pos.CENTER_LEFT);
         stringInformation.setText(information);
         hBox2.getChildren().add(stringInformation);
 
         HBox hBox3 = new HBox();
-        hBox3.setStyle("-fx-background-color: #d3d6d8;");
-        hBox3.setAlignment(Pos.CENTER);
-        hBox3.setMinSize(200, 60);
+        hBox3.setStyle("-fx-background-color: #F0F0F0;");
+        hBox3.setAlignment(Pos.CENTER_RIGHT);
+        hBox3.setMinSize(170, 65);
+        HBox hBox31 = new HBox();
+        hBox31.setStyle("-fx-background-color: #F0F0F0;");
+        hBox31.setAlignment(Pos.CENTER);
+        hBox31.setMinSize(140, 28);
         Button okButton = new Button();
-
         okButton.setText("Gerai" + "\n");
-        okButton.setStyle("-fx-font-size: 14;");
+        okButton.setStyle("-fx-font-size: 12; -fx-background-radius: 0; -fx-background-color: #0078D7, linear-gradient(#E1e1e1, #E1E1E1);");
+        okButton.setMinSize(82, 28);
+        okButton.setAlignment(Pos.CENTER);
         okButton.setOnAction(event -> popup.hide());
-        okButton.setOnKeyPressed(event -> {
+        okButton.setOnKeyReleased(event -> {
                     if (event.getCode().equals(KeyCode.ENTER)) {
                         okButton.fire();
                     }
                 }
         );
-        hBox3.getChildren().add(okButton);
+        hBox31.getChildren().add(okButton);
+        hBox3.getChildren().add(hBox31);
 
         root.getChildren().add(hBox1);
         root.getChildren().add(hBox2);
@@ -101,8 +117,6 @@ public class JPAUtil {
 
         popup.getContent().addAll(root);
         popup.show(parent);
-
-
     }
 }
 

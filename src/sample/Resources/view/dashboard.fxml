@@ -84,12 +84,19 @@
                         <MenuItem mnemonicParsing="false" onAction="#createNewCategory" text="Pridėti kategorija" />
                     </items>
                 </Menu>
-                <Menu fx:id="more_menu_bar" mnemonicParsing="false" onAction="#openUserStats" text="Daugiau">
+                <Menu fx:id="more_menu_bar" mnemonicParsing="false"  text="Kita">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="Vartotojų sąrašas" />
+                        <MenuItem mnemonicParsing="false" onAction="#openUserStats" text="Vartotojų sąrašas" />
+                        <MenuItem mnemonicParsing="false" onAction="#aboutInfo" text="Apie" />
+                    </items>
+                </Menu>
+                <Menu fx:id="users_more_menu_bar" mnemonicParsing="false"  text="Kita">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#aboutInfo" text="Apie" />
                     </items>
                 </Menu>
             </menus>
         </MenuBar>
+
     </children>
 </AnchorPane>

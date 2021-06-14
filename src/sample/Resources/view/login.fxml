@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.LoginController">
+<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.LoginController">
    <columnConstraints>
       <ColumnConstraints />
    </columnConstraints>
@@ -58,7 +58,7 @@
                <cursor>
                   <Cursor fx:constant="DEFAULT" />
                </cursor></Button>
-            <Label alignment="TOP_RIGHT" layoutX="443.0" layoutY="13.0" prefHeight="25.0" prefWidth="43.0" text="v: 0.1" textFill="#b9b9b9" />
+            <Label fx:id="version_label" alignment="TOP_RIGHT" layoutX="408.0" layoutY="13.0" prefHeight="25.0" prefWidth="78.0" text="Versija: ?" textFill="#b9b9b9" />
             <Hyperlink fx:id="register_button" alignment="CENTER" contentDisplay="CENTER" layoutX="175.0" layoutY="271.0" onAction="#register" prefHeight="17.0" prefWidth="142.0" text="Naujas vartotojas?" underline="true" />
          </children>
          <opaqueInsets>
