@@ -24,7 +24,7 @@ public class Constants {
     public static final String CREDENTIALS_IS_NOT_CORRECT_FIRST_NAME = "Vartotojo vardas neatitinka reikalavimų.";
     public static final String CREDENTIALS_IS_NOT_CORRECT_LAST_NAME = "Vartotojo pavardė neatitinka reikalavimų.";
     public static final String CREDENTIALS_IS_NOT_CORRECT_COMPANY_NAME = "Neteisingai įvestas įmonės pavadinimas.";
-    public static final String CREDENTIALS_IS_NOT_CORRECT_PASSWORD = "Slaptažodis neatitinka reikalavimų.(Bent 8 simboliai)(bent viena didžioji raidė ir skaičius)";
+    public static final String CREDENTIALS_IS_NOT_CORRECT_PASSWORD = "Slaptažodis neatitinka reikalavimų.\n(Bent 8 simboliai)(bent viena didžioji raidė ir mažoji)\n(bent vienas skaicius)";
     public static final String CREDENTIALS_IS_NOT_FILLED_EMAIL = "Vartotojo el. paštas neatitinka reikalavimų.";
     public static final String PASSWORD_IS_NOT_EQUAL = "Įvesti slaptažodžiai nesutampa.";
     public static final String CREDENTIALS_IS_NOT_FILLED = "Visi laukeliai privalo būti užpildyti.";

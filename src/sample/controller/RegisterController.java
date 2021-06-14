@@ -131,7 +131,7 @@ public class RegisterController extends Main implements Initializable {
         // Handle TextField text changes.
         password_passwordfield.textProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue.length() <= 7) {
-
+                form_info_label.setStyle("-fx-text-fill: black;");
                 form_info_label.setText("Slaptažodyje turi būti :\n" +
                         "✳bent 8 simboliai.\n");
                 return;
@@ -140,14 +140,16 @@ public class RegisterController extends Main implements Initializable {
                 form_info_label.setText("");
             }
             if (!Validation.isOneUpperCaseExist(newValue)) {
+                form_info_label.setStyle("-fx-text-fill: black;");
                 form_info_label.setText("Slaptažodyje turi būti :\n" +
-                        "✳bent viena didžioji radė.\n");
+                        "✳bent viena didžioji ir mažoji radė.\n");
                 return;
 
             } else {
                 form_info_label.setText("");
             }
             if (!Validation.isOneDigitAre(newValue)) {
+                form_info_label.setStyle("-fx-text-fill: black;");
                 form_info_label.setText("Slaptažodyje turi būti :\n" +
                         "✳bent vienas skaičius.\n");
                 return;
@@ -156,6 +158,7 @@ public class RegisterController extends Main implements Initializable {
                 form_info_label.setText("");
             }
             if(!password_confirm_passwordfield.getText().equals(password_passwordfield.getText())) {
+                form_info_label.setStyle("-fx-text-fill: black;");
                 form_info_label.setText("Įvesti slaptažodžiai turi sutapti.");
                 return;
             }

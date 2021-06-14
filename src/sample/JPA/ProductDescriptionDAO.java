@@ -23,6 +23,7 @@ public class ProductDescriptionDAO {
             query = entityManager.createQuery("Select e From ProductDescription e WHERE e.catalogNo = ?1", ProductDescription.class);
             productDescription = query.setParameter(1, catalogNo).getResultList();
 
+
             entityManager.getTransaction().commit();
             entityManager.close();
         } catch (NullPointerException e ) {
@@ -32,7 +33,6 @@ public class ProductDescriptionDAO {
 //            JPAUtil.infoBox();
 
         }
-
         return productDescription;
     }
 
