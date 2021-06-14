@@ -37,6 +37,8 @@ public class UserStatsController extends Main implements Initializable {
     @FXML
     public TableColumn last_login;
     @FXML
+    public TableColumn is_blocked;
+    @FXML
     public TableColumn login_count;
     @FXML
     public TableView<ObservableUser> user_table_view;
@@ -65,6 +67,8 @@ public class UserStatsController extends Main implements Initializable {
         registered_on.setMinWidth(50);
         last_login.setCellValueFactory(new PropertyValueFactory<>("lastLogin"));
         last_login.setMinWidth(50);
+        is_blocked.setCellValueFactory(new PropertyValueFactory<>("isBlockedCheck"));
+        is_blocked.setMinWidth(50);
         login_count.setCellValueFactory(new PropertyValueFactory<>("timeSpentInDate"));
         login_count.setMinWidth(50);
 
@@ -75,7 +79,7 @@ public class UserStatsController extends Main implements Initializable {
             String registeredDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(user.getUserCreationDate());
             String lastLoginDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(user.getLastLogin());
             //KONVERTUOJA User Į ObservableUser objektą
-            filteredUsers.add(new ObservableUser(user.getId(), user.getFirstName(), user.getLastName(), user.getEmail(), user.getCompanyName(), registeredDate, lastLoginDate, user.getTimeSpend()));
+            filteredUsers.add(new ObservableUser(user.getId(), user.getFirstName(), user.getLastName(), user.getEmail(), user.getCompanyName(), registeredDate, lastLoginDate, user.isBlocked(), user.getTimeSpend()));
         }
 
         user_table_view.setItems(filteredUsers);

@@ -1,5 +1,9 @@
 package sample.JPA.user;
 
+import javafx.beans.value.ObservableBooleanValue;
+import javafx.beans.value.ObservableValue;
+import javafx.scene.control.CheckBox;
+
 import java.sql.Timestamp;
 
 public class ObservableUser {
@@ -10,9 +14,11 @@ public class ObservableUser {
     private String companyName;
     private String registered;
     private String lastLogin;
+    private CheckBox isBlockedCheck;
+    private Boolean isBlocked;
     private String timeSpentInDate;
 
-    public ObservableUser(int id, String firstName, String lastName, String email, String companyName, String registered, String lastLogin, int timeSpend) {
+    public ObservableUser(int id, String firstName, String lastName, String email, String companyName, String registered, String lastLogin, Boolean isBlocked, int timeSpend) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -20,6 +26,9 @@ public class ObservableUser {
         this.companyName = companyName;
         this.registered = registered;
         this.lastLogin = lastLogin;
+        this.isBlocked = isBlocked;
+        setIsBlockedCheck(isBlocked);
+        this.isBlockedCheck = getIsBlockedCheck();
         this.timeSpentInDate = secondsToDate(timeSpend);
     }
 
@@ -86,6 +95,30 @@ public class ObservableUser {
     public void setLastLogin(String lastLogin) {
         this.lastLogin = lastLogin;
     }
+
+    public void setBlocked(Boolean blocked) {
+        this.isBlocked = blocked;
+    }
+
+    public CheckBox getIsBlockedCheck() {
+        return this.isBlockedCheck;
+    }
+
+    public void setIsBlockedCheck(Boolean isBlocked) {
+        this.isBlockedCheck = new CheckBox();
+        if (this.isBlockedCheck.isSelected()) {
+            setBlocked(false);
+        } else {
+            setBlocked(true);
+        }
+        this.isBlockedCheck.selectedProperty().addListener((ObservableBooleanValue -> {
+            System.out.println("CHECKBOX HAS BEEN SELECTED");
+
+            UserDAO.updateBlockedStatus(this.isBlockedCheck.isSelected(), getId());
+        }));
+        this.isBlockedCheck.setSelected(isBlocked);
+    }
+
 
     public String secondsToDate(int spentTimeInSeconds) {
         String exportDate = null;

@@ -14,6 +14,7 @@
             <TableColumn fx:id="email" prefWidth="138.99996948242188" text="El. paštas" />
             <TableColumn fx:id="registered_on" prefWidth="148.6666259765625" style="-fx-alignment: center;" text="Užsiregistravo" />
             <TableColumn fx:id="last_login" prefWidth="160.3333740234375" style="-fx-alignment: center;" text="Prisijungė" />
+            <TableColumn fx:id="is_blocked" minWidth="0.0" prefWidth="126.666748046875" style="-fx-alignment: center;" text="Blokavimas" />
             <TableColumn fx:id="login_count" minWidth="0.0" prefWidth="126.666748046875" style="-fx-alignment: center;" text="Sesijų suma" />
         </columns>
       </TableView>
