@@ -28,6 +28,8 @@ public class User {
     private Timestamp userCreationDate;
     @Column(name = "last_login", columnDefinition = "TIMESTAMP")
     private Timestamp lastLogin;
+    @Column(name = "is_blocked", columnDefinition="tinyint(1) default 0")
+    private boolean isBlocked;
     @Column(name = "time_spend", nullable = false)
     private int timeSpend;
 
@@ -40,7 +42,7 @@ public class User {
         this.password = password;
     }
 
-    public User(int id, String firstName, String lastName, String email, String companyName, String password, boolean isAdmin, Timestamp userCreationDate, Timestamp lastLogin, int timeSpend) {
+    public User(int id, String firstName, String lastName, String email, String companyName, String password, boolean isAdmin, Timestamp userCreationDate, Timestamp lastLogin, Boolean isBlocked, int timeSpend) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -50,6 +52,7 @@ public class User {
         this.isAdmin = isAdmin;
         this.userCreationDate = userCreationDate;
         this.lastLogin = lastLogin;
+        this.isBlocked = isBlocked;
         this.timeSpend = timeSpend;
     }
 
@@ -140,6 +143,14 @@ public class User {
 
     public void setLastLogin() {
         this.lastLogin =  (new Timestamp(System.currentTimeMillis()));
+    }
+
+    public boolean isBlocked() {
+        return isBlocked;
+    }
+
+    public void setBlocked(boolean blocked) {
+        isBlocked = blocked;
     }
 
     @Override

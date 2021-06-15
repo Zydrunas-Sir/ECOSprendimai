@@ -96,10 +96,11 @@ public class LoginController implements Initializable {
         //Getting list from UserDAO class with credentials of password and username
         User credentials = UserDAO.searchUserByEmail(email_textfield.getText());
 
+
         //checking password is it match
         try {
             assert credentials != null;
-            if (checkPass(password_passwordfield.getText(), credentials.getPassword())) {
+            if (checkPass(password_passwordfield.getText(), credentials.getPassword(), credentials.isBlocked())) {
 
 
                 if (check_box_remember_me.isSelected()) {
@@ -117,10 +118,11 @@ public class LoginController implements Initializable {
                 holder.setUser(u);
                 goToDashBoard();
 
-            } else if (!checkPass(password_passwordfield.getText(), credentials.getPassword())) {
+            } else if (!checkPass(password_passwordfield.getText(), credentials.getPassword(), credentials.isBlocked())) {
 
                 login_info_label.setStyle("-fx-text-fill: red;");
                 login_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT);
+                System.out.println("LOGIN UNAVAILABLE");
             }
         } catch (NullPointerException npe) {
             login_info_label.setStyle("-fx-text-fill: red;");
@@ -181,13 +183,11 @@ public class LoginController implements Initializable {
      * @param hashedPassword is encrypted password
      * @param plainPassword  password witch declared in password field
      */
-    public static boolean checkPass(String plainPassword, String hashedPassword) {
-        if (BCrypt.checkpw(plainPassword, hashedPassword)) {
+    public static boolean checkPass(String plainPassword, String hashedPassword, Boolean blockable) {
+        if (BCrypt.checkpw(plainPassword, hashedPassword) && !blockable) {
             return true;
         } else {
             return false;
         }
     }
-
-
 }

@@ -177,4 +177,30 @@ public class UserDAO {
         }
     }
 
+    public static void updateBlockedStatus(Boolean isBlocked, int id) {
+
+        EntityManager entityManager;
+        EntityTransaction entityTransaction;
+        User user;
+
+        try {
+            entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
+            entityTransaction = entityManager.getTransaction();
+            entityTransaction.begin();
+            user = entityManager.find(User.class, id);
+            user.setBlocked(isBlocked);
+            entityManager.persist(user);
+            entityManager.getTransaction().commit();
+            entityManager.close();
+        } catch (IllegalStateException e) {
+            System.out.println("User.updateBlockedStatus IllegalStateException");
+        } catch (JDBCConnectionException e) {
+            System.out.println("User.updateBlockedStatus JDBCConnectionException");
+        } catch (ServiceException e) {
+            System.out.println("User.updateBlockedStatus ServiceException");
+        } catch (PersistenceException e) {
+            System.out.println("User.updateBlockedStatus PersistenceException");
+        }
+    }
+
 }
