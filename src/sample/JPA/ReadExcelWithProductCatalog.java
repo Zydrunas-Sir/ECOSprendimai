@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import static sample.JPA.JPAUtil.getScene;
+
 
 public class ReadExcelWithProductCatalog {
     public static List<ProductCatalog> readFileUsingPOI(File file) throws IOException {
@@ -22,6 +24,9 @@ public class ReadExcelWithProductCatalog {
 
         Workbook workbook = new XSSFWorkbook(inputStream);
         Sheet sheet = workbook.getSheetAt(0);
+
+        try {
+
 
         Iterator iterator = sheet.iterator();
         while (iterator.hasNext()) {
@@ -62,12 +67,14 @@ public class ReadExcelWithProductCatalog {
                 break;
             }
             products.add(productCatalog);
-
         }
-        workbook.close();
-        inputStream.close();
 
+        } catch (Exception e) {
+            JPAUtil.showPopupWindow("Klaida!", "- Pasirinktas failas: " + file.getName() + "\n- Įkėlimas nepavyko... \n- Tikrinkite pasirinkto failo schema. \n \n- Išimtis: \n(" + e.getMessage() + " ) ", "#b02a37", "#FFFFFF", getScene());
+        } finally {
+            workbook.close();
+            inputStream.close();
+        }
         return products;
     }
-
 }
