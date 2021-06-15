@@ -388,13 +388,16 @@ public class DashboardController extends Main implements Initializable {
                     ProductCatalogDAO.insert(excelProduct);
                 }
             }
-            String successToPopup = "Pakeista produktų: " + countAffectedProducts + "\nFaile aptikta produktų: " + countExcelProducts + "\nPridėti nauji produktai: " + countNewProducts + "\nDuomenų bazėje nepaveikti produktai: " + countDBProducts + "\n";
-            showPopupWindow("Failas sėkmingai įkeltas", successToPopup, "#146c43", "#FFFFFF");
+
 //      createInformationPopUp(countAffectedProducts, countExcelProducts, countNewProducts, countDBProducts);
         } catch (NullPointerException e) {
             System.out.println("openFile(" + e + " )");
         } catch (RuntimeException e) {
             System.out.println("openFile(" + e + " )");
+        }
+        if (countDBProducts != 0) {
+            String successToPopup = "Pakeista produktų: " + countAffectedProducts + "\nFaile aptikta produktų: " + countExcelProducts + "\nPridėti nauji produktai: " + countNewProducts + "\nDuomenų bazėje nepaveikti produktai: " + countDBProducts + "\n";
+            showPopupWindow("Failas sėkmingai įkeltas", successToPopup, "#146c43", "#FFFFFF");
         }
 
     }
