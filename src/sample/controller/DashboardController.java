@@ -19,7 +19,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -318,9 +317,9 @@ public class DashboardController extends Main implements Initializable {
 
             }
         } catch (IllegalStateException e) {
-            System.out.println("mouseEventForListView() IllegalStateExecption");
+            System.out.println("mouseEventForListView( " + e + " ) ");
         } catch (NullPointerException e) {
-            System.out.println("mouseEventForListView() NullPointerException");
+            System.out.println("mouseEventForListView( "+ e + " )");
         }
 
     }
@@ -342,7 +341,7 @@ public class DashboardController extends Main implements Initializable {
 
     //Konfiguriuoja failo pasirinkimus
     private static void configureFileChooser(final FileChooser fileChooser) {
-        fileChooser.setTitle("Uzkrauti excel faila");
+        fileChooser.setTitle("Užkrauti excel failą");
         fileChooser.setInitialDirectory(
                 new File(System.getProperty("user.home"))
         );
@@ -391,7 +390,6 @@ public class DashboardController extends Main implements Initializable {
                 }
             }
 
-//      createInformationPopUp(countAffectedProducts, countExcelProducts, countNewProducts, countDBProducts);
         } catch (NullPointerException e) {
             System.out.println("openFile(" + e + " )");
         } catch (RuntimeException e) {
@@ -403,29 +401,6 @@ public class DashboardController extends Main implements Initializable {
         } else if (countAffectedProducts == 0 && countExcelProducts == 0 && countNewProducts == 0 && countDBProducts == 0 ) {
             JPAUtil.showPopupWindow("Klaida!", "- Nuskaityti nepavyko \n- Pasirinktas failas netinkamas : " + file.getName() , "#b02a37", "#FFFFFF", getScene());
         }
-
-    }
-
-    //Sukuria pop up su produktų kiekių informaciją.
-    public void createInformationPopUp(int countAffectedProducts, int countExcelProducts, int countNewProducts,
-                                       int countDBProducts) {
-        Window parent = menu_bar.getScene().getWindow();
-
-        Label label = new Label("Pakeista produktų :" + " " + countAffectedProducts + "\n" +
-                "Excel'yje yra produktų : " + countExcelProducts + "\n" +
-                "Pridėta naujų produktų : " + countNewProducts + "\n" +
-                "Duombazėje nepakeistų produktų : " + countDBProducts);
-        final Popup popup = new Popup();
-        Button hide = new Button("Ok");
-        hide.setOnAction(event -> popup.hide());
-        hide.setLayoutX(140);
-        hide.setLayoutY(115);
-        label.setStyle(" -fx-background-color: grey; -fx-text-fill: white;");
-        label.setMinWidth(300);
-        label.setMinHeight(150);
-        label.setAlignment(Pos.CENTER);
-        popup.getContent().addAll(label, hide);
-        popup.show(parent);
 
     }
 
@@ -473,9 +448,9 @@ public class DashboardController extends Main implements Initializable {
                 System.out.println("Selected Catalog No: " + tableItem.getCatalogNo());
             }
         } catch (IllegalStateException e) {
-            System.out.println("mouseEventForTreeView() IllegalStateExecption");
+            System.out.println("mouseEventForTreeView( " + e + " )");
         } catch (NullPointerException e) {
-            System.out.println("mouseEventForTreeView() NullPointerException");
+            System.out.println("mouseEventForTreeView(" + e +" )");
         }
     }
 
