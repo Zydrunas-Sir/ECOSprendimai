@@ -1,6 +1,6 @@
 package sample.controller;
 
-import javafx.application.Platform;
+
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
