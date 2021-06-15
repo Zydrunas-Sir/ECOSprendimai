@@ -102,12 +102,7 @@ public class JPAUtil {
         okButton.setMinSize(82, 28);
         okButton.setAlignment(Pos.CENTER);
         okButton.setOnAction(event -> popup.hide());
-        okButton.setOnKeyPressed(event -> {
-                    if (event.getCode().equals(KeyCode.ENTER)) {
-                        okButton.fire();
-                    }
-                }
-        );
+
         hBox31.getChildren().add(okButton);
         hBox3.getChildren().add(hBox31);
 
