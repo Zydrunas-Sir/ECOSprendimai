@@ -206,6 +206,7 @@ public class DashboardController extends Main implements Initializable {
                     }
                 }
             });
+        }
 
 
             priceNet.setCellValueFactory(new PropertyValueFactory<>("priceNet"));
@@ -215,7 +216,6 @@ public class DashboardController extends Main implements Initializable {
                     priceNet.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<ProductCatalog, String>>() {
                         @Override
                         public void handle(TableColumn.CellEditEvent<ProductCatalog, String> event) {
-
                             ProductCatalog productCatalog;
                             if (event.getNewValue().isEmpty()) {
                                 productCatalog = event.getRowValue();
@@ -246,7 +246,7 @@ public class DashboardController extends Main implements Initializable {
                 }
 
             }
-        }
+
 
 
         stock.setCellValueFactory(new PropertyValueFactory<>("stock"));
@@ -737,12 +737,7 @@ public class DashboardController extends Main implements Initializable {
         okButton.setMinSize(82, 28);
         okButton.setAlignment(Pos.CENTER);
         okButton.setOnAction(event -> popup.hide());
-        okButton.setOnKeyReleased(event -> {
-                    if (event.getCode().equals(KeyCode.ENTER)) {
-                        okButton.fire();
-                    }
-                }
-        );
+
         hBox31.getChildren().add(okButton);
         hBox3.getChildren().add(hBox31);
 
