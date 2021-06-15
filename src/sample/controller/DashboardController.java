@@ -43,6 +43,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
+import static sample.JPA.JPAUtil.getScene;
+
 public class DashboardController extends Main implements Initializable {
 
     public Button close_button;
@@ -398,6 +400,8 @@ public class DashboardController extends Main implements Initializable {
         if (countDBProducts != 0) {
             String successToPopup = "Pakeista produktų: " + countAffectedProducts + "\nFaile aptikta produktų: " + countExcelProducts + "\nPridėti nauji produktai: " + countNewProducts + "\nDuomenų bazėje nepaveikti produktai: " + countDBProducts + "\n";
             showPopupWindow("Failas sėkmingai įkeltas", successToPopup, "#146c43", "#FFFFFF");
+        } else if (countDBProducts == 0) {
+            JPAUtil.showPopupWindow("Klaida!", "- Nuskaityti nepavyko \n- Pasirinktas failas netinkamas : " + file.getName() , "#b02a37", "#FFFFFF", getScene());
         }
 
     }

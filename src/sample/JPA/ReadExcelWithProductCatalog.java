@@ -70,7 +70,8 @@ public class ReadExcelWithProductCatalog {
         }
 
         } catch (Exception e) {
-            JPAUtil.showPopupWindow("Klaida!", "- Pasirinktas failas: " + file.getName() + "\n- Įkėlimas nepavyko... \n- Tikrinkite pasirinkto failo schema. \n \n- Išimtis: \n(" + e.getMessage() + " ) ", "#b02a37", "#FFFFFF", getScene());
+            e.getStackTrace();
+//            JPAUtil.showPopupWindow("Klaida!", "- Pasirinktas failas: " + file.getName() + "\n- Įkėlimas nepavyko... \n- Tikrinkite pasirinkto failo schema. \n \n- Išimtis: \n(" + e.getMessage() + " ) ", "#b02a37", "#FFFFFF", getScene());
         } finally {
             workbook.close();
             inputStream.close();
