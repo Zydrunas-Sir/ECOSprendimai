@@ -734,7 +734,7 @@ public class DashboardController extends Main implements Initializable {
         okButton.setMinSize(82, 28);
         okButton.setAlignment(Pos.CENTER);
         okButton.setOnAction(event -> popup.hide());
-        okButton.setOnKeyReleased(event -> {
+        okButton.setOnKeyPressed(event -> {
                     if (event.getCode().equals(KeyCode.ENTER)) {
                         okButton.fire();
                     }
