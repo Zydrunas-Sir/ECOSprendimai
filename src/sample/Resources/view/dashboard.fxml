@@ -86,13 +86,8 @@
                 </Menu>
                 <Menu fx:id="more_menu_bar" mnemonicParsing="false"  text="Kita">
                     <items>
-                        <MenuItem mnemonicParsing="false" onAction="#openUserStats" text="Vartotojų sąrašas" />
-                        <MenuItem mnemonicParsing="false" onAction="#aboutInfo" text="Apie" />
-                    </items>
-                </Menu>
-                <Menu fx:id="users_more_menu_bar" mnemonicParsing="false"  text="Kita">
-                    <items>
-                        <MenuItem mnemonicParsing="false" onAction="#aboutInfo" text="Apie" />
+                        <MenuItem fx:id="user_list" mnemonicParsing="false" onAction="#openUserStats" text="Vartotojų sąrašas" />
+                        <MenuItem fx:id="user_about" mnemonicParsing="false" onAction="#aboutInfo" text="Apie" />
                     </items>
                 </Menu>
             </menus>

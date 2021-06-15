@@ -86,6 +86,10 @@ public class DashboardController extends Main implements Initializable {
     @FXML
     public ProgressIndicator loadProgress;
     @FXML
+    public MenuItem user_list;
+    @FXML
+    public MenuItem user_about;
+    @FXML
     private MenuBar menu_bar;
     @FXML
     private Menu file_menu_bar;
@@ -93,8 +97,6 @@ public class DashboardController extends Main implements Initializable {
     private Menu add_menu_bar;
     @FXML
     private Menu more_menu_bar;
-    @FXML
-    private Menu users_more_menu_bar;
 
     public static long loggedTimeStart;
     public static long loggedTimeEnd;
@@ -122,12 +124,16 @@ public class DashboardController extends Main implements Initializable {
             file_menu_bar.setVisible(true);
             add_menu_bar.setVisible(true);
             more_menu_bar.setVisible(true);
-            users_more_menu_bar.setVisible(false);
+            user_list.setVisible(true);
+            user_about.setVisible(true);
+
         } else {
             file_menu_bar.setVisible(false);
             add_menu_bar.setVisible(false);
-            more_menu_bar.setVisible(false);
-            users_more_menu_bar.setVisible(true);
+            more_menu_bar.setVisible(true);
+            user_list.setVisible(false);
+            user_about.setVisible(true);
+
         }
 
 
