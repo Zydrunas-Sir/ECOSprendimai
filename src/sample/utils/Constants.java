@@ -20,7 +20,7 @@ public class Constants {
 
     public static final String EMAIL_NOT_EXIST = "Įvestas el.paštas neegzistuoja.";
     public static final String EMAIL_EXISTS = "Įvestas el.paštas jau egzistuoja.";
-    public static final String CREDENTIALS_IS_NOT_CORRECT = "Aktyvus vartotojas nerastas.";
+    public static final String CREDENTIALS_IS_NOT_CORRECT = "Įvesti duomenys neteisingi.";
     public static final String CREDENTIALS_IS_NOT_CORRECT_FIRST_NAME = "Vartotojo vardas neatitinka reikalavimų.";
     public static final String CREDENTIALS_IS_NOT_CORRECT_LAST_NAME = "Vartotojo pavardė neatitinka reikalavimų.";
     public static final String CREDENTIALS_IS_NOT_CORRECT_COMPANY_NAME = "Neteisingai įvestas įmonės pavadinimas.";

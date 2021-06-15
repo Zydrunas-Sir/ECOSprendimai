@@ -55,20 +55,20 @@ public class LoginController implements Initializable {
         check_box_remember_me.setSelected(prefs.getBoolean(PREF_CHECKBOX, false));
 
         email_textfield.setText(propertyValue);
-        email_textfield.setOnKeyReleased(event -> {
+        email_textfield.setOnKeyPressed(event -> {
                     if (event.getCode().equals(KeyCode.ENTER)) {
                         username_button.fire();
                     }
                 }
         );
         password_passwordfield.setText(password);
-        password_passwordfield.setOnKeyReleased(event -> {
+        password_passwordfield.setOnKeyPressed(event -> {
                     if (event.getCode().equals(KeyCode.ENTER)) {
                         username_button.fire();
                     }
                 }
         );
-        username_button.setOnKeyReleased(event -> {
+        username_button.setOnKeyPressed(event -> {
                     if (event.getCode().equals(KeyCode.ENTER)) {
                         username_button.fire();
                     }
@@ -100,25 +100,29 @@ public class LoginController implements Initializable {
         //checking password is it match
         try {
             assert credentials != null;
-            if (checkPass(password_passwordfield.getText(), credentials.getPassword(), credentials.isBlocked())) {
+            if (checkPass(password_passwordfield.getText(), credentials.getPassword())) {
+                if (!credentials.isBlocked()) {
 
+                    if (check_box_remember_me.isSelected()) {
+                        prefs.put(PREF_NAME, email_textfield.getText());
+                        prefs.put(PREF_PASSWORD, password_passwordfield.getText());
+                        prefs.putBoolean(PREF_CHECKBOX, true);
+                    } else {
+                        prefs.put(PREF_NAME, "");
+                        prefs.put(PREF_PASSWORD, "");
+                        prefs.putBoolean(PREF_CHECKBOX, false);
+                    }
 
-                if (check_box_remember_me.isSelected()) {
-                    prefs.put(PREF_NAME, email_textfield.getText());
-                    prefs.put(PREF_PASSWORD, password_passwordfield.getText());
-                    prefs.putBoolean(PREF_CHECKBOX, true);
+                    User u = new User(credentials.getEmail(), credentials.isAdmin());
+                    UserHolder holder = UserHolder.getInstance();
+                    holder.setUser(u);
+                    goToDashBoard();
                 } else {
-                    prefs.put(PREF_NAME, "");
-                    prefs.put(PREF_PASSWORD, "");
-                    prefs.putBoolean(PREF_CHECKBOX, false);
+                    JPAUtil.showPopupWindow("Informacija", "Vartotojo paskyra yra išjungta. Prašome kreiptis į ECOSprendimai administratorių.\n- Telefono nr.: +370 600 00000\n- El.paštas: info@ecosprendimai.lt", "#0a58ca", "#FFFFFF", login_info_label.getScene());
+
                 }
 
-                User u = new User(credentials.getEmail(), credentials.isAdmin());
-                UserHolder holder = UserHolder.getInstance();
-                holder.setUser(u);
-                goToDashBoard();
-
-            } else if (!checkPass(password_passwordfield.getText(), credentials.getPassword(), credentials.isBlocked())) {
+            } else if (!checkPass(password_passwordfield.getText(), credentials.getPassword())) {
 
                 login_info_label.setStyle("-fx-text-fill: red;");
                 login_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT);
@@ -183,8 +187,8 @@ public class LoginController implements Initializable {
      * @param hashedPassword is encrypted password
      * @param plainPassword  password witch declared in password field
      */
-    public static boolean checkPass(String plainPassword, String hashedPassword, Boolean blockable) {
-        if (BCrypt.checkpw(plainPassword, hashedPassword) && !blockable) {
+    public static boolean checkPass(String plainPassword, String hashedPassword) {
+        if (BCrypt.checkpw(plainPassword, hashedPassword)) {
             return true;
         } else {
             return false;
