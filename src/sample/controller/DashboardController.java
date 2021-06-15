@@ -206,6 +206,7 @@ public class DashboardController extends Main implements Initializable {
                     }
                 }
             });
+        }
 
 
             priceNet.setCellValueFactory(new PropertyValueFactory<>("priceNet"));
@@ -215,7 +216,6 @@ public class DashboardController extends Main implements Initializable {
                     priceNet.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<ProductCatalog, String>>() {
                         @Override
                         public void handle(TableColumn.CellEditEvent<ProductCatalog, String> event) {
-
                             ProductCatalog productCatalog;
                             if (event.getNewValue().isEmpty()) {
                                 productCatalog = event.getRowValue();
@@ -246,7 +246,7 @@ public class DashboardController extends Main implements Initializable {
                 }
 
             }
-        }
+
 
 
         stock.setCellValueFactory(new PropertyValueFactory<>("stock"));
