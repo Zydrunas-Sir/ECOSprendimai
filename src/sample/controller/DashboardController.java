@@ -692,18 +692,21 @@ public class DashboardController extends Main implements Initializable {
         labelTitle.setMinSize(100, 29);
         labelTitle.setAlignment(Pos.CENTER_LEFT);
         labelTitle.setText(title);
-        labelTitle.setStyle("-fx-font-size: 12;");
+        labelTitle.setStyle("-fx-font-size: 14;");
         labelTitle.setTextFill(Paint.valueOf(titleTextColor));
         hBox1.getChildren().add(hBox11);
         hBox11.getChildren().add(labelTitle);
 
         HBox hBox2 = new HBox();
+        HBox hBox21 = new HBox();
+        hBox21.setMinSize(370, 160);
+
         hBox2.setStyle("-fx-background-color: #FFFFFF;");
         hBox2.setAlignment(Pos.CENTER);
         hBox2.setMinSize(350, 120);
         Label stringInformation = new Label();
         stringInformation.setMinSize(300, 100);
-        stringInformation.setStyle("-fx-font-size: 12;");
+        stringInformation.setStyle("-fx-font-size: 14;");
         stringInformation.setAlignment(Pos.CENTER_LEFT);
         stringInformation.setText(information);
         hBox2.getChildren().add(stringInformation);
@@ -718,7 +721,7 @@ public class DashboardController extends Main implements Initializable {
         hBox31.setMinSize(140, 28);
         Button okButton = new Button();
         okButton.setText("Gerai" + "\n");
-        okButton.setStyle("-fx-font-size: 12; -fx-background-radius: 0; -fx-background-color: #0078D7, linear-gradient(#E1e1e1, #E1E1E1);");
+        okButton.setStyle("-fx-font-size: 14; -fx-background-radius: 0; -fx-background-color: #0078D7, linear-gradient(#E1e1e1, #E1E1E1);");
         okButton.setMinSize(82, 28);
         okButton.setAlignment(Pos.CENTER);
         okButton.setOnAction(event -> popup.hide());
