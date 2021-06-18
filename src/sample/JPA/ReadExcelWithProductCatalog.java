@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import static sample.JPA.JPAUtil.getScene;
 
 
 public class ReadExcelWithProductCatalog {
@@ -136,7 +135,6 @@ public class ReadExcelWithProductCatalog {
 
         } catch (Exception e) {
             e.getStackTrace();
-//            JPAUtil.showPopupWindow("Klaida!", "- Pasirinktas failas: " + file.getName() + "\n- Įkėlimas nepavyko... \n- Tikrinkite pasirinkto failo schema. \n \n- Išimtis: \n(" + e.getMessage() + " ) ", "#b02a37", "#FFFFFF", getScene());
         } finally {
             workbook.close();
             inputStream.close();

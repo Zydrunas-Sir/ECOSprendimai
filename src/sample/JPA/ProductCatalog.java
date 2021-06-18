@@ -1,5 +1,6 @@
 package sample.JPA;
 
+
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -274,4 +275,3 @@ public class ProductCatalog {
                 '}';
     }
 }
-
