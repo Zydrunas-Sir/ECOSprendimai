@@ -125,16 +125,15 @@ public class DashboardController extends Main implements Initializable {
             add_menu_bar.setVisible(true);
             more_menu_bar.setVisible(true);
             user_list.setVisible(true);
-            user_about.setVisible(true);
 
         } else {
             file_menu_bar.setVisible(false);
             add_menu_bar.setVisible(false);
             more_menu_bar.setVisible(true);
             user_list.setVisible(false);
-            user_about.setVisible(true);
 
         }
+        user_about.setVisible(true);
 
 
     }
