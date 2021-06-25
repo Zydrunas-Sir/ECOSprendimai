@@ -668,7 +668,7 @@ public class DashboardController extends Main implements Initializable {
                     voltageProperty.setLayoutX(60);
                     voltageProperty.setLayoutY(getRightPanelLabelY());
                     voltageDescription.setText("Vardinė įtampa: ");
-                    voltageProperty.setText(String.valueOf(irasas.getGalia()));
+                    voltageProperty.setText(String.valueOf(irasas.getVardine_itampa()));
                     vBox1.getChildren().add(voltageDescription);
                     vBox2.getChildren().add(voltageProperty);
                 }
@@ -681,7 +681,7 @@ public class DashboardController extends Main implements Initializable {
                     typeProperty.setLayoutX(60);
                     typeProperty.setLayoutY(getRightPanelLabelY());
                     typeDescription.setText("Tipas: ");
-                    typeProperty.setText(String.valueOf(irasas.getGalia()));
+                    typeProperty.setText(String.valueOf(irasas.getTipas()));
                     vBox1.getChildren().add(typeDescription);
                     vBox2.getChildren().add(typeProperty);
                 }
@@ -707,7 +707,7 @@ public class DashboardController extends Main implements Initializable {
                     resistanceClassProperty.setLayoutX(60);
                     resistanceClassProperty.setLayoutY(getRightPanelLabelY());
                     resistanceClassDescriotion.setText("Atsparumo klasė: ");
-                    resistanceClassProperty.setText(String.valueOf(irasas.getGalia()));
+                    resistanceClassProperty.setText(String.valueOf(irasas.getAtsparumo_klase()));
                     vBox1.getChildren().add(resistanceClassDescriotion);
                     vBox2.getChildren().add(resistanceClassProperty);
                 }
@@ -720,7 +720,7 @@ public class DashboardController extends Main implements Initializable {
                     sizeProperty.setLayoutX(60);
                     sizeProperty.setLayoutY(getRightPanelLabelY());
                     sizeDescription.setText("Matmenys: ");
-                    sizeProperty.setText(String.valueOf(irasas.getGalia()));
+                    sizeProperty.setText(String.valueOf(irasas.getMatmenys()));
                     vBox1.getChildren().add(sizeDescription);
                     vBox2.getChildren().add(sizeProperty);
                 }
@@ -733,7 +733,7 @@ public class DashboardController extends Main implements Initializable {
                     workingTemperatureProperty.setLayoutX(60);
                     workingTemperatureProperty.setLayoutY(getRightPanelLabelY());
                     workingTemperatureDescription.setText("Šviesos srautas: ");
-                    workingTemperatureProperty.setText(String.valueOf(irasas.getSviesos_srautas()));
+                    workingTemperatureProperty.setText(String.valueOf(irasas.getDarbine_temperatura()));
                     vBox1.getChildren().add(workingTemperatureDescription);
                     vBox2.getChildren().add(workingTemperatureProperty);
                 }
