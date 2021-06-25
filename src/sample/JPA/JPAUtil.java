@@ -27,7 +27,7 @@ public class JPAUtil {
                 factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
             } catch (RuntimeException exception) {
                 System.out.println("JPAUtil RuntimeException ");
-                showPopupWindow("Nepapavyko užmegzti ryšio", "Nepavyko prisijungti prie duomenų bazės\n- Patikrinkite ar turite interneto ryšį. \n- Priešingu atveju kreipkitės: į ECOSprendimai\n- Klaidos kodas: JPAUtil PersistenceException\n- Programos versija: " + Constants.PROGRAM_VERSION, "#b02a37", "#FFFFFF", getScene());
+                showPopupWindow("Nepavyko užmegzti ryšio", "Nepavyko prisijungti prie duomenų bazės\n- Patikrinkite ar turite interneto ryšį. \n- Priešingu atveju kreipkitės: į ECOSprendimai\n- Klaidos kodas: JPAUtil PersistenceException\n- Programos versija: " + Constants.PROGRAM_VERSION, "#b02a37", "#FFFFFF", getScene());
 
             }
         }
