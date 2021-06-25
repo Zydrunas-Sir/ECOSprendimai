@@ -1,5 +1,6 @@
 package sample.JPA;
 
+
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -22,10 +23,10 @@ public class ProductCatalog {
     private String priceNet;
     @Column(name = "stock")
     private int stock;
-    //@ManyToOne(targetEntity = Categories.class, fetch = FetchType.EAGER, cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
-    //@JoinColumn(name = "group_id", referencedColumnName = "id")
     @Column(name = "group_id")
     private int groupId;
+    //@ManyToOne(targetEntity = Categories.class, fetch = FetchType.EAGER, cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+    //@JoinColumn(name = "group_id", referencedColumnName = "id")
     @Column(name = "aukstis")
     private int aukstis;
     @Column(name = "plotis")
@@ -63,6 +64,28 @@ public class ProductCatalog {
         this.priceNet = priceNet;
         this.stock = stock;
         this.groupId = groupId;
+        this.date = date;
+    }
+
+    public ProductCatalog(String catalogNo, String symbol, String priceNet, int stock, int groupId, int aukstis, int plotis, int gylis, String ip_klase, String spalva, String korpusas, String tipas, int vardine_itampa, int galia, int sviesos_srautas, String atsparumo_klase, String matmenys, int darbine_temperatura, Date date) {
+        this.catalogNo = catalogNo;
+        this.symbol = symbol;
+        this.priceNet = priceNet;
+        this.stock = stock;
+        this.groupId = groupId;
+        this.aukstis = aukstis;
+        this.plotis = plotis;
+        this.gylis = gylis;
+        this.ip_klase = ip_klase;
+        this.spalva = spalva;
+        this.korpusas = korpusas;
+        this.tipas = tipas;
+        this.vardine_itampa = vardine_itampa;
+        this.galia = galia;
+        this.sviesos_srautas = sviesos_srautas;
+        this.atsparumo_klase = atsparumo_klase;
+        this.matmenys = matmenys;
+        this.darbine_temperatura = darbine_temperatura;
         this.date = date;
     }
 
@@ -252,4 +275,3 @@ public class ProductCatalog {
                 '}';
     }
 }
-
