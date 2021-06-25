@@ -20,6 +20,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -37,7 +39,10 @@ import sample.utils.Validation;
 
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -502,6 +507,8 @@ public class DashboardController extends Main implements Initializable {
         HBox hBox1 = new HBox();
         VBox vBox1 = new VBox();
         VBox vBox2 = new VBox();
+        VBox imageVBox = new VBox();
+
 
 
         vBoxCatalogNumber1.setPadding(new Insets(5, 20, 2, 20));
@@ -559,6 +566,7 @@ public class DashboardController extends Main implements Initializable {
                 stockProperty.setText(String.valueOf(irasas.getStock()));
                 vBox1.getChildren().add(stockDescription);
                 vBox2.getChildren().add(stockProperty);
+
 
                 if (irasas.getAukstis() != 0) {
                     Label heightDescription = new Label();
@@ -659,7 +667,7 @@ public class DashboardController extends Main implements Initializable {
                     voltageDescription.setLayoutY(getRightPanelLabelY());
                     voltageProperty.setLayoutX(60);
                     voltageProperty.setLayoutY(getRightPanelLabelY());
-                    voltageDescription.setText("Galia: ");
+                    voltageDescription.setText("Vardinė įtampa: ");
                     voltageProperty.setText(String.valueOf(irasas.getGalia()));
                     vBox1.getChildren().add(voltageDescription);
                     vBox2.getChildren().add(voltageProperty);
@@ -672,7 +680,7 @@ public class DashboardController extends Main implements Initializable {
                     typeDescription.setLayoutY(getRightPanelLabelY());
                     typeProperty.setLayoutX(60);
                     typeProperty.setLayoutY(getRightPanelLabelY());
-                    typeDescription.setText("Galia: ");
+                    typeDescription.setText("Tipas: ");
                     typeProperty.setText(String.valueOf(irasas.getGalia()));
                     vBox1.getChildren().add(typeDescription);
                     vBox2.getChildren().add(typeProperty);
@@ -698,7 +706,7 @@ public class DashboardController extends Main implements Initializable {
                     resistanceClassDescriotion.setLayoutY(getRightPanelLabelY());
                     resistanceClassProperty.setLayoutX(60);
                     resistanceClassProperty.setLayoutY(getRightPanelLabelY());
-                    resistanceClassDescriotion.setText("Galia: ");
+                    resistanceClassDescriotion.setText("Atsparumo klasė: ");
                     resistanceClassProperty.setText(String.valueOf(irasas.getGalia()));
                     vBox1.getChildren().add(resistanceClassDescriotion);
                     vBox2.getChildren().add(resistanceClassProperty);
@@ -711,7 +719,7 @@ public class DashboardController extends Main implements Initializable {
                     sizeDescription.setLayoutY(getRightPanelLabelY());
                     sizeProperty.setLayoutX(60);
                     sizeProperty.setLayoutY(getRightPanelLabelY());
-                    sizeDescription.setText("Galia: ");
+                    sizeDescription.setText("Matmenys: ");
                     sizeProperty.setText(String.valueOf(irasas.getGalia()));
                     vBox1.getChildren().add(sizeDescription);
                     vBox2.getChildren().add(sizeProperty);
@@ -729,6 +737,18 @@ public class DashboardController extends Main implements Initializable {
                     vBox1.getChildren().add(workingTemperatureDescription);
                     vBox2.getChildren().add(workingTemperatureProperty);
                 }
+                if (irasas.getImage_url() != null && !irasas.getImage_url().isEmpty()) {
+                    Image imageFromUrl = new Image(irasas.getImage_url());
+                    ImageView imageView = new ImageView();
+                    imageView.setImage(imageFromUrl);
+                    imageView.setFitWidth(170);
+                    imageView.setPreserveRatio(true);
+                    imageView.setLayoutX(20);
+                    imageView.setLayoutY(getRightPanelLabelY());
+                    imageVBox.getChildren().add(imageView);
+                    System.out.println("Image has been loaded.");
+
+                }
             }
         });
         hBoxCatalog.getChildren().add(vBoxCatalogNumber1);
@@ -737,6 +757,7 @@ public class DashboardController extends Main implements Initializable {
         right_panel_main_vbox.getChildren().add(vBoxSymbol);
         hBox1.getChildren().add(vBox1);
         hBox1.getChildren().add(vBox2);
+        hBox1.getChildren().add(imageVBox);
         right_panel_main_vbox.getChildren().add(hBox1);
 
     }
