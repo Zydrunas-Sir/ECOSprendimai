@@ -584,6 +584,23 @@ public class DashboardController extends Main implements Initializable {
             e.getCause();
         }
     }
+    public void openStocks(ActionEvent actionEvent) {
+        try {
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource(Constants.OPEN_STOCKS_DIRECTORY_PATH)));
+            Stage loginStage = new Stage();
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add(Objects.requireNonNull(getClass().getClassLoader().getResource(Constants.CSS_DIRECTORY_PATH)).toExternalForm());
+            loginStage.setTitle("Akcijų Birža");
+            loginStage.setResizable(false);
+            loginStage.setOnCloseRequest(e -> StocksRateController.onClose());
+            loginStage.setScene(scene);
+            loginStage.show();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            e.getCause();
+        }
+    }
 
     //Atidaro produkto sukurimo form'a
     public void createNewProduct(ActionEvent actionEvent) {
@@ -652,6 +669,8 @@ public class DashboardController extends Main implements Initializable {
             }
         };
     }// Loading Spinner set-up-ends
+
+
 
 
     public void reloadCategoryListView() {
