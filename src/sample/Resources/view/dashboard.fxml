@@ -22,41 +22,13 @@
         <TitledPane animated="false" collapsible="false" layoutX="929.0" layoutY="83.0" pickOnBounds="false" prefHeight="448.0" prefWidth="414.0" text="Pasirinktos prekes stulpeleje pavadinimas" AnchorPane.bottomAnchor="3.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="83.0">
             <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="330.0" prefWidth="403.0">
-                    <children>
-                        <Label layoutX="21.0" layoutY="14.0" prefHeight="17.0" prefWidth="77.0" text="Kat. numeris :" />
-                        <Label fx:id="catalog_no" layoutX="114.0" layoutY="14.0" prefHeight="17.0" prefWidth="90.0" style="-fx-font-weight: bold;" text="nėra" />
-                        <Label layoutX="21.0" layoutY="85.0" prefHeight="17.0" prefWidth="94.0" text="Kaina :" />
-                        <Label layoutX="21.0" layoutY="123.0" prefHeight="17.0" prefWidth="109.0" text="Kaina su nuolaida :" />
-                        <Label layoutX="21.0" layoutY="104.0" prefHeight="17.0" prefWidth="84.0" text="Nuolaida :" />
-                        <Label layoutX="21.0" layoutY="151.0" prefHeight="17.0" prefWidth="101.0" text="Tiekimo terminas :" />
-                        <Label layoutX="21.0" layoutY="187.0" prefHeight="17.0" prefWidth="112.0" text="Minimalus kiekis :" />
-                        <Label layoutX="21.0" layoutY="204.0" prefHeight="17.0" prefWidth="107.0" text="Nuolaidų grupė :" />
-                        <Label layoutX="21.0" layoutY="221.0" prefHeight="17.0" prefWidth="118.0" text="Produktų šeima :" />
-                        <Label fx:id="base_price" layoutX="157.0" layoutY="85.0" prefHeight="17.0" prefWidth="30.0" style="-fx-font-weight: bold;" text="0" />
-                        <Label layoutX="21.0" layoutY="257.0" prefHeight="17.0" prefWidth="85.0" text="EAN kodas :" />
-                        <Label fx:id="discount_in_percent" layoutX="157.0" layoutY="104.0" prefHeight="17.0" prefWidth="30.0" style="-fx-font-weight: bold;" text="0" />
-                        <Label fx:id="price_with_discount" layoutX="157.0" layoutY="123.0" prefHeight="17.0" prefWidth="30.0" style="-fx-font-weight: bold;" text="0" />
-                        <Label fx:id="delivery_time_in_days_from" layoutX="183.0" layoutY="151.0" prefHeight="17.0" prefWidth="23.0" style="-fx-font-weight: bold;" text="0" textAlignment="CENTER" />
-                        <Label fx:id="item_package" layoutX="157.0" layoutY="168.0" prefHeight="17.0" prefWidth="53.0" style="-fx-font-weight: bold;" text="0" />
-                        <Label fx:id="min_order_amount" layoutX="157.0" layoutY="187.0" prefHeight="17.0" prefWidth="30.0" style="-fx-font-weight: bold;" text="0" />
-                        <Label fx:id="discount_group" layoutX="157.0" layoutY="204.0" prefHeight="17.0" prefWidth="143.0" style="-fx-font-weight: bold;" text="nėra" />
-                        <Label fx:id="product_family" layoutX="157.0" layoutY="221.0" lineSpacing="3.0" prefHeight="17.0" prefWidth="181.0" style="-fx-font-weight: bold;" text="nėra" />
-                        <Label fx:id="ean_code" layoutX="157.0" layoutY="257.0" prefHeight="17.0" prefWidth="179.0" style="-fx-font-weight: bold;" text="0" />
-                        <Label layoutX="194.0" layoutY="85.0" prefHeight="17.0" prefWidth="67.0" text="Eur už 1 vnt." />
-                        <Label layoutX="178.0" layoutY="104.0" prefHeight="17.0" prefWidth="36.0" text="\%" />
-                        <Label layoutX="196.0" layoutY="123.0" prefHeight="17.0" prefWidth="36.0" text="Eur" />
-                        <Label layoutX="216.0" layoutY="168.0" prefHeight="17.0" prefWidth="36.0" text="vnt." />
-                        <Label layoutX="22.0" layoutY="169.0" prefHeight="17.0" prefWidth="85.0" text="Paketas :" />
-                        <Label layoutX="21.0" layoutY="35.0" prefHeight="17.0" prefWidth="112.0" text="Prekės pavadinimas:" />
-                        <Label fx:id="item_name" layoutX="158.0" layoutY="35.0" prefHeight="17.0" prefWidth="192.0" style="-fx-font-weight: bold;" text="PREKĖ NEPASIRINKTA" />
-                        <Label layoutX="156.0" layoutY="151.0" text="nuo" />
-                        <Label layoutX="199.0" layoutY="151.0" text="iki" />
-                        <Label fx:id="delivery_time_in_days_to" layoutX="224.0" layoutY="151.0" style="-fx-font-weight: bold;" text="0" />
-                        <Label layoutX="243.0" layoutY="151.0" text="d. dienų" />
-                    </children>
+
                     <padding>
                         <Insets bottom="3.0" />
                     </padding>
+               <children>
+                  <VBox fx:id="right_panel_main_vbox" layoutX="8.0" prefHeight="416.0" prefWidth="388.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+               </children>
                 </AnchorPane>
             </content>
             <padding>
