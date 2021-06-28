@@ -53,6 +53,8 @@ public class ProductCatalog {
     private String matmenys;
     @Column(name = "darbine_temperatura")
     private int darbine_temperatura;
+    @Column(name = "image_url")
+    private String image_url;
     @Column(name = "date")
     private Date date;
 
@@ -67,7 +69,7 @@ public class ProductCatalog {
         this.date = date;
     }
 
-    public ProductCatalog(String catalogNo, String symbol, String priceNet, int stock, int groupId, int aukstis, int plotis, int gylis, String ip_klase, String spalva, String korpusas, String tipas, int vardine_itampa, int galia, int sviesos_srautas, String atsparumo_klase, String matmenys, int darbine_temperatura, Date date) {
+    public ProductCatalog(String catalogNo, String symbol, String priceNet, int stock, int groupId, int aukstis, int plotis, int gylis, String ip_klase, String spalva, String korpusas, String tipas, int vardine_itampa, int galia, int sviesos_srautas, String atsparumo_klase, String matmenys, int darbine_temperatura, String img_url, Date date) {
         this.catalogNo = catalogNo;
         this.symbol = symbol;
         this.priceNet = priceNet;
@@ -86,6 +88,7 @@ public class ProductCatalog {
         this.atsparumo_klase = atsparumo_klase;
         this.matmenys = matmenys;
         this.darbine_temperatura = darbine_temperatura;
+        this.image_url = img_url;
         this.date = date;
     }
 
@@ -252,6 +255,14 @@ public class ProductCatalog {
 
     public void setDarbine_temperatura(int darbine_temperatura) {
         this.darbine_temperatura = darbine_temperatura;
+    }
+
+    public String getImage_url() {
+        return image_url;
+    }
+
+    public void setImage_url(String image_url) {
+        this.image_url = image_url;
     }
 
     public Date getDate() {
