@@ -16,7 +16,7 @@ public class Constants {
     public static final String PRODUCT_FORM_VIEW_PATH = "sample/Resources/view/productForm.fxml";
     public static final String CATEGORY_FORM_VIEW_PATH = "sample/Resources/view/categoryForm.fxml";
     public static final String CSS_DIRECTORY_PATH = "sample/Resources/view/CSS.css";
-
+    public static final String OPEN_STOCKS_DIRECTORY_PATH = "sample/Resources/view/stockPriceRate.fxml";
 
     public static final String EMAIL_NOT_EXIST = "Įvestas el.paštas neegzistuoja.";
     public static final String EMAIL_EXISTS = "Įvestas el.paštas jau egzistuoja.";
