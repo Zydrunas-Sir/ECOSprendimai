@@ -13,6 +13,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -38,6 +39,7 @@ import sample.utils.Validation;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -59,6 +61,9 @@ public class DashboardController extends Main implements Initializable {
 
 
     // Dešinės panelės label
+    @FXML
+    public VBox right_panel_main_vbox;
+
     @FXML
     public Label catalog_no;
     @FXML
@@ -215,44 +220,43 @@ public class DashboardController extends Main implements Initializable {
         }
 
 
-            priceNet.setCellValueFactory(new PropertyValueFactory<>("priceNet"));
-            if (isAdmin) {
-                try {
-                    priceNet.setCellFactory(TextFieldTableCell.forTableColumn());
-                    priceNet.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<ProductCatalog, String>>() {
-                        @Override
-                        public void handle(TableColumn.CellEditEvent<ProductCatalog, String> event) {
-                            ProductCatalog productCatalog;
-                            if (event.getNewValue().isEmpty()) {
-                                productCatalog = event.getRowValue();
-                                productCatalog.setPriceNet(event.getOldValue());
-                                showPopupWindow("Neįvesta produkto kaina", "Skaičius gali būti nuo 1 ir toliau simbolių, po kablelio turėti vieną,\ndu arba neturėti skaitmenų. Pavyzdžiui:\n „30“, „7.15“, „1500.0“ ir t.t.", "#b02a37", "#FFFFFF");
-                                System.out.println("PRICNET IS EMPTY");
-                                table.refresh();
-                            } else if (Validation.isValidPrice(event.getNewValue())) {
-                                productCatalog = event.getRowValue();
-                                productCatalog.setPriceNet(event.getNewValue());
-                                ProductCatalogDAO.updatePrice(event.getNewValue(), productCatalog.getId());
-                                table.refresh();
-                                System.out.println("REGEX VALIDATION SUCCESS");
-                            } else {
-                                productCatalog = event.getRowValue();
-                                productCatalog.setPriceNet(event.getOldValue());
-                                table.refresh();
-                                showPopupWindow("Blogai įvesta produkto kaina", "Skaičius gali būti nuo 1 ir toliau simbolių, po kablelio turėti vieną,\ndu arba neturėti skaitmenų. Pavyzdžiui:\n „30“, „7.15“, „1500.0“ ir t.t.", "#b02a37", "#FFFFFF");
+        priceNet.setCellValueFactory(new PropertyValueFactory<>("priceNet"));
+        if (isAdmin) {
+            try {
+                priceNet.setCellFactory(TextFieldTableCell.forTableColumn());
+                priceNet.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<ProductCatalog, String>>() {
+                    @Override
+                    public void handle(TableColumn.CellEditEvent<ProductCatalog, String> event) {
+                        ProductCatalog productCatalog;
+                        if (event.getNewValue().isEmpty()) {
+                            productCatalog = event.getRowValue();
+                            productCatalog.setPriceNet(event.getOldValue());
+                            showPopupWindow("Neįvesta produkto kaina", "Skaičius gali būti nuo 1 ir toliau simbolių, po kablelio turėti vieną,\ndu arba neturėti skaitmenų. Pavyzdžiui:\n „30“, „7.15“, „1500.0“ ir t.t.", "#b02a37", "#FFFFFF");
+                            System.out.println("PRICNET IS EMPTY");
+                            table.refresh();
+                        } else if (Validation.isValidPrice(event.getNewValue())) {
+                            productCatalog = event.getRowValue();
+                            productCatalog.setPriceNet(event.getNewValue());
+                            ProductCatalogDAO.updatePrice(event.getNewValue(), productCatalog.getId());
+                            table.refresh();
+                            System.out.println("REGEX VALIDATION SUCCESS");
+                        } else {
+                            productCatalog = event.getRowValue();
+                            productCatalog.setPriceNet(event.getOldValue());
+                            table.refresh();
+                            showPopupWindow("Blogai įvesta produkto kaina", "Skaičius gali būti nuo 1 ir toliau simbolių, po kablelio turėti vieną,\ndu arba neturėti skaitmenų. Pavyzdžiui:\n „30“, „7.15“, „1500.0“ ir t.t.", "#b02a37", "#FFFFFF");
 
-                                System.out.println("REGEX VALIDATION DENIED");
-                            }
+                            System.out.println("REGEX VALIDATION DENIED");
                         }
+                    }
 
 
-                    });
-                } catch (Exception e) {
-                    System.out.println("Blogas editas");
-                }
-
+                });
+            } catch (Exception e) {
+                System.out.println("Blogas editas");
             }
 
+        }
 
 
         stock.setCellValueFactory(new PropertyValueFactory<>("stock"));
@@ -324,7 +328,7 @@ public class DashboardController extends Main implements Initializable {
         } catch (IllegalStateException e) {
             System.out.println("mouseEventForListView( " + e + " ) ");
         } catch (NullPointerException e) {
-            System.out.println("mouseEventForListView( "+ e + " )");
+            System.out.println("mouseEventForListView( " + e + " )");
         }
 
     }
@@ -403,8 +407,8 @@ public class DashboardController extends Main implements Initializable {
         if (countDBProducts != 0) {
             String successToPopup = "Pakeista produktų: " + countAffectedProducts + "\nFaile aptikta produktų: " + countExcelProducts + "\nPridėti nauji produktai: " + countNewProducts + "\nDuomenų bazėje nepaveikti produktai: " + countDBProducts + "\n";
             showPopupWindow("Failas sėkmingai įkeltas", successToPopup, "#146c43", "#FFFFFF");
-        } else if (countAffectedProducts == 0 && countExcelProducts == 0 && countNewProducts == 0 && countDBProducts == 0 ) {
-            JPAUtil.showPopupWindow("Klaida!", "- Nuskaityti nepavyko \n- Pasirinktas failas netinkamas : " + file.getName() , "#b02a37", "#FFFFFF", getScene());
+        } else if (countAffectedProducts == 0 && countExcelProducts == 0 && countNewProducts == 0 && countDBProducts == 0) {
+            JPAUtil.showPopupWindow("Klaida!", "- Nuskaityti nepavyko \n- Pasirinktas failas netinkamas : " + file.getName(), "#b02a37", "#FFFFFF", getScene());
         }
 
     }
@@ -455,8 +459,19 @@ public class DashboardController extends Main implements Initializable {
         } catch (IllegalStateException e) {
             System.out.println("mouseEventForTreeView( " + e + " )");
         } catch (NullPointerException e) {
-            System.out.println("mouseEventForTreeView(" + e +" )");
+            System.out.println("mouseEventForTreeView(" + e + " )");
         }
+    }
+
+
+    public double rightPanelLabelY;
+
+    private void setRightPanelLabelY(double y) {
+        this.rightPanelLabelY = y;
+    }
+
+    private double getRightPanelLabelY() {
+        return rightPanelLabelY = this.rightPanelLabelY + 20;
     }
 
     public void countTableViewObservableProducts(ObservableList<ProductCatalog> products) {
@@ -475,34 +490,286 @@ public class DashboardController extends Main implements Initializable {
     // Pirmiausia kreipiamasi į duomenų bazę, patikrinama ar egzistuoja produkto aprašymas.
     // Jei egzistuoja, ištraukiami visi duomenys ir užpildoma dešinė panelė.
     public void fillDescriptionPanel(String catalogNoImported) {
-        List<ProductDescription> productByCatalogNo = ProductDescriptionDAO.searchByCatalogNo(catalogNoImported);
-        if (productByCatalogNo.isEmpty()) {
-            catalog_no.setText(catalogNoImported);
-            item_name.setText("PREKĖS APRAŠYMAS NERASTAS");
-            base_price.setText("-");
-            discount_in_percent.setText("-");
-            delivery_time_in_days_from.setText("-");
-            delivery_time_in_days_to.setText("-");
-            item_package.setText("-");
-            min_order_amount.setText("-");
-            discount_group.setText("-");
-            product_family.setText("-");
-            ean_code.setText("-");
-        } else {
-            ProductDescription selectedProductDescription = productByCatalogNo.get(0);
-            catalog_no.setText(catalogNoImported);
-            item_name.setText(selectedProductDescription.getItemName());
-            base_price.setText(String.valueOf(selectedProductDescription.getBasePrice()));
-            discount_in_percent.setText(String.valueOf(selectedProductDescription.getDiscountInPercent()));
-            delivery_time_in_days_from.setText(String.valueOf(selectedProductDescription.getDeliveryTimeInDaysFrom()));
-            delivery_time_in_days_to.setText(String.valueOf(selectedProductDescription.getDeliveryTimeInDaysTo()));
-            item_package.setText(selectedProductDescription.getItemPackage());
-            min_order_amount.setText(String.valueOf(selectedProductDescription.getMinOrderAmount()));
-            discount_group.setText(selectedProductDescription.getDiscountGroup());
-            product_family.setText(selectedProductDescription.getProductFamily());
-            ean_code.setText(selectedProductDescription.getEanCode());
-        }
+
+        right_panel_main_vbox.getChildren().clear();
+        right_panel_main_vbox.setStyle("-fx-background-color: #F1F1F1;");
+
+        HBox hBoxCatalog = new HBox();
+        VBox vBoxCatalogNumber1 = new VBox();
+        VBox vBoxCatalogNumber2 = new VBox();
+        VBox vBoxSymbol = new VBox();
+        HBox hBox1 = new HBox();
+        VBox vBox1 = new VBox();
+        VBox vBox2 = new VBox();
+
+
+        vBoxCatalogNumber1.setPadding(new Insets(5, 20, 2, 20));
+        vBoxCatalogNumber2.setPadding(new Insets(5, 20, 2, 20));
+        vBoxSymbol.setPadding(new Insets(0, 20, 2, 20));
+        vBox1.setPadding(new Insets(5, 20, 10, 20));
+        vBox2.setPadding(new Insets(5, 20, 10, 20));
+        setRightPanelLabelY(40);
+
+
+        fullProductList.forEach(irasas -> {
+            if (irasas.getCatalogNo() == catalogNoImported) {
+                Label catalogNoDescription = new Label();
+                catalogNoDescription.setStyle("-fx-underline: true;");
+                catalogNoDescription.setLayoutX(20);
+                catalogNoDescription.setLayoutY(getRightPanelLabelY());
+                Label catalogNoProperty = new Label();
+                catalogNoProperty.setStyle("-fx-font-weight: bold;");
+                catalogNoProperty.setLayoutX(60);
+                catalogNoProperty.setLayoutY(getRightPanelLabelY());
+                catalogNoDescription.setText("Katalogo kodas:");
+                catalogNoProperty.setText(irasas.getCatalogNo());
+                vBoxCatalogNumber1.getChildren().add(catalogNoDescription);
+                vBoxCatalogNumber2.getChildren().add(catalogNoProperty);
+
+
+                Label symbolProperty = new Label();
+                symbolProperty.setLayoutX(60);
+                symbolProperty.setWrapText(true);
+                symbolProperty.setStyle("-fx-font-weight: bold;");
+                symbolProperty.setLayoutY(getRightPanelLabelY());
+                symbolProperty.setText(irasas.getSymbol());
+                vBoxSymbol.getChildren().add(symbolProperty);
+
+                Label priceNetDescription = new Label();
+                Label priceNetProperty = new Label();
+                priceNetDescription.setLayoutX(20);
+                priceNetDescription.setLayoutY(getRightPanelLabelY());
+                priceNetProperty.setLayoutX(60);
+                priceNetProperty.setLayoutY(getRightPanelLabelY());
+                priceNetProperty.setStyle("-fx-font-weight: bold;");
+                priceNetDescription.setText("Kaina: ");
+                priceNetProperty.setText(irasas.getPriceNet());
+                vBox1.getChildren().add(priceNetDescription);
+                vBox2.getChildren().add(priceNetProperty);
+
+                Label stockDescription = new Label();
+                Label stockProperty = new Label();
+                stockProperty.setStyle("-fx-font-weight: bold;");
+                stockDescription.setLayoutX(20);
+                stockDescription.setLayoutY(getRightPanelLabelY());
+                stockProperty.setLayoutX(60);
+                stockProperty.setLayoutY(getRightPanelLabelY());
+                stockDescription.setText("Likutis: ");
+                stockProperty.setText(String.valueOf(irasas.getStock()));
+                vBox1.getChildren().add(stockDescription);
+                vBox2.getChildren().add(stockProperty);
+
+                if (irasas.getAukstis() != 0) {
+                    Label heightDescription = new Label();
+                    Label heightProperty = new Label();
+                    heightProperty.setStyle("-fx-font-weight: bold;");
+                    heightDescription.setLayoutX(20);
+                    heightDescription.setLayoutY(getRightPanelLabelY());
+                    heightProperty.setLayoutX(60);
+                    heightProperty.setLayoutY(getRightPanelLabelY());
+                    heightDescription.setText("Aukštis: ");
+                    heightProperty.setText(String.valueOf(irasas.getAukstis()));
+                    vBox1.getChildren().add(heightDescription);
+                    vBox2.getChildren().add(heightProperty);
+                }
+                if (irasas.getPlotis() != 0) {
+                    Label widthDescription = new Label();
+                    Label widthProperty = new Label();
+                    widthProperty.setStyle("-fx-font-weight: bold;");
+                    widthDescription.setLayoutX(20);
+                    widthDescription.setLayoutY(getRightPanelLabelY());
+                    widthProperty.setLayoutX(60);
+                    widthProperty.setLayoutY(getRightPanelLabelY());
+                    widthDescription.setText("Plotis: ");
+                    widthProperty.setText(String.valueOf(irasas.getPlotis()));
+                    vBox1.getChildren().add(widthDescription);
+                    vBox2.getChildren().add(widthProperty);
+                }
+                if (irasas.getGylis() != 0) {
+                    Label depthDescription = new Label();
+                    Label depthProperty = new Label();
+                    depthProperty.setStyle("-fx-font-weight: bold;");
+                    depthDescription.setLayoutX(20);
+                    depthDescription.setLayoutY(getRightPanelLabelY());
+                    depthProperty.setLayoutX(60);
+                    depthProperty.setLayoutY(getRightPanelLabelY());
+                    depthDescription.setText("Gylis: ");
+                    depthProperty.setText(String.valueOf(irasas.getGylis()));
+                    vBox1.getChildren().add(depthDescription);
+                    vBox2.getChildren().add(depthProperty);
+                }
+                if (irasas.getIp_klase() != null && !irasas.getIp_klase().isEmpty()) {
+                    Label ipClassDescription = new Label();
+                    Label ipClassProperty = new Label();
+                    ipClassProperty.setStyle("-fx-font-weight: bold;");
+                    ipClassDescription.setLayoutX(20);
+                    ipClassDescription.setLayoutY(getRightPanelLabelY());
+                    ipClassProperty.setLayoutX(60);
+                    ipClassProperty.setLayoutY(getRightPanelLabelY());
+                    ipClassDescription.setText("IP klasė: ");
+                    ipClassProperty.setText(irasas.getIp_klase());
+                    vBox1.getChildren().add(ipClassDescription);
+                    vBox2.getChildren().add(ipClassProperty);
+                }
+                if (irasas.getSpalva() != null && !irasas.getSpalva().isEmpty()) {
+                    Label colorDescription = new Label();
+                    Label colorProperty = new Label();
+                    colorProperty.setStyle("-fx-font-weight: bold;");
+                    colorDescription.setLayoutX(20);
+                    colorDescription.setLayoutY(getRightPanelLabelY());
+                    colorProperty.setLayoutX(60);
+                    colorProperty.setLayoutY(getRightPanelLabelY());
+                    colorDescription.setText("Spalva: ");
+                    colorProperty.setText(irasas.getSpalva());
+                    vBox1.getChildren().add(colorDescription);
+                    vBox2.getChildren().add(colorProperty);
+                }
+                if (irasas.getKorpusas() != null && !irasas.getKorpusas().isEmpty()) {
+                    Label corpusDescription = new Label();
+                    Label corpusProperty = new Label();
+                    corpusProperty.setStyle("-fx-font-weight: bold;");
+                    corpusDescription.setLayoutX(20);
+                    corpusDescription.setLayoutY(getRightPanelLabelY());
+                    corpusProperty.setLayoutX(60);
+                    corpusProperty.setLayoutY(getRightPanelLabelY());
+                    corpusDescription.setText("Korpusas: ");
+                    corpusProperty.setText(irasas.getKorpusas());
+                    vBox1.getChildren().add(corpusDescription);
+                    vBox2.getChildren().add(corpusProperty);
+                }
+                if (irasas.getGalia() != 0) {
+                    Label powerDescription = new Label();
+                    Label powerProperty = new Label();
+                    powerProperty.setStyle("-fx-font-weight: bold;");
+                    powerDescription.setLayoutX(20);
+                    powerDescription.setLayoutY(getRightPanelLabelY());
+                    powerProperty.setLayoutX(60);
+                    powerProperty.setLayoutY(getRightPanelLabelY());
+                    powerDescription.setText("Galia: ");
+                    powerProperty.setText(String.valueOf(irasas.getGalia()));
+                    vBox1.getChildren().add(powerDescription);
+                    vBox2.getChildren().add(powerProperty);
+                }
+                if (irasas.getVardine_itampa() != 0) {
+                    Label voltageDescription = new Label();
+                    Label voltageProperty = new Label();
+                    voltageProperty.setStyle("-fx-font-weight: bold;");
+                    voltageDescription.setLayoutX(20);
+                    voltageDescription.setLayoutY(getRightPanelLabelY());
+                    voltageProperty.setLayoutX(60);
+                    voltageProperty.setLayoutY(getRightPanelLabelY());
+                    voltageDescription.setText("Galia: ");
+                    voltageProperty.setText(String.valueOf(irasas.getGalia()));
+                    vBox1.getChildren().add(voltageDescription);
+                    vBox2.getChildren().add(voltageProperty);
+                }
+                if (irasas.getTipas() != null && !irasas.getTipas().isEmpty()) {
+                    Label typeDescription = new Label();
+                    Label typeProperty = new Label();
+                    typeProperty.setStyle("-fx-font-weight: bold;");
+                    typeDescription.setLayoutX(20);
+                    typeDescription.setLayoutY(getRightPanelLabelY());
+                    typeProperty.setLayoutX(60);
+                    typeProperty.setLayoutY(getRightPanelLabelY());
+                    typeDescription.setText("Galia: ");
+                    typeProperty.setText(String.valueOf(irasas.getGalia()));
+                    vBox1.getChildren().add(typeDescription);
+                    vBox2.getChildren().add(typeProperty);
+                }
+                if (irasas.getSviesos_srautas() != 0) {
+                    Label lightStreamDescription = new Label();
+                    Label lightStreamProperty = new Label();
+                    lightStreamProperty.setStyle("-fx-font-weight: bold;");
+                    lightStreamDescription.setLayoutX(20);
+                    lightStreamDescription.setLayoutY(getRightPanelLabelY());
+                    lightStreamProperty.setLayoutX(60);
+                    lightStreamProperty.setLayoutY(getRightPanelLabelY());
+                    lightStreamDescription.setText("Šviesos srautas: ");
+                    lightStreamProperty.setText(String.valueOf(irasas.getSviesos_srautas()));
+                    vBox1.getChildren().add(lightStreamDescription);
+                    vBox2.getChildren().add(lightStreamProperty);
+                }
+                if (irasas.getAtsparumo_klase() != null && !irasas.getAtsparumo_klase().isEmpty()) {
+                    Label resistanceClassDescriotion = new Label();
+                    Label resistanceClassProperty = new Label();
+                    resistanceClassProperty.setStyle("-fx-font-weight: bold;");
+                    resistanceClassDescriotion.setLayoutX(20);
+                    resistanceClassDescriotion.setLayoutY(getRightPanelLabelY());
+                    resistanceClassProperty.setLayoutX(60);
+                    resistanceClassProperty.setLayoutY(getRightPanelLabelY());
+                    resistanceClassDescriotion.setText("Galia: ");
+                    resistanceClassProperty.setText(String.valueOf(irasas.getGalia()));
+                    vBox1.getChildren().add(resistanceClassDescriotion);
+                    vBox2.getChildren().add(resistanceClassProperty);
+                }
+                if (irasas.getMatmenys() != null && !irasas.getMatmenys().isEmpty()) {
+                    Label sizeDescription = new Label();
+                    Label sizeProperty = new Label();
+                    sizeProperty.setStyle("-fx-font-weight: bold;");
+                    sizeDescription.setLayoutX(20);
+                    sizeDescription.setLayoutY(getRightPanelLabelY());
+                    sizeProperty.setLayoutX(60);
+                    sizeProperty.setLayoutY(getRightPanelLabelY());
+                    sizeDescription.setText("Galia: ");
+                    sizeProperty.setText(String.valueOf(irasas.getGalia()));
+                    vBox1.getChildren().add(sizeDescription);
+                    vBox2.getChildren().add(sizeProperty);
+                }
+                if (irasas.getDarbine_temperatura() != 0) {
+                    Label workingTemperatureDescription = new Label();
+                    Label workingTemperatureProperty = new Label();
+                    workingTemperatureProperty.setStyle("-fx-font-weight: bold;");
+                    workingTemperatureDescription.setLayoutX(20);
+                    workingTemperatureDescription.setLayoutY(getRightPanelLabelY());
+                    workingTemperatureProperty.setLayoutX(60);
+                    workingTemperatureProperty.setLayoutY(getRightPanelLabelY());
+                    workingTemperatureDescription.setText("Šviesos srautas: ");
+                    workingTemperatureProperty.setText(String.valueOf(irasas.getSviesos_srautas()));
+                    vBox1.getChildren().add(workingTemperatureDescription);
+                    vBox2.getChildren().add(workingTemperatureProperty);
+                }
+            }
+        });
+        hBoxCatalog.getChildren().add(vBoxCatalogNumber1);
+        hBoxCatalog.getChildren().add(vBoxCatalogNumber2);
+        right_panel_main_vbox.getChildren().add(hBoxCatalog);
+        right_panel_main_vbox.getChildren().add(vBoxSymbol);
+        hBox1.getChildren().add(vBox1);
+        hBox1.getChildren().add(vBox2);
+        right_panel_main_vbox.getChildren().add(hBox1);
+
     }
+
+
+
+//        List<ProductDescription> productByCatalogNo = ProductDescriptionDAO.searchByCatalogNo(catalogNoImported);
+//        if (productByCatalogNo.isEmpty()) {
+//            catalog_no.setText(catalogNoImported);
+//            item_name.setText("PREKĖS APRAŠYMAS NERASTAS");
+//            base_price.setText("-");
+//            discount_in_percent.setText("-");
+//            delivery_time_in_days_from.setText("-");
+//            delivery_time_in_days_to.setText("-");
+//            item_package.setText("-");
+//            min_order_amount.setText("-");
+//            discount_group.setText("-");
+//            product_family.setText("-");
+//            ean_code.setText("-");
+//        } else {
+//            ProductDescription selectedProductDescription = productByCatalogNo.get(0);
+//            catalog_no.setText(catalogNoImported);
+//            item_name.setText(selectedProductDescription.getItemName());
+//            base_price.setText(String.valueOf(selectedProductDescription.getBasePrice()));
+//            discount_in_percent.setText(String.valueOf(selectedProductDescription.getDiscountInPercent()));
+//            delivery_time_in_days_from.setText(String.valueOf(selectedProductDescription.getDeliveryTimeInDaysFrom()));
+//            delivery_time_in_days_to.setText(String.valueOf(selectedProductDescription.getDeliveryTimeInDaysTo()));
+//            item_package.setText(selectedProductDescription.getItemPackage());
+//            min_order_amount.setText(String.valueOf(selectedProductDescription.getMinOrderAmount()));
+//            discount_group.setText(selectedProductDescription.getDiscountGroup());
+//            product_family.setText(selectedProductDescription.getProductFamily());
+//            ean_code.setText(selectedProductDescription.getEanCode());
+//        }
+
 
     private void currentSessionUserData() {
 
@@ -583,6 +850,23 @@ public class DashboardController extends Main implements Initializable {
             e.getCause();
         }
     }
+    public void openStocks(ActionEvent actionEvent) {
+        try {
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource(Constants.OPEN_STOCKS_DIRECTORY_PATH)));
+            Stage loginStage = new Stage();
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add(Objects.requireNonNull(getClass().getClassLoader().getResource(Constants.CSS_DIRECTORY_PATH)).toExternalForm());
+            loginStage.setTitle("Akcijų Birža");
+            loginStage.setResizable(false);
+            loginStage.setOnCloseRequest(e -> StocksRateController.onClose());
+            loginStage.setScene(scene);
+            loginStage.show();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            e.getCause();
+        }
+    }
 
     //Atidaro produkto sukurimo form'a
     public void createNewProduct(ActionEvent actionEvent) {
@@ -606,7 +890,7 @@ public class DashboardController extends Main implements Initializable {
     }
 
     public void aboutInfo() {
-        showPopupWindow("Informacija", "UAB „ECO SPRENDIMAI“\nSusiekti galite:\n- Tel.: +370 600 00000\n- El.paštu: info@ecosprendimai.lt\nProgramos versija: " + Constants.PROGRAM_VERSION, "#0a58ca", "#FFFFFF");
+        showPopupWindow("Informacija", "UAB „ECO SPRENDIMAI“\nSusisiekti galite:\n- Tel.: +370 600 00000\n- El.paštu: info@ecosprendimai.lt\nProgramos versija: " + Constants.PROGRAM_VERSION, "#0a58ca", "#FFFFFF");
     }
 
     public void windowClose() { //Uzdaro prisijungimo langa
@@ -651,6 +935,8 @@ public class DashboardController extends Main implements Initializable {
             }
         };
     }// Loading Spinner set-up-ends
+
+
 
 
     public void reloadCategoryListView() {
