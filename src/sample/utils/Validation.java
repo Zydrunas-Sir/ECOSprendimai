@@ -58,7 +58,7 @@ public class Validation {
         Matcher matcher = pattern.matcher(email);
         return matcher.find();
     }
-    public static final String PRODUCT_FORM_CATALOG_NO_PATTERN = "^[A-Z0-9]{1,25}$";
+    public static final String PRODUCT_FORM_CATALOG_NO_PATTERN = "^[A-Za-z0-9]{1,25}$";
     public static boolean isValidCatalogNo(String catalogNo){
         Pattern pattern = Pattern.compile(PRODUCT_FORM_CATALOG_NO_PATTERN);
         Matcher matcher = pattern.matcher(catalogNo);
