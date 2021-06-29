@@ -1,17 +1,16 @@
 package sample.controller;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import org.mindrot.jbcrypt.BCrypt;
 import sample.JPA.JPAUtil;
 import sample.JPA.user.User;
@@ -20,9 +19,7 @@ import sample.JPA.user.UserHolder;
 import sample.utils.Constants;
 import sample.utils.Validation;
 
-import java.awt.*;
 import java.net.URL;
-import java.util.EventListener;
 import java.util.ResourceBundle;
 import java.util.prefs.Preferences;
 
@@ -152,6 +149,10 @@ public class LoginController implements Initializable {
             JPAUtil.setScene(scene);
             registerStage.setResizable(false);
             registerStage.show();
+            registerStage.getScene().getWindow().addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, event -> {
+                System.exit(0);
+                Platform.exit();
+            });
             windowCloseLoginButton();
 
 
@@ -171,9 +172,12 @@ public class LoginController implements Initializable {
             dashboardStage.setTitle("Produktų peržiūros langas");
             dashboardStage.setScene(scene);
             dashboardStage.setMinWidth(1345);
-
             dashboardStage.show();
             dashboardStage.setOnCloseRequest(e -> DashboardController.closeDashboard());
+            dashboardStage.getScene().getWindow().addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, event -> {
+                System.exit(0);
+                Platform.exit();
+            });
             windowCloseLoginButton();
 
         } catch (Exception e) {

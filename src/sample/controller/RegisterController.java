@@ -1,6 +1,7 @@
 package sample.controller;
 
 
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
@@ -10,6 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import org.mindrot.jbcrypt.BCrypt;
 import sample.JPA.user.User;
 import sample.JPA.user.UserDAO;
@@ -17,7 +19,6 @@ import sample.Main;
 import sample.utils.Constants;
 import sample.utils.Validation;
 
-import java.awt.event.ActionEvent;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -119,6 +120,10 @@ public class RegisterController extends Main implements Initializable {
             loginStage.setResizable(false);
             loginStage.setScene(scene);
             loginStage.show();
+            loginStage.getScene().getWindow().addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, event -> {
+                System.exit(0);
+                Platform.exit();
+            });
             closeRegister();
         } catch (Exception e) {
             e.printStackTrace();
