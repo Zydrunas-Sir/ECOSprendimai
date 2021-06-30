@@ -108,6 +108,8 @@ public class DashboardController extends Main implements Initializable {
     @FXML
     private Menu more_menu_bar;
 
+    public double rightPanelLabelY;
+
     public static long loggedTimeStart;
     public static long loggedTimeEnd;
     public static long loggedTimeSpent;
@@ -469,7 +471,6 @@ public class DashboardController extends Main implements Initializable {
     }
 
 
-    public double rightPanelLabelY;
 
     private void setRightPanelLabelY(double y) {
         this.rightPanelLabelY = y;
@@ -499,22 +500,24 @@ public class DashboardController extends Main implements Initializable {
         right_panel_main_vbox.getChildren().clear();
         right_panel_main_vbox.setStyle("-fx-background-color: #F1F1F1;");
 
-        HBox hBoxCatalog = new HBox();
-        VBox vBoxCatalogNumber1 = new VBox();
-        VBox vBoxCatalogNumber2 = new VBox();
+        HBox mainHBox = new HBox();
+        VBox CatalogDescriptionVBox = new VBox();
+        VBox CatalogNumberVBox = new VBox();
         VBox vBoxSymbol = new VBox();
-        HBox hBox1 = new HBox();
-        VBox vBox1 = new VBox();
-        VBox vBox2 = new VBox();
+        HBox informationPanelHBox = new HBox();
+        VBox desciptionLabelVBox = new VBox();
+        VBox propertyLabelVBox = new VBox();
         VBox imageVBox = new VBox();
 
-
-
-        vBoxCatalogNumber1.setPadding(new Insets(5, 20, 2, 20));
-        vBoxCatalogNumber2.setPadding(new Insets(5, 20, 2, 20));
+        CatalogDescriptionVBox.setPadding(new Insets(5, 20, 2, 20));
+        CatalogNumberVBox.setPadding(new Insets(5, 20, 2, 20));
         vBoxSymbol.setPadding(new Insets(0, 20, 2, 20));
-        vBox1.setPadding(new Insets(5, 20, 10, 20));
-        vBox2.setPadding(new Insets(5, 20, 10, 20));
+        desciptionLabelVBox.setPadding(new Insets(5, 20, 10, 20));
+        desciptionLabelVBox.setMinWidth(130);
+        propertyLabelVBox.setPadding(new Insets(5, 20, 10, 20));
+        propertyLabelVBox.setMinWidth(130);
+        imageVBox.setPadding(new Insets(10, 10, 10, 10));
+        imageVBox.setAlignment(Pos.TOP_RIGHT);
         setRightPanelLabelY(40);
 
 
@@ -530,8 +533,8 @@ public class DashboardController extends Main implements Initializable {
                 catalogNoProperty.setLayoutY(getRightPanelLabelY());
                 catalogNoDescription.setText("Katalogo kodas:");
                 catalogNoProperty.setText(irasas.getCatalogNo());
-                vBoxCatalogNumber1.getChildren().add(catalogNoDescription);
-                vBoxCatalogNumber2.getChildren().add(catalogNoProperty);
+                CatalogDescriptionVBox.getChildren().add(catalogNoDescription);
+                CatalogNumberVBox.getChildren().add(catalogNoProperty);
 
 
                 Label symbolProperty = new Label();
@@ -551,8 +554,8 @@ public class DashboardController extends Main implements Initializable {
                 priceNetProperty.setStyle("-fx-font-weight: bold;");
                 priceNetDescription.setText("Kaina: ");
                 priceNetProperty.setText(irasas.getPriceNet());
-                vBox1.getChildren().add(priceNetDescription);
-                vBox2.getChildren().add(priceNetProperty);
+                desciptionLabelVBox.getChildren().add(priceNetDescription);
+                propertyLabelVBox.getChildren().add(priceNetProperty);
 
                 Label stockDescription = new Label();
                 Label stockProperty = new Label();
@@ -563,8 +566,8 @@ public class DashboardController extends Main implements Initializable {
                 stockProperty.setLayoutY(getRightPanelLabelY());
                 stockDescription.setText("Likutis: ");
                 stockProperty.setText(String.valueOf(irasas.getStock()));
-                vBox1.getChildren().add(stockDescription);
-                vBox2.getChildren().add(stockProperty);
+                desciptionLabelVBox.getChildren().add(stockDescription);
+                propertyLabelVBox.getChildren().add(stockProperty);
 
 
                 if (irasas.getAukstis() != 0) {
@@ -577,8 +580,8 @@ public class DashboardController extends Main implements Initializable {
                     heightProperty.setLayoutY(getRightPanelLabelY());
                     heightDescription.setText("Aukštis: ");
                     heightProperty.setText(String.valueOf(irasas.getAukstis()));
-                    vBox1.getChildren().add(heightDescription);
-                    vBox2.getChildren().add(heightProperty);
+                    desciptionLabelVBox.getChildren().add(heightDescription);
+                    propertyLabelVBox.getChildren().add(heightProperty);
                 }
                 if (irasas.getPlotis() != 0) {
                     Label widthDescription = new Label();
@@ -590,8 +593,8 @@ public class DashboardController extends Main implements Initializable {
                     widthProperty.setLayoutY(getRightPanelLabelY());
                     widthDescription.setText("Plotis: ");
                     widthProperty.setText(String.valueOf(irasas.getPlotis()));
-                    vBox1.getChildren().add(widthDescription);
-                    vBox2.getChildren().add(widthProperty);
+                    desciptionLabelVBox.getChildren().add(widthDescription);
+                    propertyLabelVBox.getChildren().add(widthProperty);
                 }
                 if (irasas.getGylis() != 0) {
                     Label depthDescription = new Label();
@@ -603,8 +606,8 @@ public class DashboardController extends Main implements Initializable {
                     depthProperty.setLayoutY(getRightPanelLabelY());
                     depthDescription.setText("Gylis: ");
                     depthProperty.setText(String.valueOf(irasas.getGylis()));
-                    vBox1.getChildren().add(depthDescription);
-                    vBox2.getChildren().add(depthProperty);
+                    desciptionLabelVBox.getChildren().add(depthDescription);
+                    propertyLabelVBox.getChildren().add(depthProperty);
                 }
                 if (irasas.getIp_klase() != null && !irasas.getIp_klase().isEmpty()) {
                     Label ipClassDescription = new Label();
@@ -616,8 +619,8 @@ public class DashboardController extends Main implements Initializable {
                     ipClassProperty.setLayoutY(getRightPanelLabelY());
                     ipClassDescription.setText("IP klasė: ");
                     ipClassProperty.setText(irasas.getIp_klase());
-                    vBox1.getChildren().add(ipClassDescription);
-                    vBox2.getChildren().add(ipClassProperty);
+                    desciptionLabelVBox.getChildren().add(ipClassDescription);
+                    propertyLabelVBox.getChildren().add(ipClassProperty);
                 }
                 if (irasas.getSpalva() != null && !irasas.getSpalva().isEmpty()) {
                     Label colorDescription = new Label();
@@ -629,8 +632,8 @@ public class DashboardController extends Main implements Initializable {
                     colorProperty.setLayoutY(getRightPanelLabelY());
                     colorDescription.setText("Spalva: ");
                     colorProperty.setText(irasas.getSpalva());
-                    vBox1.getChildren().add(colorDescription);
-                    vBox2.getChildren().add(colorProperty);
+                    desciptionLabelVBox.getChildren().add(colorDescription);
+                    propertyLabelVBox.getChildren().add(colorProperty);
                 }
                 if (irasas.getKorpusas() != null && !irasas.getKorpusas().isEmpty()) {
                     Label corpusDescription = new Label();
@@ -642,8 +645,8 @@ public class DashboardController extends Main implements Initializable {
                     corpusProperty.setLayoutY(getRightPanelLabelY());
                     corpusDescription.setText("Korpusas: ");
                     corpusProperty.setText(irasas.getKorpusas());
-                    vBox1.getChildren().add(corpusDescription);
-                    vBox2.getChildren().add(corpusProperty);
+                    desciptionLabelVBox.getChildren().add(corpusDescription);
+                    propertyLabelVBox.getChildren().add(corpusProperty);
                 }
                 if (irasas.getGalia() != 0) {
                     Label powerDescription = new Label();
@@ -655,8 +658,8 @@ public class DashboardController extends Main implements Initializable {
                     powerProperty.setLayoutY(getRightPanelLabelY());
                     powerDescription.setText("Galia: ");
                     powerProperty.setText(String.valueOf(irasas.getGalia()));
-                    vBox1.getChildren().add(powerDescription);
-                    vBox2.getChildren().add(powerProperty);
+                    desciptionLabelVBox.getChildren().add(powerDescription);
+                    propertyLabelVBox.getChildren().add(powerProperty);
                 }
                 if (irasas.getVardine_itampa() != 0) {
                     Label voltageDescription = new Label();
@@ -668,8 +671,8 @@ public class DashboardController extends Main implements Initializable {
                     voltageProperty.setLayoutY(getRightPanelLabelY());
                     voltageDescription.setText("Vardinė įtampa: ");
                     voltageProperty.setText(String.valueOf(irasas.getVardine_itampa()));
-                    vBox1.getChildren().add(voltageDescription);
-                    vBox2.getChildren().add(voltageProperty);
+                    desciptionLabelVBox.getChildren().add(voltageDescription);
+                    propertyLabelVBox.getChildren().add(voltageProperty);
                 }
                 if (irasas.getTipas() != null && !irasas.getTipas().isEmpty()) {
                     Label typeDescription = new Label();
@@ -681,8 +684,8 @@ public class DashboardController extends Main implements Initializable {
                     typeProperty.setLayoutY(getRightPanelLabelY());
                     typeDescription.setText("Tipas: ");
                     typeProperty.setText(String.valueOf(irasas.getTipas()));
-                    vBox1.getChildren().add(typeDescription);
-                    vBox2.getChildren().add(typeProperty);
+                    desciptionLabelVBox.getChildren().add(typeDescription);
+                    propertyLabelVBox.getChildren().add(typeProperty);
                 }
                 if (irasas.getSviesos_srautas() != 0) {
                     Label lightStreamDescription = new Label();
@@ -694,8 +697,8 @@ public class DashboardController extends Main implements Initializable {
                     lightStreamProperty.setLayoutY(getRightPanelLabelY());
                     lightStreamDescription.setText("Šviesos srautas: ");
                     lightStreamProperty.setText(String.valueOf(irasas.getSviesos_srautas()));
-                    vBox1.getChildren().add(lightStreamDescription);
-                    vBox2.getChildren().add(lightStreamProperty);
+                    desciptionLabelVBox.getChildren().add(lightStreamDescription);
+                    propertyLabelVBox.getChildren().add(lightStreamProperty);
                 }
                 if (irasas.getAtsparumo_klase() != null && !irasas.getAtsparumo_klase().isEmpty()) {
                     Label resistanceClassDescriotion = new Label();
@@ -707,8 +710,8 @@ public class DashboardController extends Main implements Initializable {
                     resistanceClassProperty.setLayoutY(getRightPanelLabelY());
                     resistanceClassDescriotion.setText("Atsparumo klasė: ");
                     resistanceClassProperty.setText(String.valueOf(irasas.getAtsparumo_klase()));
-                    vBox1.getChildren().add(resistanceClassDescriotion);
-                    vBox2.getChildren().add(resistanceClassProperty);
+                    desciptionLabelVBox.getChildren().add(resistanceClassDescriotion);
+                    propertyLabelVBox.getChildren().add(resistanceClassProperty);
                 }
                 if (irasas.getMatmenys() != null && !irasas.getMatmenys().isEmpty()) {
                     Label sizeDescription = new Label();
@@ -720,8 +723,8 @@ public class DashboardController extends Main implements Initializable {
                     sizeProperty.setLayoutY(getRightPanelLabelY());
                     sizeDescription.setText("Matmenys: ");
                     sizeProperty.setText(String.valueOf(irasas.getMatmenys()));
-                    vBox1.getChildren().add(sizeDescription);
-                    vBox2.getChildren().add(sizeProperty);
+                    desciptionLabelVBox.getChildren().add(sizeDescription);
+                    propertyLabelVBox.getChildren().add(sizeProperty);
                 }
                 if (irasas.getDarbine_temperatura() != 0) {
                     Label workingTemperatureDescription = new Label();
@@ -733,31 +736,41 @@ public class DashboardController extends Main implements Initializable {
                     workingTemperatureProperty.setLayoutY(getRightPanelLabelY());
                     workingTemperatureDescription.setText("Šviesos srautas: ");
                     workingTemperatureProperty.setText(String.valueOf(irasas.getDarbine_temperatura()));
-                    vBox1.getChildren().add(workingTemperatureDescription);
-                    vBox2.getChildren().add(workingTemperatureProperty);
+                    desciptionLabelVBox.getChildren().add(workingTemperatureDescription);
+                    propertyLabelVBox.getChildren().add(workingTemperatureProperty);
                 }
                 if (irasas.getImage_url() != null && !irasas.getImage_url().isEmpty()) {
                     Image imageFromUrl = new Image(irasas.getImage_url());
                     ImageView imageView = new ImageView();
                     imageView.setImage(imageFromUrl);
-                    imageView.setFitWidth(170);
+                    imageView.setFitWidth(130);
                     imageView.setPreserveRatio(true);
                     imageView.setLayoutX(20);
-                    imageView.setLayoutY(getRightPanelLabelY());
+                    imageView.setLayoutY(40);
                     imageVBox.getChildren().add(imageView);
-                    System.out.println("Image has been loaded.");
+                    System.out.println("Image has been downloaded and loaded.");
 
+                } else {
+                    Image imageFromUrl = new Image("/pictures/unavailable_product_picture.png");
+                    ImageView imageView = new ImageView();
+                    imageView.setImage(imageFromUrl);
+                    imageView.setFitWidth(130);
+                    imageView.setPreserveRatio(true);
+                    imageView.setLayoutX(20);
+                    imageView.setLayoutY(40);
+                    imageVBox.getChildren().add(imageView);
+                    System.out.println("Default image has been loaded.");
                 }
             }
         });
-        hBoxCatalog.getChildren().add(vBoxCatalogNumber1);
-        hBoxCatalog.getChildren().add(vBoxCatalogNumber2);
-        right_panel_main_vbox.getChildren().add(hBoxCatalog);
+        mainHBox.getChildren().add(CatalogDescriptionVBox);
+        mainHBox.getChildren().add(CatalogNumberVBox);
+        right_panel_main_vbox.getChildren().add(mainHBox);
         right_panel_main_vbox.getChildren().add(vBoxSymbol);
-        hBox1.getChildren().add(vBox1);
-        hBox1.getChildren().add(vBox2);
-        hBox1.getChildren().add(imageVBox);
-        right_panel_main_vbox.getChildren().add(hBox1);
+        informationPanelHBox.getChildren().add(desciptionLabelVBox);
+        informationPanelHBox.getChildren().add(propertyLabelVBox);
+        informationPanelHBox.getChildren().add(imageVBox);
+        right_panel_main_vbox.getChildren().add(informationPanelHBox);
 
     }
 
