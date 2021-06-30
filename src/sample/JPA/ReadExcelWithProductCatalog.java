@@ -61,17 +61,17 @@ public class ReadExcelWithProductCatalog {
                             productCatalog.setGroupId((int) cell.getNumericCellValue());
                             break;
                         case 6:
-                            Integer auktis = (int) cell.getNumericCellValue();
+                            Double auktis =cell.getNumericCellValue();
                             if (auktis == null){productCatalog.setAukstis(0);}
                             else {productCatalog.setAukstis(auktis);}
                             break;
                         case 7:
-                            Integer plotis = (int) cell.getNumericCellValue();
+                            Double plotis = cell.getNumericCellValue();
                             if (plotis == null){productCatalog.setPlotis(0);}
                             else {productCatalog.setPlotis(plotis);}
                             break;
                         case 8:
-                            Integer gylis = (int) cell.getNumericCellValue();
+                            Double gylis = cell.getNumericCellValue();
                             if (gylis == null){productCatalog.setGylis(0);}
                             else {productCatalog.setGylis(gylis);}
                             break;
@@ -95,17 +95,17 @@ public class ReadExcelWithProductCatalog {
                             else {productCatalog.setTipas(tipas);}
                             break;
                         case 13:
-                            Integer vardine_itampa = (int) cell.getNumericCellValue();
+                            Double vardine_itampa = cell.getNumericCellValue();
                             if (vardine_itampa == null){productCatalog.setVardine_itampa(0);}
                             else {productCatalog.setVardine_itampa(vardine_itampa);}
                             break;
                         case 14:
-                            Integer galia = (int) cell.getNumericCellValue();
+                            Double galia = cell.getNumericCellValue();
                             if (galia == null){productCatalog.setGalia(0);}
                             else {productCatalog.setGalia(galia);}
                             break;
                         case 15:
-                            Integer sviesos_srautas = (int) cell.getNumericCellValue();
+                            Double sviesos_srautas = cell.getNumericCellValue();
                             if (sviesos_srautas == null){productCatalog.setSviesos_srautas(0);}
                             else {productCatalog.setSviesos_srautas(sviesos_srautas);}
                             break;
