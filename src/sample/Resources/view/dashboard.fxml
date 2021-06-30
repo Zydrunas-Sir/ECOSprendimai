@@ -19,7 +19,7 @@
             <content>
                 <ListView fx:id="listView" editable="true" onMouseClicked="#mouseEventForListView" prefHeight="200.0" prefWidth="200.0" />
             </content></TitledPane>
-        <TitledPane animated="false" collapsible="false" layoutX="929.0" layoutY="83.0" pickOnBounds="false" prefHeight="448.0" prefWidth="414.0" text="Pasirinktos prekes stulpeleje pavadinimas" AnchorPane.bottomAnchor="3.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="83.0">
+        <TitledPane animated="false" collapsible="false" layoutX="929.0" layoutY="83.0" pickOnBounds="false" prefHeight="448.0" prefWidth="414.0" text="Pasirinkto produkto informacija" AnchorPane.bottomAnchor="3.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="83.0">
             <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="330.0" prefWidth="403.0">
 
