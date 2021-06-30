@@ -1,27 +1,25 @@
 package sample.JPA;
 
-import sample.controller.DashboardController;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
-public class ProductDescriptionDAO {
+public class CategoryParametersDAO {
 
-    public static List<ProductDescription> searchByCatalogNo(String catalogNo) {
+    /*public static List<CategoryParameters> searchByCatalogNo(String catalogNo) {
 
         EntityManager entityManager;
         EntityTransaction entityTransaction;
-        List<ProductDescription> productDescription = null;
-        TypedQuery<ProductDescription> query;
+        List<CategoryParameters> categoryParameters = null;
+        TypedQuery<CategoryParameters> query;
         try {
             entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
             entityTransaction = entityManager.getTransaction();
             entityTransaction.begin();
 
-            query = entityManager.createQuery("Select e From ProductDescription e WHERE e.catalogNo = ?1", ProductDescription.class);
-            productDescription = query.setParameter(1, catalogNo).getResultList();
+            query = entityManager.createQuery("", CategoryParameters.class);
+            categoryParameters = query.setParameter(1, catalogNo).getResultList();
 
 
             entityManager.getTransaction().commit();
@@ -33,8 +31,8 @@ public class ProductDescriptionDAO {
 //            JPAUtil.infoBox();
 
         }
-        return productDescription;
-    }
+        return categoryParameters;
+    }*/
 
 
 }
