@@ -28,11 +28,11 @@ public class ProductCatalog {
     //@ManyToOne(targetEntity = Categories.class, fetch = FetchType.EAGER, cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
     //@JoinColumn(name = "group_id", referencedColumnName = "id")
     @Column(name = "aukstis")
-    private int aukstis;
+    private double aukstis;
     @Column(name = "plotis")
-    private int plotis;
+    private double plotis;
     @Column(name = "gylis")
-    private int gylis;
+    private double gylis;
     @Column(name = "ip_klase")
     private String ip_klase;
     @Column(name = "spalva")
@@ -42,11 +42,11 @@ public class ProductCatalog {
     @Column(name = "tipas")
     private String tipas;
     @Column(name = "vardine_itampa")
-    private int vardine_itampa;
+    private double vardine_itampa;
     @Column(name = "galia")
-    private int galia;
+    private double galia;
     @Column(name = "sviesos_srautas")
-    private int sviesos_srautas;
+    private double sviesos_srautas;
     @Column(name = "atsparumo_klase")
     private String atsparumo_klase;
     @Column(name = "matmenys")
@@ -69,7 +69,8 @@ public class ProductCatalog {
         this.date = date;
     }
 
-    public ProductCatalog(String catalogNo, String symbol, String priceNet, int stock, int groupId, int aukstis, int plotis, int gylis, String ip_klase, String spalva, String korpusas, String tipas, int vardine_itampa, int galia, int sviesos_srautas, String atsparumo_klase, String matmenys, int darbine_temperatura, String img_url, Date date) {
+    public ProductCatalog(int id, String catalogNo, String symbol, String priceNet, int stock, int groupId, double aukstis, double plotis, double gylis, String ip_klase, String spalva, String korpusas, String tipas, double vardine_itampa, double galia, double sviesos_srautas, String atsparumo_klase, String matmenys, int darbine_temperatura, String image_url, Date date) {
+        this.id = id;
         this.catalogNo = catalogNo;
         this.symbol = symbol;
         this.priceNet = priceNet;
@@ -88,7 +89,7 @@ public class ProductCatalog {
         this.atsparumo_klase = atsparumo_klase;
         this.matmenys = matmenys;
         this.darbine_temperatura = darbine_temperatura;
-        this.image_url = img_url;
+        this.image_url = image_url;
         this.date = date;
     }
 
@@ -153,29 +154,11 @@ public class ProductCatalog {
         this.id = id;
     }
 
-    public int getAukstis() {
-        return aukstis;
-    }
 
-    public void setAukstis(int aukstis) {
-        this.aukstis = aukstis;
-    }
 
-    public int getPlotis() {
-        return plotis;
-    }
 
-    public void setPlotis(int plotis) {
-        this.plotis = plotis;
-    }
 
-    public int getGylis() {
-        return gylis;
-    }
 
-    public void setGylis(int gylis) {
-        this.gylis = gylis;
-    }
 
     public String getIp_klase() {
         return ip_klase;
@@ -209,27 +192,51 @@ public class ProductCatalog {
         this.tipas = tipas;
     }
 
-    public int getVardine_itampa() {
+    public double getAukstis() {
+        return aukstis;
+    }
+
+    public void setAukstis(double aukstis) {
+        this.aukstis = aukstis;
+    }
+
+    public double getPlotis() {
+        return plotis;
+    }
+
+    public void setPlotis(double plotis) {
+        this.plotis = plotis;
+    }
+
+    public double getGylis() {
+        return gylis;
+    }
+
+    public void setGylis(double gylis) {
+        this.gylis = gylis;
+    }
+
+    public double getVardine_itampa() {
         return vardine_itampa;
     }
 
-    public void setVardine_itampa(int vardine_itampa) {
+    public void setVardine_itampa(double vardine_itampa) {
         this.vardine_itampa = vardine_itampa;
     }
 
-    public int getGalia() {
+    public double getGalia() {
         return galia;
     }
 
-    public void setGalia(int galia) {
+    public void setGalia(double galia) {
         this.galia = galia;
     }
 
-    public int getSviesos_srautas() {
+    public double getSviesos_srautas() {
         return sviesos_srautas;
     }
 
-    public void setSviesos_srautas(int sviesos_srautas) {
+    public void setSviesos_srautas(double sviesos_srautas) {
         this.sviesos_srautas = sviesos_srautas;
     }
 

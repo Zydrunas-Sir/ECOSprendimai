@@ -18,14 +18,17 @@ public class Categories {
     private int lft;
     @Column(name = "rght")
     private int rght;
+    @Column(name = "category_parameter_id")
+    private int category_parameter_id;
     @Transient
     private long countParents;
 
-    public Categories(int id, String name, int lft, int rght) {
+    public Categories(int id, String name, int lft, int rght, int category_parameter_id) {
         this.id = id;
         this.name = name;
         this.lft = lft;
         this.rght = rght;
+        this.category_parameter_id = category_parameter_id;
     }
 
     public Categories(int id, String name, long countParents) {
@@ -81,6 +84,14 @@ public class Categories {
 
     public void setCountParents(long countParents) {
         this.countParents = countParents;
+    }
+
+    public int getCategory_parameter_id() {
+        return category_parameter_id;
+    }
+
+    public void setCategory_parameter_id(int category_parameter_id) {
+        this.category_parameter_id = category_parameter_id;
     }
 
     @Override
