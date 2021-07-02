@@ -460,6 +460,7 @@ public class DashboardController extends Main implements Initializable {
             if (!table.getSelectionModel().isEmpty()) {
                 tableItem = table.getSelectionModel().getSelectedItem();
                 fillDescriptionPanel(tableItem.getCatalogNo());
+
                 System.out.println("Item was selected.");
                 System.out.println("Selected Catalog No: " + tableItem.getCatalogNo());
             }
@@ -907,7 +908,7 @@ public class DashboardController extends Main implements Initializable {
         try {
             Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource(Constants.PRODUCT_FORM_VIEW_PATH)));
             Stage createNewProductStage = new Stage();
-            Scene scene = new Scene(root, Constants.REGISTER_WINDOW_WIDTH, Constants.REGISTER_WINDOW_HEIGHT);
+            Scene scene = new Scene(root);
             scene.getStylesheets().add(Objects.requireNonNull(getClass().getClassLoader().getResource(Constants.CSS_DIRECTORY_PATH)).toExternalForm());
             createNewProductStage.setTitle("Produkto anketa");
             createNewProductStage.setScene(scene);
