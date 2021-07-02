@@ -36,6 +36,24 @@ public class Constants {
     public static final String CREDENTIALS_IS_NOT_CORRECT_PRODUCT_PRICE = "Produkto kaina neatitinka reikalavimų.";
     public static final String CREDENTIALS_IS_NOT_CORRECT_PRODUCT_STOCK = "Produkto pasirinktas kiekis neatitinka reikalavimų.";
 
+    /* Naujo produkto kūrimo lango Validacija : Start */
+
+    public static final String CREDENTIALS_IS_NOT_CORRECT_PRODUCT_ATSPARUMO_KLASE = "Atsparumo klasės neatitinka reikalavimų.";
+    public static final String CREDENTIALS_IS_NOT_CORRECT_PRODUCT_AUKSTIS = "Aukštis neatitinka reikalavimų.";
+    public static final String CREDENTIALS_IS_NOT_CORRECT_PRODUCT_DARBINE_TEMPERATURA = "Darbinė temperatura neatitinka  reikalavimų.";
+    public static final String CREDENTIALS_IS_NOT_CORRECT_PRODUCT_GALIA = "Galia neatitinka  reikalavimų.";
+    public static final String CREDENTIALS_IS_NOT_CORRECT_PRODUCT_GYLIS= "Gylis neatitinka  reikalavimų.";
+    public static final String CREDENTIALS_IS_NOT_CORRECT_PRODUCT_KORPUSAS = "Korpusas neatitinka  reikalavimų.";
+    public static final String CREDENTIALS_IS_NOT_CORRECT_PRODUCT_MATMENYS = "Matmenys neatitinka  reikalavimų.";
+    public static final String CREDENTIALS_IS_NOT_CORRECT_PRODUCT_PLOTIS = "Plotis neatitinka  reikalavimų.";
+    public static final String CREDENTIALS_IS_NOT_CORRECT_PRODUCT_SPALVA = "Spalva neatitinka  reikalavimų.";
+    public static final String CREDENTIALS_IS_NOT_CORRECT_PRODUCT_SVIESOS_SRAUTAS = "Šviesos srautas neatitinka  reikalavimų.";
+    public static final String CREDENTIALS_IS_NOT_CORRECT_PRODUCT_TIPAS = "Tipas neatitinka  reikalavimų.";
+    public static final String CREDENTIALS_IS_NOT_CORRECT_PRODUCT_VARDINE_TEMPERATURA = "Vardinė temperatūra neatitinka  reikalavimų.";
+
+
+    /* Naujo produkto kūrimo lango Validacija : End */
+
     public static final String CURRENT_SESSION_STATUS_ADMIN = "Administratorius";
     public static final String CURRENT_SESSION_STATUS_USER = "Vartotojas";
 
