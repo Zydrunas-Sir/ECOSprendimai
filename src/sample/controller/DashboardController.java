@@ -23,6 +23,7 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
@@ -67,8 +68,7 @@ public class DashboardController extends Main implements Initializable {
 
     // Dešinės panelės label
     @FXML
-    public VBox right_panel_main_vbox;
-
+    public AnchorPane right_panel_anchor_pane;
     @FXML
     public Label catalog_no;
     @FXML
@@ -496,34 +496,52 @@ public class DashboardController extends Main implements Initializable {
     // Suveikia pasirinkus item'ą vidurinėje panelėje.
     // Pirmiausia kreipiamasi į duomenų bazę, patikrinama ar egzistuoja produkto aprašymas.
     // Jei egzistuoja, ištraukiami visi duomenys ir užpildoma dešinė panelė.
+
     public void fillDescriptionPanel(String catalogNoImported) {
 
-        right_panel_main_vbox.getChildren().clear();
-        right_panel_main_vbox.setStyle("-fx-background-color: #F1F1F1;");
+        right_panel_anchor_pane.getChildren().clear();
+        right_panel_anchor_pane.autosize();
 
-        HBox mainHBox = new HBox();
-        VBox CatalogDescriptionVBox = new VBox();
-        VBox CatalogNumberVBox = new VBox();
-        VBox vBoxSymbol = new VBox();
-        HBox informationPanelHBox = new HBox();
+        HBox    joinedInformationPanelWithImageHBox = new HBox();
+        joinedInformationPanelWithImageHBox.setStyle("-fx-border-width: 3; -fx-border-color: #B7B7B7;");
+        joinedInformationPanelWithImageHBox.setPadding(new Insets(5, 3, 2, 3));
+
+        VBox right_panel_main_vbox = new VBox();
+        right_panel_main_vbox.setMinWidth(408);
+        right_panel_main_vbox.prefHeight(397);
+        right_panel_main_vbox.prefWidth(408);
+        right_panel_main_vbox.setMaxWidth(408);
+        right_panel_anchor_pane.getChildren().add(right_panel_main_vbox);
+
+
         VBox desciptionLabelVBox = new VBox();
         VBox propertyLabelVBox = new VBox();
+        HBox informationPanelHBox = new HBox();
         VBox imageVBox = new VBox();
 
-        CatalogDescriptionVBox.setPadding(new Insets(5, 20, 2, 20));
-        CatalogNumberVBox.setPadding(new Insets(5, 20, 2, 20));
-        vBoxSymbol.setPadding(new Insets(0, 20, 2, 20));
-        desciptionLabelVBox.setPadding(new Insets(5, 20, 10, 20));
+        propertyLabelVBox.setPadding(new Insets(5, 5, 2, 5));
+        desciptionLabelVBox.setPadding(new Insets(5, 5, 10, 5));
         desciptionLabelVBox.setMinWidth(130);
-        propertyLabelVBox.setPadding(new Insets(5, 20, 10, 20));
         propertyLabelVBox.setMinWidth(130);
-        imageVBox.setPadding(new Insets(10, 10, 10, 10));
-        imageVBox.setAlignment(Pos.TOP_RIGHT);
+        imageVBox.setPadding(new Insets(0, 0, 0, 4));
+        imageVBox.setAlignment(Pos.TOP_CENTER);
         setRightPanelLabelY(40);
-
 
         fullProductList.forEach(irasas -> {
             if (irasas.getCatalogNo() == catalogNoImported) {
+                Label symbolProperty = new Label();
+                symbolProperty.setWrapText(true);
+                symbolProperty.setMinWidth(408);
+                symbolProperty.prefWidth(408);
+                symbolProperty.setMinHeight(24);
+                symbolProperty.setMaxHeight(50);
+                symbolProperty.setMaxWidth(408);
+                symbolProperty.setAlignment(Pos.CENTER_LEFT);
+                symbolProperty.setPadding(new Insets(3, 3, 3, 3));
+                symbolProperty.setStyle("-fx-font-weight: bold; -fx-background-color: linear-gradient(to top, #D9D9D9, #EDEDED); -fx-border-width: 1; -fx-border-color: #c8c8c8; -fx-border-radius: 1;");
+                symbolProperty.setText(irasas.getSymbol());
+                right_panel_main_vbox.getChildren().add(symbolProperty);
+
                 Label catalogNoDescription = new Label();
                 catalogNoDescription.setStyle("-fx-underline: true;");
                 catalogNoDescription.setLayoutX(20);
@@ -534,17 +552,8 @@ public class DashboardController extends Main implements Initializable {
                 catalogNoProperty.setLayoutY(getRightPanelLabelY());
                 catalogNoDescription.setText("Katalogo kodas:");
                 catalogNoProperty.setText(irasas.getCatalogNo());
-                CatalogDescriptionVBox.getChildren().add(catalogNoDescription);
-                CatalogNumberVBox.getChildren().add(catalogNoProperty);
-
-
-                Label symbolProperty = new Label();
-                symbolProperty.setLayoutX(60);
-                symbolProperty.setWrapText(true);
-                symbolProperty.setStyle("-fx-font-weight: bold;");
-                symbolProperty.setLayoutY(getRightPanelLabelY());
-                symbolProperty.setText(irasas.getSymbol());
-                vBoxSymbol.getChildren().add(symbolProperty);
+                desciptionLabelVBox.getChildren().add(catalogNoDescription);
+                propertyLabelVBox.getChildren().add(catalogNoProperty);
 
                 Label priceNetDescription = new Label();
                 Label priceNetProperty = new Label();
@@ -744,67 +753,41 @@ public class DashboardController extends Main implements Initializable {
                     Image imageFromUrl = new Image(irasas.getImage_url());
                     ImageView imageView = new ImageView();
                     imageView.setImage(imageFromUrl);
-                    imageView.setFitWidth(130);
+                    imageView.setFitWidth(125);
                     imageView.setPreserveRatio(true);
-                    imageView.setLayoutX(20);
-                    imageView.setLayoutY(40);
-                    imageVBox.getChildren().add(imageView);
+//                    imageView.setLayoutX(20);
+//                    imageView.setLayoutY(40);
+                    VBox boundryImageVBox = new VBox();
+                    boundryImageVBox.getChildren().add(imageView);
+                    boundryImageVBox.setStyle("-fx-border-width: 3; -fx-border-color: #B7B7B7;");
+                    imageVBox.getChildren().add(boundryImageVBox);
                     System.out.println("Image has been downloaded and loaded.");
 
                 } else {
                     Image imageFromUrl = new Image("/pictures/unavailable_product_picture.png");
                     ImageView imageView = new ImageView();
                     imageView.setImage(imageFromUrl);
-                    imageView.setFitWidth(130);
+                    imageView.setFitWidth(125);
                     imageView.setPreserveRatio(true);
-                    imageView.setLayoutX(20);
-                    imageView.setLayoutY(40);
-                    imageVBox.getChildren().add(imageView);
+//                    imageView.setLayoutX(20);
+//                    imageView.setLayoutY(40);
+                    VBox boundryImageVBox = new VBox();
+                    boundryImageVBox.getChildren().add(imageView);
+                    boundryImageVBox.setStyle("-fx-border-width: 3; -fx-border-color: #B7B7B7;");
+                    imageVBox.getChildren().add(boundryImageVBox);
                     System.out.println("Default image has been loaded.");
                 }
             }
         });
-        mainHBox.getChildren().add(CatalogDescriptionVBox);
-        mainHBox.getChildren().add(CatalogNumberVBox);
-        right_panel_main_vbox.getChildren().add(mainHBox);
-        right_panel_main_vbox.getChildren().add(vBoxSymbol);
-        informationPanelHBox.getChildren().add(desciptionLabelVBox);
-        informationPanelHBox.getChildren().add(propertyLabelVBox);
+
+        joinedInformationPanelWithImageHBox.getChildren().add(desciptionLabelVBox);
+        joinedInformationPanelWithImageHBox.getChildren().add(propertyLabelVBox);
+        informationPanelHBox.getChildren().add(joinedInformationPanelWithImageHBox);
         informationPanelHBox.getChildren().add(imageVBox);
         right_panel_main_vbox.getChildren().add(informationPanelHBox);
 
+
     }
-
-
-
-//        List<ProductDescription> productByCatalogNo = ProductDescriptionDAO.searchByCatalogNo(catalogNoImported);
-//        if (productByCatalogNo.isEmpty()) {
-//            catalog_no.setText(catalogNoImported);
-//            item_name.setText("PREKĖS APRAŠYMAS NERASTAS");
-//            base_price.setText("-");
-//            discount_in_percent.setText("-");
-//            delivery_time_in_days_from.setText("-");
-//            delivery_time_in_days_to.setText("-");
-//            item_package.setText("-");
-//            min_order_amount.setText("-");
-//            discount_group.setText("-");
-//            product_family.setText("-");
-//            ean_code.setText("-");
-//        } else {
-//            ProductDescription selectedProductDescription = productByCatalogNo.get(0);
-//            catalog_no.setText(catalogNoImported);
-//            item_name.setText(selectedProductDescription.getItemName());
-//            base_price.setText(String.valueOf(selectedProductDescription.getBasePrice()));
-//            discount_in_percent.setText(String.valueOf(selectedProductDescription.getDiscountInPercent()));
-//            delivery_time_in_days_from.setText(String.valueOf(selectedProductDescription.getDeliveryTimeInDaysFrom()));
-//            delivery_time_in_days_to.setText(String.valueOf(selectedProductDescription.getDeliveryTimeInDaysTo()));
-//            item_package.setText(selectedProductDescription.getItemPackage());
-//            min_order_amount.setText(String.valueOf(selectedProductDescription.getMinOrderAmount()));
-//            discount_group.setText(selectedProductDescription.getDiscountGroup());
-//            product_family.setText(selectedProductDescription.getProductFamily());
-//            ean_code.setText(selectedProductDescription.getEanCode());
-//        }
-
 
     private void currentSessionUserData() {
 
