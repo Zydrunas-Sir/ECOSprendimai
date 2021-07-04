@@ -30,12 +30,14 @@ public class Categories {
         this.rght = rght;
         this.category_parameter_id = category_parameter_id;
     }
-
-    public Categories(int id, String name, long countParents) {
+    public Categories(int id, String name,  long countParents, int category_parameter_id) {
         this.id = id;
         this.name = name;
         this.countParents = countParents;
+        this.category_parameter_id = category_parameter_id;
+
     }
+
 
     public Categories(String name, int lft, int rght) {
         this.name = name;
@@ -43,8 +45,11 @@ public class Categories {
         this.rght = rght;
     }
 
+
+
     public Categories() {
     }
+
 
     public int getId() {
         return id;

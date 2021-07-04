@@ -44,6 +44,7 @@ public class CategoryFormController extends Main implements Initializable {
         List<Categories> categoryNames = CategoriesDAO.selectCategoriesForListView();
         categoryComboBox.setCellFactory(lv -> new ListCell<Categories>() {
             public void updateItem(Categories item, boolean empty) {
+
                 super.updateItem(item, empty);
                 if (empty) {
                     setText(null);
@@ -52,6 +53,7 @@ public class CategoryFormController extends Main implements Initializable {
                 }
             }
         });
+
         categoryComboBox.getItems().addAll(categoryNames);
     }
 
