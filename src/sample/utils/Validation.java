@@ -65,7 +65,7 @@ public class Validation {
         return matcher.find();
     }
 
-    public static final String PRODUCT_FORM_SYMBOL_PATTERN = "^((?![\\^!@#$*~ <>?]).)((?![\\^!@#$*~<>?]).){0,255}((?![\\^!@#$*~ <>?]).)$";
+    public static final String PRODUCT_FORM_SYMBOL_PATTERN = "^((?![\\^!@#$*~ <>?]).)((?![\\^!@#$*~<>?]).){0,1024}((?![\\^!@#$*~ <>?]).)$";
     public static boolean isValidSymbol(String symbol){
         Pattern pattern = Pattern.compile(PRODUCT_FORM_SYMBOL_PATTERN);
         Matcher matcher = pattern.matcher(symbol);
@@ -86,7 +86,7 @@ public class Validation {
         return matcher.find();
     }
 
-    public static final String CATEGORY_FORM_NAME_PATTERN = "^[A-Za-z0-9 ._%+-a-zĄąČčĘęĖėĮįŠšŲųŪūŽž]{2,255}$";
+    public static final String CATEGORY_FORM_NAME_PATTERN = "^[A-Za-z0-9 ._%+-a-zĄąČčĘęĖėĮįŠšŲųŪūŽž]{2,512}$";
     public static boolean isValidCategoryName(String name){
         Pattern pattern = Pattern.compile(CATEGORY_FORM_NAME_PATTERN);
         Matcher matcher = pattern.matcher(name);
