@@ -503,7 +503,7 @@ public class DashboardController extends Main implements Initializable {
         right_panel_anchor_pane.autosize();
 
         HBox    joinedInformationPanelWithImageHBox = new HBox();
-        joinedInformationPanelWithImageHBox.setStyle("-fx-border-width: 3; -fx-border-color: #B7B7B7;");
+//        joinedInformationPanelWithImageHBox.setStyle("-fx-border-width: 3; -fx-border-color: #B7B7B7;");
         joinedInformationPanelWithImageHBox.setPadding(new Insets(5, 3, 2, 3));
 
         VBox right_panel_main_vbox = new VBox();
@@ -519,11 +519,11 @@ public class DashboardController extends Main implements Initializable {
         HBox informationPanelHBox = new HBox();
         VBox imageVBox = new VBox();
 
-        propertyLabelVBox.setPadding(new Insets(5, 5, 2, 5));
-        desciptionLabelVBox.setPadding(new Insets(5, 5, 10, 5));
+        propertyLabelVBox.setPadding(new Insets(0, 5, 2, 5));
+        desciptionLabelVBox.setPadding(new Insets(0, 5, 10, 5));
         desciptionLabelVBox.setMinWidth(130);
         propertyLabelVBox.setMinWidth(130);
-        imageVBox.setPadding(new Insets(0, 0, 0, 4));
+        imageVBox.setPadding(new Insets(5, 0, 5, 0));
         imageVBox.setAlignment(Pos.TOP_CENTER);
         setRightPanelLabelY(40);
 
@@ -784,6 +784,7 @@ public class DashboardController extends Main implements Initializable {
         joinedInformationPanelWithImageHBox.getChildren().add(propertyLabelVBox);
         informationPanelHBox.getChildren().add(joinedInformationPanelWithImageHBox);
         informationPanelHBox.getChildren().add(imageVBox);
+        informationPanelHBox.setStyle("-fx-border-width: 3; -fx-border-color: #B7B7B7;");
         right_panel_main_vbox.getChildren().add(informationPanelHBox);
 
 
