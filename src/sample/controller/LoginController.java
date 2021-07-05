@@ -7,7 +7,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -25,14 +24,18 @@ import java.util.prefs.Preferences;
 
 public class LoginController implements Initializable {
 
+    @FXML
     public Button username_button;
+    @FXML
     public Label login_info_label;
+    @FXML
     public TextField email_textfield;
+    @FXML
     public PasswordField password_passwordfield;
+    @FXML
     public Hyperlink register_button;
-    public Button dashboard_button;
+    @FXML
     public CheckBox check_box_remember_me;
-    public ImageView imageView;
 
     @FXML
     public Label version_label;
@@ -44,7 +47,6 @@ public class LoginController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
         version_label.setText("Versija: " + Constants.PROGRAM_VERSION);
 
         String propertyValue = prefs.get(PREF_NAME, "");
@@ -74,7 +76,6 @@ public class LoginController implements Initializable {
     }
 
     public void login() {
-
         if (email_textfield.getText().isEmpty()
                 || password_passwordfield.getText().isEmpty()) {
             login_info_label.setStyle("-fx-text-fill: red;");
