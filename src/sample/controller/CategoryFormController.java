@@ -27,12 +27,15 @@ public class CategoryFormController extends Main implements Initializable {
         if (categoryName_textField.getText().isEmpty() && (item == null)) {
             WarnStyle();
             form_info_label.setText(Constants.CREDENTIALS_IS_NOT_FILLED);
-        } else if (!Validation.isValidSymbol(categoryName_textField.getText())) {
+        } else if (!Validation.isValidCategoryName(categoryName_textField.getText())) {
             WarnStyle();
             form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_CATEGORY_NAME);
         } else if ((item == null)) {
             WarnStyle();
             form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CHOSEN_CATEGORY);
+        }else if (item.getCategory_parameter_id() == 0){
+            WarnStyle();
+            form_info_label.setText("Pasirinkta tėvinė kategorija neturi parametrų.");
         } else {
             registerCategory(item);
         }
@@ -41,7 +44,7 @@ public class CategoryFormController extends Main implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        List<Categories> categoryNames = CategoriesDAO.selectCategoriesForListView();
+        List<Categories> categoryNames = CategoriesDAO.selectCategoriesForComboBox();
         categoryComboBox.setCellFactory(lv -> new ListCell<Categories>() {
             public void updateItem(Categories item, boolean empty) {
 
@@ -63,10 +66,9 @@ public class CategoryFormController extends Main implements Initializable {
     }
 
     public void registerCategory(Categories item) {
-        Categories parentCategory = CategoriesDAO.displayParentCategoryById(item.getId());
-        CategoriesDAO.updateCategoryLefts(parentCategory.getlft());
-        CategoriesDAO.updateCategoryRights(parentCategory.getlft());
-        Categories newCategory = new Categories(categoryName_textField.getText(), parentCategory.getlft() + 1, parentCategory.getlft() + 2);
+        CategoriesDAO.updateCategoryLefts(item.getlft());
+        CategoriesDAO.updateCategoryRights(item.getlft());
+        Categories newCategory = new Categories(categoryName_textField.getText(), item.getlft() + 1, item.getlft() + 2, item.getCategory_parameter_id());
         CategoriesDAO.insert(newCategory);
         closeWindow();
     }

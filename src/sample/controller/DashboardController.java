@@ -1,6 +1,7 @@
 package sample.controller;
 
 
+import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -841,6 +842,10 @@ public class DashboardController extends Main implements Initializable {
             loginStage.setResizable(false);
             loginStage.setScene(scene);
             loginStage.show();
+            loginStage.getScene().getWindow().addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, event -> {
+                System.exit(0);
+                Platform.exit();
+            });
             windowClose();
 
         } catch (Exception e) {
@@ -853,7 +858,7 @@ public class DashboardController extends Main implements Initializable {
         try {
             Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource(Constants.CATEGORY_FORM_VIEW_PATH)));
             Stage createCategoryStage = new Stage();
-            Scene scene = new Scene(root, Constants.REGISTER_WINDOW_WIDTH, Constants.REGISTER_WINDOW_HEIGHT);
+            Scene scene = new Scene(root, Constants.CATEGORY_FORM_WINDOW_WIDTH, Constants.CATEGORY_FORM_WINDOW_HEIGHT);
             scene.getStylesheets().add(Objects.requireNonNull(getClass().getClassLoader().getResource(Constants.CSS_DIRECTORY_PATH)).toExternalForm());
             createCategoryStage.setTitle("Kategorijos anketa");
             createCategoryStage.setScene(scene);

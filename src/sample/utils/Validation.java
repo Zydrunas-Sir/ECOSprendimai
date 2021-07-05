@@ -86,6 +86,13 @@ public class Validation {
         return matcher.find();
     }
 
+    public static final String CATEGORY_FORM_NAME_PATTERN = "^[A-Za-z0-9 ._%+-a-zĄąČčĘęĖėĮįŠšŲųŪūŽž]{2,255}$";
+    public static boolean isValidCategoryName(String name){
+        Pattern pattern = Pattern.compile(CATEGORY_FORM_NAME_PATTERN);
+        Matcher matcher = pattern.matcher(name);
+        return matcher.find();
+    }
+
     /* Naujo produkto kūrimo lango Validacija : Start */
 
     public static final String PRODUCT_FORM_ATSPARUMO_KLASE_PATTERN = "^[a-zA-ZĄąČčĘęĖėĮįŠšŲųŪūŽž]{3,255}$";

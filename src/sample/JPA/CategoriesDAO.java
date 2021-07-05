@@ -125,6 +125,20 @@ public class CategoriesDAO {
         return categories;
     }
 
+    public static List<Categories> selectCategoriesForComboBox(){
+        EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
+        EntityTransaction entityTransaction = entityManager.getTransaction();
+        entityTransaction.begin();
+
+        TypedQuery<Categories> query = entityManager.createQuery("SELECT NEW Categories(node.id, CONCAT(REPEAT('    ', count(parent.name) - 3), CASE WHEN (count(parent.name) - 3 <= 0) THEN CONCAT('   ', node.name) ELSE CONCAT(' |- ', node.name) END), node.lft, node.rght, count(parent.name), node.category_parameter_id) FROM Categories as node INNER JOIN Categories as parent ON ( parent.lft <= node.lft AND parent.rght >= node.lft ) GROUP BY node.id ORDER BY node.lft", Categories.class);
+        List<Categories> categories = query.getResultList();
+
+        entityManager.getTransaction().commit();
+        entityManager.close();
+
+        return categories;
+    }
+
     public static void updateCategoryLefts(int lft){
         EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
         EntityTransaction entityTransaction = entityManager.getTransaction();
