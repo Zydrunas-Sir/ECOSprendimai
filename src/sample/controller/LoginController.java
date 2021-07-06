@@ -80,8 +80,6 @@ public class LoginController implements Initializable {
     }
 
 
-
-
     private void loadProgress() {
         Task copyWorker = createWorker();
         loadProgress.progressProperty().bind(copyWorker.progressProperty());
