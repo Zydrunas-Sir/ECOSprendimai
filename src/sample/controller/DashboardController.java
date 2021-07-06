@@ -431,8 +431,10 @@ public class DashboardController extends Main implements Initializable {
                 }
                 Platform.runLater(() -> {
                     loadProgress.setVisible(false);
+                    reloadProductTableView();
                 });
             }
+
         });
         uploadExcelLogicalThread.setDaemon(true);
         uploadExcelLogicalThread.start();
