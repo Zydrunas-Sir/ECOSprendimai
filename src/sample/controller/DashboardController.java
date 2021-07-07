@@ -129,6 +129,7 @@ public class DashboardController extends Main implements Initializable {
         currentSessionUserData();
         reloadCategoryListView();
         reloadProductTableView();
+        firstFillDescriptionPanel();
         UserHolder userHolder = UserHolder.getInstance();
         UserDAO.setLastLoginTime(userHolder.getUser());
         loggedTimeStart = System.currentTimeMillis(); // Fiksuoja prisijungimo laiko pradžią
@@ -516,6 +517,19 @@ public class DashboardController extends Main implements Initializable {
     // Suveikia pasirinkus item'ą vidurinėje panelėje.
     // Pirmiausia kreipiamasi į duomenų bazę, patikrinama ar egzistuoja produkto aprašymas.
     // Jei egzistuoja, ištraukiami visi duomenys ir užpildoma dešinė panelė.
+
+    public void firstFillDescriptionPanel() {
+        HBox mainHBox = new HBox();
+        mainHBox.setAlignment(Pos.CENTER);
+        Label infoLabel = new Label();
+        infoLabel.setAlignment(Pos.CENTER);
+        infoLabel.setLayoutY(140);
+        infoLabel.setLayoutX(70);
+        infoLabel.setStyle("-fx-font-style: italic; -fx-font-size: 14;");
+        infoLabel.setText("Pasirinkite produktą iš sąrašo,\nkad detali informacija būtų atvaizduota...");
+        mainHBox.getChildren().add(infoLabel);
+        right_panel_anchor_pane.getChildren().add(infoLabel);
+    }
 
     public void fillDescriptionPanel(String catalogNoImported) {
 
