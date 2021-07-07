@@ -34,7 +34,7 @@
         <Label fx:id="current_session_user_status" layoutX="1012.0" layoutY="40.0" prefHeight="17.0" prefWidth="195.0" text="Vartotojas" textFill="#808080" AnchorPane.rightAnchor="135.0" AnchorPane.topAnchor="40.0" />
         <Label layoutX="953.0" layoutY="59.0" text="El.paštas:" AnchorPane.rightAnchor="341.0" AnchorPane.topAnchor="59.0" />
         <Button fx:id="close_button" layoutX="1236.0" layoutY="29.0" mnemonicParsing="false" onAction="#goBackToLogin" prefHeight="50.0" prefWidth="102.0" style="-fx-background-radius: 0px; -fx-background-color: #474747;" text="Atsijungti" textFill="WHITE" underline="true" AnchorPane.rightAnchor="4.0" />
-        <ProgressIndicator fx:id="loadProgress" layoutX="639.0" layoutY="249.0" progress="0.0" visible="false" />
+        <ProgressIndicator fx:id="loadProgress" layoutX="630.0" layoutY="240.0" progress="0.0" visible="false" />
         <MenuBar fx:id="menu_bar" prefHeight="25.0" prefWidth="1342.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <menus>
                 <Menu fx:id="file_menu_bar" mnemonicParsing="false" text="Failas">

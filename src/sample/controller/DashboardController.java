@@ -345,14 +345,13 @@ public class DashboardController extends Main implements Initializable {
     public void openExcelFileFromDialog() {
         final FileChooser fileChooser = new FileChooser();
         configureFileChooser(fileChooser);
-        loadProgress();
         // Loading Spinner start.
         File file = fileChooser.showOpenDialog(new Stage());
         if (file != null) {
             openFile(file);
-            loadProgress.setVisible(false); // Loading Spinner ends.
+//            loadProgress.setVisible(false); // Loading Spinner ends.
         }
-        loadProgress.setVisible(false);
+//        loadProgress.setVisible(false);
         reloadProductTableView();
     }
 
@@ -370,54 +369,75 @@ public class DashboardController extends Main implements Initializable {
     //Tikriną excelio produktų kainas su duombasėje esamomis produkto kainomis, įkelia naujus produktus, jei jų nėra duombasėje, visai tai skaičiuoja.
     private void openFile(File file) {
         //ProductCatalogDAO.checkIfCatalogExistsIfNotCreateIt();
+        loadProgress();
 
-        List<ProductCatalog> excelProducts = null;
-        List<ProductCatalog> dbProducts = ProductCatalogDAO.displayAllItems();
+        Thread uploadExcelLogicalThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                List<ProductCatalog> excelProducts = null;
+                List<ProductCatalog> dbProducts = ProductCatalogDAO.displayAllItems();
 
-        try {
-            excelProducts = ReadExcelWithProductCatalog.readFileUsingPOI(file);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+                try {
+                    excelProducts = ReadExcelWithProductCatalog.readFileUsingPOI(file);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
-        int countAffectedProducts = 0;
-        int countExcelProducts = 0;
-        int countNewProducts = 0;
-        int countDBProducts = 0;
+                int countAffectedProducts = 0;
+                int countExcelProducts = 0;
+                int countNewProducts = 0;
+                int countDBProducts = 0;
 
-        assert excelProducts != null;
-        try {
-            for (ProductCatalog excelProduct : excelProducts) {
-                countExcelProducts++;
-                boolean isNewProduct = true;
+                assert excelProducts != null;
+                try {
+                    for (ProductCatalog excelProduct : excelProducts) {
+                        countExcelProducts++;
+                        boolean isNewProduct = true;
 
-                for (ProductCatalog dbProduct : dbProducts) {
-                    if (!dbProduct.getPriceNet().equals(excelProduct.getPriceNet()) && dbProduct.getCatalogNo().equals(excelProduct.getCatalogNo()) && dbProduct.getGroupId() == excelProduct.getGroupId() && dbProduct.getSymbol().equals(excelProduct.getSymbol())) {
-                        isNewProduct = false;
-                        ProductCatalogDAO.updatePrice(excelProduct.getPriceNet(), dbProduct.getId());
-                        countAffectedProducts++;
-                    } else if (dbProduct.getPriceNet().equals(excelProduct.getPriceNet()) && dbProduct.getCatalogNo().equals(excelProduct.getCatalogNo()) && dbProduct.getGroupId() == excelProduct.getGroupId() && dbProduct.getSymbol().equals(excelProduct.getSymbol())) {
-                        isNewProduct = false;
-                        countDBProducts = dbProducts.size() - countAffectedProducts;
+                        for (ProductCatalog dbProduct : dbProducts) {
+                            if (!dbProduct.getPriceNet().equals(excelProduct.getPriceNet()) && dbProduct.getCatalogNo().equals(excelProduct.getCatalogNo()) && dbProduct.getGroupId() == excelProduct.getGroupId() && dbProduct.getSymbol().equals(excelProduct.getSymbol())) {
+                                isNewProduct = false;
+                                ProductCatalogDAO.updatePrice(excelProduct.getPriceNet(), dbProduct.getId());
+                                countAffectedProducts++;
+                            } else if (dbProduct.getPriceNet().equals(excelProduct.getPriceNet()) && dbProduct.getCatalogNo().equals(excelProduct.getCatalogNo()) && dbProduct.getGroupId() == excelProduct.getGroupId() && dbProduct.getSymbol().equals(excelProduct.getSymbol())) {
+                                isNewProduct = false;
+                                countDBProducts = dbProducts.size() - countAffectedProducts;
+                            }
+                        }
+                        if (isNewProduct) {
+                            countNewProducts++;
+                            ProductCatalogDAO.insert(excelProduct);
+                        }
                     }
+
+                } catch (NullPointerException e) {
+                    System.out.println("openFile(" + e + " )");
+                } catch (RuntimeException e) {
+                    System.out.println("openFile(" + e + " )");
                 }
-                if (isNewProduct) {
-                    countNewProducts++;
-                    ProductCatalogDAO.insert(excelProduct);
+                if (countDBProducts != 0) {
+                    String successToPopup = "Pakeista produktų: " + countAffectedProducts + "\nFaile aptikta produktų: " + countExcelProducts + "\nPridėti nauji produktai: " + countNewProducts + "\nDuomenų bazėje nepaveikti produktai: " + countDBProducts + "\n";
+
+                    Platform.runLater(() -> {
+                        showPopupWindow("Failas sėkmingai įkeltas", successToPopup, "#146c43", "#FFFFFF");
+                        loadProgress.setVisible(false);
+
+                    });
+                } else if (countAffectedProducts == 0 && countExcelProducts == 0 && countNewProducts == 0 && countDBProducts == 0) {
+                    Platform.runLater(() -> {
+                        JPAUtil.showPopupWindow("Klaida!", "- Nuskaityti nepavyko \n- Pasirinktas failas netinkamas : " + file.getName(), "#b02a37", "#FFFFFF", getScene());
+                        loadProgress.setVisible(false);
+                    });
                 }
+                Platform.runLater(() -> {
+                    loadProgress.setVisible(false);
+                    reloadProductTableView();
+                });
             }
 
-        } catch (NullPointerException e) {
-            System.out.println("openFile(" + e + " )");
-        } catch (RuntimeException e) {
-            System.out.println("openFile(" + e + " )");
-        }
-        if (countDBProducts != 0) {
-            String successToPopup = "Pakeista produktų: " + countAffectedProducts + "\nFaile aptikta produktų: " + countExcelProducts + "\nPridėti nauji produktai: " + countNewProducts + "\nDuomenų bazėje nepaveikti produktai: " + countDBProducts + "\n";
-            showPopupWindow("Failas sėkmingai įkeltas", successToPopup, "#146c43", "#FFFFFF");
-        } else if (countAffectedProducts == 0 && countExcelProducts == 0 && countNewProducts == 0 && countDBProducts == 0) {
-            JPAUtil.showPopupWindow("Klaida!", "- Nuskaityti nepavyko \n- Pasirinktas failas netinkamas : " + file.getName(), "#b02a37", "#FFFFFF", getScene());
-        }
+        });
+        uploadExcelLogicalThread.setDaemon(true);
+        uploadExcelLogicalThread.start();
 
     }
 
@@ -473,7 +493,6 @@ public class DashboardController extends Main implements Initializable {
     }
 
 
-
     private void setRightPanelLabelY(double y) {
         this.rightPanelLabelY = y;
     }
@@ -503,8 +522,8 @@ public class DashboardController extends Main implements Initializable {
         right_panel_anchor_pane.getChildren().clear();
         right_panel_anchor_pane.autosize();
 
-        HBox    joinedInformationPanelWithImageHBox = new HBox();
-        joinedInformationPanelWithImageHBox.setStyle("-fx-border-width: 3; -fx-border-color: #B7B7B7;");
+        HBox joinedInformationPanelWithImageHBox = new HBox();
+//        joinedInformationPanelWithImageHBox.setStyle("-fx-border-width: 3; -fx-border-color: #B7B7B7;");
         joinedInformationPanelWithImageHBox.setPadding(new Insets(5, 3, 2, 3));
 
         VBox right_panel_main_vbox = new VBox();
@@ -520,11 +539,11 @@ public class DashboardController extends Main implements Initializable {
         HBox informationPanelHBox = new HBox();
         VBox imageVBox = new VBox();
 
-        propertyLabelVBox.setPadding(new Insets(5, 5, 2, 5));
-        desciptionLabelVBox.setPadding(new Insets(5, 5, 10, 5));
+        propertyLabelVBox.setPadding(new Insets(0, 5, 2, 5));
+        desciptionLabelVBox.setPadding(new Insets(0, 5, 10, 5));
         desciptionLabelVBox.setMinWidth(130);
         propertyLabelVBox.setMinWidth(130);
-        imageVBox.setPadding(new Insets(0, 0, 0, 4));
+        imageVBox.setPadding(new Insets(5, 0, 5, 0));
         imageVBox.setAlignment(Pos.TOP_CENTER);
         setRightPanelLabelY(40);
 
@@ -785,6 +804,7 @@ public class DashboardController extends Main implements Initializable {
         joinedInformationPanelWithImageHBox.getChildren().add(propertyLabelVBox);
         informationPanelHBox.getChildren().add(joinedInformationPanelWithImageHBox);
         informationPanelHBox.getChildren().add(imageVBox);
+        informationPanelHBox.setStyle("-fx-border-width: 3; -fx-border-color: #B7B7B7;");
         right_panel_main_vbox.getChildren().add(informationPanelHBox);
 
 
@@ -873,6 +893,7 @@ public class DashboardController extends Main implements Initializable {
             e.getCause();
         }
     }
+
     public void openStocks(ActionEvent actionEvent) {
         try {
             Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource(Constants.OPEN_STOCKS_DIRECTORY_PATH)));
@@ -950,16 +971,14 @@ public class DashboardController extends Main implements Initializable {
             @Override
             protected TabPane call() throws Exception {
                 TabPane tabPane = new TabPane();
-                final int count = 1000 - 1;
-                for (int i = 1; i <= count; i++) {
-                    Thread.sleep(100000);
-                }
+//                final int count = 1000 - 1;
+//                for (int i = 1; i <= count; i++) {
+//                    Thread.sleep(100000);
+//                }
                 return tabPane;
             }
         };
     }// Loading Spinner set-up-ends
-
-
 
 
     public void reloadCategoryListView() {

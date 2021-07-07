@@ -1,6 +1,8 @@
 package sample.controller;
 
+import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -18,6 +20,7 @@ import sample.JPA.user.UserHolder;
 import sample.utils.Constants;
 import sample.utils.Validation;
 
+import java.lang.management.PlatformManagedObject;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.prefs.Preferences;
@@ -36,9 +39,10 @@ public class LoginController implements Initializable {
     public Hyperlink register_button;
     @FXML
     public CheckBox check_box_remember_me;
-
     @FXML
     public Label version_label;
+    @FXML
+    ProgressIndicator loadProgress;
 
     final String PREF_NAME = "Email";
     final String PREF_PASSWORD = "Password";
@@ -75,63 +79,112 @@ public class LoginController implements Initializable {
         );
     }
 
-    public void login() {
-        if (email_textfield.getText().isEmpty()
-                || password_passwordfield.getText().isEmpty()) {
-            login_info_label.setStyle("-fx-text-fill: red;");
-            login_info_label.setText(Constants.CREDENTIALS_IS_NOT_FILLED);
-            return;
-        } else if (!Validation.isValidEmail(email_textfield.getText()) || !Validation.isValidPassword(password_passwordfield.getText())) {
 
-            login_info_label.setStyle("-fx-text-fill: red;");
-            login_info_label.setText(Constants.CREDENTIALS_EMAIL_AND_PASSWORD_NOT_CORRECT);
-            return;
-        }
-        //Comparing two objects (email)
-        //If email from text field equals email from database
-        //Go to dashboard
+    private void loadProgress() {
+        Task copyWorker = createWorker();
+        loadProgress.progressProperty().bind(copyWorker.progressProperty());
+        //table.itemsProperty().bind(copyWorker.valueProperty());
+        new Thread(copyWorker).start();
+        loadProgress.setVisible(true);
+    }
 
-        //Getting list from UserDAO class with credentials of password and username
-        User credentials = UserDAO.searchUserByEmail(email_textfield.getText());
-
-
-        //checking password is it match
-        try {
-            assert credentials != null;
-            if (checkPass(password_passwordfield.getText(), credentials.getPassword())) {
-                if (!credentials.isBlocked()) {
-
-                    if (check_box_remember_me.isSelected()) {
-                        prefs.put(PREF_NAME, email_textfield.getText());
-                        prefs.put(PREF_PASSWORD, password_passwordfield.getText());
-                        prefs.putBoolean(PREF_CHECKBOX, true);
-                    } else {
-                        prefs.put(PREF_NAME, "");
-                        prefs.put(PREF_PASSWORD, "");
-                        prefs.putBoolean(PREF_CHECKBOX, false);
-                    }
-
-                    User u = new User(credentials.getEmail(), credentials.isAdmin());
-                    UserHolder holder = UserHolder.getInstance();
-                    holder.setUser(u);
-                    goToDashBoard();
-                } else {
-                    JPAUtil.showPopupWindow("Informacija", "Vartotojo paskyra yra išjungta. Prašome kreiptis į ECOSprendimai administratorių.\n- Telefono nr.: +370 600 00000\n- El.paštas: info@ecosprendimai.lt", "#0a58ca", "#FFFFFF", login_info_label.getScene());
-
-                }
-
-            } else if (!checkPass(password_passwordfield.getText(), credentials.getPassword())) {
-
-                login_info_label.setStyle("-fx-text-fill: red;");
-                login_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT);
-                System.out.println("LOGIN UNAVAILABLE");
+    public Task createWorker() {
+        return new Task() {
+            @Override
+            protected TabPane call() throws Exception {
+                TabPane tabPane = new TabPane();
+//                final int count = 1000 - 1;
+//                for (int i = 1; i <= count; i++) {
+//                    Thread.sleep(100000);
+//                }
+                return tabPane;
             }
-        } catch (NullPointerException npe) {
-            login_info_label.setStyle("-fx-text-fill: red;");
-            login_info_label.setText(Constants.EMAIL_NOT_EXIST);
-        }
+        };
+    }// Loading Spinner set-up-ends
+
+    public void login() {
+        username_button.setVisible(false);
+        loadProgress();
+
+        Thread loginLogicThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                if (email_textfield.getText().isEmpty()
+                        || password_passwordfield.getText().isEmpty()) {
+                    Platform.runLater(() -> {
+                        login_info_label.setStyle("-fx-text-fill: red;");
+                        login_info_label.setText(Constants.CREDENTIALS_IS_NOT_FILLED);
+                        loadProgress.setVisible(false);
+                        username_button.setVisible(true);
+                        return;
+                    });
+                } else if (!Validation.isValidEmail(email_textfield.getText()) || !Validation.isValidPassword(password_passwordfield.getText())) {
+                    Platform.runLater(() -> {
+                        login_info_label.setStyle("-fx-text-fill: red;");
+                        login_info_label.setText(Constants.CREDENTIALS_EMAIL_AND_PASSWORD_NOT_CORRECT);
+                        loadProgress.setVisible(false);
+                        username_button.setVisible(true);
+                        return;
+                    });
+                }
+                //Comparing two objects (email)
+                //If email from text field equals email from database
+                //Go to dashboard
+
+                //Getting list from UserDAO class with credentials of password and username
+                User credentials = UserDAO.searchUserByEmail(email_textfield.getText());
 
 
+                //checking password is it match
+                try {
+                    assert credentials != null;
+                    if (checkPass(password_passwordfield.getText(), credentials.getPassword())) {
+                        if (!credentials.isBlocked()) {
+
+                            if (check_box_remember_me.isSelected()) {
+                                prefs.put(PREF_NAME, email_textfield.getText());
+                                prefs.put(PREF_PASSWORD, password_passwordfield.getText());
+                                prefs.putBoolean(PREF_CHECKBOX, true);
+                            } else {
+                                prefs.put(PREF_NAME, "");
+                                prefs.put(PREF_PASSWORD, "");
+                                prefs.putBoolean(PREF_CHECKBOX, false);
+                            }
+
+                            User u = new User(credentials.getEmail(), credentials.isAdmin());
+                            UserHolder holder = UserHolder.getInstance();
+                            holder.setUser(u);
+                            Platform.runLater(() -> {
+                                goToDashBoard();
+                            });
+                        } else {
+                            Platform.runLater(() -> {
+                                JPAUtil.showPopupWindow("Informacija", "Vartotojo paskyra yra išjungta. Prašome kreiptis į ECOSprendimai administratorių.\n- Telefono nr.: +370 600 00000\n- El.paštas: info@ecosprendimai.lt", "#0a58ca", "#FFFFFF", login_info_label.getScene());
+                            });
+                        }
+
+                    } else if (!checkPass(password_passwordfield.getText(), credentials.getPassword())) {
+                        Platform.runLater(() -> {
+                            login_info_label.setStyle("-fx-text-fill: red;");
+                            login_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT);
+                            System.out.println("LOGIN UNAVAILABLE");
+                            loadProgress.setVisible(false);
+                            username_button.setVisible(true);
+
+                        });
+                    }
+                } catch (NullPointerException npe) {
+                    Platform.runLater(() -> {
+                        login_info_label.setStyle("-fx-text-fill: red;");
+                        login_info_label.setText(Constants.EMAIL_NOT_EXIST);
+                        loadProgress.setVisible(false);
+                        username_button.setVisible(true);
+                    });
+                }
+            }
+        });
+        loginLogicThread.setDaemon(true);
+        loginLogicThread.start();
     }
 
     public void windowCloseLoginButton() { //Uzdaro prisijungimo langa
