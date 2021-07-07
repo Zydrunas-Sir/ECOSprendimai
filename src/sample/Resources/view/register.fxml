@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="552.0" prefWidth="550.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.RegisterController">
+<AnchorPane prefHeight="552.0" prefWidth="550.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.RegisterController">
    <children>
       <Label alignment="CENTER_RIGHT" layoutX="27.0" layoutY="240.0" prefHeight="39.0" prefWidth="184.0" text="Įmonės pavadinimas:">
          <font>
@@ -78,5 +78,6 @@
             <Font name="Segoe UI Light" size="19.0" />
          </font>
       </Label>
+      <ProgressIndicator fx:id="load_progress_indicator" layoutX="250.0" layoutY="481.0" progress="0.0" visible="false" />
    </children>
 </AnchorPane>

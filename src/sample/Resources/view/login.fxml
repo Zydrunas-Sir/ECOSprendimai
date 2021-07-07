@@ -51,7 +51,7 @@
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor></CheckBox>
-            <ProgressIndicator fx:id="loadProgress" layoutX="230.0" layoutY="230.0" prefHeight="35.0" prefWidth="35.0" progress="0.0" visible="false" />
+            <ProgressIndicator fx:id="load_progress_indicator" layoutX="230.0" layoutY="230.0" prefHeight="35.0" prefWidth="35.0" progress="0.0" visible="false" />
             <Button fx:id="username_button" layoutX="176.0" layoutY="235.0" mnemonicParsing="false" onAction="#login" prefHeight="37.0" prefWidth="142.0" text="Prisijungti">
                <font>
                   <Font name="Microsoft JhengHei Light" size="16.0" />

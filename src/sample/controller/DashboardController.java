@@ -129,6 +129,7 @@ public class DashboardController extends Main implements Initializable {
         currentSessionUserData();
         reloadCategoryListView();
         reloadProductTableView();
+        firstFillDescriptionPanel();
         UserHolder userHolder = UserHolder.getInstance();
         UserDAO.setLastLoginTime(userHolder.getUser());
         loggedTimeStart = System.currentTimeMillis(); // Fiksuoja prisijungimo laiko pradžią
@@ -517,6 +518,19 @@ public class DashboardController extends Main implements Initializable {
     // Pirmiausia kreipiamasi į duomenų bazę, patikrinama ar egzistuoja produkto aprašymas.
     // Jei egzistuoja, ištraukiami visi duomenys ir užpildoma dešinė panelė.
 
+    public void firstFillDescriptionPanel() {
+        HBox mainHBox = new HBox();
+        mainHBox.setAlignment(Pos.CENTER);
+        Label infoLabel = new Label();
+        infoLabel.setAlignment(Pos.CENTER);
+        infoLabel.setLayoutY(140);
+        infoLabel.setLayoutX(70);
+        infoLabel.setStyle("-fx-font-style: italic; -fx-font-size: 14;");
+        infoLabel.setText("Pasirinkite produktą iš sąrašo,\nkad detali informacija būtų atvaizduota...");
+        mainHBox.getChildren().add(infoLabel);
+        right_panel_anchor_pane.getChildren().add(infoLabel);
+    }
+
     public void fillDescriptionPanel(String catalogNoImported) {
 
         right_panel_anchor_pane.getChildren().clear();
@@ -527,10 +541,10 @@ public class DashboardController extends Main implements Initializable {
         joinedInformationPanelWithImageHBox.setPadding(new Insets(5, 3, 2, 3));
 
         VBox right_panel_main_vbox = new VBox();
-        right_panel_main_vbox.setMinWidth(408);
+        right_panel_main_vbox.setMinWidth(410);
         right_panel_main_vbox.prefHeight(397);
-        right_panel_main_vbox.prefWidth(408);
-        right_panel_main_vbox.setMaxWidth(408);
+        right_panel_main_vbox.prefWidth(410);
+        right_panel_main_vbox.setMaxWidth(410);
         right_panel_anchor_pane.getChildren().add(right_panel_main_vbox);
 
 
@@ -551,11 +565,11 @@ public class DashboardController extends Main implements Initializable {
             if (irasas.getCatalogNo() == catalogNoImported) {
                 Label symbolProperty = new Label();
                 symbolProperty.setWrapText(true);
-                symbolProperty.setMinWidth(408);
-                symbolProperty.prefWidth(408);
+                symbolProperty.setMinWidth(410);
+                symbolProperty.prefWidth(412);
                 symbolProperty.setMinHeight(24);
                 symbolProperty.setMaxHeight(50);
-                symbolProperty.setMaxWidth(408);
+                symbolProperty.setMaxWidth(410);
                 symbolProperty.setAlignment(Pos.CENTER_LEFT);
                 symbolProperty.setPadding(new Insets(3, 3, 3, 3));
                 symbolProperty.setStyle("-fx-font-weight: bold; -fx-background-color: linear-gradient(to top, #D9D9D9, #EDEDED); -fx-border-width: 1; -fx-border-color: #c8c8c8; -fx-border-radius: 1;");

@@ -1,6 +1,5 @@
 package sample.controller;
 
-import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
@@ -20,7 +19,6 @@ import sample.JPA.user.UserHolder;
 import sample.utils.Constants;
 import sample.utils.Validation;
 
-import java.lang.management.PlatformManagedObject;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.prefs.Preferences;
@@ -42,7 +40,7 @@ public class LoginController implements Initializable {
     @FXML
     public Label version_label;
     @FXML
-    ProgressIndicator loadProgress;
+    ProgressIndicator load_progress_indicator;
 
     final String PREF_NAME = "Email";
     final String PREF_PASSWORD = "Password";
@@ -82,10 +80,9 @@ public class LoginController implements Initializable {
 
     private void loadProgress() {
         Task copyWorker = createWorker();
-        loadProgress.progressProperty().bind(copyWorker.progressProperty());
-        //table.itemsProperty().bind(copyWorker.valueProperty());
+        load_progress_indicator.progressProperty().bind(copyWorker.progressProperty());
         new Thread(copyWorker).start();
-        loadProgress.setVisible(true);
+        load_progress_indicator.setVisible(true);
     }
 
     public Task createWorker() {
@@ -93,10 +90,7 @@ public class LoginController implements Initializable {
             @Override
             protected TabPane call() throws Exception {
                 TabPane tabPane = new TabPane();
-//                final int count = 1000 - 1;
-//                for (int i = 1; i <= count; i++) {
-//                    Thread.sleep(100000);
-//                }
+
                 return tabPane;
             }
         };
@@ -104,6 +98,7 @@ public class LoginController implements Initializable {
 
     public void login() {
         username_button.setVisible(false);
+        register_button.setVisible(false);
         loadProgress();
 
         Thread loginLogicThread = new Thread(new Runnable() {
@@ -114,16 +109,18 @@ public class LoginController implements Initializable {
                     Platform.runLater(() -> {
                         login_info_label.setStyle("-fx-text-fill: red;");
                         login_info_label.setText(Constants.CREDENTIALS_IS_NOT_FILLED);
-                        loadProgress.setVisible(false);
+                        load_progress_indicator.setVisible(false);
                         username_button.setVisible(true);
+                        register_button.setVisible(true);
                         return;
                     });
                 } else if (!Validation.isValidEmail(email_textfield.getText()) || !Validation.isValidPassword(password_passwordfield.getText())) {
                     Platform.runLater(() -> {
                         login_info_label.setStyle("-fx-text-fill: red;");
                         login_info_label.setText(Constants.CREDENTIALS_EMAIL_AND_PASSWORD_NOT_CORRECT);
-                        loadProgress.setVisible(false);
+                        load_progress_indicator.setVisible(false);
                         username_button.setVisible(true);
+                        register_button.setVisible(true);
                         return;
                     });
                 }
@@ -168,8 +165,9 @@ public class LoginController implements Initializable {
                             login_info_label.setStyle("-fx-text-fill: red;");
                             login_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT);
                             System.out.println("LOGIN UNAVAILABLE");
-                            loadProgress.setVisible(false);
+                            load_progress_indicator.setVisible(false);
                             username_button.setVisible(true);
+                            register_button.setVisible(true);
 
                         });
                     }
@@ -177,8 +175,9 @@ public class LoginController implements Initializable {
                     Platform.runLater(() -> {
                         login_info_label.setStyle("-fx-text-fill: red;");
                         login_info_label.setText(Constants.EMAIL_NOT_EXIST);
-                        loadProgress.setVisible(false);
+                        load_progress_indicator.setVisible(false);
                         username_button.setVisible(true);
+                        register_button.setVisible(true);
                     });
                 }
             }
