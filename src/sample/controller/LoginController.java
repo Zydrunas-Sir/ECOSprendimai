@@ -104,6 +104,7 @@ public class LoginController implements Initializable {
 
     public void login() {
         username_button.setVisible(false);
+        register_button.setVisible(false);
         loadProgress();
 
         Thread loginLogicThread = new Thread(new Runnable() {
@@ -116,6 +117,7 @@ public class LoginController implements Initializable {
                         login_info_label.setText(Constants.CREDENTIALS_IS_NOT_FILLED);
                         loadProgress.setVisible(false);
                         username_button.setVisible(true);
+                        register_button.setVisible(true);
                         return;
                     });
                 } else if (!Validation.isValidEmail(email_textfield.getText()) || !Validation.isValidPassword(password_passwordfield.getText())) {
@@ -124,6 +126,7 @@ public class LoginController implements Initializable {
                         login_info_label.setText(Constants.CREDENTIALS_EMAIL_AND_PASSWORD_NOT_CORRECT);
                         loadProgress.setVisible(false);
                         username_button.setVisible(true);
+                        register_button.setVisible(true);
                         return;
                     });
                 }
@@ -170,6 +173,7 @@ public class LoginController implements Initializable {
                             System.out.println("LOGIN UNAVAILABLE");
                             loadProgress.setVisible(false);
                             username_button.setVisible(true);
+                            register_button.setVisible(true);
 
                         });
                     }
@@ -179,6 +183,7 @@ public class LoginController implements Initializable {
                         login_info_label.setText(Constants.EMAIL_NOT_EXIST);
                         loadProgress.setVisible(false);
                         username_button.setVisible(true);
+                        register_button.setVisible(true);
                     });
                 }
             }
