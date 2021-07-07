@@ -17,7 +17,7 @@ public class ProductCatalog {
     private int id;
     @Column(name = "catalog_no")
     private String catalogNo;
-    @Column(name = "symbol")
+    @Column(name = "symbol", length = 1024)
     private String symbol;
     @Column(name = "price_net")
     private String priceNet;
@@ -53,7 +53,7 @@ public class ProductCatalog {
     private String matmenys;
     @Column(name = "darbine_temperatura")
     private int darbine_temperatura;
-    @Column(name = "image_url")
+    @Column(name = "image_url", length = 1024)
     private String image_url;
     @Column(name = "date")
     private Date date;

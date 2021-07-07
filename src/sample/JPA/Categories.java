@@ -1,5 +1,6 @@
 package sample.JPA;
 
+import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -12,7 +13,7 @@ public class Categories {
     @GeneratedValue(generator = "incrementation")
     @GenericGenerator(name = "incrementation", strategy = "increment")
     private int id;
-    @Column(name = "name")
+    @Column(name = "name", length = 512)
     private String name;
     @Column(name = "lft")
     private int lft;
