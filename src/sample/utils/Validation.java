@@ -65,7 +65,7 @@ public class Validation {
         return matcher.find();
     }
 
-    public static final String PRODUCT_FORM_SYMBOL_PATTERN = "^((?![\\^!@#$*~ <>?]).)((?![\\^!@#$*~<>?]).){0,1024}((?![\\^!@#$*~ <>?]).)$";
+    public static final String PRODUCT_FORM_SYMBOL_PATTERN = "^((?![\\^!@#$*~ <>?]).)((?![\\^!@#$*~<>?]).){1,1024}((?![\\^!@#$*~ <>?]).)$";
     public static boolean isValidSymbol(String symbol){
         Pattern pattern = Pattern.compile(PRODUCT_FORM_SYMBOL_PATTERN);
         Matcher matcher = pattern.matcher(symbol);
@@ -178,6 +178,13 @@ public class Validation {
     public static boolean isValidVardineItampa(String vardine_itampa) {
         Pattern pattern = Pattern.compile(PRODUCT_FORM_VARDINE_ITAMPA_PATTERN);
         Matcher matcher = pattern.matcher(vardine_itampa);
+        return matcher.find();
+    }
+
+    public static final String PRODUCT_FORM_IP_KLASE_PATTERN = "^[0-9a-zA-ZĄąČčĘęĖėĮįŠšŲųŪūŽž]{1,255}$";
+    public static boolean isValidIpKlase(String ip_klase) {
+        Pattern pattern = Pattern.compile(PRODUCT_FORM_IP_KLASE_PATTERN);
+        Matcher matcher = pattern.matcher(ip_klase);
         return matcher.find();
     }
 
