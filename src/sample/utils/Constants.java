@@ -20,7 +20,7 @@ public class Constants {
     public static final String CSS_DIRECTORY_PATH = "sample/Resources/view/CSS.css";
     public static final String OPEN_STOCKS_DIRECTORY_PATH = "sample/Resources/view/stockPriceRate.fxml";
 
-    public static final String EMAIL_NOT_EXIST = "Įvestas el.paštas neegzistuoja.";
+    public static final String EMAIL_NOT_EXIST = "Vartotojas su įvestu el.paštu neegzistuoja.";
     public static final String EMAIL_EXISTS = "Įvestas el.paštas jau egzistuoja.";
     public static final String CREDENTIALS_IS_NOT_CORRECT = "Įvesti duomenys neteisingi.";
     public static final String CREDENTIALS_IS_NOT_CORRECT_FIRST_NAME = "Vartotojo vardas neatitinka reikalavimų.";
