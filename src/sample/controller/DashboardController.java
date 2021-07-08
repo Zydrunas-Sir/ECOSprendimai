@@ -429,6 +429,14 @@ public class DashboardController extends Main implements Initializable {
                         JPAUtil.showPopupWindow("Klaida!", "- Nuskaityti nepavyko \n- Pasirinktas failas netinkamas : " + file.getName(), "#b02a37", "#FFFFFF", getScene());
                         loadProgress.setVisible(false);
                     });
+                } else {
+                    String successToPopup = "Pakeista produktų: " + countAffectedProducts + "\nFaile aptikta produktų: " + countExcelProducts + "\nPridėti nauji produktai: " + countNewProducts + "\nDuomenų bazėje nepaveikti produktai: " + countDBProducts + "\n";
+
+                    Platform.runLater(() -> {
+                        showPopupWindow("Failas sėkmingai įkeltas", successToPopup, "#146c43", "#FFFFFF");
+                        loadProgress.setVisible(false);
+
+                    });
                 }
                 Platform.runLater(() -> {
                     loadProgress.setVisible(false);
