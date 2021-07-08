@@ -17,9 +17,9 @@ public class ProductCatalog {
     private int id;
     @Column(name = "catalog_no")
     private String catalogNo;
-    @Column(name = "symbol")
+    @Column(name = "symbol", length = 1024)
     private String symbol;
-    @Column(name = "price_net")
+    @Column(name = "price_net", length = 255)
     private String priceNet;
     @Column(name = "stock")
     private int stock;

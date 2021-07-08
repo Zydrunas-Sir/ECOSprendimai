@@ -72,7 +72,7 @@ public class Validation {
         return matcher.find();
     }
 
-    public static final String PRODUCT_FORM_PRICE_PATTERN = "^[0-9]*(\\.[0-9]+)?$";
+    public static final String PRODUCT_FORM_PRICE_PATTERN = "^[0-9]*(\\.[0-9]{1,255}+)?$";
     public static boolean isValidPrice(String price){
         Pattern pattern = Pattern.compile(PRODUCT_FORM_PRICE_PATTERN);
         Matcher matcher = pattern.matcher(price);
