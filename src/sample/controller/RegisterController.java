@@ -288,17 +288,27 @@ public class RegisterController extends Main implements Initializable {
             } else {
                 form_info_label.setText("");
             }
-        });
-            password_confirm_passwordfield.textProperty().addListener((observable, oldValue, newValue) -> {
-                if (!password_confirm_passwordfield.getText().isEmpty()) {
-                    if (!password_passwordfield.getText().equals(password_confirm_passwordfield.getText())) {
-                        form_info_label.setStyle("-fx-text-fill: black;");
-                        form_info_label.setText("Įvesti slaptažodžiai turi sutapti.");
-                return;
-                    } else if (password_passwordfield.getText().equals(password_confirm_passwordfield.getText())) {
-                        form_info_label.setText("");
-                    }
+            if (!password_passwordfield.getText().isEmpty()) {
+                if (!password_passwordfield.getText().equals(password_confirm_passwordfield.getText())) {
+                    form_info_label.setStyle("-fx-text-fill: black;");
+                    form_info_label.setText("Įvesti slaptažodžiai turi sutapti.");
+                    return;
+                } else if (password_passwordfield.getText().equals(password_confirm_passwordfield.getText())) {
+                    form_info_label.setText("");
                 }
+            }
+        });
+        password_confirm_passwordfield.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!password_confirm_passwordfield.getText().isEmpty()) {
+                if (!password_passwordfield.getText().equals(password_confirm_passwordfield.getText())) {
+                    form_info_label.setStyle("-fx-text-fill: black;");
+                    form_info_label.setText("Įvesti slaptažodžiai turi sutapti.");
+                    return;
+                } else if (password_passwordfield.getText().equals(password_confirm_passwordfield.getText())) {
+                    form_info_label.setText("");
+                    return;
+                }
+            }
         });
     }
 
