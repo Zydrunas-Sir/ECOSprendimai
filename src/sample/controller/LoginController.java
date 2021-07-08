@@ -99,6 +99,9 @@ public class LoginController implements Initializable {
     public void login() {
         username_button.setVisible(false);
         register_button.setVisible(false);
+        email_textfield.setDisable(true);
+        password_passwordfield.setDisable(true);
+        check_box_remember_me.setDisable(true);
         loadProgress();
 
         Thread loginLogicThread = new Thread(new Runnable() {
@@ -112,6 +115,9 @@ public class LoginController implements Initializable {
                         load_progress_indicator.setVisible(false);
                         username_button.setVisible(true);
                         register_button.setVisible(true);
+                        email_textfield.setDisable(false);
+                        password_passwordfield.setDisable(false);
+                        check_box_remember_me.setDisable(false);
                         return;
                     });
                 } else if (!Validation.isValidEmail(email_textfield.getText()) || !Validation.isValidPassword(password_passwordfield.getText())) {
@@ -121,6 +127,9 @@ public class LoginController implements Initializable {
                         load_progress_indicator.setVisible(false);
                         username_button.setVisible(true);
                         register_button.setVisible(true);
+                        email_textfield.setDisable(false);
+                        password_passwordfield.setDisable(false);
+                        check_box_remember_me.setDisable(false);
                         return;
                     });
                 }
@@ -168,6 +177,9 @@ public class LoginController implements Initializable {
                             load_progress_indicator.setVisible(false);
                             username_button.setVisible(true);
                             register_button.setVisible(true);
+                            email_textfield.setDisable(false);
+                            password_passwordfield.setDisable(false);
+                            check_box_remember_me.setDisable(false);
 
                         });
                     }
@@ -178,6 +190,9 @@ public class LoginController implements Initializable {
                         load_progress_indicator.setVisible(false);
                         username_button.setVisible(true);
                         register_button.setVisible(true);
+                        email_textfield.setDisable(false);
+                        password_passwordfield.setDisable(false);
+                        check_box_remember_me.setDisable(false);
                     });
                 }
             }

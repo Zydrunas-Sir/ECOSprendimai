@@ -27,6 +27,8 @@ public class RegisterController extends Main implements Initializable {
     @FXML
     public Button register_button;
     @FXML
+    public Button close;
+    @FXML
     public Label form_info_label;
     @FXML
     public TextField company_name_textfield;
@@ -56,6 +58,13 @@ public class RegisterController extends Main implements Initializable {
     //Checks all register fields are correct
     public void register() {
         register_button.setVisible(false);
+        close.setVisible(false);
+        first_name_textfield.setDisable(true);
+        last_name_textfield.setDisable(true);
+        email_textfield.setDisable(true);
+        company_name_textfield.setDisable(true);
+        password_passwordfield.setDisable(true);
+        password_confirm_passwordfield.setDisable(true);
         loadProgress();
         Thread registerLogicalThread = new Thread(new Runnable() {
             @Override
@@ -70,36 +79,90 @@ public class RegisterController extends Main implements Initializable {
                     Platform.runLater(() -> {
                         WarnStyle();
                         form_info_label.setText(Constants.CREDENTIALS_IS_NOT_FILLED);
+                        register_button.setVisible(true);
+                        close.setVisible(true);
+                        load_progress_indicator.setVisible(false);
+                        first_name_textfield.setDisable(false);
+                        last_name_textfield.setDisable(false);
+                        email_textfield.setDisable(false);
+                        company_name_textfield.setDisable(false);
+                        password_passwordfield.setDisable(false);
+                        password_confirm_passwordfield.setDisable(false);
                     });
                     return;
                 } else if (!Validation.isValidFirstName(first_name_textfield.getText())) {
                     Platform.runLater(() -> {
                         WarnStyle();
                         form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_FIRST_NAME);
+                        register_button.setVisible(true);
+                        close.setVisible(true);
+                        load_progress_indicator.setVisible(false);
+                        first_name_textfield.setDisable(false);
+                        last_name_textfield.setDisable(false);
+                        email_textfield.setDisable(false);
+                        company_name_textfield.setDisable(false);
+                        password_passwordfield.setDisable(false);
+                        password_confirm_passwordfield.setDisable(false);
                     });
                     return;
                 } else if (!Validation.isValidLastName(last_name_textfield.getText())) {
                     Platform.runLater(() -> {
                         WarnStyle();
                         form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_LAST_NAME);
+                        register_button.setVisible(true);
+                        close.setVisible(true);
+                        load_progress_indicator.setVisible(false);
+                        first_name_textfield.setDisable(false);
+                        last_name_textfield.setDisable(false);
+                        email_textfield.setDisable(false);
+                        company_name_textfield.setDisable(false);
+                        password_passwordfield.setDisable(false);
+                        password_confirm_passwordfield.setDisable(false);
                     });
                     return;
                 } else if (!Validation.isValidEmail(email_textfield.getText())) {
                     Platform.runLater(() -> {
                         WarnStyle();
                         form_info_label.setText(Constants.CREDENTIALS_IS_NOT_FILLED_EMAIL);
+                        register_button.setVisible(true);
+                        close.setVisible(true);
+                        load_progress_indicator.setVisible(false);
+                        first_name_textfield.setDisable(false);
+                        last_name_textfield.setDisable(false);
+                        email_textfield.setDisable(false);
+                        company_name_textfield.setDisable(false);
+                        password_passwordfield.setDisable(false);
+                        password_confirm_passwordfield.setDisable(false);
                     });
                     return;
                 } else if (!Validation.isValidCompanyName(company_name_textfield.getText())) {
                     Platform.runLater(() -> {
                         WarnStyle();
                         form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_COMPANY_NAME);
+                        register_button.setVisible(true);
+                        close.setVisible(true);
+                        load_progress_indicator.setVisible(false);
+                        first_name_textfield.setDisable(false);
+                        last_name_textfield.setDisable(false);
+                        email_textfield.setDisable(false);
+                        company_name_textfield.setDisable(false);
+                        password_passwordfield.setDisable(false);
+                        password_confirm_passwordfield.setDisable(false);
                     });
                     return;
                 } else if (!Validation.isValidPassword(password_passwordfield.getText())) {
                     Platform.runLater(() -> {
                         WarnStyle();
                         form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_PASSWORD);
+                        register_button.setVisible(true);
+                        close.setVisible(true);
+                        load_progress_indicator.setVisible(false);
+                        first_name_textfield.setDisable(false);
+                        last_name_textfield.setDisable(false);
+                        email_textfield.setDisable(false);
+                        company_name_textfield.setDisable(false);
+                        password_passwordfield.setDisable(false);
+                        password_confirm_passwordfield.setDisable(false);
 
                     });
                     return;
@@ -107,12 +170,30 @@ public class RegisterController extends Main implements Initializable {
                     Platform.runLater(() -> {
                         WarnStyle();
                         form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_PASSWORD);
+                        register_button.setVisible(true);
+                        close.setVisible(true);
+                        load_progress_indicator.setVisible(false);
+                        first_name_textfield.setDisable(false);
+                        last_name_textfield.setDisable(false);
+                        email_textfield.setDisable(false);
+                        company_name_textfield.setDisable(false);
+                        password_passwordfield.setDisable(false);
+                        password_confirm_passwordfield.setDisable(false);
                     });
                     return;
                 } else if (!password_passwordfield.getText().equals(password_confirm_passwordfield.getText())) {
                     Platform.runLater(() -> {
                         WarnStyle();
                         form_info_label.setText(Constants.PASSWORD_IS_NOT_EQUAL);
+                        register_button.setVisible(true);
+                        close.setVisible(true);
+                        load_progress_indicator.setVisible(false);
+                        first_name_textfield.setDisable(false);
+                        last_name_textfield.setDisable(false);
+                        email_textfield.setDisable(false);
+                        company_name_textfield.setDisable(false);
+                        password_passwordfield.setDisable(false);
+                        password_confirm_passwordfield.setDisable(false);
                     });
                 }
                 //Sending data with email address and getting answer is it exists in boolean
@@ -128,7 +209,14 @@ public class RegisterController extends Main implements Initializable {
                         form_info_label.setText(Constants.EMAIL_EXISTS);
                         email_textfield.setStyle("-fx-text-fill: red;");
                         register_button.setVisible(true);
+                        close.setVisible(true);
                         load_progress_indicator.setVisible(false);
+                        first_name_textfield.setDisable(false);
+                        last_name_textfield.setDisable(false);
+                        email_textfield.setDisable(false);
+                        company_name_textfield.setDisable(false);
+                        password_passwordfield.setDisable(false);
+                        password_confirm_passwordfield.setDisable(false);
                     }
                 });
             }
@@ -200,12 +288,27 @@ public class RegisterController extends Main implements Initializable {
             } else {
                 form_info_label.setText("");
             }
-            if(!password_confirm_passwordfield.getText().equals(password_passwordfield.getText())) {
-                form_info_label.setStyle("-fx-text-fill: black;");
-                form_info_label.setText("Įvesti slaptažodžiai turi sutapti.");
-                return;
+            if (!password_passwordfield.getText().isEmpty()) {
+                if (!password_passwordfield.getText().equals(password_confirm_passwordfield.getText())) {
+                    form_info_label.setStyle("-fx-text-fill: black;");
+                    form_info_label.setText("Įvesti slaptažodžiai turi sutapti.");
+                    return;
+                } else if (password_passwordfield.getText().equals(password_confirm_passwordfield.getText())) {
+                    form_info_label.setText("");
+                }
             }
-
+        });
+        password_confirm_passwordfield.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!password_confirm_passwordfield.getText().isEmpty()) {
+                if (!password_passwordfield.getText().equals(password_confirm_passwordfield.getText())) {
+                    form_info_label.setStyle("-fx-text-fill: black;");
+                    form_info_label.setText("Įvesti slaptažodžiai turi sutapti.");
+                    return;
+                } else if (password_passwordfield.getText().equals(password_confirm_passwordfield.getText())) {
+                    form_info_label.setText("");
+                    return;
+                }
+            }
         });
     }
 
