@@ -17,6 +17,7 @@ import sample.utils.Constants;
 import sample.utils.Validation;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -80,6 +81,12 @@ public class ProductFormController extends Main implements Initializable {
 
 
         List<Categories> categoryNames = CategoriesDAO.selectCategoriesForListView();
+        List<Categories> categoriesList = new ArrayList<>();
+        for (Categories category : categoryNames){
+            if( !category.getName().equals("   Visos kategorijos")){
+                categoriesList.add(category);
+            }
+        }
         categoryComboBox.setCellFactory(lv -> new ListCell<Categories>() {
             public void updateItem(Categories item, boolean empty) {
                 super.updateItem(item, empty);
@@ -90,7 +97,7 @@ public class ProductFormController extends Main implements Initializable {
                 }
             }
         });
-        categoryComboBox.getItems().addAll(categoryNames);
+        categoryComboBox.getItems().addAll(categoriesList);
 
     }
 

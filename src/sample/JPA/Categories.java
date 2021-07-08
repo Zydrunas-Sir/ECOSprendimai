@@ -1,6 +1,5 @@
 package sample.JPA;
 
-import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
