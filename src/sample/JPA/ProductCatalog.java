@@ -19,7 +19,7 @@ public class ProductCatalog {
     private String catalogNo;
     @Column(name = "symbol", length = 1024)
     private String symbol;
-    @Column(name = "price_net", length = 255)
+    @Column(name = "price_net")
     private String priceNet;
     @Column(name = "stock")
     private int stock;
@@ -69,8 +69,7 @@ public class ProductCatalog {
         this.date = date;
     }
 
-    public ProductCatalog(int id, String catalogNo, String symbol, String priceNet, int stock, int groupId, double aukstis, double plotis, double gylis, String ip_klase, String spalva, String korpusas, String tipas, double vardine_itampa, double galia, double sviesos_srautas, String atsparumo_klase, String matmenys, int darbine_temperatura, String image_url, Date date) {
-        this.id = id;
+    public ProductCatalog(String catalogNo, String symbol, String priceNet, int stock, int groupId, double aukstis, double plotis, double gylis, String ip_klase, String spalva, String korpusas, String tipas, double vardine_itampa, double galia, double sviesos_srautas, String atsparumo_klase, String matmenys, int darbine_temperatura, String image_url, Date date) {
         this.catalogNo = catalogNo;
         this.symbol = symbol;
         this.priceNet = priceNet;
@@ -153,11 +152,6 @@ public class ProductCatalog {
     public void setId(int id) {
         this.id = id;
     }
-
-
-
-
-
 
 
     public String getIp_klase() {

@@ -113,10 +113,22 @@ public class ProductFormController extends Main implements Initializable {
 
     public void registerProduct(Categories item) {
         ProductCatalog product = new ProductCatalog(catalog_no_textField.getText(), symbol_textField.getText(),
-                price_textField.getText(), Integer.parseInt(stock_textField.getText()),
-                item.getId(), null);
+                price_textField.getText(), Integer.parseInt(nullChecker(stock_textField.getText())),
+                item.getId(), Double.parseDouble(nullChecker(height_field.getText())), Double.parseDouble(nullChecker(width_field.getText())),
+                Double.parseDouble(nullChecker(depth_field.getText())), ip_class_field.getText(), color_field.getText(),
+                body_field.getText(), type_field.getText(), Double.parseDouble(nullChecker(nominal_voltage_field.getText())),
+                Double.parseDouble(nullChecker(power_field.getText())), Double.parseDouble(nullChecker(light_wave_field.getText())),
+                resistance_class_field.getText(), dimensions_field.getText(), Integer.parseInt(nullChecker(temperature_field.getText())),
+                null, null);
         ProductCatalogDAO.insert(product);
         closeWindow();
+    }
+
+    public String nullChecker(String value){
+        if (value.equals(null)){
+            return "0";
+        }
+        return value;
     }
 
 
@@ -151,7 +163,7 @@ public class ProductFormController extends Main implements Initializable {
 
         double SIZE = 13;
 
-        CategoryParameters categoryParameters = new CategoryParameters( true, true, true, true, true, true, true, true, true, true, true, true, true);
+        CategoryParameters categoryParameters = CategoryParametersDAO.getParametersByCategoryParameterId(category_parameter_id);
 
         HBox hBox1 = new HBox();
         VBox vBox1 = new VBox();
@@ -290,7 +302,6 @@ public class ProductFormController extends Main implements Initializable {
             Label label = new Label();
             label.setFont(new Font("Segoe UI Light", SIZE));
             label.setText("Matmenys:");
-            TextField dimensions_field = new TextField();
             dimensions_field.setLayoutX(60);
             dimensions_field.setPrefWidth(250);
             vBox1.getChildren().add(label);
