@@ -6,6 +6,7 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -18,7 +19,10 @@ import sample.utils.Validation;
 
 import java.net.URL;
 import java.util.List;
+import java.util.Observable;
 import java.util.ResourceBundle;
+
+import static javafx.scene.layout.Region.USE_COMPUTED_SIZE;
 
 public class ProductFormController extends Main implements Initializable {
 
@@ -46,7 +50,10 @@ public class ProductFormController extends Main implements Initializable {
     TextField nominal_voltage_field = new TextField();
 
     @FXML
-    public VBox vbox;
+    public AnchorPane main_anchor_panel;
+
+    public static VBox vbox;
+    public static ScrollPane letsScroll;
 
     public void createProduct(ActionEvent actionEvent) {
         Categories item = categoryComboBox.getSelectionModel().getSelectedItem();
@@ -91,6 +98,15 @@ public class ProductFormController extends Main implements Initializable {
             }
         });
         categoryComboBox.getItems().addAll(categoryNames);
+        vbox = new VBox();
+        letsScroll = new ScrollPane();
+        letsScroll.setLayoutX(429);
+        letsScroll.setLayoutY(14);
+        letsScroll.prefWidth(300);
+        letsScroll.prefHeight(300);
+        letsScroll.setVisible(false);
+        letsScroll.setContent(vbox);
+        main_anchor_panel.getChildren().add(letsScroll);
 
     }
 
@@ -114,6 +130,8 @@ public class ProductFormController extends Main implements Initializable {
 
 
     public void mouseEventForTableView(ActionEvent event) {
+        System.out.println("Method mouseEventForTableView() initialized");
+
         vbox.getChildren().clear();
         Categories tableItem;
         try {
@@ -141,10 +159,32 @@ public class ProductFormController extends Main implements Initializable {
 
 
     public void addParametersForProduct(int category_parameter_id) {
+        System.out.println("Method addParametersForProduct() initialized");
+
+        CategoryParameters categoryParameters = new CategoryParameters( true, true, true, true, true, true, true, true, true, true, true, true, true);
+
+
+        letsScroll.setVisible(true);
+        letsScroll.setPrefSize(430, 405);
+        main_anchor_panel.setTopAnchor(letsScroll, 40.0);
+        main_anchor_panel.setBottomAnchor(letsScroll, 80.0);
+
+        vbox.setLayoutY(14);
+        vbox.prefWidth(USE_COMPUTED_SIZE);
+        vbox.prefHeight(USE_COMPUTED_SIZE);
+        vbox.setVisible(true);
+
+        Stage productFormStage = (Stage) create_product_button.getScene().getWindow();
+        productFormStage.setWidth(887);
+        productFormStage.setHeight(531);
+        productFormStage.centerOnScreen();
+        productFormStage.maxWidthProperty().bind(productFormStage.widthProperty());
+        productFormStage.minWidthProperty().bind(productFormStage.widthProperty());
+        productFormStage.setMaxHeight(900);
+        productFormStage.setMinHeight(400);
 
         double SIZE = 13;
 
-        CategoryParameters categoryParameters = new CategoryParameters( true, true, true, true, true, true, true, true, true, true, true, true, true);
 
         HBox hBox1 = new HBox();
         VBox vBox1 = new VBox();
@@ -158,6 +198,7 @@ public class ProductFormController extends Main implements Initializable {
         vBox2.setSpacing(6);
         vBox1.setSpacing(12);
         vBox1.setAlignment(Pos.CENTER_RIGHT);
+
 
         if (categoryParameters.isAukstis()) { //aukstis
             Label label = new Label();
@@ -301,9 +342,24 @@ public class ProductFormController extends Main implements Initializable {
             vBox2.getChildren().add(temperature_field);
         }
 
+//         FIELDS FOR TESTING
+        for (int i = 0; i < 6; i++) {
+           Label label = new Label();
+            label.setFont(new Font("Segoe UI Light", SIZE));
+            label.setText("Test field:");
+
+            TextField textField = new TextField();
+            textField.setLayoutX(60);
+            textField.setPrefWidth(250);
+            vBox1.getChildren().add(label);
+            vBox2.getChildren().add(textField);
+        }
+//         ^ DELETE AFTER TEST
+
+
+
         hBox1.getChildren().add(vBox1);
         hBox1.getChildren().add(vBox2);
-
         vbox.getChildren().add(hBox1);
 
        System.out.println(temperature_field.getText());

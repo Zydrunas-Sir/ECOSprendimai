@@ -42,7 +42,7 @@
                         <MenuItem mnemonicParsing="false" onAction="#openExcelFileFromDialog" text="Ikelti EXCEL faila..." />
                     </items>
                 </Menu>
-                <Menu fx:id="add_menu_bar" mnemonicParsing="false" text="Prideti">
+                <Menu fx:id="add_menu_bar" mnemonicParsing="false" text="Pridėti">
                     <items>
                         <MenuItem mnemonicParsing="false" onAction="#createNewProduct" text="Pridėti produkta" />
                         <MenuItem mnemonicParsing="false" onAction="#createNewCategory" text="Pridėti kategorija" />
