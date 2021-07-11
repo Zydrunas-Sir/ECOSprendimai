@@ -30,6 +30,7 @@ public class ProductFormController extends Main implements Initializable {
     public TextField stock_textField;
     public Label form_info_label;
     public ComboBox<Categories> categoryComboBox;
+    public CategoryParameters categoryParameters;
 
 
     TextField height_field = new TextField();
@@ -70,6 +71,45 @@ public class ProductFormController extends Main implements Initializable {
         } else if ((item == null)) {
             WarnStyle();
             form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CHOSEN_CATEGORY);
+        } else if (categoryParameters.isAukstis() && !Validation.isValidAukstis(height_field.getText())){
+            WarnStyle();
+            form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_PRODUCT_AUKSTIS);
+        } else if (categoryParameters.isPlotis() && !Validation.isValidPlotis(width_field.getText())){
+            WarnStyle();
+            form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_PRODUCT_PLOTIS);
+        } else if (categoryParameters.isGylis() && !Validation.isValidGylis(depth_field.getText())){
+            WarnStyle();
+            form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_PRODUCT_GYLIS);
+        } else if (categoryParameters.isIp_klase() && !Validation.isValidIpKlase(ip_class_field.getText())){
+            WarnStyle();
+            form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_PRODUCT_IP_KLASE);
+        } else if (categoryParameters.isSpalva() && !Validation.isValidSpalva(color_field.getText())){
+            WarnStyle();
+            form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_PRODUCT_SPALVA);
+        } else if (categoryParameters.isKorpusas() && !Validation.isValidKorpusas(body_field.getText())){
+            WarnStyle();
+            form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_PRODUCT_KORPUSAS);
+        } else if (categoryParameters.isTipas() && !Validation.isValidTipas(type_field.getText())){
+            WarnStyle();
+            form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_PRODUCT_TIPAS);
+        } else if (categoryParameters.isVardine_itampa() && !Validation.isValidVardineItampa(nominal_voltage_field.getText())){
+            WarnStyle();
+            form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_PRODUCT_VARDINE_ITAMPA);
+        } else if (categoryParameters.isGalia() && !Validation.isValidGalia(power_field.getText())){
+            WarnStyle();
+            form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_PRODUCT_GALIA);
+        } else if (categoryParameters.isSviesos_srautas() && !Validation.isValidSviesosSrautas(light_wave_field.getText())){
+            WarnStyle();
+            form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_PRODUCT_SVIESOS_SRAUTAS);
+        } else if (categoryParameters.isAtsparumo_klase() && !Validation.isValidAtsparumas(resistance_class_field.getText())){
+            WarnStyle();
+            form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_PRODUCT_ATSPARUMO_KLASE);
+        } else if (categoryParameters.isMatmenys() && !Validation.isValidMatmenys(dimensions_field.getText())){
+            WarnStyle();
+            form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_PRODUCT_MATMENYS);
+        } else if (categoryParameters.isDarbine_temperatura() && !Validation.isValidDarbineTemperatura(temperature_field.getText())){
+            WarnStyle();
+            form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_PRODUCT_DARBINE_TEMPERATURA);
         } else {
             registerProduct(item);
         }
@@ -113,20 +153,27 @@ public class ProductFormController extends Main implements Initializable {
 
     public void registerProduct(Categories item) {
         ProductCatalog product = new ProductCatalog(catalog_no_textField.getText(), symbol_textField.getText(),
-                price_textField.getText(), Integer.parseInt(nullChecker(stock_textField.getText())),
-                item.getId(), Double.parseDouble(nullChecker(height_field.getText())), Double.parseDouble(nullChecker(width_field.getText())),
-                Double.parseDouble(nullChecker(depth_field.getText())), ip_class_field.getText(), color_field.getText(),
-                body_field.getText(), type_field.getText(), Double.parseDouble(nullChecker(nominal_voltage_field.getText())),
-                Double.parseDouble(nullChecker(power_field.getText())), Double.parseDouble(nullChecker(light_wave_field.getText())),
-                resistance_class_field.getText(), dimensions_field.getText(), Integer.parseInt(nullChecker(temperature_field.getText())),
+                price_textField.getText(), Integer.parseInt(nullCheckerForNumbers(stock_textField.getText())),
+                item.getId(), Double.parseDouble(nullCheckerForNumbers(height_field.getText())), Double.parseDouble(nullCheckerForNumbers(width_field.getText())),
+                Double.parseDouble(nullCheckerForNumbers(depth_field.getText())), nullCheckerForText(ip_class_field.getText()),nullCheckerForText(color_field.getText()) ,
+                 nullCheckerForText(body_field.getText()), nullCheckerForText(type_field.getText()), Double.parseDouble(nullCheckerForNumbers(nominal_voltage_field.getText())),
+                Double.parseDouble(nullCheckerForNumbers(power_field.getText())), Double.parseDouble(nullCheckerForNumbers(light_wave_field.getText())),
+                nullCheckerForText(resistance_class_field.getText()), nullCheckerForText(dimensions_field.getText()), Integer.parseInt(nullCheckerForNumbers(temperature_field.getText())),
                 null, null);
         ProductCatalogDAO.insert(product);
         closeWindow();
     }
 
-    public String nullChecker(String value){
-        if (value.equals(null)){
+    public String nullCheckerForNumbers(String value){
+        if (value.equals("")){
             return "0";
+        }
+        return value;
+    }
+
+    public String nullCheckerForText(String value){
+        if (value.equals("")){
+            return null;
         }
         return value;
     }
@@ -138,7 +185,13 @@ public class ProductFormController extends Main implements Initializable {
         try {
             if (!categoryComboBox.getSelectionModel().isEmpty()) {
                 tableItem = categoryComboBox.getSelectionModel().getSelectedItem();
-                addParametersForProduct(tableItem.getCategory_parameter_id());
+                if (tableItem.getCategory_parameter_id() != 0){
+                    addParametersForProduct(tableItem.getCategory_parameter_id());
+                }
+                else{
+                    WarnStyle();
+                    form_info_label.setText("Pasirinkite kategorija turinčia parametrus");
+                }
             }
         } catch (IllegalStateException e) {
             System.out.println("mouseEventForTreeView( " + e + " )");
@@ -163,7 +216,7 @@ public class ProductFormController extends Main implements Initializable {
 
         double SIZE = 13;
 
-        CategoryParameters categoryParameters = CategoryParametersDAO.getParametersByCategoryParameterId(category_parameter_id);
+        categoryParameters = CategoryParametersDAO.getParametersByCategoryParameterId(category_parameter_id);
 
         HBox hBox1 = new HBox();
         VBox vBox1 = new VBox();

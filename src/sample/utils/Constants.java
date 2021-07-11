@@ -51,8 +51,8 @@ public class Constants {
     public static final String CREDENTIALS_IS_NOT_CORRECT_PRODUCT_SPALVA = "Spalva neatitinka  reikalavimų.";
     public static final String CREDENTIALS_IS_NOT_CORRECT_PRODUCT_SVIESOS_SRAUTAS = "Šviesos srautas neatitinka  reikalavimų.";
     public static final String CREDENTIALS_IS_NOT_CORRECT_PRODUCT_TIPAS = "Tipas neatitinka  reikalavimų.";
-    public static final String CREDENTIALS_IS_NOT_CORRECT_PRODUCT_VARDINE_TEMPERATURA = "Vardinė temperatūra neatitinka  reikalavimų.";
-
+    public static final String CREDENTIALS_IS_NOT_CORRECT_PRODUCT_VARDINE_ITAMPA = "Vardinė itampa neatitinka  reikalavimų.";
+    public static final String CREDENTIALS_IS_NOT_CORRECT_PRODUCT_IP_KLASE = "Ip klasė neatitinka  reikalavimų.";
 
     /* Naujo produkto kūrimo lango Validacija : End */
 
