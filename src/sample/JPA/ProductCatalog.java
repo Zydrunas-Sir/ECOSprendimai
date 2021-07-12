@@ -33,26 +33,62 @@ public class ProductCatalog {
     private double plotis;
     @Column(name = "gylis")
     private double gylis;
-    @Column(name = "ip_klase")
-    private String ip_klase;
-    @Column(name = "spalva")
-    private String spalva;
-    @Column(name = "korpusas")
-    private String korpusas;
-    @Column(name = "tipas")
-    private String tipas;
+    @Column(name = "skersmuo")
+    private double skersmuo;
+    @Column(name = "ilgis")
+    private double ilgis;
+    @Column(name = "apsaugos_laipsnis")
+    private String apsaugos_laipsnis;
+    @Column(name = "moduliu_skaicius")
+    private double moduliu_skaicius;
+    @Column(name = "vardine_srove")
+    private double vardine_srove;
     @Column(name = "vardine_itampa")
     private double vardine_itampa;
+    @Column(name = "mechaninis_atsparumas_IK")
+    private String mechaninis_atsparumas_IK;
+    @Column(name = "spalva")
+    private String spalva;
+    @Column(name = "korpuso_medziaga")
+    private String korpuso_medziaga;
+    @Column(name = "izoliacija")
+    private String izoliacija;
+    @Column(name = "svoris")
+    private double svoris;
     @Column(name = "galia")
     private double galia;
     @Column(name = "sviesos_srautas")
     private double sviesos_srautas;
-    @Column(name = "atsparumo_klase")
-    private String atsparumo_klase;
-    @Column(name = "matmenys")
-    private String matmenys;
+    @Column(name = "sviesos_spalvos_temperatura")
+    private String sviesos_spalvos_temperatura;
+    @Column(name = "laidininkas")
+    private String laidininkas;
+    @Column(name = "izoliacija2")
+    private String izoliacija2;
     @Column(name = "darbine_temperatura")
     private int darbine_temperatura;
+    @Column(name = "Max_darbine_temperatura")
+    private int Max_darbine_temperatura;
+    @Column(name = "apvalkalas")
+    private String apvalkalas;
+    @Column(name = "CPR_klase")
+    private String CPR_klase;
+    @Column(name = "isjungimo_geba")
+    private String isjungimo_geba;
+    @Column(name = "isjungimo_charakteristika")
+    private String isjungimo_charakteristika;
+    @Column(name = "mechaninis_atsparumas")
+    private String mechaninis_atsparumas;
+    @Column(name = "skerspjuvis")
+    private String skerspjuvis;
+    @Column(name = "skerspjuvis2")
+    private String skerspjuvis2;
+    @Column(name = "nuotekio_srove")
+    private String nuotekio_srove;
+    @Column(name = "dydis")
+    private int dydis;
+    @Column(name = "plotas")
+    private String plotas;
     @Column(name = "image_url", length = 1024)
     private String image_url;
     @Column(name = "date")
@@ -69,7 +105,7 @@ public class ProductCatalog {
         this.date = date;
     }
 
-    public ProductCatalog(String catalogNo, String symbol, String priceNet, int stock, int groupId, double aukstis, double plotis, double gylis, String ip_klase, String spalva, String korpusas, String tipas, double vardine_itampa, double galia, double sviesos_srautas, String atsparumo_klase, String matmenys, int darbine_temperatura, String image_url, Date date) {
+    public ProductCatalog(String catalogNo, String symbol, String priceNet, int stock, int groupId, double aukstis, double plotis, double gylis, double skersmuo, double ilgis, String apsaugos_laipsnis, double moduliu_skaicius, double vardine_srove, double vardine_itampa, String mechaninis_atsparumas_IK, String spalva, String korpuso_medziaga, String izoliacija, double svoris, double galia, double sviesos_srautas, String sviesos_spalvos_temperatura, String laidininkas, String izoliacija2, int darbine_temperatura, int max_darbine_temperatura, String apvalkalas, String CPR_klase, String isjungimo_geba, String isjungimo_charakteristika, String mechaninis_atsparumas, String skerspjuvis, String skerspjuvis2, String nuotekio_srove, int dydis, String plotas, String image_url, Date date) {
         this.catalogNo = catalogNo;
         this.symbol = symbol;
         this.priceNet = priceNet;
@@ -78,16 +114,34 @@ public class ProductCatalog {
         this.aukstis = aukstis;
         this.plotis = plotis;
         this.gylis = gylis;
-        this.ip_klase = ip_klase;
-        this.spalva = spalva;
-        this.korpusas = korpusas;
-        this.tipas = tipas;
+        this.skersmuo = skersmuo;
+        this.ilgis = ilgis;
+        this.apsaugos_laipsnis = apsaugos_laipsnis;
+        this.moduliu_skaicius = moduliu_skaicius;
+        this.vardine_srove = vardine_srove;
         this.vardine_itampa = vardine_itampa;
+        this.mechaninis_atsparumas_IK = mechaninis_atsparumas_IK;
+        this.spalva = spalva;
+        this.korpuso_medziaga = korpuso_medziaga;
+        this.izoliacija = izoliacija;
+        this.svoris = svoris;
         this.galia = galia;
         this.sviesos_srautas = sviesos_srautas;
-        this.atsparumo_klase = atsparumo_klase;
-        this.matmenys = matmenys;
+        this.sviesos_spalvos_temperatura = sviesos_spalvos_temperatura;
+        this.laidininkas = laidininkas;
+        this.izoliacija2 = izoliacija2;
         this.darbine_temperatura = darbine_temperatura;
+        Max_darbine_temperatura = max_darbine_temperatura;
+        this.apvalkalas = apvalkalas;
+        this.CPR_klase = CPR_klase;
+        this.isjungimo_geba = isjungimo_geba;
+        this.isjungimo_charakteristika = isjungimo_charakteristika;
+        this.mechaninis_atsparumas = mechaninis_atsparumas;
+        this.skerspjuvis = skerspjuvis;
+        this.skerspjuvis2 = skerspjuvis2;
+        this.nuotekio_srove = nuotekio_srove;
+        this.dydis = dydis;
+        this.plotas = plotas;
         this.image_url = image_url;
         this.date = date;
     }
@@ -103,6 +157,190 @@ public class ProductCatalog {
 
 
     public ProductCatalog() {
+    }
+
+    public double getSkersmuo() {
+        return skersmuo;
+    }
+
+    public void setSkersmuo(double skersmuo) {
+        this.skersmuo = skersmuo;
+    }
+
+    public double getIlgis() {
+        return ilgis;
+    }
+
+    public void setIlgis(double ilgis) {
+        this.ilgis = ilgis;
+    }
+
+    public String getApsaugos_laipsnis() {
+        return apsaugos_laipsnis;
+    }
+
+    public void setApsaugos_laipsnis(String apsaugos_laipsnis) {
+        this.apsaugos_laipsnis = apsaugos_laipsnis;
+    }
+
+    public double getModuliu_skaicius() {
+        return moduliu_skaicius;
+    }
+
+    public void setModuliu_skaicius(double moduliu_skaicius) {
+        this.moduliu_skaicius = moduliu_skaicius;
+    }
+
+    public double getVardine_srove() {
+        return vardine_srove;
+    }
+
+    public void setVardine_srove(double vardine_srove) {
+        this.vardine_srove = vardine_srove;
+    }
+
+    public String getMechaninis_atsparumas_IK() {
+        return mechaninis_atsparumas_IK;
+    }
+
+    public void setMechaninis_atsparumas_IK(String mechaninis_atsparumas_IK) {
+        this.mechaninis_atsparumas_IK = mechaninis_atsparumas_IK;
+    }
+
+    public String getKorpuso_medziaga() {
+        return korpuso_medziaga;
+    }
+
+    public void setKorpuso_medziaga(String korpuso_medziaga) {
+        this.korpuso_medziaga = korpuso_medziaga;
+    }
+
+    public String getIzoliacija() {
+        return izoliacija;
+    }
+
+    public void setIzoliacija(String izoliacija) {
+        this.izoliacija = izoliacija;
+    }
+
+    public double getSvoris() {
+        return svoris;
+    }
+
+    public void setSvoris(double svoris) {
+        this.svoris = svoris;
+    }
+
+    public String getSviesos_spalvos_temperatura() {
+        return sviesos_spalvos_temperatura;
+    }
+
+    public void setSviesos_spalvos_temperatura(String sviesos_spalvos_temperatura) {
+        this.sviesos_spalvos_temperatura = sviesos_spalvos_temperatura;
+    }
+
+    public String getLaidininkas() {
+        return laidininkas;
+    }
+
+    public void setLaidininkas(String laidininkas) {
+        this.laidininkas = laidininkas;
+    }
+
+    public String getIzoliacija2() {
+        return izoliacija2;
+    }
+
+    public void setIzoliacija2(String izoliacija2) {
+        this.izoliacija2 = izoliacija2;
+    }
+
+    public int getMax_darbine_temperatura() {
+        return Max_darbine_temperatura;
+    }
+
+    public void setMax_darbine_temperatura(int max_darbine_temperatura) {
+        Max_darbine_temperatura = max_darbine_temperatura;
+    }
+
+    public String getApvalkalas() {
+        return apvalkalas;
+    }
+
+    public void setApvalkalas(String apvalkalas) {
+        this.apvalkalas = apvalkalas;
+    }
+
+    public String getCPR_klase() {
+        return CPR_klase;
+    }
+
+    public void setCPR_klase(String CPR_klase) {
+        this.CPR_klase = CPR_klase;
+    }
+
+    public String getIsjungimo_geba() {
+        return isjungimo_geba;
+    }
+
+    public void setIsjungimo_geba(String isjungimo_geba) {
+        this.isjungimo_geba = isjungimo_geba;
+    }
+
+    public String getIsjungimo_charakteristika() {
+        return isjungimo_charakteristika;
+    }
+
+    public void setIsjungimo_charakteristika(String isjungimo_charakteristika) {
+        this.isjungimo_charakteristika = isjungimo_charakteristika;
+    }
+
+    public String getMechaninis_atsparumas() {
+        return mechaninis_atsparumas;
+    }
+
+    public void setMechaninis_atsparumas(String mechaninis_atsparumas) {
+        this.mechaninis_atsparumas = mechaninis_atsparumas;
+    }
+
+    public String getSkerspjuvis() {
+        return skerspjuvis;
+    }
+
+    public void setSkerspjuvis(String skerspjuvis) {
+        this.skerspjuvis = skerspjuvis;
+    }
+
+    public String getSkerspjuvis2() {
+        return skerspjuvis2;
+    }
+
+    public void setSkerspjuvis2(String skerspjuvis2) {
+        this.skerspjuvis2 = skerspjuvis2;
+    }
+
+    public String getNuotekio_srove() {
+        return nuotekio_srove;
+    }
+
+    public void setNuotekio_srove(String nuotekio_srove) {
+        this.nuotekio_srove = nuotekio_srove;
+    }
+
+    public int getDydis() {
+        return dydis;
+    }
+
+    public void setDydis(int dydis) {
+        this.dydis = dydis;
+    }
+
+    public String getPlotas() {
+        return plotas;
+    }
+
+    public void setPlotas(String plotas) {
+        this.plotas = plotas;
     }
 
     public String getCatalogNo() {
@@ -153,37 +391,12 @@ public class ProductCatalog {
         this.id = id;
     }
 
-
-    public String getIp_klase() {
-        return ip_klase;
-    }
-
-    public void setIp_klase(String ip_klase) {
-        this.ip_klase = ip_klase;
-    }
-
     public String getSpalva() {
         return spalva;
     }
 
     public void setSpalva(String spalva) {
         this.spalva = spalva;
-    }
-
-    public String getKorpusas() {
-        return korpusas;
-    }
-
-    public void setKorpusas(String korpusas) {
-        this.korpusas = korpusas;
-    }
-
-    public String getTipas() {
-        return tipas;
-    }
-
-    public void setTipas(String tipas) {
-        this.tipas = tipas;
     }
 
     public double getAukstis() {
@@ -232,22 +445,6 @@ public class ProductCatalog {
 
     public void setSviesos_srautas(double sviesos_srautas) {
         this.sviesos_srautas = sviesos_srautas;
-    }
-
-    public String getAtsparumo_klase() {
-        return atsparumo_klase;
-    }
-
-    public void setAtsparumo_klase(String atsparumo_klase) {
-        this.atsparumo_klase = atsparumo_klase;
-    }
-
-    public String getMatmenys() {
-        return matmenys;
-    }
-
-    public void setMatmenys(String matmenys) {
-        this.matmenys = matmenys;
     }
 
     public int getDarbine_temperatura() {

@@ -98,13 +98,13 @@ public class ProductFormController extends Main implements Initializable {
         } else if (categoryParameters.isGalia() && !Validation.isValidGalia(power_field.getText())){
             WarnStyle();
             form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_PRODUCT_GALIA);
-        } else if (categoryParameters.isSviesos_srautas() && !Validation.isValidSviesosSrautas(light_wave_field.getText())){
-            WarnStyle();
-            form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_PRODUCT_SVIESOS_SRAUTAS);
         } else if (categoryParameters.isAtsparumo_klase() && !Validation.isValidAtsparumas(resistance_class_field.getText())){
             WarnStyle();
             form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_PRODUCT_ATSPARUMO_KLASE);
-        } else if (categoryParameters.isMatmenys() && !Validation.isValidMatmenys(dimensions_field.getText())){
+        } else if (categoryParameters.isSviesos_srautas() && !Validation.isValidSviesosSrautas(light_wave_field.getText())){
+            WarnStyle();
+            form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_PRODUCT_SVIESOS_SRAUTAS);
+        }  else if (categoryParameters.isMatmenys() && !Validation.isValidMatmenys(dimensions_field.getText())){
             WarnStyle();
             form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_PRODUCT_MATMENYS);
         } else if (categoryParameters.isDarbine_temperatura() && !Validation.isValidDarbineTemperatura(temperature_field.getText())){
@@ -152,7 +152,7 @@ public class ProductFormController extends Main implements Initializable {
     }
 
     public void registerProduct(Categories item) {
-        ProductCatalog product = new ProductCatalog(catalog_no_textField.getText(), symbol_textField.getText(),
+        /*ProductCatalog product = new ProductCatalog(catalog_no_textField.getText(), symbol_textField.getText(),
                 price_textField.getText(), Integer.parseInt(nullCheckerForNumbers(stock_textField.getText())),
                 item.getId(), Double.parseDouble(nullCheckerForNumbers(height_field.getText())), Double.parseDouble(nullCheckerForNumbers(width_field.getText())),
                 Double.parseDouble(nullCheckerForNumbers(depth_field.getText())), nullCheckerForText(ip_class_field.getText()),nullCheckerForText(color_field.getText()) ,
@@ -161,7 +161,7 @@ public class ProductFormController extends Main implements Initializable {
                 nullCheckerForText(resistance_class_field.getText()), nullCheckerForText(dimensions_field.getText()), Integer.parseInt(nullCheckerForNumbers(temperature_field.getText())),
                 null, null);
         ProductCatalogDAO.insert(product);
-        closeWindow();
+        closeWindow();*/
     }
 
     public String nullCheckerForNumbers(String value){
