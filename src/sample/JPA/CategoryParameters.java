@@ -55,7 +55,7 @@ public class CategoryParameters {
     @Column(name = "darbine_temperatura")
     private boolean darbine_temperatura;
     @Column(name = "Max_darbine_temperatura")
-    private boolean Max_darbine_temperatura;
+    private boolean max_darbine_temperatura;
     @Column(name = "apvalkalas")
     private boolean apvalkalas;
     @Column(name = "CPR_klase")
@@ -102,7 +102,7 @@ public class CategoryParameters {
         this.laidininkas = laidininkas;
         this.izoliacija2 = izoliacija2;
         this.darbine_temperatura = darbine_temperatura;
-        Max_darbine_temperatura = max_darbine_temperatura;
+        this.max_darbine_temperatura = max_darbine_temperatura;
         this.apvalkalas = apvalkalas;
         this.CPR_klase = CPR_klase;
         this.isjungimo_geba = isjungimo_geba;
@@ -200,7 +200,7 @@ public class CategoryParameters {
     }
 
     public boolean isMax_darbine_temperatura() {
-        return Max_darbine_temperatura;
+        return max_darbine_temperatura;
     }
 
     public boolean isApvalkalas() {
@@ -324,7 +324,7 @@ public class CategoryParameters {
     }
 
     public void setMax_darbine_temperatura(boolean max_darbine_temperatura) {
-        Max_darbine_temperatura = max_darbine_temperatura;
+        this.max_darbine_temperatura = max_darbine_temperatura;
     }
 
     public void setApvalkalas(boolean apvalkalas) {

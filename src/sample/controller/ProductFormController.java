@@ -104,7 +104,7 @@ public class ProductFormController extends Main implements Initializable {
         } else if (categoryParameters.isGylis() && !Validation.isValidGylis(gylis_field.getText())){
             WarnStyle();
             form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_PRODUCT_GYLIS);
-        } else if (categoryParameters.isIp_klase() && !Validation.isValidIpKlase(ip_class_field.getText())){
+        }/* else if (categoryParameters.isIp_klase() && !Validation.isValidIpKlase(ip_class_field.getText())){
             WarnStyle();
             form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_PRODUCT_IP_KLASE);
         } else if (categoryParameters.isSpalva() && !Validation.isValidSpalva(color_field.getText())){
@@ -134,7 +134,7 @@ public class ProductFormController extends Main implements Initializable {
         } else if (categoryParameters.isDarbine_temperatura() && !Validation.isValidDarbineTemperatura(temperature_field.getText())){
             WarnStyle();
             form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_PRODUCT_DARBINE_TEMPERATURA);
-        } else {
+        }*/ else {
             registerProduct(item);
         }
 
@@ -176,16 +176,25 @@ public class ProductFormController extends Main implements Initializable {
     }
 
     public void registerProduct(Categories item) {
-        /*ProductCatalog product = new ProductCatalog(catalog_no_textField.getText(), symbol_textField.getText(),
+        ProductCatalog product = new ProductCatalog(catalog_no_textField.getText(), symbol_textField.getText(),
                 price_textField.getText(), Integer.parseInt(nullCheckerForNumbers(stock_textField.getText())),
-                item.getId(), Double.parseDouble(nullCheckerForNumbers(height_field.getText())), Double.parseDouble(nullCheckerForNumbers(width_field.getText())),
-                Double.parseDouble(nullCheckerForNumbers(depth_field.getText())), nullCheckerForText(ip_class_field.getText()),nullCheckerForText(color_field.getText()) ,
-                 nullCheckerForText(body_field.getText()), nullCheckerForText(type_field.getText()), Double.parseDouble(nullCheckerForNumbers(nominal_voltage_field.getText())),
-                Double.parseDouble(nullCheckerForNumbers(power_field.getText())), Double.parseDouble(nullCheckerForNumbers(light_wave_field.getText())),
-                nullCheckerForText(resistance_class_field.getText()), nullCheckerForText(dimensions_field.getText()), Integer.parseInt(nullCheckerForNumbers(temperature_field.getText())),
+                item.getId(), Double.parseDouble(nullCheckerForNumbers(aukstis_field.getText())), Double.parseDouble(nullCheckerForNumbers(plotis_field.getText())),
+                Double.parseDouble(nullCheckerForNumbers(gylis_field.getText())),
+                Double.parseDouble(nullCheckerForNumbers(skersmuo_field.getText())), Double.parseDouble(nullCheckerForNumbers(ilgis_field.getText())),
+                nullCheckerForText(apsaugos_laipsnis_field.getText()), Double.parseDouble(nullCheckerForNumbers(moduliu_skaicius_field.getText())),
+                Double.parseDouble(nullCheckerForNumbers(vardine_srove_field.getText())), Double.parseDouble(nullCheckerForNumbers(vardine_itampa_field.getText())),
+                nullCheckerForText(mechaninis_atsparumas_IK_field.getText()), nullCheckerForText(spalva_field.getText()), nullCheckerForText(korpuso_medziaga_field.getText()),
+                nullCheckerForText(izoliacija_field.getText()), Double.parseDouble(nullCheckerForNumbers(svoris_field.getText())),
+                Double.parseDouble(nullCheckerForNumbers(galia_field.getText())), Double.parseDouble(nullCheckerForNumbers(sviesos_srautas_field.getText())),
+                nullCheckerForText(sviesos_spalvos_temperatura_field.getText()), nullCheckerForText(laidininkas_field.getText()), nullCheckerForText(izoliacija2_field.getText()),
+                Integer.parseInt(nullCheckerForNumbers(darbine_temperatura_field.getText())), Integer.parseInt(nullCheckerForNumbers(max_darbine_temperatura_field.getText())),
+                nullCheckerForText(apvalkalas_field.getText()), nullCheckerForText(cpr_klase_field.getText()), nullCheckerForText(isjungimo_geba_field.getText()),
+                nullCheckerForText(isjungimo_charakteristika_field.getText()), nullCheckerForText(mechaninis_atsparumas_field.getText()), nullCheckerForText(skerspjuvis_field.getText()),
+                nullCheckerForText(skerspjuvis2_field.getText()), nullCheckerForText(nuotekio_srove_field.getText()), Integer.parseInt(nullCheckerForNumbers(dydis_field.getText())),
+                nullCheckerForText(plotas_field.getText()),
                 null, null);
         ProductCatalogDAO.insert(product);
-        closeWindow();*/
+        closeWindow();
     }
 
     public String nullCheckerForNumbers(String value){
@@ -246,8 +255,8 @@ public class ProductFormController extends Main implements Initializable {
 
         letsScroll.setVisible(true);
         letsScroll.setPrefSize(430, 405);
-        main_anchor_panel.setTopAnchor(letsScroll, 40.0);
-        main_anchor_panel.setBottomAnchor(letsScroll, 80.0);
+        AnchorPane.setTopAnchor(letsScroll, 40.0);
+        AnchorPane.setBottomAnchor(letsScroll, 80.0);
 
         vbox.setLayoutY(14);
         vbox.prefWidth(USE_COMPUTED_SIZE);
@@ -881,8 +890,6 @@ public class ProductFormController extends Main implements Initializable {
         hBox1.getChildren().add(vBox1);
         hBox1.getChildren().add(vBox2);
         vbox.getChildren().add(hBox1);
-
-       System.out.println(temperature_field.getText());
     }
 
 
