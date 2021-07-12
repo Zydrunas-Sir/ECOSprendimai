@@ -4,9 +4,16 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="251.0" prefWidth="518.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.StocksRateController">
+<AnchorPane prefHeight="193.0" prefWidth="491.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.StocksRateController">
    <children>
-      <Pane layoutY="-1.0" prefHeight="170.0" prefWidth="518.0" style="-fx-background-color: #e3e3e3;" />
+      <Pane layoutY="-1.0" prefHeight="170.0" prefWidth="498.0" style="-fx-background-color: #e3e3e3;">
+         <children>
+            <Label layoutX="272.0" layoutY="38.0" text="Kaina:">
+               <font>
+                  <Font name="Microsoft Sans Serif" size="14.0" />
+               </font>
+            </Label>
+         </children></Pane>
       <Pane layoutX="16.0" layoutY="57.0" prefHeight="81.0" prefWidth="200.0" style="-fx-background-color: #4444;">
          <children>
             <Label fx:id="stock_symbol" alignment="CENTER" layoutX="6.0" layoutY="24.0" prefHeight="43.0" prefWidth="178.0" text="-" textAlignment="CENTER">
@@ -16,43 +23,43 @@
             </Label>
          </children>
       </Pane>
-      <Pane layoutX="311.0" layoutY="57.0" prefHeight="81.0" prefWidth="192.0" style="-fx-background-color: #4444; -fx-border-insets: 1; -fx-border-color: black;">
+      <Pane layoutX="270.0" layoutY="57.0" prefHeight="81.0" prefWidth="226.0" style="-fx-background-color: #4444; -fx-border-insets: 1; -fx-border-color: black; -fx-border-width: 1.5;">
          <children>
-            <Label fx:id="stock_currency" layoutX="144.0" layoutY="14.0" prefHeight="10.0" prefWidth="37.0" text="EUR">
-               <font>
-                  <Font name="Microsoft Sans Serif" size="13.0" />
-               </font>
-            </Label>
-            <Label fx:id="stock_closed" layoutX="7.0" layoutY="43.0" prefHeight="32.0" prefWidth="113.0" text="-0.0000">
+            <Label fx:id="stock_closed" alignment="BOTTOM_CENTER" layoutX="37.0" layoutY="36.0" prefHeight="32.0" prefWidth="94.0" text="-0.000">
                <font>
                   <Font name="Arial Bold" size="27.0" />
                </font>
             </Label>
-            <Label fx:id="stock_dividend" layoutX="122.0" layoutY="59.0" prefHeight="7.0" prefWidth="68.0" text="-0.00">
+            <Label fx:id="stock_dividend" layoutX="150.0" layoutY="32.0" prefHeight="17.0" prefWidth="37.0" text="0.00">
                <font>
                   <Font name="Arial Bold" size="15.0" />
                </font>
             </Label>
+            <Label fx:id="stock_currency" alignment="BOTTOM_LEFT" layoutX="137.0" layoutY="52.0" prefHeight="17.0" prefWidth="27.0" text="EUR">
+               <font>
+                  <Font name="Calibri Light" size="14.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="1.0" prefHeight="24.0" prefWidth="224.0" style="-fx-background-color: #4444;" text="Kaina per kilogramą.">
+               <font>
+                  <Font name="Calibri Light" size="14.0" />
+               </font>
+            </Label>
          </children>
       </Pane>
-      <Label layoutX="311.0" layoutY="38.0" text="Dabartinė Kaina:">
-         <font>
-            <Font name="Microsoft Sans Serif" size="14.0" />
-         </font>
-      </Label>
       <Label layoutX="14.0" layoutY="38.0" prefHeight="16.0" prefWidth="102.0" text="Trumpinys:">
          <font>
             <Font name="Microsoft Sans Serif" size="14.0" />
          </font>
       </Label>
-      <Pane layoutY="198.0" prefHeight="24.0" prefWidth="518.0" style="-fx-background-color: #404040;">
+      <Pane layoutY="169.0" prefHeight="24.0" prefWidth="498.0" style="-fx-background-color: #404040;">
          <children>
-            <Label layoutX="134.0" layoutY="4.0" prefHeight="17.0" prefWidth="125.0" text="Šiandienos data/laikas:" textFill="#cdcdcd">
+            <Label layoutX="184.0" layoutY="4.0" prefHeight="17.0" prefWidth="94.0" text="Kaina atnaujinta:" textFill="#cdcdcd">
                <font>
                   <Font name="Roboto Light" size="12.0" />
                </font>
             </Label>
-            <Label fx:id="stock_date" layoutX="259.0" layoutY="4.0" prefHeight="17.0" prefWidth="220.0" text="2015-05-15" textFill="#cdcdcd">
+            <Label fx:id="stock_date" layoutX="278.0" layoutY="4.0" prefHeight="17.0" prefWidth="94.0" text="2015-05-15" textFill="#cdcdcd">
                <font>
                   <Font name="Roboto Light" size="12.0" />
                </font>
