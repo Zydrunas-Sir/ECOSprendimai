@@ -941,9 +941,14 @@ public class DashboardController extends Main implements Initializable {
             Stage createNewProductStage = new Stage();
             Scene scene = new Scene(root);
             scene.getStylesheets().add(Objects.requireNonNull(getClass().getClassLoader().getResource(Constants.CSS_DIRECTORY_PATH)).toExternalForm());
-            createNewProductStage.setTitle("Produkto anketa");
+            createNewProductStage.setTitle("Produkto įvedimas į duomenų bazę");
             createNewProductStage.setScene(scene);
             createNewProductStage.show();
+            createNewProductStage.maxWidthProperty().bind(createNewProductStage.widthProperty());
+            createNewProductStage.minWidthProperty().bind(createNewProductStage.widthProperty());
+            createNewProductStage.setMaxHeight(400);
+            createNewProductStage.setMinHeight(300);
+
             createNewProductStage.getScene().getWindow().addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, event -> {
                 reloadProductTableView();
             });
