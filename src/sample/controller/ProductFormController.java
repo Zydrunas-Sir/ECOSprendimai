@@ -20,7 +20,6 @@ import sample.utils.Validation;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
 import java.util.ResourceBundle;
 
 import static javafx.scene.layout.Region.USE_COMPUTED_SIZE;
@@ -37,19 +36,37 @@ public class ProductFormController extends Main implements Initializable {
     public CategoryParameters categoryParameters;
 
 
-    TextField height_field = new TextField();
-    TextField depth_field = new TextField();
-    TextField width_field = new TextField();
-    TextField ip_class_field = new TextField();
-    TextField color_field = new TextField();
-    TextField type_field = new TextField();
-    TextField body_field = new TextField();
-    TextField power_field = new TextField();
-    TextField resistance_class_field = new TextField();
-    TextField light_wave_field = new TextField();
-    TextField temperature_field = new TextField();
-    TextField dimensions_field = new TextField();
-    TextField nominal_voltage_field = new TextField();
+    TextField aukstis_field = new TextField();
+    TextField plotis_field = new TextField();
+    TextField gylis_field = new TextField();
+    TextField skersmuo_field = new TextField();
+    TextField ilgis_field = new TextField();
+    TextField apsaugos_laipsnis_field = new TextField();
+    TextField moduliu_skaicius_field = new TextField();
+    TextField vardine_srove_field = new TextField();
+    TextField vardine_itampa_field = new TextField();
+    TextField mechaninis_atsparumas_IK_field = new TextField();
+    TextField spalva_field = new TextField();
+    TextField korpuso_medziaga_field = new TextField();
+    TextField izoliacija_field = new TextField();
+    TextField svoris_field = new TextField();
+    TextField galia_field = new TextField();
+    TextField sviesos_srautas_field = new TextField();
+    TextField sviesos_spalvos_temperatura_field = new TextField();
+    TextField laidininkas_field = new TextField();
+    TextField izoliacija2_field = new TextField();
+    TextField darbine_temperatura_field = new TextField();
+    TextField max_darbine_temperatura_field = new TextField();
+    TextField apvalkalas_field = new TextField();
+    TextField cpr_klase_field = new TextField();
+    TextField isjungimo_geba_field = new TextField();
+    TextField isjungimo_charakteristika_field = new TextField();
+    TextField mechaninis_atsparumas_field = new TextField();
+    TextField skerspjuvis_field = new TextField();
+    TextField skerspjuvis2_field = new TextField();
+    TextField nuotekio_srove_field = new TextField();
+    TextField dydis_field = new TextField();
+    TextField plotas_field = new TextField();
 
     @FXML
     public AnchorPane main_anchor_panel;
@@ -78,13 +95,13 @@ public class ProductFormController extends Main implements Initializable {
         } else if ((item == null)) {
             WarnStyle();
             form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CHOSEN_CATEGORY);
-        } else if (categoryParameters.isAukstis() && !Validation.isValidAukstis(height_field.getText())){
+        } else if (categoryParameters.isAukstis() && !Validation.isValidAukstis(aukstis_field.getText())){
             WarnStyle();
             form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_PRODUCT_AUKSTIS);
-        } else if (categoryParameters.isPlotis() && !Validation.isValidPlotis(width_field.getText())){
+        } else if (categoryParameters.isPlotis() && !Validation.isValidPlotis(plotis_field.getText())){
             WarnStyle();
             form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_PRODUCT_PLOTIS);
-        } else if (categoryParameters.isGylis() && !Validation.isValidGylis(depth_field.getText())){
+        } else if (categoryParameters.isGylis() && !Validation.isValidGylis(gylis_field.getText())){
             WarnStyle();
             form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_PRODUCT_GYLIS);
         } else if (categoryParameters.isIp_klase() && !Validation.isValidIpKlase(ip_class_field.getText())){
@@ -224,7 +241,7 @@ public class ProductFormController extends Main implements Initializable {
     public void addParametersForProduct(int category_parameter_id) {
         System.out.println("Method addParametersForProduct() initialized");
 
-        CategoryParameters categoryParameters = new CategoryParameters( true, true, true, true, true, true, true, true, true, true, true, true, true);
+//        CategoryParameters categoryParameters = new CategoryParameters( true, true, true, true, true, true, true, true, true, true, true, true, true);
 
 
         letsScroll.setVisible(true);
@@ -263,6 +280,459 @@ public class ProductFormController extends Main implements Initializable {
         vBox1.setSpacing(12);
         vBox1.setAlignment(Pos.CENTER_RIGHT);
 
+        if (categoryParameters.isAukstis()) {
+            Label label = new Label();
+            label.setLayoutX(20);
+            label.setLayoutY(getformBoxY());
+            label.setFont(new Font("Segoe UI Light", SIZE));
+            label.setText("Aukštis:");
+
+            vbox.setSpacing(10);
+            aukstis_field.setLayoutX(60);
+            aukstis_field.setPrefWidth(250);
+            aukstis_field.setLayoutY(getformBoxY());
+            vBox1.getChildren().add(label);
+            vBox2.getChildren().add(aukstis_field);
+        }
+        if (categoryParameters.isPlotis()) {
+            Label label = new Label();
+            label.setLayoutX(20);
+            label.setLayoutY(getformBoxY());
+            label.setFont(new Font("Segoe UI Light", SIZE));
+            label.setText("Plotis:");
+
+            vbox.setSpacing(10);
+            plotis_field.setLayoutX(60);
+            plotis_field.setPrefWidth(250);
+            plotis_field.setLayoutY(getformBoxY());
+            vBox1.getChildren().add(label);
+            vBox2.getChildren().add(plotis_field);
+        }
+        if (categoryParameters.isGylis()) {
+            Label label = new Label();
+            label.setLayoutX(20);
+            label.setLayoutY(getformBoxY());
+            label.setFont(new Font("Segoe UI Light", SIZE));
+            label.setText("Gylis:");
+
+            vbox.setSpacing(10);
+            gylis_field.setLayoutX(60);
+            gylis_field.setPrefWidth(250);
+            gylis_field.setLayoutY(getformBoxY());
+            vBox1.getChildren().add(label);
+            vBox2.getChildren().add(gylis_field);
+        }
+        if (categoryParameters.isSkersmuo()) {
+            Label label = new Label();
+            label.setLayoutX(20);
+            label.setLayoutY(getformBoxY());
+            label.setFont(new Font("Segoe UI Light", SIZE));
+            label.setText("Skersmuo:");
+
+            vbox.setSpacing(10);
+            skersmuo_field.setLayoutX(60);
+            skersmuo_field.setPrefWidth(250);
+            skersmuo_field.setLayoutY(getformBoxY());
+            vBox1.getChildren().add(label);
+            vBox2.getChildren().add(skersmuo_field);
+        }
+        if (categoryParameters.isIlgis()) {
+            Label label = new Label();
+            label.setLayoutX(20);
+            label.setLayoutY(getformBoxY());
+            label.setFont(new Font("Segoe UI Light", SIZE));
+            label.setText("Ilgis:");
+
+            vbox.setSpacing(10);
+            ilgis_field.setLayoutX(60);
+            ilgis_field.setPrefWidth(250);
+            ilgis_field.setLayoutY(getformBoxY());
+            vBox1.getChildren().add(label);
+            vBox2.getChildren().add(ilgis_field);
+        }
+        if (categoryParameters.isApsaugos_laipsnis()) {
+            Label label = new Label();
+            label.setLayoutX(20);
+            label.setLayoutY(getformBoxY());
+            label.setFont(new Font("Segoe UI Light", SIZE));
+            label.setText("Apsaugos laipsnis:");
+
+            vbox.setSpacing(10);
+            apsaugos_laipsnis_field.setLayoutX(60);
+            apsaugos_laipsnis_field.setPrefWidth(250);
+            apsaugos_laipsnis_field.setLayoutY(getformBoxY());
+            vBox1.getChildren().add(label);
+            vBox2.getChildren().add(apsaugos_laipsnis_field);
+        }
+        if (categoryParameters.isModuliu_skaicius()) {
+            Label label = new Label();
+            label.setLayoutX(20);
+            label.setLayoutY(getformBoxY());
+            label.setFont(new Font("Segoe UI Light", SIZE));
+            label.setText("Modulių skaičius:");
+
+            vbox.setSpacing(10);
+            moduliu_skaicius_field.setLayoutX(60);
+            moduliu_skaicius_field.setPrefWidth(250);
+            moduliu_skaicius_field.setLayoutY(getformBoxY());
+            vBox1.getChildren().add(label);
+            vBox2.getChildren().add(moduliu_skaicius_field);
+        }
+        if (categoryParameters.isVardine_srove()) {
+            Label label = new Label();
+            label.setLayoutX(20);
+            label.setLayoutY(getformBoxY());
+            label.setFont(new Font("Segoe UI Light", SIZE));
+            label.setText("Vardinė srovė:");
+
+            vbox.setSpacing(10);
+            vardine_srove_field.setLayoutX(60);
+            vardine_srove_field.setPrefWidth(250);
+            vardine_srove_field.setLayoutY(getformBoxY());
+            vBox1.getChildren().add(label);
+            vBox2.getChildren().add(vardine_srove_field);
+        }
+        if (categoryParameters.isVardine_itampa()) {
+            Label label = new Label();
+            label.setLayoutX(20);
+            label.setLayoutY(getformBoxY());
+            label.setFont(new Font("Segoe UI Light", SIZE));
+            label.setText("Vardinė įtampa:");
+
+            vbox.setSpacing(10);
+            vardine_itampa_field.setLayoutX(60);
+            vardine_itampa_field.setPrefWidth(250);
+            vardine_itampa_field.setLayoutY(getformBoxY());
+            vBox1.getChildren().add(label);
+            vBox2.getChildren().add(vardine_itampa_field);
+        }
+        if (categoryParameters.isMechaninis_atsparumas_IK()) {
+            Label label = new Label();
+            label.setLayoutX(20);
+            label.setLayoutY(getformBoxY());
+            label.setFont(new Font("Segoe UI Light", SIZE));
+            label.setText("Mechaninis atsparumas:");
+
+            vbox.setSpacing(10);
+            mechaninis_atsparumas_IK_field.setLayoutX(60);
+            mechaninis_atsparumas_IK_field.setPrefWidth(250);
+            mechaninis_atsparumas_IK_field.setLayoutY(getformBoxY());
+            vBox1.getChildren().add(label);
+            vBox2.getChildren().add(mechaninis_atsparumas_IK_field);
+        }
+        if (categoryParameters.isSpalva()) {
+            Label label = new Label();
+            label.setLayoutX(20);
+            label.setLayoutY(getformBoxY());
+            label.setFont(new Font("Segoe UI Light", SIZE));
+            label.setText("Spalva:");
+
+            vbox.setSpacing(10);
+            spalva_field.setLayoutX(60);
+            spalva_field.setPrefWidth(250);
+            spalva_field.setLayoutY(getformBoxY());
+            vBox1.getChildren().add(label);
+            vBox2.getChildren().add(spalva_field);
+        }
+        if (categoryParameters.isKorpuso_medziaga()) {
+            Label label = new Label();
+            label.setLayoutX(20);
+            label.setLayoutY(getformBoxY());
+            label.setFont(new Font("Segoe UI Light", SIZE));
+            label.setText("Korpuso medžiaga:");
+
+            vbox.setSpacing(10);
+            korpuso_medziaga_field.setLayoutX(60);
+            korpuso_medziaga_field.setPrefWidth(250);
+            korpuso_medziaga_field.setLayoutY(getformBoxY());
+            vBox1.getChildren().add(label);
+            vBox2.getChildren().add(korpuso_medziaga_field);
+        }
+        if (categoryParameters.isIzoliacija()) {
+            Label label = new Label();
+            label.setLayoutX(20);
+            label.setLayoutY(getformBoxY());
+            label.setFont(new Font("Segoe UI Light", SIZE));
+            label.setText("Izoliacija:");
+
+            vbox.setSpacing(10);
+            izoliacija_field.setLayoutX(60);
+            izoliacija_field.setPrefWidth(250);
+            izoliacija_field.setLayoutY(getformBoxY());
+            vBox1.getChildren().add(label);
+            vBox2.getChildren().add(izoliacija_field);
+        }
+        if (categoryParameters.isSvoris()) {
+            Label label = new Label();
+            label.setLayoutX(20);
+            label.setLayoutY(getformBoxY());
+            label.setFont(new Font("Segoe UI Light", SIZE));
+            label.setText("Svoris:");
+
+            vbox.setSpacing(10);
+            svoris_field.setLayoutX(60);
+            svoris_field.setPrefWidth(250);
+            svoris_field.setLayoutY(getformBoxY());
+            vBox1.getChildren().add(label);
+            vBox2.getChildren().add(svoris_field);
+        }
+        if (categoryParameters.isGalia()) {
+            Label label = new Label();
+            label.setLayoutX(20);
+            label.setLayoutY(getformBoxY());
+            label.setFont(new Font("Segoe UI Light", SIZE));
+            label.setText("Galia:");
+
+            vbox.setSpacing(10);
+            galia_field.setLayoutX(60);
+            galia_field.setPrefWidth(250);
+            galia_field.setLayoutY(getformBoxY());
+            vBox1.getChildren().add(label);
+            vBox2.getChildren().add(galia_field);
+        }
+        if (categoryParameters.isSviesos_srautas()) {
+            Label label = new Label();
+            label.setLayoutX(20);
+            label.setLayoutY(getformBoxY());
+            label.setFont(new Font("Segoe UI Light", SIZE));
+            label.setText("Šviesos srautas:");
+
+            vbox.setSpacing(10);
+            sviesos_srautas_field.setLayoutX(60);
+            sviesos_srautas_field.setPrefWidth(250);
+            sviesos_srautas_field.setLayoutY(getformBoxY());
+            vBox1.getChildren().add(label);
+            vBox2.getChildren().add(sviesos_srautas_field);
+        }
+        if (categoryParameters.isSviesos_spalvos_temperatura()) {
+            Label label = new Label();
+            label.setLayoutX(20);
+            label.setLayoutY(getformBoxY());
+            label.setFont(new Font("Segoe UI Light", SIZE));
+            label.setText("Spalvos temperatūra:");
+
+            vbox.setSpacing(10);
+            sviesos_spalvos_temperatura_field.setLayoutX(60);
+            sviesos_spalvos_temperatura_field.setPrefWidth(250);
+            sviesos_spalvos_temperatura_field.setLayoutY(getformBoxY());
+            vBox1.getChildren().add(label);
+            vBox2.getChildren().add(sviesos_spalvos_temperatura_field);
+        }
+        if (categoryParameters.isLaidininkas()) {
+            Label label = new Label();
+            label.setLayoutX(20);
+            label.setLayoutY(getformBoxY());
+            label.setFont(new Font("Segoe UI Light", SIZE));
+            label.setText("Laidininkas:");
+
+            vbox.setSpacing(10);
+            laidininkas_field.setLayoutX(60);
+            laidininkas_field.setPrefWidth(250);
+            laidininkas_field.setLayoutY(getformBoxY());
+            vBox1.getChildren().add(label);
+            vBox2.getChildren().add(laidininkas_field);
+        }
+        if (categoryParameters.isIzoliacija2()) {
+            Label label = new Label();
+            label.setLayoutX(20);
+            label.setLayoutY(getformBoxY());
+            label.setFont(new Font("Segoe UI Light", SIZE));
+            label.setText("Izoliacija:");
+
+            vbox.setSpacing(10);
+            izoliacija2_field.setLayoutX(60);
+            izoliacija2_field.setPrefWidth(250);
+            izoliacija2_field.setLayoutY(getformBoxY());
+            vBox1.getChildren().add(label);
+            vBox2.getChildren().add(izoliacija2_field);
+        }
+        if (categoryParameters.isDarbine_temperatura()) {
+            Label label = new Label();
+            label.setLayoutX(20);
+            label.setLayoutY(getformBoxY());
+            label.setFont(new Font("Segoe UI Light", SIZE));
+            label.setText("Darbinė temperatūra:");
+
+            vbox.setSpacing(10);
+            darbine_temperatura_field.setLayoutX(60);
+            darbine_temperatura_field.setPrefWidth(250);
+            darbine_temperatura_field.setLayoutY(getformBoxY());
+            vBox1.getChildren().add(label);
+            vBox2.getChildren().add(darbine_temperatura_field);
+        }
+        if (categoryParameters.isMax_darbine_temperatura()) {
+            Label label = new Label();
+            label.setLayoutX(20);
+            label.setLayoutY(getformBoxY());
+            label.setFont(new Font("Segoe UI Light", SIZE));
+            label.setText("Maks. darbinė temp.:");
+
+            vbox.setSpacing(10);
+            max_darbine_temperatura_field.setLayoutX(60);
+            max_darbine_temperatura_field.setPrefWidth(250);
+            max_darbine_temperatura_field.setLayoutY(getformBoxY());
+            vBox1.getChildren().add(label);
+            vBox2.getChildren().add(max_darbine_temperatura_field);
+        }
+        if (categoryParameters.isApvalkalas()) {
+            Label label = new Label();
+            label.setLayoutX(20);
+            label.setLayoutY(getformBoxY());
+            label.setFont(new Font("Segoe UI Light", SIZE));
+            label.setText("Apvalkalas:");
+
+            vbox.setSpacing(10);
+            apvalkalas_field.setLayoutX(60);
+            apvalkalas_field.setPrefWidth(250);
+            apvalkalas_field.setLayoutY(getformBoxY());
+            vBox1.getChildren().add(label);
+            vBox2.getChildren().add(apvalkalas_field);
+        }
+        if (categoryParameters.isCPR_klase()) {
+            Label label = new Label();
+            label.setLayoutX(20);
+            label.setLayoutY(getformBoxY());
+            label.setFont(new Font("Segoe UI Light", SIZE));
+            label.setText("CPR klasė:");
+
+            vbox.setSpacing(10);
+            cpr_klase_field.setLayoutX(60);
+            cpr_klase_field.setPrefWidth(250);
+            cpr_klase_field.setLayoutY(getformBoxY());
+            vBox1.getChildren().add(label);
+            vBox2.getChildren().add(cpr_klase_field);
+        }
+        if (categoryParameters.isIsjungimo_geba()) {
+            Label label = new Label();
+            label.setLayoutX(20);
+            label.setLayoutY(getformBoxY());
+            label.setFont(new Font("Segoe UI Light", SIZE));
+            label.setText("Išjungimo geba:");
+
+            vbox.setSpacing(10);
+            isjungimo_geba_field.setLayoutX(60);
+            isjungimo_geba_field.setPrefWidth(250);
+            isjungimo_geba_field.setLayoutY(getformBoxY());
+            vBox1.getChildren().add(label);
+            vBox2.getChildren().add(isjungimo_geba_field);
+        }
+        if (categoryParameters.isIsjungimo_charakteristika()) {
+            Label label = new Label();
+            label.setLayoutX(20);
+            label.setLayoutY(getformBoxY());
+            label.setFont(new Font("Segoe UI Light", SIZE));
+            label.setText("Išjungimo charakter.:");
+
+            vbox.setSpacing(10);
+            isjungimo_charakteristika_field.setLayoutX(60);
+            isjungimo_charakteristika_field.setPrefWidth(250);
+            isjungimo_charakteristika_field.setLayoutY(getformBoxY());
+            vBox1.getChildren().add(label);
+            vBox2.getChildren().add(isjungimo_charakteristika_field);
+        }
+        if (categoryParameters.isMechaninis_atsparumas()) {
+            Label label = new Label();
+            label.setLayoutX(20);
+            label.setLayoutY(getformBoxY());
+            label.setFont(new Font("Segoe UI Light", SIZE));
+            label.setText("Mechaninis atsparumas:");
+
+            vbox.setSpacing(10);
+            mechaninis_atsparumas_field.setLayoutX(60);
+            mechaninis_atsparumas_field.setPrefWidth(250);
+            mechaninis_atsparumas_field.setLayoutY(getformBoxY());
+            vBox1.getChildren().add(label);
+            vBox2.getChildren().add(mechaninis_atsparumas_field);
+        }
+        if (categoryParameters.isSkerspjuvis()) {
+            Label label = new Label();
+            label.setLayoutX(20);
+            label.setLayoutY(getformBoxY());
+            label.setFont(new Font("Segoe UI Light", SIZE));
+            label.setText("Skerspjūvis:");
+
+            vbox.setSpacing(10);
+            skerspjuvis_field.setLayoutX(60);
+            skerspjuvis_field.setPrefWidth(250);
+            skerspjuvis_field.setLayoutY(getformBoxY());
+            vBox1.getChildren().add(label);
+            vBox2.getChildren().add(skerspjuvis_field);
+        }
+        if (categoryParameters.isSkerspjuvis2()) {
+            Label label = new Label();
+            label.setLayoutX(20);
+            label.setLayoutY(getformBoxY());
+            label.setFont(new Font("Segoe UI Light", SIZE));
+            label.setText("Skerspjūvis:");
+
+            vbox.setSpacing(10);
+            skerspjuvis2_field.setLayoutX(60);
+            skerspjuvis2_field.setPrefWidth(250);
+            skerspjuvis2_field.setLayoutY(getformBoxY());
+            vBox1.getChildren().add(label);
+            vBox2.getChildren().add(skerspjuvis2_field);
+        }
+        if (categoryParameters.isNuotekio_srove()) {
+            Label label = new Label();
+            label.setLayoutX(20);
+            label.setLayoutY(getformBoxY());
+            label.setFont(new Font("Segoe UI Light", SIZE));
+            label.setText("Nuotekio srovė:");
+
+            vbox.setSpacing(10);
+            nuotekio_srove_field.setLayoutX(60);
+            nuotekio_srove_field.setPrefWidth(250);
+            nuotekio_srove_field.setLayoutY(getformBoxY());
+            vBox1.getChildren().add(label);
+            vBox2.getChildren().add(nuotekio_srove_field);
+        }
+        if (categoryParameters.isDydis()) {
+            Label label = new Label();
+            label.setLayoutX(20);
+            label.setLayoutY(getformBoxY());
+            label.setFont(new Font("Segoe UI Light", SIZE));
+            label.setText("Dydis:");
+
+            vbox.setSpacing(10);
+            dydis_field.setLayoutX(60);
+            dydis_field.setPrefWidth(250);
+            dydis_field.setLayoutY(getformBoxY());
+            vBox1.getChildren().add(label);
+            vBox2.getChildren().add(dydis_field);
+        }
+        if (categoryParameters.isPlotas()) {
+            Label label = new Label();
+            label.setLayoutX(20);
+            label.setLayoutY(getformBoxY());
+            label.setFont(new Font("Segoe UI Light", SIZE));
+            label.setText("Plotis:");
+
+            vbox.setSpacing(10);
+            plotas_field.setLayoutX(60);
+            plotas_field.setPrefWidth(250);
+            plotas_field.setLayoutY(getformBoxY());
+            vBox1.getChildren().add(label);
+            vBox2.getChildren().add(plotas_field);
+        }
+        //         FIELDS FOR TESTING
+        for (int i = 0; i < 6; i++) {
+            Label label = new Label();
+            label.setFont(new Font("Segoe UI Light", SIZE));
+            label.setText("Test field:");
+
+            TextField textField = new TextField();
+            textField.setLayoutX(60);
+            textField.setPrefWidth(250);
+            vBox1.getChildren().add(label);
+            vBox2.getChildren().add(textField);
+        }
+//         ^ DELETE AFTER TEST
+
+
+
+
+        /**
+         * SENAS KODAS
 
         if (categoryParameters.isAukstis()) { //aukstis
             Label label = new Label();
@@ -405,20 +875,7 @@ public class ProductFormController extends Main implements Initializable {
             vBox2.getChildren().add(temperature_field);
         }
 
-//         FIELDS FOR TESTING
-        for (int i = 0; i < 6; i++) {
-           Label label = new Label();
-            label.setFont(new Font("Segoe UI Light", SIZE));
-            label.setText("Test field:");
-
-            TextField textField = new TextField();
-            textField.setLayoutX(60);
-            textField.setPrefWidth(250);
-            vBox1.getChildren().add(label);
-            vBox2.getChildren().add(textField);
-        }
-//         ^ DELETE AFTER TEST
-
+         */
 
 
         hBox1.getChildren().add(vBox1);
