@@ -10,36 +10,9 @@ import java.util.List;
 
 public class CategoryParametersDAO {
 
-    /*public static List<CategoryParameters> searchByCatalogNo(String catalogNo) {
-
-        EntityManager entityManager;
-        EntityTransaction entityTransaction;
-        List<CategoryParameters> categoryParameters = null;
-        TypedQuery<CategoryParameters> query;
-        try {
-            entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
-            entityTransaction = entityManager.getTransaction();
-            entityTransaction.begin();
-
-            query = entityManager.createQuery("", CategoryParameters.class);
-            categoryParameters = query.setParameter(1, catalogNo).getResultList();
-
-
-            entityManager.getTransaction().commit();
-            entityManager.close();
-        } catch (NullPointerException e ) {
-            System.out.println("ProductDescriptionDAO.searchByCatalogNo() NullPointerExecption");
-        } catch (RuntimeException e) {
-//            JPAUtil.infoBox("NEPAVYKO PRISIJUNGTI PRIE DUOMENŲ BAZĖS", "RuntimeException");
-//            JPAUtil.infoBox();
-
-        }
-        return categoryParameters;
-    }*/
-
     //Paduodamas Categories objektas iš jo ištraukiamas category_parameter_id ir grąžinamas CategoryParameters objektas su kategorijų boolean'ais
     //Pastaba: Grąžinamas objektas gali būti null, jeigu nebus rastas atitikmuo DB
-    public static CategoryParameters getParametersByCategoryId(Categories category) {
+    public static CategoryParameters getParametersByCategoryParameterId(int category_parameter_id) {
         EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
         EntityTransaction entityTransaction = entityManager.getTransaction();
         entityTransaction.begin();
@@ -47,7 +20,7 @@ public class CategoryParametersDAO {
 
         try {
             TypedQuery<CategoryParameters> query = entityManager.createQuery("Select e From CategoryParameters e WHERE e.id = ?1", CategoryParameters.class);
-            categoryParameters = query.setParameter(1, category.getCategory_parameter_id()).getSingleResult();
+            categoryParameters = query.setParameter(1, category_parameter_id).getSingleResult();
 
             entityManager.getTransaction().commit();
             entityManager.close();

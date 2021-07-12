@@ -12,6 +12,7 @@ import sample.utils.Constants;
 import sample.utils.Validation;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -45,6 +46,12 @@ public class CategoryFormController extends Main implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         List<Categories> categoryNames = CategoriesDAO.selectCategoriesForComboBox();
+        List<Categories> categoriesList = new ArrayList<>();
+        for (Categories category : categoryNames){
+            if( !category.getName().equals("   Visos kategorijos")){
+                categoriesList.add(category);
+            }
+        }
         categoryComboBox.setCellFactory(lv -> new ListCell<Categories>() {
             public void updateItem(Categories item, boolean empty) {
 
@@ -52,12 +59,11 @@ public class CategoryFormController extends Main implements Initializable {
                 if (empty) {
                     setText(null);
                 } else {
-                    setText(item.getName());
+                        setText(item.getName());
                 }
             }
         });
-
-        categoryComboBox.getItems().addAll(categoryNames);
+        categoryComboBox.getItems().addAll(categoriesList);
     }
 
     public void closeWindow() {

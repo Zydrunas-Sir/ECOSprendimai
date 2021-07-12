@@ -922,7 +922,7 @@ public class DashboardController extends Main implements Initializable {
             Stage loginStage = new Stage();
             Scene scene = new Scene(root);
             scene.getStylesheets().add(Objects.requireNonNull(getClass().getClassLoader().getResource(Constants.CSS_DIRECTORY_PATH)).toExternalForm());
-            loginStage.setTitle("Akcijų Birža");
+            loginStage.setTitle("Vario kursas");
             loginStage.setResizable(false);
             loginStage.setOnCloseRequest(e -> StocksRateController.onClose());
             loginStage.setScene(scene);

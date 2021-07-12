@@ -14,12 +14,12 @@ public class YahooStockAPI {
     public StocksDto getRealTimeRate() throws IOException {
 
 
-        Stock stock = YahooFinance.get("EURXCU=X");
+        Stock stock = YahooFinance.get("HG=F");
 
         String currency = "EUR";
         String name = stock.getName();
         String symbol = stock.getSymbol();
-        BigDecimal price = stock.getQuote().getPrice();
+        BigDecimal price = stock.getQuote().getPreviousClose();
         BigDecimal change = stock.getQuote().getChangeInPercent();
 
         StocksDto stocksDto = new StocksDto(symbol,currency, price,change,name);
