@@ -14,10 +14,10 @@ import java.util.Iterator;
 import java.util.List;
 
 
-
 public class ReadExcelWithProductCatalog {
     public static List<ProductCatalog> readFileUsingPOI(File file) throws IOException {
         List<ProductCatalog> products = new ArrayList<>();
+
 
         FileInputStream inputStream = new FileInputStream(file);
 
@@ -61,159 +61,252 @@ public class ReadExcelWithProductCatalog {
                             productCatalog.setGroupId((int) cell.getNumericCellValue());
                             break;
                         case 6:
-                            Double auktis =cell.getNumericCellValue();
-                            if (auktis == null){productCatalog.setAukstis(0);}
-                            else {productCatalog.setAukstis(auktis);}
+                            Double aukstis = cell.getNumericCellValue();
+                            if (aukstis == null) {
+                                productCatalog.setAukstis(0);
+                            } else {
+                                productCatalog.setAukstis(aukstis);
+                            }
                             break;
                         case 7:
                             Double plotis = cell.getNumericCellValue();
-                            if (plotis == null){productCatalog.setPlotis(0);}
-                            else {productCatalog.setPlotis(plotis);}
+                            if (plotis == null) {
+                                productCatalog.setPlotis(0);
+                            } else {
+                                productCatalog.setPlotis(plotis);
+                            }
                             break;
                         case 8:
                             Double gylis = cell.getNumericCellValue();
-                            if (gylis == null){productCatalog.setGylis(0);}
-                            else {productCatalog.setGylis(gylis);}
+                            if (gylis == null) {
+                                productCatalog.setGylis(0);
+                            } else {
+                                productCatalog.setGylis(gylis);
+                            }
                             break;
                         case 9:
                             Double skersmuo = cell.getNumericCellValue();
-                            if (skersmuo == null){productCatalog.setSkersmuo(0);}
-                            else {productCatalog.setSkersmuo(skersmuo);}
+                            if (skersmuo == null) {
+                                productCatalog.setSkersmuo(0);
+                            } else {
+                                productCatalog.setSkersmuo(skersmuo);
+                            }
                             break;
                         case 10:
                             Double ilgis = cell.getNumericCellValue();
-                            if (ilgis == null){productCatalog.setIlgis(0);}
-                            else {productCatalog.setIlgis(ilgis);}
+                            if (ilgis == null) {
+                                productCatalog.setIlgis(0);
+                            } else {
+                                productCatalog.setIlgis(ilgis);
+                            }
                             break;
                         case 11:
                             String apsaugos_laipsnis = cell.getStringCellValue();
-                            if (apsaugos_laipsnis.equals("")){productCatalog.setApsaugos_laipsnis(null);}
-                            else {productCatalog.setApsaugos_laipsnis(apsaugos_laipsnis);}
+                            if (apsaugos_laipsnis.equals("")) {
+                                productCatalog.setApsaugos_laipsnis(null);
+                            } else {
+                                productCatalog.setApsaugos_laipsnis(apsaugos_laipsnis);
+                            }
                             break;
                         case 12:
                             Double moduliu_skaicius = cell.getNumericCellValue();
-                            if (moduliu_skaicius == null){productCatalog.setModuliu_skaicius(0);}
-                            else {productCatalog.setModuliu_skaicius(moduliu_skaicius);}
+                            if (moduliu_skaicius == null) {
+                                productCatalog.setModuliu_skaicius(0);
+                            } else {
+                                productCatalog.setModuliu_skaicius(moduliu_skaicius);
+                            }
                             break;
                         case 13:
-                            Double vardine_srove = cell.getNumericCellValue();
-                            if (vardine_srove == null){productCatalog.setVardine_srove(0);}
-                            else {productCatalog.setVardine_srove(vardine_srove);}
+                            String vardine_srove = cell.getStringCellValue();
+                            if (vardine_srove.equals("")) {
+                                productCatalog.setVardine_srove(null);
+                            } else {
+                                productCatalog.setVardine_srove(vardine_srove);
+                            }
                             break;
                         case 14:
-                            Double vardine_itampa = cell.getNumericCellValue();
-                            if (vardine_itampa == null){productCatalog.setVardine_itampa(0);}
-                            else {productCatalog.setVardine_itampa(vardine_itampa);}
+                            String vardine_itampa = cell.getStringCellValue();
+                            if (vardine_itampa.equals("")) {
+                                productCatalog.setVardine_itampa(null);
+                            } else {
+                                productCatalog.setVardine_itampa(vardine_itampa);
+                            }
                             break;
                         case 15:
                             String mechaninis_atsparumas_IK = cell.getStringCellValue();
-                            if (mechaninis_atsparumas_IK.equals("")){productCatalog.setMechaninis_atsparumas_IK(null);}
-                            else {productCatalog.setMechaninis_atsparumas_IK(mechaninis_atsparumas_IK);}
+                            if (mechaninis_atsparumas_IK.equals("")) {
+                                productCatalog.setMechaninis_atsparumas_IK(null);
+                            } else {
+                                productCatalog.setMechaninis_atsparumas_IK(mechaninis_atsparumas_IK);
+                            }
                             break;
                         case 16:
                             String spalva = cell.getStringCellValue();
-                            if (spalva.equals("")){productCatalog.setSpalva(null);}
-                            else {productCatalog.setSpalva(spalva);}
+                            if (spalva.equals("")) {
+                                productCatalog.setSpalva(null);
+                            } else {
+                                productCatalog.setSpalva(spalva);
+                            }
                             break;
                         case 17:
                             String korpuso_medziaga = cell.getStringCellValue();
-                            if (korpuso_medziaga.equals("")){productCatalog.setKorpuso_medziaga(null);}
-                            else {productCatalog.setKorpuso_medziaga(korpuso_medziaga);}
+                            if (korpuso_medziaga.equals("")) {
+                                productCatalog.setKorpuso_medziaga(null);
+                            } else {
+                                productCatalog.setKorpuso_medziaga(korpuso_medziaga);
+                            }
                             break;
                         case 18:
                             String izoliacija = cell.getStringCellValue();
-                            if (izoliacija.equals("")){productCatalog.setIzoliacija(null);}
-                            else {productCatalog.setIzoliacija(izoliacija);}
+                            if (izoliacija.equals("")) {
+                                productCatalog.setIzoliacija(null);
+                            } else {
+                                productCatalog.setIzoliacija(izoliacija);
+                            }
                             break;
                         case 19:
-                            Double svoris = cell.getNumericCellValue();
-                            if (svoris == 0){productCatalog.setSvoris(0);}
-                            else {productCatalog.setSvoris(svoris);}
+                            double svoris = cell.getNumericCellValue();
+                            if (svoris == 0) {
+                                productCatalog.setSvoris(0);
+                            } else {
+                                productCatalog.setSvoris(svoris);
+                            }
                             break;
                         case 20:
-                            Double galia = cell.getNumericCellValue();
-                            if (galia == 0){productCatalog.setGalia(0);}
-                            else {productCatalog.setGalia(galia);}
+                            String galia = cell.getStringCellValue();
+                            if (galia.equals("")) {
+                                productCatalog.setGalia(null);
+                            } else {
+                                productCatalog.setGalia(galia);
+                            }
                             break;
                         case 21:
                             Double sviesos_srautas = cell.getNumericCellValue();
-                            if (sviesos_srautas == null){productCatalog.setSviesos_srautas(0);}
-                            else {productCatalog.setSviesos_srautas(sviesos_srautas);}
+                            if (sviesos_srautas == null) {
+                                productCatalog.setSviesos_srautas(0);
+                            } else {
+                                productCatalog.setSviesos_srautas(sviesos_srautas);
+                            }
                             break;
                         case 22:
                             String sviesos_spalvos_temperatura = cell.getStringCellValue();
-                            if (sviesos_spalvos_temperatura.equals("")){productCatalog.setSviesos_spalvos_temperatura(null);}
-                            else {productCatalog.setSviesos_spalvos_temperatura(sviesos_spalvos_temperatura);}
+                            if (sviesos_spalvos_temperatura.equals("")) {
+                                productCatalog.setSviesos_spalvos_temperatura(null);
+                            } else {
+                                productCatalog.setSviesos_spalvos_temperatura(sviesos_spalvos_temperatura);
+                            }
                             break;
                         case 23:
                             String laidininkas = cell.getStringCellValue();
-                            if (laidininkas.equals("")){productCatalog.setLaidininkas(null);}
-                            else {productCatalog.setLaidininkas(laidininkas);}
+                            if (laidininkas.equals("")) {
+                                productCatalog.setLaidininkas(null);
+                            } else {
+                                productCatalog.setLaidininkas(laidininkas);
+                            }
                             break;
                         case 24:
                             String izoliacija2 = cell.getStringCellValue();
-                            if (izoliacija2.equals("")){productCatalog.setIzoliacija2(null);}
-                            else {productCatalog.setIzoliacija2(izoliacija2);}
+                            if (izoliacija2.equals("")) {
+                                productCatalog.setIzoliacija2(null);
+                            } else {
+                                productCatalog.setIzoliacija2(izoliacija2);
+                            }
                             break;
                         case 25:
-                            Integer darbine_temperatura =(int) cell.getNumericCellValue();
-                            if (darbine_temperatura == 0){productCatalog.setDarbine_temperatura(0);}
-                            else {productCatalog.setDarbine_temperatura(darbine_temperatura);}
+                            String darbine_temperatura = cell.getStringCellValue();
+                            if (darbine_temperatura.equals("")) {
+                                productCatalog.setDarbine_temperatura(null);
+                            } else {
+                                productCatalog.setDarbine_temperatura(darbine_temperatura);
+                            }
                             break;
                         case 26:
-                            Integer max_darbine_temperatura = (int) cell.getNumericCellValue();
-                            if (max_darbine_temperatura == 0){productCatalog.setMax_darbine_temperatura(0);}
-                            else {productCatalog.setMax_darbine_temperatura(max_darbine_temperatura);}
+                            String max_darbine_temperatura = cell.getStringCellValue();
+                            if (max_darbine_temperatura.equals("")) {
+                                productCatalog.setMax_darbine_temperatura(null);
+                            } else {
+                                productCatalog.setMax_darbine_temperatura(max_darbine_temperatura);
+                            }
                             break;
                         case 27:
                             String apvalkalas = cell.getStringCellValue();
-                            if (apvalkalas.equals("")){productCatalog.setApvalkalas(null);}
-                            else {productCatalog.setApvalkalas(apvalkalas);}
+                            if (apvalkalas.equals("")) {
+                                productCatalog.setApvalkalas(null);
+                            } else {
+                                productCatalog.setApvalkalas(apvalkalas);
+                            }
                             break;
                         case 28:
                             String CPR_klase = cell.getStringCellValue();
-                            if (CPR_klase.equals("")){productCatalog.setCpr_klase(null);}
-                            else {productCatalog.setCpr_klase(CPR_klase);}
+                            if (CPR_klase.equals("")) {
+                                productCatalog.setCpr_klase(null);
+                            } else {
+                                productCatalog.setCpr_klase(CPR_klase);
+                            }
                             break;
                         case 29:
                             String isjungimo_geba = cell.getStringCellValue();
-                            if (isjungimo_geba.equals("")){productCatalog.setIsjungimo_geba(null);}
-                            else {productCatalog.setIsjungimo_geba(isjungimo_geba);}
+                            if (isjungimo_geba.equals("")) {
+                                productCatalog.setIsjungimo_geba(null);
+                            } else {
+                                productCatalog.setIsjungimo_geba(isjungimo_geba);
+                            }
                             break;
                         case 30:
                             String isjungimo_charakteristika = cell.getStringCellValue();
-                            if (isjungimo_charakteristika.equals("")){productCatalog.setIsjungimo_charakteristika(null);}
-                            else {productCatalog.setIsjungimo_charakteristika(isjungimo_charakteristika);}
+                            if (isjungimo_charakteristika.equals("")) {
+                                productCatalog.setIsjungimo_charakteristika(null);
+                            } else {
+                                productCatalog.setIsjungimo_charakteristika(isjungimo_charakteristika);
+                            }
                             break;
                         case 31:
                             String mechaninis_atsparumas = cell.getStringCellValue();
-                            if (mechaninis_atsparumas.equals("")){productCatalog.setMechaninis_atsparumas(null);}
-                            else {productCatalog.setMechaninis_atsparumas(mechaninis_atsparumas);}
+                            if (mechaninis_atsparumas.equals("")) {
+                                productCatalog.setMechaninis_atsparumas(null);
+                            } else {
+                                productCatalog.setMechaninis_atsparumas(mechaninis_atsparumas);
+                            }
                             break;
                         case 32:
                             String skerspjuvis = cell.getStringCellValue();
-                            if (skerspjuvis.equals("")){productCatalog.setSkerspjuvis(null);}
-                            else {productCatalog.setSkerspjuvis(skerspjuvis);}
+                            if (skerspjuvis.equals("")) {
+                                productCatalog.setSkerspjuvis(null);
+                            } else {
+                                productCatalog.setSkerspjuvis(skerspjuvis);
+                            }
                             break;
                         case 33:
                             String skerspjuvis2 = cell.getStringCellValue();
-                            if (skerspjuvis2.equals("")){productCatalog.setSkerspjuvis2(null);}
-                            else {productCatalog.setSkerspjuvis2(skerspjuvis2);}
+                            if (skerspjuvis2.equals("")) {
+                                productCatalog.setSkerspjuvis2(null);
+                            } else {
+                                productCatalog.setSkerspjuvis2(skerspjuvis2);
+                            }
                             break;
                         case 34:
                             String nuotekio_srove = cell.getStringCellValue();
-                            if (nuotekio_srove.equals("")){productCatalog.setNuotekio_srove(null);}
-                            else {productCatalog.setNuotekio_srove(nuotekio_srove);}
+                            if (nuotekio_srove.equals("")) {
+                                productCatalog.setNuotekio_srove(null);
+                            } else {
+                                productCatalog.setNuotekio_srove(nuotekio_srove);
+                            }
                             break;
                         case 35:
-                            Integer dydis = (int) cell.getNumericCellValue();
-                            if (dydis == 0){productCatalog.setDydis(0);}
-                            else {productCatalog.setDydis(dydis);}
+                            String dydis = cell.getStringCellValue();
+                            if (dydis.equals("")) {
+                                productCatalog.setDydis(null);
+                            } else {
+                                productCatalog.setDydis(dydis);
+                            }
                             break;
                         case 36:
                             String plotas = cell.getStringCellValue();
-                            if (plotas.equals("")){productCatalog.setPlotas(null);}
-                            else {productCatalog.setPlotas(plotas);}
+                            if (plotas.equals("")) {
+                                productCatalog.setPlotas(null);
+                            } else {
+                                productCatalog.setPlotas(plotas);
+                            }
                             break;
                     }
 
@@ -222,6 +315,7 @@ public class ReadExcelWithProductCatalog {
                     break;
                 }
                 products.add(productCatalog);
+
             }
 
         } catch (Exception e) {

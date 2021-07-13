@@ -42,9 +42,9 @@ public class ProductCatalog {
     @Column(name = "moduliu_skaicius")
     private double moduliu_skaicius;
     @Column(name = "vardine_srove")
-    private double vardine_srove;
+    private String vardine_srove;
     @Column(name = "vardine_itampa")
-    private double vardine_itampa;
+    private String vardine_itampa;
     @Column(name = "mechaninis_atsparumas_IK")
     private String mechaninis_atsparumas_IK;
     @Column(name = "spalva")
@@ -56,7 +56,7 @@ public class ProductCatalog {
     @Column(name = "svoris")
     private double svoris;
     @Column(name = "galia")
-    private double galia;
+    private String galia;
     @Column(name = "sviesos_srautas")
     private double sviesos_srautas;
     @Column(name = "sviesos_spalvos_temperatura")
@@ -66,9 +66,9 @@ public class ProductCatalog {
     @Column(name = "izoliacija2")
     private String izoliacija2;
     @Column(name = "darbine_temperatura")
-    private int darbine_temperatura;
+    private String darbine_temperatura;
     @Column(name = "Max_darbine_temperatura")
-    private int max_darbine_temperatura;
+    private String max_darbine_temperatura;
     @Column(name = "apvalkalas")
     private String apvalkalas;
     @Column(name = "CPR_klase")
@@ -86,7 +86,7 @@ public class ProductCatalog {
     @Column(name = "nuotekio_srove")
     private String nuotekio_srove;
     @Column(name = "dydis")
-    private int dydis;
+    private String dydis;
     @Column(name = "plotas")
     private String plotas;
     @Column(name = "image_url", length = 1024)
@@ -105,7 +105,7 @@ public class ProductCatalog {
         this.date = date;
     }
 
-    public ProductCatalog(String catalogNo, String symbol, String priceNet, int stock, int groupId, double aukstis, double plotis, double gylis, double skersmuo, double ilgis, String apsaugos_laipsnis, double moduliu_skaicius, double vardine_srove, double vardine_itampa, String mechaninis_atsparumas_IK, String spalva, String korpuso_medziaga, String izoliacija, double svoris, double galia, double sviesos_srautas, String sviesos_spalvos_temperatura, String laidininkas, String izoliacija2, int darbine_temperatura, int max_darbine_temperatura, String apvalkalas, String cpr_klase, String isjungimo_geba, String isjungimo_charakteristika, String mechaninis_atsparumas, String skerspjuvis, String skerspjuvis2, String nuotekio_srove, int dydis, String plotas, String image_url, Date date) {
+    public ProductCatalog(String catalogNo, String symbol, String priceNet, int stock, int groupId, double aukstis, double plotis, double gylis, double skersmuo, double ilgis, String apsaugos_laipsnis, double moduliu_skaicius, String vardine_srove, String vardine_itampa, String mechaninis_atsparumas_IK, String spalva, String korpuso_medziaga, String izoliacija, double svoris, String galia, double sviesos_srautas, String sviesos_spalvos_temperatura, String laidininkas, String izoliacija2, String darbine_temperatura, String max_darbine_temperatura, String apvalkalas, String cpr_klase, String isjungimo_geba, String isjungimo_charakteristika, String mechaninis_atsparumas, String skerspjuvis, String skerspjuvis2, String nuotekio_srove, String dydis, String plotas, String image_url, Date date) {
         this.catalogNo = catalogNo;
         this.symbol = symbol;
         this.priceNet = priceNet;
@@ -191,11 +191,11 @@ public class ProductCatalog {
         this.moduliu_skaicius = moduliu_skaicius;
     }
 
-    public double getVardine_srove() {
+    public String getVardine_srove() {
         return vardine_srove;
     }
 
-    public void setVardine_srove(double vardine_srove) {
+    public void setVardine_srove(String vardine_srove) {
         this.vardine_srove = vardine_srove;
     }
 
@@ -255,11 +255,11 @@ public class ProductCatalog {
         this.izoliacija2 = izoliacija2;
     }
 
-    public int getMax_darbine_temperatura() {
+    public String getMax_darbine_temperatura() {
         return max_darbine_temperatura;
     }
 
-    public void setMax_darbine_temperatura(int max_darbine_temperatura) {
+    public void setMax_darbine_temperatura(String max_darbine_temperatura) {
         this.max_darbine_temperatura = max_darbine_temperatura;
     }
 
@@ -327,11 +327,11 @@ public class ProductCatalog {
         this.nuotekio_srove = nuotekio_srove;
     }
 
-    public int getDydis() {
+    public String getDydis() {
         return dydis;
     }
 
-    public void setDydis(int dydis) {
+    public void setDydis(String dydis) {
         this.dydis = dydis;
     }
 
@@ -423,19 +423,19 @@ public class ProductCatalog {
         this.gylis = gylis;
     }
 
-    public double getVardine_itampa() {
+    public String getVardine_itampa() {
         return vardine_itampa;
     }
 
-    public void setVardine_itampa(double vardine_itampa) {
+    public void setVardine_itampa(String vardine_itampa) {
         this.vardine_itampa = vardine_itampa;
     }
 
-    public double getGalia() {
+    public String getGalia() {
         return galia;
     }
 
-    public void setGalia(double galia) {
+    public void setGalia(String galia) {
         this.galia = galia;
     }
 
@@ -447,11 +447,11 @@ public class ProductCatalog {
         this.sviesos_srautas = sviesos_srautas;
     }
 
-    public int getDarbine_temperatura() {
+    public String getDarbine_temperatura() {
         return darbine_temperatura;
     }
 
-    public void setDarbine_temperatura(int darbine_temperatura) {
+    public void setDarbine_temperatura(String darbine_temperatura) {
         this.darbine_temperatura = darbine_temperatura;
     }
 

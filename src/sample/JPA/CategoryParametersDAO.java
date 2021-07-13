@@ -49,4 +49,18 @@ public class CategoryParametersDAO {
         }
     }
 
+    public static List<CategoryParameters> displayAllCategoryParameters() {
+        EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
+        EntityTransaction entityTransaction = entityManager.getTransaction();
+        entityTransaction.begin();
+
+        TypedQuery<CategoryParameters> query = entityManager.createQuery("Select e From CategoryParameters e", CategoryParameters.class);
+        List<CategoryParameters> categoryParameters = query.getResultList();
+
+        entityManager.getTransaction().commit();
+        entityManager.close();
+
+        return categoryParameters;
+
+    }
 }

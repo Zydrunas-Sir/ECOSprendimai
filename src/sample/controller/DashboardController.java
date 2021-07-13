@@ -377,6 +377,7 @@ public class DashboardController extends Main implements Initializable {
             public void run() {
                 List<ProductCatalog> excelProducts = null;
                 List<ProductCatalog> dbProducts = ProductCatalogDAO.displayAllItems();
+                List<CategoryParameters> allCategoryParameters = CategoryParametersDAO.displayAllCategoryParameters();
 
                 try {
                     excelProducts = ReadExcelWithProductCatalog.readFileUsingPOI(file);
@@ -392,6 +393,7 @@ public class DashboardController extends Main implements Initializable {
                 assert excelProducts != null;
                 try {
                     for (ProductCatalog excelProduct : excelProducts) {
+                        insertCategoryParameter(createCategoryParameter(excelProduct), allCategoryParameters);
                         countExcelProducts++;
                         boolean isNewProduct = true;
 
@@ -448,6 +450,113 @@ public class DashboardController extends Main implements Initializable {
         uploadExcelLogicalThread.setDaemon(true);
         uploadExcelLogicalThread.start();
 
+    }
+
+    public void insertCategoryParameter(CategoryParameters categoryParameter, List<CategoryParameters> allCategoryParameters) {
+        for (CategoryParameters fromAllCategoryParameter : allCategoryParameters){
+            if (!fromAllCategoryParameter.equals(categoryParameter)){
+                CategoryParametersDAO.createNewCategoryParametersField(categoryParameter);
+            }
+        }
+    }
+
+    public CategoryParameters createCategoryParameter(ProductCatalog product) {
+        CategoryParameters categoryParameters = new CategoryParameters();
+
+        Double aukstis = product.getAukstis();
+        categoryParameters.setAukstis(aukstis != null);
+
+        Double plotis = product.getPlotis();
+        categoryParameters.setPlotis(plotis != null);
+
+        Double gylis = product.getGylis();
+        categoryParameters.setGylis(gylis != null);
+
+        Double skersmuo = product.getSkersmuo();
+        categoryParameters.setSkersmuo(skersmuo != null);
+
+        Double ilgis = product.getIlgis();
+        categoryParameters.setIlgis(ilgis != null);
+
+        String apsaugos_laipsnis = product.getApsaugos_laipsnis();
+        categoryParameters.setApsaugos_laipsnis(apsaugos_laipsnis != null);
+
+        Double moduliu_skaicius = product.getModuliu_skaicius();
+        categoryParameters.setModuliu_skaicius(moduliu_skaicius != null);
+
+        String vardine_srove = product.getVardine_srove();
+        categoryParameters.setVardine_srove(vardine_srove != null);
+
+        String vardine_itampa = product.getVardine_itampa();
+        categoryParameters.setVardine_itampa(vardine_itampa != null);
+
+        String mechaninis_atsparumas_IK = product.getMechaninis_atsparumas_IK();
+        categoryParameters.setMechaninis_atsparumas_IK(mechaninis_atsparumas_IK != null);
+
+        String spalva = product.getSpalva();
+        categoryParameters.setSpalva(spalva != null);
+
+        String korpuso_medziaga = product.getKorpuso_medziaga();
+        categoryParameters.setKorpuso_medziaga(korpuso_medziaga != null);
+
+        String izoliacija = product.getIzoliacija();
+        categoryParameters.setIzoliacija(izoliacija != null);
+
+        Double svoris = product.getSvoris();
+        categoryParameters.setSvoris(svoris != null);
+
+        String galia = product.getGalia();
+        categoryParameters.setGalia(galia != null);
+
+        Double sviesos_srautas = product.getSviesos_srautas();
+        categoryParameters.setSviesos_srautas(sviesos_srautas != null);
+
+        String sviesos_spalvos_temperatura = product.getSviesos_spalvos_temperatura();
+        categoryParameters.setSviesos_spalvos_temperatura(sviesos_spalvos_temperatura != null);
+
+        String laidininkas = product.getLaidininkas();
+        categoryParameters.setLaidininkas(laidininkas != null);
+
+        String izoliacija2 = product.getIzoliacija2();
+        categoryParameters.setIzoliacija2(izoliacija2 != null);
+
+        String darbine_temperatura = product.getDarbine_temperatura();
+        categoryParameters.setDarbine_temperatura(darbine_temperatura != null);
+
+        String max_darbine_temperatura = product.getMax_darbine_temperatura();
+        categoryParameters.setMax_darbine_temperatura(max_darbine_temperatura != null);
+
+        String apvalkalas = product.getApvalkalas();
+        categoryParameters.setApvalkalas(apvalkalas != null);
+
+        String cpr_klase = product.getCpr_klase();
+        categoryParameters.setCPR_klase(cpr_klase != null);
+
+        String isjungimo_geba = product.getIsjungimo_geba();
+        categoryParameters.setIsjungimo_geba(isjungimo_geba != null);
+
+        String isjungimo_charakteristika = product.getIsjungimo_charakteristika();
+        categoryParameters.setIsjungimo_charakteristika(isjungimo_charakteristika != null);
+
+        String mechaninis_atsparumas = product.getMechaninis_atsparumas();
+        categoryParameters.setMechaninis_atsparumas(mechaninis_atsparumas != null);
+
+        String skerspjuvis = product.getSkerspjuvis();
+        categoryParameters.setSkerspjuvis(skerspjuvis != null);
+
+        String skerspjuvis2 = product.getSkerspjuvis2();
+        categoryParameters.setSkerspjuvis2(skerspjuvis2 != null);
+
+        String nuotekio_srove = product.getNuotekio_srove();
+        categoryParameters.setNuotekio_srove(nuotekio_srove != null);
+
+        String dydis = product.getDydis();
+        categoryParameters.setDydis(dydis != null);
+
+        String plotas = product.getPlotas();
+        categoryParameters.setPlotas(plotas != null);
+
+        return categoryParameters;
     }
 
     //Surenka visus produktus turinčius pasirinktos kategorijos id
@@ -713,7 +822,7 @@ public class DashboardController extends Main implements Initializable {
                     desciptionLabelVBox.getChildren().add(modulesNumberDescription);
                     propertyLabelVBox.getChildren().add(modulesNumberProperties);
                 }
-                if (irasas.getVardine_itampa() != 0) {
+                if (irasas.getVardine_itampa() != null) {
                     Label voltageDescription = new Label();
                     Label voltageProperty = new Label();
                     voltageProperty.setStyle("-fx-font-weight: bold;");
@@ -726,7 +835,7 @@ public class DashboardController extends Main implements Initializable {
                     desciptionLabelVBox.getChildren().add(voltageDescription);
                     propertyLabelVBox.getChildren().add(voltageProperty);
                 }
-                if (irasas.getVardine_srove() != 0) {
+                if (irasas.getVardine_srove() != null) {
                     Label voltageFlowDescription = new Label();
                     Label voltageFlowProperty = new Label();
                     voltageFlowProperty.setStyle("-fx-font-weight: bold;");
@@ -804,7 +913,7 @@ public class DashboardController extends Main implements Initializable {
                     desciptionLabelVBox.getChildren().add(weightDescription);
                     propertyLabelVBox.getChildren().add(weightProperty);
                 }
-                if (irasas.getGalia() != 0) {
+                if (irasas.getGalia() != null) {
                     Label powerDescription = new Label();
                     Label powerProperty = new Label();
                     powerProperty.setStyle("-fx-font-weight: bold;");
@@ -883,7 +992,7 @@ public class DashboardController extends Main implements Initializable {
                     desciptionLabelVBox.getChildren().add(isolation2Description);
                     propertyLabelVBox.getChildren().add(isolation2Proeprty);
                 }
-                if (irasas.getDarbine_temperatura() != 0) {
+                if (irasas.getDarbine_temperatura() != null) {
                     Label workingTemperatureDescription = new Label();
                     Label workingTemperatureProperty = new Label();
                     workingTemperatureProperty.setStyle("-fx-font-weight: bold;");
@@ -896,7 +1005,7 @@ public class DashboardController extends Main implements Initializable {
                     desciptionLabelVBox.getChildren().add(workingTemperatureDescription);
                     propertyLabelVBox.getChildren().add(workingTemperatureProperty);
                 }
-                if (irasas.getMax_darbine_temperatura() != 0) {
+                if (irasas.getMax_darbine_temperatura() != null) {
                     Label maxWorkTemperatureDescription = new Label();
                     Label maxWorkTemperatureProperty = new Label();
                     maxWorkTemperatureProperty.setStyle("-fx-font-weight: bold;");
@@ -1013,7 +1122,7 @@ public class DashboardController extends Main implements Initializable {
                     desciptionLabelVBox.getChildren().add(currentDescription);
                     propertyLabelVBox.getChildren().add(currentProperty);
                 }
-                if (irasas.getDydis() != 0) {
+                if (irasas.getDydis() != null) {
                     Label sizeDescription = new Label();
                     Label sizeProperty = new Label();
                     sizeProperty.setStyle("-fx-font-weight: bold;");
