@@ -1,6 +1,7 @@
 package sample.JPA;
 
 
+import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -27,8 +28,9 @@ public class JPAUtil {
                 factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
             } catch (RuntimeException exception) {
                 System.out.println("JPAUtil RuntimeException ");
-                showPopupWindow("Nepavyko užmegzti ryšio", "Nepavyko prisijungti prie duomenų bazės\n- Patikrinkite ar turite interneto ryšį. \n- Priešingu atveju kreipkitės: į ECOSprendimai\n- Klaidos kodas: JPAUtil PersistenceException\n- Programos versija: " + Constants.PROGRAM_VERSION, "#b02a37", "#FFFFFF", getScene());
-
+                Platform.runLater(() -> {
+                showPopupWindow("Nepavyko užmegzti ryšio", "Nepavyko prisijungti prie duomenų bazės\n- Patikrinkite ar turite interneto ryšį \n- Priešingu atveju kreipkitės: į ECOSprendimai\n- Klaidos kodas: JPAUtil PersistenceException\n- Programos versija: " + Constants.PROGRAM_VERSION, "#b02a37", "#FFFFFF", getScene());
+                });
             }
         }
         return factory;

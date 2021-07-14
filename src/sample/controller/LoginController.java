@@ -165,7 +165,13 @@ public class LoginController implements Initializable {
                             });
                         } else {
                             Platform.runLater(() -> {
-                                JPAUtil.showPopupWindow("Informacija", "Vartotojo paskyra yra išjungta. Prašome kreiptis į ECOSprendimai administratorių.\n- Telefono nr.: +370 600 00000\n- El.paštas: info@ecosprendimai.lt", "#0a58ca", "#FFFFFF", login_info_label.getScene());
+                                JPAUtil.showPopupWindow("Informacija", "Vartotojo paskyra yra išjungta. \nPrašome kreiptis į ECOSprendimai administratorių.\n- Telefono nr.: +370 600 00000\n- El.paštas: info@ecosprendimai.lt", "#0a58ca", "#FFFFFF", login_info_label.getScene());
+                                load_progress_indicator.setVisible(false);
+                                username_button.setVisible(true);
+                                register_button.setVisible(true);
+                                email_textfield.setDisable(false);
+                                password_passwordfield.setDisable(false);
+                                check_box_remember_me.setDisable(false);
                             });
                         }
 

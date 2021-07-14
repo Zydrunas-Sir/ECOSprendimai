@@ -7,6 +7,9 @@ import yahoofinance.YahooFinance;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.TimeZone;
 
 public class YahooStockAPI {
 
@@ -14,7 +17,7 @@ public class YahooStockAPI {
     public StocksDto getRealTimeRate() throws IOException {
 
 
-        Stock stock = YahooFinance.get("HG=F");
+        Stock stock = YahooFinance.get("HG=F", true);
 
         String currency = "EUR";
         String name = stock.getName();
