@@ -153,6 +153,23 @@ public class CategoriesDAO {
         entityManager.close();
     }
 
+
+
+    public static void updateCategoryParameterById(int categoryParameter, int id){
+        EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
+        EntityTransaction entityTransaction = entityManager.getTransaction();
+        entityTransaction.begin();
+
+        Query query = entityManager.createQuery("Update Categories a SET a.category_parameter_id = ?1 WHERE a.id = ?2");
+        query.setParameter(1, categoryParameter);
+        query.setParameter(2, id);
+        int rowsUpdated = query.executeUpdate();
+        System.out.println("entities Updated: " + rowsUpdated);
+
+        entityManager.getTransaction().commit();
+        entityManager.close();
+    }
+
     public static void updateCategoryRights(int lft){
         EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
         EntityTransaction entityTransaction = entityManager.getTransaction();

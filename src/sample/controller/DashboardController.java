@@ -377,7 +377,7 @@ public class DashboardController extends Main implements Initializable {
             public void run() {
                 List<ProductCatalog> excelProducts = null;
                 List<ProductCatalog> dbProducts = ProductCatalogDAO.displayAllItems();
-                List<CategoryParameters> allCategoryParameters = CategoryParametersDAO.displayAllCategoryParameters();
+
 
                 try {
                     excelProducts = ReadExcelWithProductCatalog.readFileUsingPOI(file);
@@ -393,7 +393,8 @@ public class DashboardController extends Main implements Initializable {
                 assert excelProducts != null;
                 try {
                     for (ProductCatalog excelProduct : excelProducts) {
-                        insertCategoryParameter(createCategoryParameter(excelProduct), allCategoryParameters);
+                        List<CategoryParameters> allCategoryParameters = CategoryParametersDAO.displayAllCategoryParameters();
+                        insertCategoryParameter(createCategoryParameter(excelProduct), allCategoryParameters, excelProduct);
                         countExcelProducts++;
                         boolean isNewProduct = true;
 
@@ -452,10 +453,12 @@ public class DashboardController extends Main implements Initializable {
 
     }
 
-    public void insertCategoryParameter(CategoryParameters categoryParameter, List<CategoryParameters> allCategoryParameters) {
+    public void insertCategoryParameter(CategoryParameters categoryParameter, List<CategoryParameters> allCategoryParameters, ProductCatalog product) {
         for (CategoryParameters fromAllCategoryParameter : allCategoryParameters){
             if (!fromAllCategoryParameter.equals(categoryParameter)){
                 CategoryParametersDAO.createNewCategoryParametersField(categoryParameter);
+                CategoryParameters parameter = CategoryParametersDAO.selectLastCategoryParameter();
+                CategoriesDAO.updateCategoryParameterById(parameter.getId(), product.getGroupId());
             }
         }
     }

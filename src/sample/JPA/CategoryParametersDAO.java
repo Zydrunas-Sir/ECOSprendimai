@@ -49,6 +49,20 @@ public class CategoryParametersDAO {
         }
     }
 
+    public static CategoryParameters selectLastCategoryParameter(){
+        EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
+        EntityTransaction entityTransaction = entityManager.getTransaction();
+        entityTransaction.begin();
+
+        TypedQuery<CategoryParameters> query = entityManager.createQuery("Select e From CategoryParameters e ORDER BY id DESC LIMIT 1", CategoryParameters.class);
+        CategoryParameters categoryParameters = query.getSingleResult();
+
+        entityManager.getTransaction().commit();
+        entityManager.close();
+
+        return categoryParameters;
+    }
+
     public static List<CategoryParameters> displayAllCategoryParameters() {
         EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
         EntityTransaction entityTransaction = entityManager.getTransaction();
