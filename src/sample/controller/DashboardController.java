@@ -717,7 +717,7 @@ public class DashboardController extends Main implements Initializable {
                 priceNetProperty.setLayoutY(getRightPanelLabelY());
                 priceNetProperty.setStyle("-fx-font-weight: bold;");
                 priceNetDescription.setText("Kaina: ");
-                priceNetProperty.setText(irasas.getPriceNet());
+                priceNetProperty.setText(String.valueOf(Math.round((Double.parseDouble(irasas.getPriceNet()) * 100.0) / 100.0)));
                 desciptionLabelVBox.getChildren().add(priceNetDescription);
                 propertyLabelVBox.getChildren().add(priceNetProperty);
 
