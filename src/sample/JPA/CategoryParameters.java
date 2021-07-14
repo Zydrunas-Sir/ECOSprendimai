@@ -81,41 +81,6 @@ public class CategoryParameters {
     public CategoryParameters() {
     }
 
-    public CategoryParameters(int id, boolean aukstis, boolean plotis, boolean gylis, boolean skersmuo, boolean ilgis, boolean apsaugos_laipsnis, boolean moduliu_skaicius, boolean vardine_srove, boolean vardine_itampa, boolean mechaninis_atsparumas_IK, boolean spalva, boolean korpuso_medziaga, boolean izoliacija, boolean svoris, boolean galia, boolean sviesos_srautas, boolean sviesos_spalvos_temperatura, boolean laidininkas, boolean izoliacija2, boolean darbine_temperatura, boolean max_darbine_temperatura, boolean apvalkalas, boolean CPR_klase, boolean isjungimo_geba, boolean isjungimo_charakteristika, boolean mechaninis_atsparumas, boolean skerspjuvis, boolean skerspjuvis2, boolean nuotekio_srove, boolean dydis, boolean plotas) {
-        this.id = id;
-        this.aukstis = aukstis;
-        this.plotis = plotis;
-        this.gylis = gylis;
-        this.skersmuo = skersmuo;
-        this.ilgis = ilgis;
-        this.apsaugos_laipsnis = apsaugos_laipsnis;
-        this.moduliu_skaicius = moduliu_skaicius;
-        this.vardine_srove = vardine_srove;
-        this.vardine_itampa = vardine_itampa;
-        this.mechaninis_atsparumas_IK = mechaninis_atsparumas_IK;
-        this.spalva = spalva;
-        this.korpuso_medziaga = korpuso_medziaga;
-        this.izoliacija = izoliacija;
-        this.svoris = svoris;
-        this.galia = galia;
-        this.sviesos_srautas = sviesos_srautas;
-        this.sviesos_spalvos_temperatura = sviesos_spalvos_temperatura;
-        this.laidininkas = laidininkas;
-        this.izoliacija2 = izoliacija2;
-        this.darbine_temperatura = darbine_temperatura;
-        this.max_darbine_temperatura = max_darbine_temperatura;
-        this.apvalkalas = apvalkalas;
-        this.CPR_klase = CPR_klase;
-        this.isjungimo_geba = isjungimo_geba;
-        this.isjungimo_charakteristika = isjungimo_charakteristika;
-        this.mechaninis_atsparumas = mechaninis_atsparumas;
-        this.skerspjuvis = skerspjuvis;
-        this.skerspjuvis2 = skerspjuvis2;
-        this.nuotekio_srove = nuotekio_srove;
-        this.dydis = dydis;
-        this.plotas = plotas;
-    }
-
     public CategoryParameters(boolean aukstis, boolean plotis, boolean gylis, boolean skersmuo, boolean ilgis, boolean apsaugos_laipsnis, boolean moduliu_skaicius, boolean vardine_srove, boolean vardine_itampa, boolean mechaninis_atsparumas_IK, boolean spalva, boolean korpuso_medziaga, boolean izoliacija, boolean svoris, boolean galia, boolean sviesos_srautas, boolean sviesos_spalvos_temperatura, boolean laidininkas, boolean izoliacija2, boolean darbine_temperatura, boolean max_darbine_temperatura, boolean apvalkalas, boolean CPR_klase, boolean isjungimo_geba, boolean isjungimo_charakteristika, boolean mechaninis_atsparumas, boolean skerspjuvis, boolean skerspjuvis2, boolean nuotekio_srove, boolean dydis, boolean plotas) {
         this.aukstis = aukstis;
         this.plotis = plotis;
@@ -400,43 +365,6 @@ public class CategoryParameters {
 
     public void setPlotas(boolean plotas) {
         this.plotas = plotas;
-    }
-
-    @Override
-    public String toString() {
-        return "CategoryParameters{" +
-                ", aukstis=" + aukstis +
-                ", plotis=" + plotis +
-                ", gylis=" + gylis +
-                ", skersmuo=" + skersmuo +
-                ", ilgis=" + ilgis +
-                ", apsaugos_laipsnis=" + apsaugos_laipsnis +
-                ", moduliu_skaicius=" + moduliu_skaicius +
-                ", vardine_srove=" + vardine_srove +
-                ", vardine_itampa=" + vardine_itampa +
-                ", mechaninis_atsparumas_IK=" + mechaninis_atsparumas_IK +
-                ", spalva=" + spalva +
-                ", korpuso_medziaga=" + korpuso_medziaga +
-                ", izoliacija=" + izoliacija +
-                ", svoris=" + svoris +
-                ", galia=" + galia +
-                ", sviesos_srautas=" + sviesos_srautas +
-                ", sviesos_spalvos_temperatura=" + sviesos_spalvos_temperatura +
-                ", laidininkas=" + laidininkas +
-                ", izoliacija2=" + izoliacija2 +
-                ", darbine_temperatura=" + darbine_temperatura +
-                ", max_darbine_temperatura=" + max_darbine_temperatura +
-                ", apvalkalas=" + apvalkalas +
-                ", CPR_klase=" + CPR_klase +
-                ", isjungimo_geba=" + isjungimo_geba +
-                ", isjungimo_charakteristika=" + isjungimo_charakteristika +
-                ", mechaninis_atsparumas=" + mechaninis_atsparumas +
-                ", skerspjuvis=" + skerspjuvis +
-                ", skerspjuvis2=" + skerspjuvis2 +
-                ", nuotekio_srove=" + nuotekio_srove +
-                ", dydis=" + dydis +
-                ", plotas=" + plotas +
-                '}';
     }
 }
 
