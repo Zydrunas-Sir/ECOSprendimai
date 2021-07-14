@@ -131,9 +131,9 @@ public class Validation {
         return matcher.find();
     }
 
-    public static final String PRODUCT_FORM_KORPUSAS_PATTERN = "^[a-zA-ZĄąČčĘęĖėĮįŠšŲųŪūŽž]{3,255}$";
+    public static final String PRODUCT_FORM_KORPUSO_MEDZIAGA_PATTERN = "^[a-zA-ZĄąČčĘęĖėĮįŠšŲųŪūŽž]{3,255}$";
     public static boolean isValidKorpusas(String korpusas) {
-        Pattern pattern = Pattern.compile(PRODUCT_FORM_KORPUSAS_PATTERN);
+        Pattern pattern = Pattern.compile(PRODUCT_FORM_KORPUSO_MEDZIAGA_PATTERN);
         Matcher matcher = pattern.matcher(korpusas);
         return matcher.find();
     }
@@ -188,6 +188,140 @@ public class Validation {
         return matcher.find();
     }
 
+    public static final String PRODUCT_FORM_MECHANICAL_RESISTANCE_IK = "^[0-9]{1,10}$";
+    public static boolean isValidMechanicalResistanceIk(String mr_ik) {
+        Pattern pattern = Pattern.compile(PRODUCT_FORM_MECHANICAL_RESISTANCE_IK);
+        Matcher matcher = pattern.matcher(mr_ik);
+        return matcher.find();
+    }
+
+    public static final String PRODUCT_FORM_NUMBER_OF_MODULES_PATTERN = "^[0-9]{1,10}$";
+    public static boolean isValidNumberOfModules(String numberOfModules) {
+        Pattern pattern = Pattern.compile(PRODUCT_FORM_NUMBER_OF_MODULES_PATTERN);
+        Matcher matcher = pattern.matcher(numberOfModules);
+        return matcher.find();
+    }
+
+    public static final String PRODUCT_FORM_DIAMETER = "^[0-9]{1,10}$";
+    public static boolean isValidDiameter(String diameter) {
+        Pattern pattern = Pattern.compile(PRODUCT_FORM_DIAMETER);
+        Matcher matcher = pattern.matcher(diameter);
+        return matcher.find();
+    }
+    public static final String PRODUCT_FORM_LENGTH = "^[0-9]{1,10}$";
+    public static boolean isValidLength(String length) {
+        Pattern pattern = Pattern.compile(PRODUCT_FORM_LENGTH);
+        Matcher matcher = pattern.matcher(length);
+        return matcher.find();
+    }
+
+    public static final String PRODUCT_MODULE_COUNT_PATTERN = "^[0-9]{1,10}$";
+    public static boolean isModuleCount(String moduleCount) {
+        Pattern pattern = Pattern.compile(PRODUCT_MODULE_COUNT_PATTERN);
+        Matcher matcher = pattern.matcher(moduleCount);
+        return matcher.find();
+    }
+
+    public static final String PRODUCT_FORM_MASS_PATTERN = "^[0-9]{1,10}$";
+    public static boolean isMass(String mass) {
+        Pattern pattern = Pattern.compile(PRODUCT_FORM_MASS_PATTERN);
+        Matcher matcher = pattern.matcher(mass);
+        return matcher.find();
+    }
+
+    public static final String PRODUCT_FORM_SHELL_PATTERN = "^[a-zA-ZĄąČčĘęĖėĮįŠšŲųŪūŽž]{3,255}$";
+    public static boolean isShell(String shell) {
+        Pattern pattern = Pattern.compile(PRODUCT_FORM_SHELL_PATTERN);
+        Matcher matcher = pattern.matcher(shell);
+        return matcher.find();
+    }
+
+    public static final String PRODUCT_FORM_ISOLATION_PATTERN = "^[a-zA-ZĄąČčĘęĖėĮįŠšŲųŪūŽž]{3,255}$";
+    public static boolean isIsolation(String isolation) {
+        Pattern pattern = Pattern.compile(PRODUCT_FORM_ISOLATION_PATTERN);
+        Matcher matcher = pattern.matcher(isolation);
+        return matcher.find();
+    }
+
+    public static final String PRODUCT_FORM_CONDUCTOR_PATTERN = "^[0-9]{1,10}$";
+    public static boolean isConductor(String conductor) {
+        Pattern pattern = Pattern.compile(PRODUCT_FORM_CONDUCTOR_PATTERN);
+        Matcher matcher = pattern.matcher(conductor);
+        return matcher.find();
+
+    }
+
+    public static final String PRODUCT_FORM_LIGHT_COLOR_TEMPERATURE_PATTERN= "^[0-9]{1,10}$";
+    public static boolean isLightColor(String lightColorTemperature) {
+        Pattern pattern = Pattern.compile(PRODUCT_FORM_LIGHT_COLOR_TEMPERATURE_PATTERN);
+        Matcher matcher = pattern.matcher(lightColorTemperature);
+        return matcher.find();
+    }
+    public static final String PRODUCT_FORM_MAX_OPERATION_TEMPERATURE_PATTERN= "^[0-9]{1,10}$";
+    public static boolean isOperationTemerature(String operationTemperature) {
+        Pattern pattern = Pattern.compile(PRODUCT_FORM_MAX_OPERATION_TEMPERATURE_PATTERN);
+        Matcher matcher = pattern.matcher(operationTemperature);
+        return matcher.find();
+    }
+
+    public static final String PRODUCT_FORM_SHUTDOWN_CAPABILITY_PATTERN= "^[0-9]{1,10}$";
+    public static boolean isShutDown(String shutdownCapability) {
+        Pattern pattern = Pattern.compile(PRODUCT_FORM_SHUTDOWN_CAPABILITY_PATTERN);
+        Matcher matcher = pattern.matcher(shutdownCapability);
+        return matcher.find();
+    }
+    public static final String PRODUCT_FORM_SHUTDOWN_CHARACTERISTIC_PATTERN= "^[a-zA-ZĄąČčĘęĖėĮįŠšŲųŪūŽž]{3,255}$";
+    public static boolean isShutDownCh(String shutdownCharacteristic) {
+        Pattern pattern = Pattern.compile(PRODUCT_FORM_SHUTDOWN_CHARACTERISTIC_PATTERN);
+        Matcher matcher = pattern.matcher(shutdownCharacteristic);
+        return matcher.find();
+    }
+    public static final String PRODUCT_FORM_CPR_CLASS_PATTERN= "^[a-zA-ZĄąČčĘęĖėĮįŠšŲųŪūŽž]{3,255}$";
+    public static boolean isCprClass(String cpr) {
+        Pattern pattern = Pattern.compile(PRODUCT_FORM_CPR_CLASS_PATTERN);
+        Matcher matcher = pattern.matcher(cpr);
+        return matcher.find();
+
+    }
+
+    public static final String PRODUCT_FORM_MECHANICAL_RESISTANCE_PATTERN= "^[0-9]{1,10}$";
+    public static boolean isResistence(String mechanicalResistance) {
+        Pattern pattern = Pattern.compile(PRODUCT_FORM_MECHANICAL_RESISTANCE_PATTERN);
+        Matcher matcher = pattern.matcher(mechanicalResistance);
+        return matcher.find();
+
+    }
+
+    public static final String PRODUCT_FORM_CROSSCUT_PATTERN= "^[0-9]{1,10}$";
+    public static boolean isCrosscut(String crosscut) {
+        Pattern pattern = Pattern.compile(PRODUCT_FORM_CROSSCUT_PATTERN);
+        Matcher matcher = pattern.matcher(crosscut);
+        return matcher.find();
+
+    }
+
+    public static final String PRODUCT_FORM_LEAKAGE_CURRENT_PATTERN= "^[0-9]{1,10}$";
+    public static boolean isLeakageCurrent(String leakageCurrent) {
+        Pattern pattern = Pattern.compile(PRODUCT_FORM_LEAKAGE_CURRENT_PATTERN);
+        Matcher matcher = pattern.matcher(leakageCurrent);
+        return matcher.find();
+
+    }
+    public static final String PRODUCT_FORM_SIZE_PATTERN= "^[0-9]{1,10}$";
+    public static boolean isSize(String size) {
+        Pattern pattern = Pattern.compile(PRODUCT_FORM_SIZE_PATTERN);
+        Matcher matcher = pattern.matcher(size);
+        return matcher.find();
+
+    }
+
+    public static final String PRODUCT_FORM_AREA_PATTERN= "^[0-9]{1,10}$";
+    public static boolean isArea(String area) {
+        Pattern pattern = Pattern.compile(PRODUCT_FORM_AREA_PATTERN);
+        Matcher matcher = pattern.matcher(area);
+        return matcher.find();
+
+    }
     /* Naujo produkto kūrimo lango Validacija : End */
 
 }

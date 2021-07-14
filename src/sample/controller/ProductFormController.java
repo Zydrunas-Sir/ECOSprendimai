@@ -134,7 +134,10 @@ public class ProductFormController extends Main implements Initializable {
         } else if (categoryParameters.isDarbine_temperatura() && !Validation.isValidDarbineTemperatura(temperature_field.getText())){
             WarnStyle();
             form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_PRODUCT_DARBINE_TEMPERATURA);
-        }*/ else {
+        }
+        */
+
+        else {
             registerProduct(item);
         }
 
@@ -213,7 +216,7 @@ public class ProductFormController extends Main implements Initializable {
 
 
     public void mouseEventForTableView(ActionEvent event) {
-        System.out.println("Method mouseEventForTableView() initialized");
+
 
         vbox.getChildren().clear();
         Categories tableItem;
