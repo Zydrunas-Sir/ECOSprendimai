@@ -40,6 +40,7 @@ public class CategoryParametersDAO {
 
         try {
             entityManager.persist(categoryParameters);
+
             entityManager.getTransaction().commit();
             entityManager.close();
         } catch (JDBCConnectionException e) {
@@ -54,7 +55,8 @@ public class CategoryParametersDAO {
         EntityTransaction entityTransaction = entityManager.getTransaction();
         entityTransaction.begin();
 
-        TypedQuery<CategoryParameters> query = entityManager.createQuery("Select e From CategoryParameters e ORDER BY id DESC LIMIT 1", CategoryParameters.class);
+        TypedQuery<CategoryParameters> query = entityManager.createQuery("Select e From CategoryParameters e ORDER BY e.id DESC", CategoryParameters.class);
+        query.setMaxResults(1);
         CategoryParameters categoryParameters = query.getSingleResult();
 
         entityManager.getTransaction().commit();
