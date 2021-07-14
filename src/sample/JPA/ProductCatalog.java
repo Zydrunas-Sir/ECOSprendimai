@@ -364,7 +364,7 @@ public class ProductCatalog {
     }
 
     public void setPriceNet(String priceNet) {
-        this.priceNet = priceNet;
+        this.priceNet = String.valueOf(Math.round(Double.parseDouble(priceNet) * 100.0) / 100.0);
     }
 
     public int getStock() {
