@@ -463,6 +463,7 @@ public class DashboardController extends Main implements Initializable {
                 if (compareCategoryParameters(allCategoryParameter, categoryParameter)) {
                     System.out.println("true");
                 } else {
+                    System.out.println("false");
                     CategoryParametersDAO.createNewCategoryParametersField(categoryParameter);
                     CategoryParameters parameter = CategoryParametersDAO.selectLastCategoryParameter();
                     CategoriesDAO.updateCategoryParameterById(parameter.getId(), product.getGroupId());
