@@ -470,7 +470,6 @@ public class DashboardController extends Main implements Initializable {
                         CategoriesDAO.updateCategoryParameterById(allCategoryParameter.getId(), product.getGroupId());
                     }
                 } else {
-                    System.out.println("false");
 
                 }
 
