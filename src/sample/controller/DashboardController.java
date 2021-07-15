@@ -308,6 +308,7 @@ public class DashboardController extends Main implements Initializable {
 
     }
 
+    //Filtruoja listview panelyje esamą informaciją pagal užrašyta teksta searchfielde
     public void createFilteredCategoryList() {
         FilteredList<Categories> filteredList = new FilteredList<>(observableCategoryList, p -> true);
         listViewSearchField.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -322,6 +323,7 @@ public class DashboardController extends Main implements Initializable {
         listView.setItems(filteredList);
     }
 
+    //Paspaudus ant listview elemento tableview panelyje pavaizduoja visus produktus priklausančius šiam kategorija.
     public void mouseEventForListView(MouseEvent mouseEvent) {
         Categories item;
         try {
@@ -452,26 +454,36 @@ public class DashboardController extends Main implements Initializable {
         uploadExcelLogicalThread.start();
 
     }
-
+    //Ikelia categoryParameter objektą į duombazę patikrinus ar tokio objekto nėra duombazėje.
     public void insertCategoryParameter(CategoryParameters categoryParameter, List<CategoryParameters> allCategoryParameters, ProductCatalog product) {
         if (allCategoryParameters.size() == 0) {
             CategoryParametersDAO.createNewCategoryParametersField(categoryParameter);
             CategoryParameters parameter = CategoryParametersDAO.selectLastCategoryParameter();
             CategoriesDAO.updateCategoryParameterById(parameter.getId(), product.getGroupId());
         } else {
+            boolean newParameter = true;
             for (CategoryParameters allCategoryParameter : allCategoryParameters) {
                 if (compareCategoryParameters(allCategoryParameter, categoryParameter)) {
-                    System.out.println("true");
+                    newParameter = false;
+                    Categories category = CategoriesDAO.displayParentCategoryById(product.getGroupId());
+                    if (allCategoryParameter.getId() != category.getCategory_parameter_id()){
+                        CategoriesDAO.updateCategoryParameterById(allCategoryParameter.getId(), product.getGroupId());
+                    }
                 } else {
-                    CategoryParametersDAO.createNewCategoryParametersField(categoryParameter);
-                    CategoryParameters parameter = CategoryParametersDAO.selectLastCategoryParameter();
-                    CategoriesDAO.updateCategoryParameterById(parameter.getId(), product.getGroupId());
+                    System.out.println("false");
+
                 }
+
+            }
+            if (newParameter) {
+                CategoryParametersDAO.createNewCategoryParametersField(categoryParameter);
+                CategoryParameters parameter = CategoryParametersDAO.selectLastCategoryParameter();
+                CategoriesDAO.updateCategoryParameterById(parameter.getId(), product.getGroupId());
             }
         }
     }
 
-
+    //Lygina du categoryParameter objektus.
     public boolean compareCategoryParameters(CategoryParameters parameter, CategoryParameters parameter2) {
         return parameter.isDarbine_temperatura() == parameter2.isDarbine_temperatura() && parameter.isSviesos_srautas() == parameter2.isSviesos_srautas() &&
                 parameter.isGalia() == parameter2.isGalia() && parameter.isVardine_itampa() == parameter2.isVardine_itampa() && parameter.isSpalva() == parameter2.isSpalva() &&
@@ -486,6 +498,7 @@ public class DashboardController extends Main implements Initializable {
                 parameter.isSviesos_spalvos_temperatura() == parameter2.isSviesos_spalvos_temperatura() && parameter.isSvoris() == parameter2.isSvoris() && parameter.isVardine_srove() == parameter2.isVardine_srove();
     }
 
+    //Sukuria categoryParameter objektą iš produkto esamų parametrų.
     public CategoryParameters createCategoryParameter(ProductCatalog product) {
         CategoryParameters categoryParameters = new CategoryParameters();
 
@@ -621,6 +634,7 @@ public class DashboardController extends Main implements Initializable {
     // metodui perduodamas item'o katalogo numeris.
     public void mouseEventForTableView() {
         ProductCatalog tableItem;
+
 
         try {
             if (!table.getSelectionModel().isEmpty()) {
