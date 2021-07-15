@@ -601,10 +601,9 @@ public class DashboardController extends Main implements Initializable {
         try {
             if (!table.getSelectionModel().isEmpty()) {
                 tableItem = table.getSelectionModel().getSelectedItem();
-                fillDescriptionPanel(tableItem.getCatalogNo());
-
-                System.out.println("Item was selected.");
                 System.out.println("Selected Catalog No: " + tableItem.getCatalogNo());
+                fillDescriptionPanel(tableItem.getCatalogNo());
+                System.out.println("Item was selected.");
             }
         } catch (IllegalStateException e) {
             System.out.println("mouseEventForTreeView( " + e + " )");
@@ -872,8 +871,12 @@ public class DashboardController extends Main implements Initializable {
                     colorDescription.setLayoutY(getRightPanelLabelY());
                     colorProperty.setLayoutX(60);
                     colorProperty.setLayoutY(getRightPanelLabelY());
+
                     colorDescription.setText("Spalva: ");
-                    colorProperty.setText(String.valueOf(irasas.getSpalva()));
+                    colorProperty.setText(irasas.getSpalva());
+                    colorProperty.setWrapText(true);
+
+                    System.out.println(colorProperty.wrapTextProperty().getValue());
                     desciptionLabelVBox.getChildren().add(colorDescription);
                     propertyLabelVBox.getChildren().add(colorProperty);
                 }

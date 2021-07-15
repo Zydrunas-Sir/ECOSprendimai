@@ -282,7 +282,7 @@ public class ProductFormController extends Main implements Initializable {
 
 
         letsScroll.setVisible(true);
-        letsScroll.setPrefSize(450, 405);
+        letsScroll.setPrefSize(450, 300);
         AnchorPane.setTopAnchor(letsScroll, 40.0);
         AnchorPane.setBottomAnchor(letsScroll, 80.0);
 
@@ -293,7 +293,7 @@ public class ProductFormController extends Main implements Initializable {
 
         Stage productFormStage = (Stage) create_product_button.getScene().getWindow();
         productFormStage.setWidth(930);
-        productFormStage.setHeight(531);
+        productFormStage.setHeight(400);
         productFormStage.centerOnScreen();
         productFormStage.maxWidthProperty().bind(productFormStage.widthProperty());
         productFormStage.minWidthProperty().bind(productFormStage.widthProperty());

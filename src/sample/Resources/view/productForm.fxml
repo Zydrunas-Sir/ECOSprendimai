@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="main_anchor_panel" prefHeight="400.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.ProductFormController">
+<AnchorPane fx:id="main_anchor_panel" prefHeight="300.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.ProductFormController">
     <children>
         <Label alignment="CENTER_RIGHT" layoutX="23.0" layoutY="43.0" prefHeight="25.0" prefWidth="122.0" text="Katalogo nr. :">
             <font>
