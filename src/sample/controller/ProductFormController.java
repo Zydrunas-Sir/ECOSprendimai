@@ -238,6 +238,15 @@ public class ProductFormController extends Main implements Initializable {
                     addParametersForProduct(tableItem.getCategory_parameter_id());
                 }
                 else{
+                    Stage productFormStage = (Stage) create_product_button.getScene().getWindow();
+                    productFormStage.setWidth(500);
+                    productFormStage.setHeight(400);
+                    productFormStage.centerOnScreen();
+                    productFormStage.maxWidthProperty().bind(productFormStage.widthProperty());
+                    productFormStage.minWidthProperty().bind(productFormStage.widthProperty());
+                    productFormStage.setMaxHeight(400);
+                    productFormStage.setMinHeight(400);
+                    letsScroll.setVisible(false);
                     WarnStyle();
                     System.out.println("mouseEventForTableView(ActionEvent event).WarnStyle();");
                     form_info_label.setText("Pasirinkite kategorija turinčia parametrus");
