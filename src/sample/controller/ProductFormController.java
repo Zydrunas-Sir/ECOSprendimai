@@ -165,6 +165,15 @@ public class ProductFormController extends Main implements Initializable {
             }
         });
         categoryComboBox.getItems().addAll(categoriesList);
+        vbox = new VBox();
+        letsScroll = new ScrollPane();
+        letsScroll.setLayoutX(429);
+        letsScroll.setLayoutY(14);
+        letsScroll.prefWidth(300);
+        letsScroll.prefHeight(300);
+        letsScroll.setVisible(false);
+        letsScroll.setContent(vbox);
+        main_anchor_panel.getChildren().add(letsScroll);
 
     }
 
@@ -216,18 +225,30 @@ public class ProductFormController extends Main implements Initializable {
 
 
     public void mouseEventForTableView(ActionEvent event) {
-
-
+        System.out.println("mouseEventForTableView(ActionEvent event)");
         vbox.getChildren().clear();
+        System.out.println("vbox.getChildren().clear();");
         Categories tableItem;
         try {
             if (!categoryComboBox.getSelectionModel().isEmpty()) {
+                System.out.println("!categoryComboBox.getSelectionModel().isEmpty()");
                 tableItem = categoryComboBox.getSelectionModel().getSelectedItem();
                 if (tableItem.getCategory_parameter_id() != 0){
+                    System.out.println("addParametersForProduct(tableItem.getCategory_parameter_id())");
                     addParametersForProduct(tableItem.getCategory_parameter_id());
                 }
                 else{
+                    Stage productFormStage = (Stage) create_product_button.getScene().getWindow();
+                    productFormStage.setWidth(500);
+                    productFormStage.setHeight(400);
+                    productFormStage.centerOnScreen();
+                    productFormStage.maxWidthProperty().bind(productFormStage.widthProperty());
+                    productFormStage.minWidthProperty().bind(productFormStage.widthProperty());
+                    productFormStage.setMaxHeight(400);
+                    productFormStage.setMinHeight(400);
+                    letsScroll.setVisible(false);
                     WarnStyle();
+                    System.out.println("mouseEventForTableView(ActionEvent event).WarnStyle();");
                     form_info_label.setText("Pasirinkite kategorija turinčia parametrus");
                 }
             }
@@ -252,12 +273,16 @@ public class ProductFormController extends Main implements Initializable {
 
     public void addParametersForProduct(int category_parameter_id) {
         System.out.println("Method addParametersForProduct() initialized");
+        form_info_label.setText("");
+        categoryParameters = CategoryParametersDAO.getParametersByCategoryParameterId(category_parameter_id);
+        System.out.println("getParametersByCategoryParameterId()");
 
-//        CategoryParameters categoryParameters = new CategoryParameters( true, true, true, true, true, true, true, true, true, true, true, true, true);
+//        CategoryParameters categoryParameters = new CategoryParameters(true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true,true, true, true, true, true, true, true, true, true, true);
+        System.out.println("categoryParameters object: " + categoryParameters);
 
 
         letsScroll.setVisible(true);
-        letsScroll.setPrefSize(430, 405);
+        letsScroll.setPrefSize(450, 405);
         AnchorPane.setTopAnchor(letsScroll, 40.0);
         AnchorPane.setBottomAnchor(letsScroll, 80.0);
 
@@ -267,7 +292,7 @@ public class ProductFormController extends Main implements Initializable {
         vbox.setVisible(true);
 
         Stage productFormStage = (Stage) create_product_button.getScene().getWindow();
-        productFormStage.setWidth(887);
+        productFormStage.setWidth(930);
         productFormStage.setHeight(531);
         productFormStage.centerOnScreen();
         productFormStage.maxWidthProperty().bind(productFormStage.widthProperty());
@@ -277,7 +302,6 @@ public class ProductFormController extends Main implements Initializable {
 
         double SIZE = 13;
 
-        categoryParameters = CategoryParametersDAO.getParametersByCategoryParameterId(category_parameter_id);
 
         HBox hBox1 = new HBox();
         VBox vBox1 = new VBox();
@@ -727,17 +751,17 @@ public class ProductFormController extends Main implements Initializable {
             vBox2.getChildren().add(plotas_field);
         }
         //         FIELDS FOR TESTING
-        for (int i = 0; i < 6; i++) {
-            Label label = new Label();
-            label.setFont(new Font("Segoe UI Light", SIZE));
-            label.setText("Test field:");
-
-            TextField textField = new TextField();
-            textField.setLayoutX(60);
-            textField.setPrefWidth(250);
-            vBox1.getChildren().add(label);
-            vBox2.getChildren().add(textField);
-        }
+//        for (int i = 0; i < 6; i++) {
+//            Label label = new Label();
+//            label.setFont(new Font("Segoe UI Light", SIZE));
+//            label.setText("Test field:");
+//
+//            TextField textField = new TextField();
+//            textField.setLayoutX(60);
+//            textField.setPrefWidth(250);
+//            vBox1.getChildren().add(label);
+//            vBox2.getChildren().add(textField);
+//        }
 //         ^ DELETE AFTER TEST
 
 

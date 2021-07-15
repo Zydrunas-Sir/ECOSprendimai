@@ -1340,6 +1340,7 @@ public class DashboardController extends Main implements Initializable {
             scene.getStylesheets().add(Objects.requireNonNull(getClass().getClassLoader().getResource(Constants.CSS_DIRECTORY_PATH)).toExternalForm());
             createNewProductStage.setTitle("Produkto įvedimas į duomenų bazę");
             createNewProductStage.setScene(scene);
+            createNewProductStage.centerOnScreen();
             createNewProductStage.show();
             createNewProductStage.maxWidthProperty().bind(createNewProductStage.widthProperty());
             createNewProductStage.minWidthProperty().bind(createNewProductStage.widthProperty());
