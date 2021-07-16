@@ -277,12 +277,12 @@ public class DashboardController extends Main implements Initializable {
         priceNet.setResizable(true);
         stock.setResizable(true);
 
-        tableViewSearchField.setPromptText("Įveskite produkto pavadinimą filtravimui ...");
+        tableViewSearchField.setPromptText("Įveskite produkto pavadinimą filtravimui...");
     }
 
 
     public void loadCategoriesToListView() {
-        listViewSearchField.setPromptText("Įveskite kategorijos pavadinimą filtravimui ...");
+        listViewSearchField.setPromptText("Įveskite kategorijos pavadinimą filtravimui...");
         listView.setCellFactory(lv -> new ListCell<Categories>() {
             @Override
             protected void updateItem(Categories c, boolean empty) {
@@ -713,7 +713,7 @@ public class DashboardController extends Main implements Initializable {
         desciptionLabelVBox.setPadding(new Insets(0, 5, 10, 5));
         desciptionLabelVBox.setMinWidth(130);
         propertyLabelVBox.setMinWidth(130);
-        imageVBox.setPadding(new Insets(5, 0, 5, 0));
+        imageVBox.setPadding(new Insets(5, 5, 5, 0));
         imageVBox.setAlignment(Pos.TOP_CENTER);
         setRightPanelLabelY(40);
 
@@ -1491,8 +1491,6 @@ public class DashboardController extends Main implements Initializable {
 
         popup.getContent().addAll(root);
         popup.show(parent);
-
-
     }
 }
 
