@@ -104,40 +104,91 @@ public class ProductFormController extends Main implements Initializable {
         } else if (categoryParameters.isGylis() && !Validation.isValidGylis(gylis_field.getText())){
             WarnStyle();
             form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_PRODUCT_GYLIS);
-        }/* else if (categoryParameters.isIp_klase() && !Validation.isValidIpKlase(ip_class_field.getText())){
+        } else if (categoryParameters.isSkersmuo() && !Validation.isValidSkersmuo(skersmuo_field.getText())) {
             WarnStyle();
-            form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_PRODUCT_IP_KLASE);
-        } else if (categoryParameters.isSpalva() && !Validation.isValidSpalva(color_field.getText())){
+            form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_PRODUCT_SKERSMUO);
+        } else if (categoryParameters.isIlgis() && !Validation.isValidIlgis(ilgis_field.getText())) {
             WarnStyle();
-            form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_PRODUCT_SPALVA);
-        } else if (categoryParameters.isKorpusas() && !Validation.isValidKorpusas(body_field.getText())){
+            form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_PRODUCT_ILGIS);
+        } else if (categoryParameters.isApsaugos_laipsnis() && !Validation.isValidApsaugosLaipsnis(apsaugos_laipsnis_field.getText())) {
             WarnStyle();
-            form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_PRODUCT_KORPUSAS);
-        } else if (categoryParameters.isTipas() && !Validation.isValidTipas(type_field.getText())){
+            form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_PRODUCT_APSAUGOS_LAIPSNIS);
+        } else if (categoryParameters.isModuliu_skaicius() && !Validation.isValidModuliuSkaicius(moduliu_skaicius_field.getText())) {
             WarnStyle();
-            form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_PRODUCT_TIPAS);
-        } else if (categoryParameters.isVardine_itampa() && !Validation.isValidVardineItampa(nominal_voltage_field.getText())){
+            form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_PRODUCT_MODULIU_SKAICIUS);
+        }else if (categoryParameters.isVardine_srove() && !Validation.isValidVardineSrove(vardine_srove_field.getText())) {
+            WarnStyle();
+            form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_PRODUCT_VARDINE_SROVE);
+        } else if (categoryParameters.isVardine_itampa() && !Validation.isValidVardineItampa(vardine_itampa_field.getText())) {
             WarnStyle();
             form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_PRODUCT_VARDINE_ITAMPA);
-        } else if (categoryParameters.isGalia() && !Validation.isValidGalia(power_field.getText())){
+        } else if (categoryParameters.isMechaninis_atsparumas_IK() && !Validation.isValidMechaninisAtsparumasIK(mechaninis_atsparumas_IK_field.getText())) {
+            WarnStyle();
+            form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_PRODUCT_MECHANINIS_ATSPARUMAS_IK);
+        } else if (categoryParameters.isSpalva() && !Validation.isValidSpalva(spalva_field.getText())) {
+            WarnStyle();
+            form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_PRODUCT_SPALVA);
+        } else if (categoryParameters.isKorpuso_medziaga() && !Validation.isValidKorpusoMedziaga(korpuso_medziaga_field.getText())) {
+            WarnStyle();
+            form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_PRODUCT_KORPUSO_MEDZIAGA);
+        } else if (categoryParameters.isIzoliacija() && !Validation.isValidIzoliacija(izoliacija_field.getText())) {
+            WarnStyle();
+            form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_PRODUCT_IZOLIACIJA);
+        } else if (categoryParameters.isSvoris() && !Validation.isValidSvoris(svoris_field.getText())) {
+            WarnStyle();
+            form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_PRODUCT_SVORIS);
+        } else if (categoryParameters.isGalia() && !Validation.isValidGalia(galia_field.getText())) {
             WarnStyle();
             form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_PRODUCT_GALIA);
-        } else if (categoryParameters.isAtsparumo_klase() && !Validation.isValidAtsparumas(resistance_class_field.getText())){
-            WarnStyle();
-            form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_PRODUCT_ATSPARUMO_KLASE);
-        } else if (categoryParameters.isSviesos_srautas() && !Validation.isValidSviesosSrautas(light_wave_field.getText())){
+        } else if (categoryParameters.isSviesos_srautas() && !Validation.isValidSviesosSrautas(sviesos_srautas_field.getText())) {
             WarnStyle();
             form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_PRODUCT_SVIESOS_SRAUTAS);
-        }  else if (categoryParameters.isMatmenys() && !Validation.isValidMatmenys(dimensions_field.getText())){
+        } else if (categoryParameters.isSviesos_spalvos_temperatura() && !Validation.isValidSviesosSpalvosTemperatura(sviesos_spalvos_temperatura_field.getText())) {
             WarnStyle();
-            form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_PRODUCT_MATMENYS);
-        } else if (categoryParameters.isDarbine_temperatura() && !Validation.isValidDarbineTemperatura(temperature_field.getText())){
+            form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_PRODUCT_SVIESOS_SPALVOS_TEMPERATURA);
+        } else if (categoryParameters.isLaidininkas() && !Validation.isValidLaidininkas(laidininkas_field.getText())) {
+            WarnStyle();
+            form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_PRODUCT_LAIDININKAS);
+        } else if (categoryParameters.isIzoliacija2() && !Validation.isValidIzoliacija2(izoliacija2_field.getText())) {
+            WarnStyle();
+            form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_PRODUCT_IZOLIACIJA2);
+        } else if (categoryParameters.isDarbine_temperatura() && !Validation.isValidDarbineTemperatura(darbine_temperatura_field.getText())) {
             WarnStyle();
             form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_PRODUCT_DARBINE_TEMPERATURA);
-        }
-        */
-
-        else {
+        } else if (categoryParameters.isMax_darbine_temperatura() && !Validation.isValidMaxDarbineTemperatura(max_darbine_temperatura_field.getText())) {
+            WarnStyle();
+            form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_PRODUCT_MAX_DARBINE_TEMPERATURA);
+        } else if (categoryParameters.isApvalkalas() && !Validation.isValidApvalkalas(apvalkalas_field.getText())) {
+            WarnStyle();
+            form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_PRODUCT_APVALKALAS);
+        } else if (categoryParameters.isCPR_klase() && !Validation.isValidCprKlase(cpr_klase_field.getText())) {
+            WarnStyle();
+            form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_PRODUCT_CPR_KLASE);
+        } else if (categoryParameters.isIsjungimo_geba() && !Validation.isValidIsjungimoGeba(isjungimo_geba_field.getText())) {
+            WarnStyle();
+            form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_PRODUCT_ISJUNGIMO_GEBA);
+        } else if (categoryParameters.isIsjungimo_charakteristika() && !Validation.isValidIsjungimoCharakteristika(isjungimo_geba_field.getText())) {
+            WarnStyle();
+            form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_PRODUCT_ISJUNGIMO_CHARAKTERISTIKA);
+        }  else if (categoryParameters.isMechaninis_atsparumas() && !Validation.isValidMechaninisAtsparumas(mechaninis_atsparumas_field.getText())) {
+            WarnStyle();
+            form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_PRODUCT_MECHANINIS_ATSPARUMAS);
+        } else if (categoryParameters.isSkerspjuvis() && !Validation.isValidSkerspjuvis(skerspjuvis_field.getText())) {
+            WarnStyle();
+            form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_PRODUCT_SKERSPJUVIS);
+        } else if (categoryParameters.isSkerspjuvis2() && !Validation.isValidSkerspjuvis2(skerspjuvis2_field.getText())) {
+            WarnStyle();
+            form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_PRODUCT_SKERSPJUVIS2);
+        }  else if (categoryParameters.isNuotekio_srove() && !Validation.isValidNuotekuSrove(nuotekio_srove_field.getText())) {
+            WarnStyle();
+            form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_PRODUCT_NUOTEKIO_SROVE);
+        } else if (categoryParameters.isDydis() && !Validation.isValidDydis(dydis_field.getText())) {
+            WarnStyle();
+            form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_PRODUCT_DYDIS);
+        } else if (categoryParameters.isPlotas() && !Validation.isValidPlotas(plotas_field.getText())) {
+            WarnStyle();
+            form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_PRODUCT_PLOTAS);
+        } else {
             registerProduct(item);
         }
 

@@ -54,7 +54,8 @@ public class CategoryParametersDAO {
         EntityTransaction entityTransaction = entityManager.getTransaction();
         entityTransaction.begin();
 
-        TypedQuery<CategoryParameters> query = entityManager.createQuery("Select e From CategoryParameters e ORDER BY id DESC LIMIT 1", CategoryParameters.class);
+        TypedQuery<CategoryParameters> query = entityManager.createQuery("Select e From CategoryParameters e ORDER BY id DESC", CategoryParameters.class);
+        query.setMaxResults(1);
         CategoryParameters categoryParameters = query.getSingleResult();
 
         entityManager.getTransaction().commit();

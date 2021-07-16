@@ -277,12 +277,12 @@ public class DashboardController extends Main implements Initializable {
         priceNet.setResizable(true);
         stock.setResizable(true);
 
-        tableViewSearchField.setPromptText("Įveskite produkto pavadinimą filtravimui ...");
+        tableViewSearchField.setPromptText("Įveskite produkto pavadinimą filtravimui...");
     }
 
 
     public void loadCategoriesToListView() {
-        listViewSearchField.setPromptText("Įveskite kategorijos pavadinimą filtravimui ...");
+        listViewSearchField.setPromptText("Įveskite kategorijos pavadinimą filtravimui...");
         listView.setCellFactory(lv -> new ListCell<Categories>() {
             @Override
             protected void updateItem(Categories c, boolean empty) {
@@ -308,6 +308,7 @@ public class DashboardController extends Main implements Initializable {
 
     }
 
+    //Filtruoja listview panelyje esamą informaciją pagal užrašyta teksta searchfielde
     public void createFilteredCategoryList() {
         FilteredList<Categories> filteredList = new FilteredList<>(observableCategoryList, p -> true);
         listViewSearchField.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -322,6 +323,7 @@ public class DashboardController extends Main implements Initializable {
         listView.setItems(filteredList);
     }
 
+    //Paspaudus ant listview elemento tableview panelyje pavaizduoja visus produktus priklausančius šiam kategorija.
     public void mouseEventForListView(MouseEvent mouseEvent) {
         Categories item;
         try {
@@ -377,7 +379,7 @@ public class DashboardController extends Main implements Initializable {
             public void run() {
                 List<ProductCatalog> excelProducts = null;
                 List<ProductCatalog> dbProducts = ProductCatalogDAO.displayAllItems();
-
+                List<CategoryParameters> allCategoryParameters;
 
                 try {
                     excelProducts = ReadExcelWithProductCatalog.readFileUsingPOI(file);
@@ -393,8 +395,6 @@ public class DashboardController extends Main implements Initializable {
                 assert excelProducts != null;
                 try {
                     for (ProductCatalog excelProduct : excelProducts) {
-                        List<CategoryParameters> allCategoryParameters = CategoryParametersDAO.displayAllCategoryParameters();
-                        insertCategoryParameter(createCategoryParameter(excelProduct), allCategoryParameters, excelProduct);
                         countExcelProducts++;
                         boolean isNewProduct = true;
 
@@ -411,6 +411,8 @@ public class DashboardController extends Main implements Initializable {
                         if (isNewProduct) {
                             countNewProducts++;
                             ProductCatalogDAO.insert(excelProduct);
+                            allCategoryParameters = CategoryParametersDAO.displayAllCategoryParameters();
+                            insertCategoryParameter(createCategoryParameter(excelProduct), allCategoryParameters, excelProduct);
                         }
                     }
 
@@ -452,10 +454,27 @@ public class DashboardController extends Main implements Initializable {
         uploadExcelLogicalThread.start();
 
     }
-
+    //Ikelia categoryParameter objektą į duombazę patikrinus ar tokio objekto nėra duombazėje.
     public void insertCategoryParameter(CategoryParameters categoryParameter, List<CategoryParameters> allCategoryParameters, ProductCatalog product) {
-        for (CategoryParameters fromAllCategoryParameter : allCategoryParameters){
-            if (!fromAllCategoryParameter.equals(categoryParameter)){
+        if (allCategoryParameters.size() == 0) {
+            CategoryParametersDAO.createNewCategoryParametersField(categoryParameter);
+            CategoryParameters parameter = CategoryParametersDAO.selectLastCategoryParameter();
+            CategoriesDAO.updateCategoryParameterById(parameter.getId(), product.getGroupId());
+        } else {
+            boolean newParameter = true;
+            for (CategoryParameters allCategoryParameter : allCategoryParameters) {
+                if (compareCategoryParameters(allCategoryParameter, categoryParameter)) {
+                    newParameter = false;
+                    Categories category = CategoriesDAO.displayParentCategoryById(product.getGroupId());
+                    if (allCategoryParameter.getId() != category.getCategory_parameter_id()){
+                        CategoriesDAO.updateCategoryParameterById(allCategoryParameter.getId(), product.getGroupId());
+                    }
+                } else {
+
+                }
+
+            }
+            if (newParameter) {
                 CategoryParametersDAO.createNewCategoryParametersField(categoryParameter);
                 CategoryParameters parameter = CategoryParametersDAO.selectLastCategoryParameter();
                 CategoriesDAO.updateCategoryParameterById(parameter.getId(), product.getGroupId());
@@ -463,29 +482,45 @@ public class DashboardController extends Main implements Initializable {
         }
     }
 
+    //Lygina du categoryParameter objektus.
+    public boolean compareCategoryParameters(CategoryParameters parameter, CategoryParameters parameter2) {
+        return parameter.isDarbine_temperatura() == parameter2.isDarbine_temperatura() && parameter.isSviesos_srautas() == parameter2.isSviesos_srautas() &&
+                parameter.isGalia() == parameter2.isGalia() && parameter.isVardine_itampa() == parameter2.isVardine_itampa() && parameter.isSpalva() == parameter2.isSpalva() &&
+                parameter.isGylis() == parameter2.isGylis() && parameter.isPlotis() == parameter2.isPlotis() &&
+                parameter.isAukstis() == parameter2.isAukstis() && parameter.isApsaugos_laipsnis() == parameter2.isApsaugos_laipsnis() && parameter.isApvalkalas() == parameter2.isApvalkalas() &&
+                parameter.isCPR_klase() == parameter2.isCPR_klase() && parameter.isDydis() == parameter2.isDydis() && parameter.isIlgis() == parameter2.isIlgis() &&
+                parameter.isIsjungimo_charakteristika() == parameter2.isIsjungimo_charakteristika() && parameter.isIsjungimo_geba() == parameter2.isIsjungimo_geba() &&
+                parameter.isIzoliacija() == parameter2.isIzoliacija() && parameter.isIzoliacija2() == parameter2.isIzoliacija2() && parameter.isKorpuso_medziaga() == parameter2.isKorpuso_medziaga() &&
+                parameter.isLaidininkas() == parameter2.isLaidininkas() && parameter.isMax_darbine_temperatura() == parameter2.isMax_darbine_temperatura() && parameter.isMechaninis_atsparumas() == parameter2.isMechaninis_atsparumas() &&
+                parameter.isMechaninis_atsparumas_IK() == parameter2.isMechaninis_atsparumas_IK() && parameter.isModuliu_skaicius() == parameter2.isModuliu_skaicius() && parameter.isNuotekio_srove() == parameter2.isNuotekio_srove() &&
+                parameter.isPlotas() == parameter2.isPlotas() && parameter.isSkersmuo() == parameter2.isSkersmuo() && parameter.isSkerspjuvis() == parameter2.isSkerspjuvis() && parameter.isSkerspjuvis2() == parameter2.isSkerspjuvis2() &&
+                parameter.isSviesos_spalvos_temperatura() == parameter2.isSviesos_spalvos_temperatura() && parameter.isSvoris() == parameter2.isSvoris() && parameter.isVardine_srove() == parameter2.isVardine_srove();
+    }
+
+    //Sukuria categoryParameter objektą iš produkto esamų parametrų.
     public CategoryParameters createCategoryParameter(ProductCatalog product) {
         CategoryParameters categoryParameters = new CategoryParameters();
 
-        Double aukstis = product.getAukstis();
-        categoryParameters.setAukstis(aukstis != null);
+        double aukstis = product.getAukstis();
+        categoryParameters.setAukstis(aukstis != 0);
 
-        Double plotis = product.getPlotis();
-        categoryParameters.setPlotis(plotis != null);
+        double plotis = product.getPlotis();
+        categoryParameters.setPlotis(plotis != 0);
 
-        Double gylis = product.getGylis();
-        categoryParameters.setGylis(gylis != null);
+        double gylis = product.getGylis();
+        categoryParameters.setGylis(gylis != 0);
 
-        Double skersmuo = product.getSkersmuo();
-        categoryParameters.setSkersmuo(skersmuo != null);
+        double skersmuo = product.getSkersmuo();
+        categoryParameters.setSkersmuo(skersmuo != 0);
 
-        Double ilgis = product.getIlgis();
-        categoryParameters.setIlgis(ilgis != null);
+        double ilgis = product.getIlgis();
+        categoryParameters.setIlgis(ilgis != 0);
 
         String apsaugos_laipsnis = product.getApsaugos_laipsnis();
         categoryParameters.setApsaugos_laipsnis(apsaugos_laipsnis != null);
 
-        Double moduliu_skaicius = product.getModuliu_skaicius();
-        categoryParameters.setModuliu_skaicius(moduliu_skaicius != null);
+        double moduliu_skaicius = product.getModuliu_skaicius();
+        categoryParameters.setModuliu_skaicius(moduliu_skaicius != 0);
 
         String vardine_srove = product.getVardine_srove();
         categoryParameters.setVardine_srove(vardine_srove != null);
@@ -505,14 +540,14 @@ public class DashboardController extends Main implements Initializable {
         String izoliacija = product.getIzoliacija();
         categoryParameters.setIzoliacija(izoliacija != null);
 
-        Double svoris = product.getSvoris();
-        categoryParameters.setSvoris(svoris != null);
+        double svoris = product.getSvoris();
+        categoryParameters.setSvoris(svoris != 0);
 
         String galia = product.getGalia();
         categoryParameters.setGalia(galia != null);
 
-        Double sviesos_srautas = product.getSviesos_srautas();
-        categoryParameters.setSviesos_srautas(sviesos_srautas != null);
+        double sviesos_srautas = product.getSviesos_srautas();
+        categoryParameters.setSviesos_srautas(sviesos_srautas != 0);
 
         String sviesos_spalvos_temperatura = product.getSviesos_spalvos_temperatura();
         categoryParameters.setSviesos_spalvos_temperatura(sviesos_spalvos_temperatura != null);
@@ -598,6 +633,8 @@ public class DashboardController extends Main implements Initializable {
     // metodui perduodamas item'o katalogo numeris.
     public void mouseEventForTableView() {
         ProductCatalog tableItem;
+
+
         try {
             if (!table.getSelectionModel().isEmpty()) {
                 tableItem = table.getSelectionModel().getSelectedItem();
@@ -676,7 +713,7 @@ public class DashboardController extends Main implements Initializable {
         desciptionLabelVBox.setPadding(new Insets(0, 5, 10, 5));
         desciptionLabelVBox.setMinWidth(130);
         propertyLabelVBox.setMinWidth(130);
-        imageVBox.setPadding(new Insets(5, 0, 5, 0));
+        imageVBox.setPadding(new Insets(5, 5, 5, 0));
         imageVBox.setAlignment(Pos.TOP_CENTER);
         setRightPanelLabelY(40);
 
@@ -1450,8 +1487,6 @@ public class DashboardController extends Main implements Initializable {
 
         popup.getContent().addAll(root);
         popup.show(parent);
-
-
     }
 }
 
