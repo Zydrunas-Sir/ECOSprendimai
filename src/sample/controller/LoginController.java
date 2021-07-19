@@ -335,6 +335,7 @@ public class LoginController implements Initializable {
         okButton.setAlignment(Pos.CENTER);
         okButton.setOnAction(event -> {
             popup.hide();
+            System.exit(0);
             Platform.exit();
         });
         stage.addEventHandler(KeyEvent.KEY_RELEASED, (KeyEvent event) -> {

@@ -280,7 +280,6 @@ public class DashboardController extends Main implements Initializable {
         tableViewSearchField.setPromptText("Įveskite produkto pavadinimą filtravimui...");
     }
 
-
     public void loadCategoriesToListView() {
         listViewSearchField.setPromptText("Įveskite kategorijos pavadinimą filtravimui...");
         listView.setCellFactory(lv -> new ListCell<Categories>() {
@@ -1318,15 +1317,13 @@ public class DashboardController extends Main implements Initializable {
     public void openStocks(ActionEvent actionEvent) {
         try {
             Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource(Constants.OPEN_STOCKS_DIRECTORY_PATH)));
-            Stage loginStage = new Stage();
+            Stage stocksRate = new Stage();
             Scene scene = new Scene(root);
-            scene.getStylesheets().add(Objects.requireNonNull(getClass().getClassLoader().getResource(Constants.CSS_DIRECTORY_PATH)).toExternalForm());
-            loginStage.setTitle("Vario kursas");
-            loginStage.setResizable(false);
-            loginStage.initModality(Modality.APPLICATION_MODAL);
-            loginStage.setOnCloseRequest(e -> StocksRateController.onClose());
-            loginStage.setScene(scene);
-            loginStage.show();
+            stocksRate.setTitle("Vario kursas");
+            stocksRate.setResizable(false);
+            stocksRate.setOnCloseRequest(e -> StocksRateController.onClose());
+            stocksRate.setScene(scene);
+            stocksRate.show();
 
         } catch (Exception e) {
             e.printStackTrace();

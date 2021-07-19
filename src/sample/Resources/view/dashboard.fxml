@@ -39,7 +39,7 @@
             <menus>
                 <Menu fx:id="file_menu_bar" mnemonicParsing="false" text="Failas">
                     <items>
-                        <MenuItem mnemonicParsing="false" onAction="#openExcelFileFromDialog" text="Įkelti EXCEL failą..." />
+                        <MenuItem mnemonicParsing="false" onAction="#openExcelFileFromDialog" text="Įkelti failą..." />
                     </items>
                 </Menu>
                 <Menu fx:id="add_menu_bar" mnemonicParsing="false" text="Pridėti">
@@ -51,8 +51,8 @@
                 <Menu fx:id="more_menu_bar" mnemonicParsing="false" text="Kita">
                     <items>
                         <MenuItem fx:id="user_list" mnemonicParsing="false" onAction="#openUserStats" text="Vartotojų sąrašas" />
-                        <MenuItem fx:id="user_about" mnemonicParsing="false" onAction="#aboutInfo" text="Apie" />
                         <MenuItem mnemonicParsing="false" onAction="#openStocks" text="Vario kursas" />
+                        <MenuItem fx:id="user_about" mnemonicParsing="false" onAction="#aboutInfo" text="Apie" />
                     </items>
                 </Menu>
             </menus>
