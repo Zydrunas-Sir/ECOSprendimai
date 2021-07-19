@@ -40,19 +40,40 @@ public class Constants {
 
     /* Naujo produkto kūrimo lango Validacija : Start */
 
-    public static final String CREDENTIALS_IS_NOT_CORRECT_PRODUCT_ATSPARUMO_KLASE = "Atsparumo klasės neatitinka reikalavimų.";
     public static final String CREDENTIALS_IS_NOT_CORRECT_PRODUCT_AUKSTIS = "Aukštis neatitinka reikalavimų.";
-    public static final String CREDENTIALS_IS_NOT_CORRECT_PRODUCT_DARBINE_TEMPERATURA = "Darbinė temperatura neatitinka  reikalavimų.";
-    public static final String CREDENTIALS_IS_NOT_CORRECT_PRODUCT_GALIA = "Galia neatitinka  reikalavimų.";
+    public static final String CREDENTIALS_IS_NOT_CORRECT_PRODUCT_PLOTIS = "Plotis neatitinka reikalavimų.";
     public static final String CREDENTIALS_IS_NOT_CORRECT_PRODUCT_GYLIS= "Gylis neatitinka  reikalavimų.";
-    public static final String CREDENTIALS_IS_NOT_CORRECT_PRODUCT_KORPUSAS = "Korpusas neatitinka  reikalavimų.";
-    public static final String CREDENTIALS_IS_NOT_CORRECT_PRODUCT_MATMENYS = "Matmenys neatitinka  reikalavimų.";
-    public static final String CREDENTIALS_IS_NOT_CORRECT_PRODUCT_PLOTIS = "Plotis neatitinka  reikalavimų.";
-    public static final String CREDENTIALS_IS_NOT_CORRECT_PRODUCT_SPALVA = "Spalva neatitinka  reikalavimų.";
-    public static final String CREDENTIALS_IS_NOT_CORRECT_PRODUCT_SVIESOS_SRAUTAS = "Šviesos srautas neatitinka  reikalavimų.";
-    public static final String CREDENTIALS_IS_NOT_CORRECT_PRODUCT_TIPAS = "Tipas neatitinka  reikalavimų.";
-    public static final String CREDENTIALS_IS_NOT_CORRECT_PRODUCT_VARDINE_ITAMPA = "Vardinė itampa neatitinka  reikalavimų.";
-    public static final String CREDENTIALS_IS_NOT_CORRECT_PRODUCT_IP_KLASE = "Ip klasė neatitinka  reikalavimų.";
+    public static final String CREDENTIALS_IS_NOT_CORRECT_PRODUCT_SKERSMUO = "Skersmuo neatitinka  reikalavimų.";
+    public static final String CREDENTIALS_IS_NOT_CORRECT_PRODUCT_ILGIS = "Ilgis neatitinka reikalavimų.";
+    public static final String CREDENTIALS_IS_NOT_CORRECT_PRODUCT_APSAUGOS_LAIPSNIS = "Apsaugos laipsnis neatitinka reikalavimų.";
+    public static final String CREDENTIALS_IS_NOT_CORRECT_PRODUCT_MODULIU_SKAICIUS = "Moduliu skaičius neatitinka reikalavimų.";
+    public static final String CREDENTIALS_IS_NOT_CORRECT_PRODUCT_VARDINE_SROVE = "Vardinė srovė neatitinka reikalavimų.";
+    public static final String CREDENTIALS_IS_NOT_CORRECT_PRODUCT_VARDINE_ITAMPA = "Vardinė įtampa neatitinka reikalavimų.";
+    public static final String CREDENTIALS_IS_NOT_CORRECT_PRODUCT_MECHANINIS_ATSPARUMAS_IK = "Mechaninis atsparumas IK neatitinka reikalavimų.";
+    public static final String CREDENTIALS_IS_NOT_CORRECT_PRODUCT_SPALVA = "Spalva neatitinka reikalavimų.";
+    public static final String CREDENTIALS_IS_NOT_CORRECT_PRODUCT_KORPUSO_MEDZIAGA = "Korpuso medžiaga neatitinka reikalavimų.";
+    public static final String CREDENTIALS_IS_NOT_CORRECT_PRODUCT_IZOLIACIJA = "Izoliacija neatitinka reikalavimų.";
+    public static final String CREDENTIALS_IS_NOT_CORRECT_PRODUCT_SVORIS = "Svoris neatitinka reikalavimų.";
+    public static final String CREDENTIALS_IS_NOT_CORRECT_PRODUCT_GALIA = "Galia neatitinka reikalavimų.";
+    public static final String CREDENTIALS_IS_NOT_CORRECT_PRODUCT_SVIESOS_SRAUTAS = "Šviesos srautas neatitinka reikalavimų.";
+    public static final String CREDENTIALS_IS_NOT_CORRECT_PRODUCT_SVIESOS_SPALVOS_TEMPERATURA = "Šviesos spalvos temperatura neatitinka reikalavimų.";
+    public static final String CREDENTIALS_IS_NOT_CORRECT_PRODUCT_LAIDININKAS = "Laidininkas neatitinka reikalavimų.";
+    public static final String CREDENTIALS_IS_NOT_CORRECT_PRODUCT_IZOLIACIJA2 = "Izoliacija2 neatitinka reikalavimų.";
+    public static final String CREDENTIALS_IS_NOT_CORRECT_PRODUCT_DARBINE_TEMPERATURA = "Darbinė temperatura neatitinka reikalavimų.";
+    public static final String CREDENTIALS_IS_NOT_CORRECT_PRODUCT_MAX_DARBINE_TEMPERATURA = "Max darbinė temperatura neatitinka reikalavimų.";
+    public static final String CREDENTIALS_IS_NOT_CORRECT_PRODUCT_APVALKALAS = "Apvalkalas neatitinka reikalavimų.";
+    public static final String CREDENTIALS_IS_NOT_CORRECT_PRODUCT_CPR_KLASE = "CPR klasė neatitinka reikalavimų.";
+    public static final String CREDENTIALS_IS_NOT_CORRECT_PRODUCT_ISJUNGIMO_GEBA = "Išjungimo geba neatitinka reikalavimų.";
+    public static final String CREDENTIALS_IS_NOT_CORRECT_PRODUCT_ISJUNGIMO_CHARAKTERISTIKA = "Išjungimo charakteristika neatitinka reikalavimų.";
+    public static final String CREDENTIALS_IS_NOT_CORRECT_PRODUCT_MECHANINIS_ATSPARUMAS = "Mechaninis atsparumas neatitinka reikalavimų.";
+    public static final String CREDENTIALS_IS_NOT_CORRECT_PRODUCT_SKERSPJUVIS = "Skerspjuvis neatitinka reikalavimų.";
+    public static final String CREDENTIALS_IS_NOT_CORRECT_PRODUCT_SKERSPJUVIS2 = "Skerspjuvis2 neatitinka reikalavimų.";
+    public static final String CREDENTIALS_IS_NOT_CORRECT_PRODUCT_NUOTEKIO_SROVE = "Nuotekio srovė neatitinka reikalavimų.";
+    public static final String CREDENTIALS_IS_NOT_CORRECT_PRODUCT_DYDIS = "Dydis neatitinka reikalavimų.";
+    public static final String CREDENTIALS_IS_NOT_CORRECT_PRODUCT_PLOTAS = "Plotas neatitinka reikalavimų.";
+
+
+
 
     /* Naujo produkto kūrimo lango Validacija : End */
 

@@ -907,12 +907,8 @@ public class DashboardController extends Main implements Initializable {
                     colorDescription.setLayoutY(getRightPanelLabelY());
                     colorProperty.setLayoutX(60);
                     colorProperty.setLayoutY(getRightPanelLabelY());
-
                     colorDescription.setText("Spalva: ");
                     colorProperty.setText(irasas.getSpalva());
-                    colorProperty.setWrapText(true);
-
-                    System.out.println(colorProperty.wrapTextProperty().getValue());
                     desciptionLabelVBox.getChildren().add(colorDescription);
                     propertyLabelVBox.getChildren().add(colorProperty);
                 }
