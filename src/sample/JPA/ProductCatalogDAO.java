@@ -82,7 +82,7 @@ public class ProductCatalogDAO {
     }
 
 
-    public static void updatePrice(String price, int id) {
+    public static void updatePrice(double price, int id) {
 
         EntityManager entityManager;
         EntityTransaction entityTransaction;
