@@ -300,7 +300,7 @@ public class ProductFormController extends Main implements Initializable {
                     letsScroll.setVisible(false);
                     WarnStyle();
                     System.out.println("mouseEventForTableView(ActionEvent event).WarnStyle();");
-                    form_info_label.setText("Pasirinkite kategorija turinčia parametrus");
+                    form_info_label.setText("Pasirinkite kategoriją turinčią parametrus");
                 }
             }
         } catch (IllegalStateException e) {

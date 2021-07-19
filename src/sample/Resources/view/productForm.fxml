@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="main_anchor_panel" prefHeight="300.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.ProductFormController">
+<AnchorPane fx:id="main_anchor_panel" prefHeight="350.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.ProductFormController">
     <children>
         <Label alignment="CENTER_RIGHT" layoutX="23.0" layoutY="43.0" prefHeight="25.0" prefWidth="122.0" text="Katalogo nr. :">
             <font>
@@ -46,15 +46,15 @@
          </font>
       </Label>
       <ComboBox fx:id="categoryComboBox" layoutX="150.0" layoutY="202.0" onAction="#mouseEventForTableView" prefHeight="17.0" prefWidth="255.0" />
-
-        <Label fx:id="form_info_label" alignment="CENTER" layoutX="14.0" layoutY="361.0" prefHeight="54.0" prefWidth="399.0" textAlignment="CENTER" textFill="RED" wrapText="true">
-            <font>
-                <Font name="Segoe UI Light" size="18.0" />
-            </font></Label>
         <Button fx:id="create_product_button" layoutX="32.0" layoutY="361.6666666666667" mnemonicParsing="false" onAction="#createProduct" prefHeight="39.0" prefWidth="438.0" style="-fx-background-color: #4444;" text="Sukurti" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="32.0" AnchorPane.rightAnchor="30.0">
             <font>
                 <Font name="Segoe UI Light" size="18.0" />
             </font></Button>
+
+        <Label fx:id="form_info_label" alignment="CENTER" layoutX="50.0" layoutY="236.0" prefHeight="54.0" prefWidth="399.0" textAlignment="CENTER" textFill="RED" wrapText="true">
+            <font>
+                <Font name="Segoe UI Light" size="18.0" />
+            </font></Label>
     </children>
 
 </AnchorPane>
