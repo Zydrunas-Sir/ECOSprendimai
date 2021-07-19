@@ -10,6 +10,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
@@ -279,6 +280,8 @@ public class LoginController implements Initializable {
         Window parent = scene.getWindow();
         javafx.stage.Popup popup = new Popup();
 
+        Stage stage = (Stage) username_button.getScene().getWindow();
+
         VBox root = new VBox();
         root.setAlignment(Pos.CENTER);
         root.setStyle("-fx-border-width: 1; -fx-border-color: #000000; -fx-effect: dropshadow(two-pass-box, #000000, 10, 0.0, 1.0, 1.0);");
@@ -331,10 +334,16 @@ public class LoginController implements Initializable {
         okButton.setMinSize(82, 28);
         okButton.setAlignment(Pos.CENTER);
         okButton.setOnAction(event -> {
-
             popup.hide();
             Platform.exit();
         });
+        stage.addEventHandler(KeyEvent.KEY_RELEASED, (KeyEvent event) -> {
+            if (KeyCode.ESCAPE == event.getCode()) {
+                stage.close();
+                Platform.exit();
+            }
+        });
+
 
         hBox31.getChildren().add(okButton);
         hBox3.getChildren().add(hBox31);
