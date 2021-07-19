@@ -35,7 +35,7 @@
     ###### Version info
     11. Mark checkbox & fill fields:
     12. File version ( *.0.0.0 must be )
-    13. File descriptrion
+    13. File description
     14. Copyright
     15. Product version ( *.0.0.0 must be )
     16. Product name
