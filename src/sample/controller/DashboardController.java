@@ -241,7 +241,7 @@ public class DashboardController extends Main implements Initializable {
                             productCatalog = event.getRowValue();
                             productCatalog.setPriceNet(event.getOldValue());
                             showPopupWindow("Neįvesta produkto kaina", "Skaičius gali būti nuo 1 ir toliau simbolių, po kablelio turėti vieną,\ndu arba neturėti skaitmenų. Pavyzdžiui:\n „30“, „7.15“, „1500.0“ ir t.t.", "#b02a37", "#FFFFFF");
-                            System.out.println("PRICNET IS EMPTY");
+                            System.out.println("PRICENET IS EMPTY");
                             table.refresh();
                         } else if (Validation.isValidPrice(event.getNewValue())) {
                             productCatalog = event.getRowValue();
@@ -1260,6 +1260,7 @@ public class DashboardController extends Main implements Initializable {
             statsStage.setTitle("Registruotų vartotojų sąrašas");
             statsStage.setScene(scene);
             statsStage.setResizable(true);
+            statsStage.initModality(Modality.APPLICATION_MODAL);
             statsStage.show();
 
         } catch (Exception e) {
@@ -1301,6 +1302,7 @@ public class DashboardController extends Main implements Initializable {
             scene.getStylesheets().add(Objects.requireNonNull(getClass().getClassLoader().getResource(Constants.CSS_DIRECTORY_PATH)).toExternalForm());
             createCategoryStage.setTitle("Kategorijos anketa");
             createCategoryStage.setScene(scene);
+            createCategoryStage.initModality(Modality.APPLICATION_MODAL);
             createCategoryStage.show();
             createCategoryStage.getScene().getWindow().addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, event -> {
                 reloadCategoryListView();
@@ -1321,6 +1323,7 @@ public class DashboardController extends Main implements Initializable {
             scene.getStylesheets().add(Objects.requireNonNull(getClass().getClassLoader().getResource(Constants.CSS_DIRECTORY_PATH)).toExternalForm());
             loginStage.setTitle("Vario kursas");
             loginStage.setResizable(false);
+            loginStage.initModality(Modality.APPLICATION_MODAL);
             loginStage.setOnCloseRequest(e -> StocksRateController.onClose());
             loginStage.setScene(scene);
             loginStage.show();
@@ -1341,6 +1344,7 @@ public class DashboardController extends Main implements Initializable {
             createNewProductStage.setTitle("Produkto įvedimas į duomenų bazę");
             createNewProductStage.setScene(scene);
             createNewProductStage.centerOnScreen();
+            createNewProductStage.initModality(Modality.APPLICATION_MODAL);
             createNewProductStage.show();
             createNewProductStage.maxWidthProperty().bind(createNewProductStage.widthProperty());
             createNewProductStage.minWidthProperty().bind(createNewProductStage.widthProperty());
@@ -1359,7 +1363,7 @@ public class DashboardController extends Main implements Initializable {
     }
 
     public void aboutInfo() {
-        showPopupWindow("Informacija", "UAB „ECO SPRENDIMAI“\nSusisiekti galite:\n- Tel.: +370 600 00000\n- El.paštu: info@ecosprendimai.lt\nProgramos versija: " + Constants.PROGRAM_VERSION, "#0a58ca", "#FFFFFF");
+        showPopupWindow("Informacija", "UAB „ECO SPRENDIMAI“\nSusisiekti galite:\n- Tel.: +370 600 00000\n- El. paštu: info@ecosprendimai.lt\nProgramos versija: " + Constants.PROGRAM_VERSION, "#0a58ca", "#FFFFFF");
     }
 
     public void windowClose() { //Uzdaro prisijungimo langa
