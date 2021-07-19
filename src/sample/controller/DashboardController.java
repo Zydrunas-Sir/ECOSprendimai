@@ -280,7 +280,6 @@ public class DashboardController extends Main implements Initializable {
         tableViewSearchField.setPromptText("Įveskite produkto pavadinimą filtravimui...");
     }
 
-
     public void loadCategoriesToListView() {
         listViewSearchField.setPromptText("Įveskite kategorijos pavadinimą filtravimui...");
         listView.setCellFactory(lv -> new ListCell<Categories>() {
