@@ -20,7 +20,7 @@ public class ProductCatalog {
     @Column(name = "symbol", length = 1024)
     private String symbol;
     @Column(name = "price_net")
-    private String priceNet;
+    private double priceNet;
     @Column(name = "stock")
     private int stock;
     @Column(name = "group_id")
@@ -95,7 +95,7 @@ public class ProductCatalog {
     private Date date;
 
 
-    public ProductCatalog(int id, String catalogNo, String symbol, String priceNet, int stock, int groupId, Date date) {
+    public ProductCatalog(int id, String catalogNo, String symbol, double priceNet, int stock, int groupId, Date date) {
         this.id = id;
         this.catalogNo = catalogNo;
         this.symbol = symbol;
@@ -105,7 +105,7 @@ public class ProductCatalog {
         this.date = date;
     }
 
-    public ProductCatalog(String catalogNo, String symbol, String priceNet, int stock, int groupId, double aukstis, double plotis, double gylis, double skersmuo, double ilgis, String apsaugos_laipsnis, double moduliu_skaicius, String vardine_srove, String vardine_itampa, String mechaninis_atsparumas_IK, String spalva, String korpuso_medziaga, String izoliacija, double svoris, String galia, double sviesos_srautas, String sviesos_spalvos_temperatura, String laidininkas, String izoliacija2, String darbine_temperatura, String max_darbine_temperatura, String apvalkalas, String cpr_klase, String isjungimo_geba, String isjungimo_charakteristika, String mechaninis_atsparumas, String skerspjuvis, String skerspjuvis2, String nuotekio_srove, String dydis, String plotas, String image_url, Date date) {
+    public ProductCatalog(String catalogNo, String symbol, double priceNet, int stock, int groupId, double aukstis, double plotis, double gylis, double skersmuo, double ilgis, String apsaugos_laipsnis, double moduliu_skaicius, String vardine_srove, String vardine_itampa, String mechaninis_atsparumas_IK, String spalva, String korpuso_medziaga, String izoliacija, double svoris, String galia, double sviesos_srautas, String sviesos_spalvos_temperatura, String laidininkas, String izoliacija2, String darbine_temperatura, String max_darbine_temperatura, String apvalkalas, String cpr_klase, String isjungimo_geba, String isjungimo_charakteristika, String mechaninis_atsparumas, String skerspjuvis, String skerspjuvis2, String nuotekio_srove, String dydis, String plotas, String image_url, Date date) {
         this.catalogNo = catalogNo;
         this.symbol = symbol;
         this.priceNet = priceNet;
@@ -146,7 +146,7 @@ public class ProductCatalog {
         this.date = date;
     }
 
-    public ProductCatalog(String catalogNo, String symbol, String priceNet, int stock, int groupId, Date date) {
+    public ProductCatalog(String catalogNo, String symbol, double priceNet, int stock, int groupId, Date date) {
         this.catalogNo = catalogNo;
         this.symbol = symbol;
         this.priceNet = priceNet;
@@ -359,12 +359,12 @@ public class ProductCatalog {
         this.symbol = symbol;
     }
 
-    public String getPriceNet() {
+    public double getPriceNet() {
         return priceNet;
     }
 
-    public void setPriceNet(String priceNet) {
-        this.priceNet = String.valueOf(Math.round(Double.parseDouble(priceNet) * 100.0) / 100.0);
+    public void setPriceNet(double priceNet) {
+        this.priceNet = Math.round(priceNet * 100.0) / 100.0;
     }
 
     public int getStock() {

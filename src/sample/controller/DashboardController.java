@@ -31,6 +31,7 @@ import javafx.scene.paint.Paint;
 import javafx.stage.*;
 import javafx.stage.Popup;
 import javafx.util.Callback;
+import javafx.util.converter.DoubleStringConverter;
 import sample.JPA.*;
 import sample.JPA.user.User;
 import sample.JPA.user.UserDAO;
@@ -166,7 +167,7 @@ public class DashboardController extends Main implements Initializable {
         TableColumn number = new TableColumn("#");
         TableColumn<ProductCatalog, Integer> catalogNo = new TableColumn<>("Katalogo nr.");
         TableColumn<ProductCatalog, String> symbol = new TableColumn<>("Produkto pavadinimas");
-        TableColumn<ProductCatalog, String> priceNet = new TableColumn<>("Kaina");
+        TableColumn<ProductCatalog, Double> priceNet = new TableColumn<>("Kaina");
         TableColumn<ProductCatalog, Integer> stock = new TableColumn<>("Kiekis");
 
         table.getColumns().addAll(number, catalogNo, symbol, priceNet, stock);
@@ -232,18 +233,18 @@ public class DashboardController extends Main implements Initializable {
         priceNet.setCellValueFactory(new PropertyValueFactory<>("priceNet"));
         if (isAdmin) {
             try {
-                priceNet.setCellFactory(TextFieldTableCell.forTableColumn());
-                priceNet.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<ProductCatalog, String>>() {
+                priceNet.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
+                priceNet.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<ProductCatalog, Double>>() {
                     @Override
-                    public void handle(TableColumn.CellEditEvent<ProductCatalog, String> event) {
+                    public void handle(TableColumn.CellEditEvent<ProductCatalog, Double> event) {
                         ProductCatalog productCatalog;
-                        if (event.getNewValue().isEmpty()) {
+                        if (event.getNewValue() == null) {
                             productCatalog = event.getRowValue();
                             productCatalog.setPriceNet(event.getOldValue());
                             showPopupWindow("Neįvesta produkto kaina", "Skaičius gali būti nuo 1 ir toliau simbolių, po kablelio turėti vieną,\ndu arba neturėti skaitmenų. Pavyzdžiui:\n „30“, „7.15“, „1500.0“ ir t.t.", "#b02a37", "#FFFFFF");
-                            System.out.println("PRICNET IS EMPTY");
+                            System.out.println("PRICENET IS EMPTY");
                             table.refresh();
-                        } else if (Validation.isValidPrice(event.getNewValue())) {
+                        } else if (Validation.isValidPriceDouble(event.getNewValue())) {
                             productCatalog = event.getRowValue();
                             productCatalog.setPriceNet(event.getNewValue());
                             ProductCatalogDAO.updatePrice(event.getNewValue(), productCatalog.getId());
@@ -254,15 +255,12 @@ public class DashboardController extends Main implements Initializable {
                             productCatalog.setPriceNet(event.getOldValue());
                             table.refresh();
                             showPopupWindow("Blogai įvesta produkto kaina", "Skaičius gali būti nuo 1 ir toliau simbolių, po kablelio turėti vieną,\ndu arba neturėti skaitmenų. Pavyzdžiui:\n „30“, „7.15“, „1500.0“ ir t.t.", "#b02a37", "#FFFFFF");
-
                             System.out.println("REGEX VALIDATION DENIED");
                         }
                     }
-
-
                 });
             } catch (Exception e) {
-                System.out.println("Blogas editas");
+                System.out.println(e);
             }
 
         }
@@ -398,11 +396,11 @@ public class DashboardController extends Main implements Initializable {
                         boolean isNewProduct = true;
 
                         for (ProductCatalog dbProduct : dbProducts) {
-                            if (!dbProduct.getPriceNet().equals(excelProduct.getPriceNet()) && dbProduct.getCatalogNo().equals(excelProduct.getCatalogNo()) && dbProduct.getGroupId() == excelProduct.getGroupId() && dbProduct.getSymbol().equals(excelProduct.getSymbol())) {
+                            if (dbProduct.getPriceNet() == (excelProduct.getPriceNet()) && dbProduct.getCatalogNo().equals(excelProduct.getCatalogNo()) && dbProduct.getGroupId() == excelProduct.getGroupId() && dbProduct.getSymbol().equals(excelProduct.getSymbol())) {
                                 isNewProduct = false;
                                 ProductCatalogDAO.updatePrice(excelProduct.getPriceNet(), dbProduct.getId());
                                 countAffectedProducts++;
-                            } else if (dbProduct.getPriceNet().equals(excelProduct.getPriceNet()) && dbProduct.getCatalogNo().equals(excelProduct.getCatalogNo()) && dbProduct.getGroupId() == excelProduct.getGroupId() && dbProduct.getSymbol().equals(excelProduct.getSymbol())) {
+                            } else if (dbProduct.getPriceNet() == (excelProduct.getPriceNet()) && dbProduct.getCatalogNo().equals(excelProduct.getCatalogNo()) && dbProduct.getGroupId() == excelProduct.getGroupId() && dbProduct.getSymbol().equals(excelProduct.getSymbol())) {
                                 isNewProduct = false;
                                 countDBProducts = dbProducts.size() - countAffectedProducts;
                             }
@@ -1259,6 +1257,7 @@ public class DashboardController extends Main implements Initializable {
             statsStage.setTitle("Registruotų vartotojų sąrašas");
             statsStage.setScene(scene);
             statsStage.setResizable(true);
+            statsStage.initModality(Modality.APPLICATION_MODAL);
             statsStage.show();
 
         } catch (Exception e) {
@@ -1300,6 +1299,7 @@ public class DashboardController extends Main implements Initializable {
             scene.getStylesheets().add(Objects.requireNonNull(getClass().getClassLoader().getResource(Constants.CSS_DIRECTORY_PATH)).toExternalForm());
             createCategoryStage.setTitle("Kategorijos anketa");
             createCategoryStage.setScene(scene);
+            createCategoryStage.initModality(Modality.APPLICATION_MODAL);
             createCategoryStage.show();
             createCategoryStage.getScene().getWindow().addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, event -> {
                 reloadCategoryListView();
@@ -1339,6 +1339,7 @@ public class DashboardController extends Main implements Initializable {
             createNewProductStage.setTitle("Produkto įvedimas į duomenų bazę");
             createNewProductStage.setScene(scene);
             createNewProductStage.centerOnScreen();
+            createNewProductStage.initModality(Modality.APPLICATION_MODAL);
             createNewProductStage.show();
             createNewProductStage.maxWidthProperty().bind(createNewProductStage.widthProperty());
             createNewProductStage.minWidthProperty().bind(createNewProductStage.widthProperty());
@@ -1357,7 +1358,7 @@ public class DashboardController extends Main implements Initializable {
     }
 
     public void aboutInfo() {
-        showPopupWindow("Informacija", "UAB „ECO SPRENDIMAI“\nSusisiekti galite:\n- Tel.: +370 600 00000\n- El.paštu: info@ecosprendimai.lt\nProgramos versija: " + Constants.PROGRAM_VERSION, "#0a58ca", "#FFFFFF");
+        showPopupWindow("Informacija", "UAB „ECO SPRENDIMAI“\nSusisiekti galite:\n- Tel.: +370 600 00000\n- El. paštu: info@ecosprendimai.lt\nProgramos versija: " + Constants.PROGRAM_VERSION, "#0a58ca", "#FFFFFF");
     }
 
     public void windowClose() { //Uzdaro prisijungimo langa

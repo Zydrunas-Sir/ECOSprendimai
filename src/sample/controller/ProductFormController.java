@@ -240,7 +240,7 @@ public class ProductFormController extends Main implements Initializable {
 
     public void registerProduct(Categories item) {
         ProductCatalog product = new ProductCatalog(catalog_no_textField.getText(), symbol_textField.getText(),
-                price_textField.getText(), Integer.parseInt(nullCheckerForNumbers(stock_textField.getText())),
+                Double.parseDouble(price_textField.getText()), Integer.parseInt(nullCheckerForNumbers(stock_textField.getText())),
                 item.getId(), Double.parseDouble(nullCheckerForNumbers(aukstis_field.getText())), Double.parseDouble(nullCheckerForNumbers(plotis_field.getText())),
                 Double.parseDouble(nullCheckerForNumbers(gylis_field.getText())),
                 Double.parseDouble(nullCheckerForNumbers(skersmuo_field.getText())), Double.parseDouble(nullCheckerForNumbers(ilgis_field.getText())),

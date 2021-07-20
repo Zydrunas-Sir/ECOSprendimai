@@ -20,11 +20,11 @@ public class Constants {
     public static final String CSS_DIRECTORY_PATH = "sample/Resources/view/CSS.css";
     public static final String OPEN_STOCKS_DIRECTORY_PATH = "sample/Resources/view/stockPriceRate.fxml";
 
-    public static final String EMAIL_NOT_EXIST = "Vartotojas su įvestu el.paštu neegzistuoja.";
-    public static final String EMAIL_EXISTS = "Įvestas el.paštas jau egzistuoja.";
+    public static final String EMAIL_NOT_EXIST = "Vartotojas su įvestu el. paštu neegzistuoja.";
+    public static final String EMAIL_EXISTS = "Vartotojas su įvestu el. paštu egzistuoja.";
     public static final String CREDENTIALS_IS_NOT_CORRECT = "Įvesti duomenys neteisingi.";
-    public static final String CREDENTIALS_IS_NOT_CORRECT_FIRST_NAME = "Vartotojo vardas neatitinka reikalavimų.";
-    public static final String CREDENTIALS_IS_NOT_CORRECT_LAST_NAME = "Vartotojo pavardė neatitinka reikalavimų.";
+    public static final String CREDENTIALS_IS_NOT_CORRECT_FIRST_NAME = "Įvestas vardas neatitinka reikalavimų.";
+    public static final String CREDENTIALS_IS_NOT_CORRECT_LAST_NAME = "Įvesta pavardė neatitinka reikalavimų.";
     public static final String CREDENTIALS_IS_NOT_CORRECT_COMPANY_NAME = "Neteisingai įvestas įmonės pavadinimas.";
     public static final String CREDENTIALS_IS_NOT_CORRECT_PASSWORD = "Slaptažodis neatitinka reikalavimų.\n(Bent 8 simboliai)(bent viena didžioji raidė ir mažoji)\n(bent vienas skaicius)";
     public static final String CREDENTIALS_IS_NOT_FILLED_EMAIL = "Vartotojo el. paštas neatitinka reikalavimų.";
